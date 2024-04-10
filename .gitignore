@@ -53,6 +53,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.yarn/releases/yarn-4.1.1.cjs
 
 .vscode/
