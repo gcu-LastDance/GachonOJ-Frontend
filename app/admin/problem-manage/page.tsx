@@ -1,5 +1,12 @@
-import React from "react";
+'use client';
+import { PaginationTable } from '../../../components/PaginationTable'
 
-export default function page() {
-  return <div>admin-pm</div>;
+function page() {
+	return (
+    	<div className="App-board">
+          <PaginationTable />
+        </div>
+    )
 }
+
+export default page;
