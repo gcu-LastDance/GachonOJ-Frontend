@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function page() {
-  return <div>main</div>;
+  return <div>ranking</div>;
 }

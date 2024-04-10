@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function page() {
-  return <div>admin-pm</div>;
+  return <div className="font-PretendardBlack bg-white">ok</div>;
 }
