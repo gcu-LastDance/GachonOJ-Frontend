@@ -1,10 +1,10 @@
 'use client';
-import { PaginationTable } from '../../../components/PaginationTable'
+import ProblemManageTable from './_components/ProblemManageTable'
 
 function page() {
 	return (
     	<div className="App-board">
-          <PaginationTable />
+          <ProblemManageTable />
         </div>
     )
 }

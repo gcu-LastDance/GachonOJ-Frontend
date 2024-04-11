@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import MOCK_DATA from "./MOCK_DATA.json";
-import { COLUMNS } from "./columns";
+import MOCK_DATA from "../../../../mocks/MOCK_DATA.json";
+import { COLUMNS } from "../../../../types/columns";
 import { usePagination, useTable } from "react-table";
 
-export const PaginationTable = () => {
+export const ProblemManageTable = () => {
   // Columns 및 데이터를 useMemo를 사용하여 선언
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
@@ -41,7 +41,7 @@ export const PaginationTable = () => {
         문제관리 &gt; 문제목록
       </div>
       <div className="flex justify-end items-center pr-2">
-        <input type="text" placeholder="검색" className="border" />
+        <input type="text" placeholder="검색" className="border"/>
       </div>
       {/* 테이블 요소 생성 */}
       <table {...getTableProps()} className="w-full text-sm">
@@ -152,5 +152,4 @@ export const PaginationTable = () => {
     </div>
   );
 };
-
-export default PaginationTable;
+export default ProblemManageTable;
