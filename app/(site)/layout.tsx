@@ -1,4 +1,4 @@
-import HeaderNav from "@/components/HeaderNav";
+import HeaderNav from "@/components/Nav/HeaderNav";
 import React from "react";
 
 export default function layout({ children }: { children: React.ReactNode }) {

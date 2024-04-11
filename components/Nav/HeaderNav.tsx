@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import GachonOJ_logo_image from "@logo/gachonoj_logo.png";
 import React from "react";
@@ -5,7 +7,7 @@ import Image from "next/image";
 
 export default function HeaderNav() {
   return (
-    <header className="border-b-2">
+    <header className="border-b-2 shadow-md">
       <div className="flex items-center w-[75vw] h-[7vh] mx-auto">
         <div>
           <Link href="/main">
@@ -14,7 +16,7 @@ export default function HeaderNav() {
             </div>
           </Link>
         </div>
-        <div className="ml-16 mr-16 space-x-16 font-PretendardSemiBold text-lg pt-1">
+        <div className="ml-16 mr-16 space-x-16 font-PretendardSemiBold text-lg pt-1 text-primaryDark">
           <Link href="/problem">
             <span>문제</span>
           </Link>
@@ -36,8 +38,10 @@ export default function HeaderNav() {
         </div>
         <div className="ml-auto">
           <Link href="/login">
-            <div className="border-2 pl-6 pr-6 pt-1 pb-1 rounded-lg">
-              <span>로그인</span>
+            <div className="border-[1.5px] pl-5 pr-5 pt-0.5 pb-0.5 rounded-lg border-primaryBlue">
+              <span className="font-PretendardMedium text-primaryBlue text-base">
+                로그인
+              </span>
             </div>
           </Link>
         </div>

@@ -1268,7 +1268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.0.1":
+"autoprefixer@npm:^10.4.19":
   version: 10.4.19
   resolution: "autoprefixer@npm:10.4.19"
   dependencies:
@@ -2663,18 +2663,19 @@ __metadata:
     "@types/react-beautiful-dnd": "npm:^13.1.8"
     "@types/react-dom": "npm:^18"
     "@types/react-table": "npm:^7.7.20"
-    autoprefixer: "npm:^10.0.1"
+    autoprefixer: "npm:^10.4.19"
     axios: "npm:^1.6.8"
     eslint: "npm:^8"
     eslint-config-next: "npm:14.1.4"
     msw: "npm:^2.2.13"
     next: "npm:14.1.4"
     next-themes: "npm:^0.3.0"
-    postcss: "npm:^8"
+    postcss: "npm:^8.4.38"
     react: "npm:^18"
     react-beautiful-dnd: "npm:^13.1.1"
     react-dom: "npm:^18"
     react-hook-form: "npm:^7.51.2"
+    react-icons: "npm:^5.0.1"
     react-spinners: "npm:^0.13.8"
     react-table: "npm:^7.8.0"
     shadcn-ui: "npm:^0.8.0"
@@ -4518,7 +4519,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8, postcss@npm:^8.4.23":
+"postcss@npm:^8.4.23, postcss@npm:^8.4.38":
   version: 8.4.38
   resolution: "postcss@npm:8.4.38"
   dependencies:
@@ -4638,6 +4639,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
   checksum: 10c0/9d5e303b64f77330f244304854522e4f588fd3a5554734d2daebf64230195eb42c44504e074d5acfabd6f33a2272ffca4ebef7a54fad7019ae519471b720327e
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-icons@npm:5.0.1"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/717022d93a3b2b30082f86fbb3c725a94a603b3fa1c611533439cc886f691a13b1833c30446d257a177667779239eac57411fa7516d8a4787bd735e965c9f63d
   languageName: node
   linkType: hard
 
