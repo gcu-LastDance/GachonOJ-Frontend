@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
-import PROBLEM_MOCK_DATA from "../../../../mocks/PROBLEM_MOCK_DATA.json";
-import { COLUMNS } from "../../../../types/ProblemManageColumns";
+import ADMIN_MOCK_DATA from "../../../../mocks/ADMIN_MOCK_DATA.json";
+import { COLUMNS } from "../../../../types/AdminManageColumns";
 import { usePagination, useTable } from "react-table";
 
-export const ProblemManageTable = () => {
+export const AdminManageTable = () => {
   // Columns 및 데이터를 useMemo를 사용하여 선언
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => PROBLEM_MOCK_DATA, []);
+  const data = useMemo(() => ADMIN_MOCK_DATA, []);
 
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
@@ -38,10 +38,7 @@ export const ProblemManageTable = () => {
   return (
     <div className="mt-20">
       <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
-        문제관리 &gt; 문제목록
-      </div>
-      <div className="flex justify-end items-center pr-2">
-        <input type="text" placeholder="검색" className="border"/>
+        관리자관리 &gt; 관리자 목록
       </div>
       {/* 테이블 요소 생성 */}
       <table {...getTableProps()} className="w-full text-sm">
@@ -146,10 +143,10 @@ export const ProblemManageTable = () => {
           type="button"
           className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
         >
-          새 문제 생성
+          새 관리자 생성
         </button>
       </div>
     </div>
   );
 };
-export default ProblemManageTable;
+export default AdminManageTable;

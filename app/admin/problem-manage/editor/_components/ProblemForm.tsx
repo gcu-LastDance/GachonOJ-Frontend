@@ -1,5 +1,5 @@
 "use client";
-import { ProblemFormData } from "@/types/admin";
+import { ProblemFormData } from "@/types/ProblemForm";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -51,7 +51,7 @@ export default function Page() {
           </label>
           <select
             id="time"
-            name="time"
+            
             {...register("time")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
@@ -67,7 +67,7 @@ export default function Page() {
           </label>
           <select
             id="difficulty"
-            name="difficulty"
+            
             {...register("difficulty")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
@@ -84,7 +84,7 @@ export default function Page() {
             <input
               type="checkbox"
               id="language-c"
-              name="language"
+            
               value="C"
               {...register("language")}
               className="mr-2"
@@ -95,7 +95,7 @@ export default function Page() {
             <input
               type="checkbox"
               id="language-cpp"
-              name="language"
+            
               value="C++"
               {...register("language")}
               className="mr-2"
@@ -106,7 +106,7 @@ export default function Page() {
             <input
               type="checkbox"
               id="language-java"
-              name="language"
+              
               value="JAVA"
               {...register("language")}
               className="mr-2"
@@ -117,7 +117,7 @@ export default function Page() {
             <input
               type="checkbox"
               id="language-python"
-              name="language"
+              
               value="Python"
               {...register("language")}
               className="mr-2"
