@@ -17,7 +17,7 @@ export const COLUMNS = [
   },
   {
     Header: "권한",
-    accessor: "member_Role",
+    accessor: "member_role",
   },
   {
     Header: "가입일",
