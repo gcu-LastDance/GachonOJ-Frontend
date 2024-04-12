@@ -14,7 +14,7 @@ const config: Config = {
         primaryDark: "#262935", // 대부분의 텍스트에 사용
         primaryRed: "#C83838",
         superlightGrey: "#FAFAFA", // 배경색에 사용
-        lightGrey: "#FCFCFC", // 배경색에 사용
+        lightGrey: "#F7F7F7", // 배경색에 사용
         semiSemiGrey: "#E2E2E2",
         semiGrey: "#DBDBDB", // 테두리에 사용
         realGrey: "#767676",

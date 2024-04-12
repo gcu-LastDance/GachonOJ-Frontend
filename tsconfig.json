@@ -27,6 +27,7 @@
       "@types/*": ["./types/*"],
       "@store/*": ["./store/*"],
       "@lib/*": ["./lib/*"],
+      "@images/*": ["./public/images/*"],
       "@logo/*": ["./public/images/logo/*"]
     }
   },
