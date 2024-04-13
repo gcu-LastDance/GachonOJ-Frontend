@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.29.2",
     "@tanstack/react-table": "^8.15.3",
     "axios": "^1.6.8",
     "next": "14.1.4",
@@ -31,6 +32,7 @@
     "@types/react-dom": "^18",
     "@types/react-table": "^7.7.20",
     "autoprefixer": "^10.4.19",
+    "axios-mock-adapter": "^1.22.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "msw": "^2.2.13",

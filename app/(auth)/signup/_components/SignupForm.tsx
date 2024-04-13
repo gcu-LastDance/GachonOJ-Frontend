@@ -1,6 +1,6 @@
 "use client";
 
-import FullButton from "@/components/Button/FullButton";
+import FullButton from "@/components/button/FullButton";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { SignUpFormData } from "@/types/auth";
 import Link from "next/link";
@@ -40,7 +40,7 @@ export default function SignupForm() {
             disabled={isReadytoEmailVerification}
             className={`${
               isReadytoEmailVerification
-                ? `border-semiGrey bg-lightGrey cursor-not-allowed`
+                ? "border-semiGrey bg-lightGrey cursor-not-allowed"
                 : ""
             } border-[1.5px] w-[6vw] h-[5vh] border-primaryBlue rounded-md ml-auto`}
           >

@@ -11,13 +11,13 @@
 !.yarn/versions
 
 # unused Zero-Install
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
+# .yarn/*
+# !.yarn/patches
+# !.yarn/releases
+# !.yarn/plugins
+# !.yarn/sdks
+# !.yarn/versions
+# .pnp.*
 
 # dependencies
 /node_modules
@@ -55,3 +55,4 @@ yarn-error.log*
 next-env.d.ts
 
 .vscode/
+*.icloud
