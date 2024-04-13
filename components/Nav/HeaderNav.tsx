@@ -16,7 +16,7 @@ export default function HeaderNav() {
             </div>
           </Link>
         </div>
-        <div className="ml-16 mr-16 space-x-16 font-PretendardSemiBold text-[1vw] pt-1 text-primaryDark">
+        <div className="ml-16 mr-16 space-x-14 font-PretendardSemiBold text-[1.2vw] pt-1 text-primaryDark">
           <Link href="/problem">
             <span>문제</span>
           </Link>

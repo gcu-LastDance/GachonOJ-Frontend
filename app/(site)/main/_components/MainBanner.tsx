@@ -5,9 +5,9 @@ import Main_banner_image from "@images/main_banner.png";
 import Image from "next/image";
 
 export default function MainBanner() {
-  const gitHref = "https://github.com/gcu-LastDance";
+  const gcuCE_Href = "http://ceprj.gachon.ac.kr/inner-roadmap#";
   const handleClickBannerText = () => {
-    window.open(gitHref);
+    window.open(gcuCE_Href);
   };
 
   return (
@@ -30,12 +30,12 @@ export default function MainBanner() {
           학생들의 전공실력, 직무능력 극대화를 위한 학과 프로젝트 로드맵
         </p>
         <div className="space-x-2 mt-5">
-          <span className="font-PretendardBold text-[0.9vw] text-white">2</span>
+          <span className="font-PretendardBold text-[0.9vw] text-white">1</span>
           <span className="font-PretendardExtraLight text-[0.9vw] text-white">
             |
           </span>
           <span className="font-PretendardExtraLight text-[0.9vw] text-white">
-            3
+            1
           </span>
         </div>
       </div>
