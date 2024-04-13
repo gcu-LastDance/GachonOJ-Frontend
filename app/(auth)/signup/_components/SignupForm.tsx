@@ -1,6 +1,6 @@
 "use client";
 
-import FullButton from "@/components/Button/FullButton";
+import FullButton from "@/components/button/FullButton";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { SignUpFormData } from "@/types/auth";
 import Link from "next/link";

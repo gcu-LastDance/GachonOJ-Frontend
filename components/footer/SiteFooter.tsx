@@ -28,7 +28,7 @@ export default function SiteFooter() {
           가천OJ는 가천대학교 구성원들의 알고리즘 학습, 시험 지원을 위해
           만들어진 비상업 비영리 서비스입니다.
         </span>
-        <div className="flex items-baseline">
+        <div className="flex items-end">
           <span className="font-PretendardLight text-primaryDark">
             이용약관
           </span>

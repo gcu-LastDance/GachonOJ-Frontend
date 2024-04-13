@@ -9,32 +9,32 @@ import { useTable } from "react-table";
 
 const main_table_data: MainTableData[] = [
   {
-    id: 5,
-    title: "서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 4,
-    title: "서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 3,
-    title: "서비스 정식 오픈을 위한 운영서버 점검 안내",
+    id: 1,
+    title: "1서비스 정식 오픈을 위한 운영서버 점검 안내",
     author: "가천OJ 관리자",
     date: "2022-01-01",
   },
   {
     id: 2,
-    title: "서비스 정식 오픈을 위한 운영서버 점검 안내",
+    title: "2서비스 정식 오픈을 위한 운영서버 점검 안내",
+    author: "가천OJ 관리자",
+    date: "2022-01-01",
+  },
+  {
+    id: 3,
+    title: "3서비스 정식 오픈을 위한 운영서버 점검 안내",
+    author: "가천OJ 관리자",
+    date: "2022-01-01",
+  },
+  {
+    id: 4,
+    title: "4서비스 정식 오픈을 위한 운영서버 점검 안내",
     author: "GachonOJ",
     date: "2022-01-01",
   },
   {
-    id: 1,
-    title: "서비스 정식 오픈을 위한 운영서버 점검 안내",
+    id: 5,
+    title: "5서비스 정식 오픈을 위한 운영서버 점검 안내",
     author: "가천OJ 관리자",
     date: "2022-01-01",
   },
@@ -51,8 +51,8 @@ export default function MainNotice() {
     useTable<MainTableData>({ columns: main_columns, data: main_table_data });
 
   return (
-    <div className="flex pl-[3vw] mt-[2vh]">
-      <table {...getTableProps()} className="w-full mx-[4vw]">
+    <div className="flex pl-[3vw] mt-[1.5vh]">
+      <table {...getTableProps()} className="w-full mx-[2vw]">
         <thead>
           {headerGroups.map((headerGroup, index) => (
             <tr
@@ -66,7 +66,7 @@ export default function MainNotice() {
                   key={column.id}
                   className={`${
                     column.id === "title"
-                      ? "text-left w-[28vw]"
+                      ? "text-left w-[28vw] pl-[3vw]"
                       : "text-center w-[12.5w]"
                   }`}
                 >
@@ -90,10 +90,18 @@ export default function MainNotice() {
                     {...cell.getCellProps()}
                     key={cell.column.id}
                     className={`${
-                      cell.column.id == "title" ? "text-left" : "text-center"
+                      cell.column.id === "title"
+                        ? "text-left pl-[3vw]"
+                        : "text-center"
                     }  text-[1vw] font-PretendardLight text-realGrey`}
                   >
-                    {cell.render("Cell")}
+                    {cell.column.id === "title" ? (
+                      <Link href={`/notice/${row.original.id}`}>
+                        {cell.render("Cell")}
+                      </Link>
+                    ) : (
+                      cell.render("Cell")
+                    )}
                   </td>
                 ))}
               </tr>
