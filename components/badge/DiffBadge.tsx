@@ -8,9 +8,9 @@ export default function DiffBadge({ difficulty }: { difficulty: difficulty }) {
   return (
     <div
       style={{ backgroundColor: badgeColor }}
-      className={`flex w-[4vw] justify-center items-center border-[0.1vw] border-semiGrey rounded-xl`}
+      className={`flex w-fit justify-center items-center border-[0.1vw] border-semiGrey rounded-2xl`}
     >
-      <span className="font-PretendardRegular text-[0.85vw] text-white py-[0.5vh]">
+      <span className="font-PretendardRegular text-[0.85vw] text-white py-[0.5vh] px-[1vw]">
         {difficulty}단계
       </span>
     </div>

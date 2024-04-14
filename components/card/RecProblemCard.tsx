@@ -1,6 +1,6 @@
 "use client";
 
-import { RecProblemData } from "@/types/problem";
+import { RecProblemData } from "../../types/problem";
 import React, { useState } from "react";
 import DiffBadge from "../badge/DiffBadge";
 import { IoArrowForwardSharp } from "react-icons/io5";
