@@ -1,4 +1,4 @@
-import AuthCard from "@/components/card/AuthCard";
+import AuthCard from "@/components/card/AuthCard";
 import React from "react";
 
 export default function layout({ children }: { children: React.ReactNode }) {

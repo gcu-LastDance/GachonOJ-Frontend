@@ -1,4 +1,4 @@
-import RecProblemCard from "@/components/\bcard/RecProblemCard";
+import RecProblemCard from "@/components/card/RecProblemCard";
 import { RecProblemData } from "@/types/problem";
 import React from "react";
 
