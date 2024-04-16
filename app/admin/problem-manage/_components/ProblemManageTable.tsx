@@ -41,7 +41,7 @@ export const ProblemManageTable = () => {
         문제관리 &gt; 문제목록
       </div>
       <div className="flex justify-end items-center pr-2">
-        <input type="text" placeholder="검색" className="border"/>
+        <input type="text" placeholder="검색" className="border" />
       </div>
       {/* 테이블 요소 생성 */}
       <table {...getTableProps()} className="w-full text-sm">
