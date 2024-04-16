@@ -1,13 +1,39 @@
 import React, { useMemo } from "react";
-import ADMIN_MOCK_DATA from "../../../../mocks/ADMIN_MOCK_DATA.json";
-import { COLUMNS } from "../../../../types/AdminManageColumns";
+import ADMIN_MOCK_DATA from "@/mocks/ADMIN_MOCK_DATA.json";
+import { adminTableColumn, adminTableData } from "@/types/admin/admin";
 import { usePagination, useTable } from "react-table";
 
-export const AdminManageTable = () => {
-  // Columns 및 데이터를 useMemo를 사용하여 선언
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => ADMIN_MOCK_DATA, []);
+const main_table_data: adminTableData[] = ADMIN_MOCK_DATA
 
+export const main_columns: adminTableColumn[] = [
+  {
+    Header: "번호",
+    accessor: "index",
+  },
+  {
+    Header: "이메일",
+    accessor: "member_email",
+  },
+  {
+    Header: "이름",
+    accessor: "member_name",
+  },
+  {
+    Header: "닉네임",
+    accessor: "member_nickname",
+  },
+  {
+    Header: "권한",
+    accessor: "member_role",
+  },
+  {
+    Header: "가입일",
+    accessor: "member_created_date",
+  },
+
+];
+
+export const AdminManageTable = () => {
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
     getTableProps,
@@ -24,10 +50,10 @@ export const AdminManageTable = () => {
     setPageSize,
     state,
     prepareRow,
-  } = useTable(
+  } = useTable<adminTableData>(
     {
-      columns,
-      data,
+      columns: main_columns,
+      data: main_table_data
     },
     usePagination
   );
@@ -44,12 +70,13 @@ export const AdminManageTable = () => {
       <table {...getTableProps()} className="w-full text-sm">
         <thead>
           {/* 테이블 헤더 생성 */}
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+          {headerGroups.map((headerGroup, index) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column) => (
                 <th
                   className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
                   {...column.getHeaderProps()}
+                  key={column.id}
                 >
                   {/* 컬럼 헤더 렌더링 */}
                   {column.render("Header")}
@@ -64,13 +91,14 @@ export const AdminManageTable = () => {
           {page.map((row, index) => {
             prepareRow(row);
             return (
-              <tr key={index} {...row.getRowProps()}>
+              <tr  {...row.getRowProps()} key={row.id}>
                 {row.cells.map((cell, index) => {
                   return (
                     <td
-                      key={index}
+                     
                       className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                       {...cell.getCellProps()}
+                      key={cell.column.id}
                     >
                       {cell.render("Cell")}
                     </td>
