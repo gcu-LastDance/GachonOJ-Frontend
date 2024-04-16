@@ -1,5 +1,5 @@
-import { inquiryTableColumn, inquiryTableData } from "@/types/inquiry";
-import React, { useMemo } from "react";
+import { inquiryTableColumn, inquiryTableData } from "@/types/admin/inquiry";
+import React from "react";
 import { usePagination, useTable } from "react-table";
 
 const main_table_data: inquiryTableData[] = [

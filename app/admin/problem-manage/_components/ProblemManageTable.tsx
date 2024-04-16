@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import PROBLEM_MOCK_DATA from "@/mocks/PROBLEM_MOCK_DATA.json";
 import { problemTableColumn, problemTableData } from "@/types/admin/problem";
 import { usePagination, useTable } from "react-table";
@@ -59,7 +59,7 @@ export const ProblemManageTable = () => {
   } = useTable<problemTableData>(
     {
       columns: main_columns,
-      data: main_table_data,
+      data: main_table_data
     },
     usePagination
   );
