@@ -33,7 +33,7 @@ export const main_columns: adminTableColumn[] = [
 
 ];
 
-export const AdminManageTable = () => {
+const AdminManageTable = () => {
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
     getTableProps,

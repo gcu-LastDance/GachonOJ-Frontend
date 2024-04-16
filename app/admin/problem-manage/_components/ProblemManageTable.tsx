@@ -40,7 +40,7 @@ export const main_columns: problemTableColumn[]  = [
   },
 ];
 
-export const ProblemManageTable = () => {
+const ProblemManageTable = () => {
   const {
     getTableProps,
     getTableBodyProps,

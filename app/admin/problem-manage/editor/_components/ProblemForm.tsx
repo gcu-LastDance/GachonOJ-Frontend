@@ -3,13 +3,14 @@ import { ProblemFormData } from "@/types/problemform";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-export default function Page() {
+const ProblemForm = () => {
   const { register, handleSubmit } = useForm<ProblemFormData>();
 
   const onSubmit: SubmitHandler<ProblemFormData> = (data) => {
     console.log(data);
     // 여기서 데이터를 처리하거나 제출합니다.
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-end">
@@ -221,4 +222,6 @@ export default function Page() {
       </div>
     </form>
   );
-}
+};
+
+export default ProblemForm;
