@@ -1,30 +1,40 @@
-import React from "react";
-import NOTICE_MOCK_DATA from "@/mocks/NOTICE_MOCK_DATA.json";
-import { noticeTableColumn, noticeTableData } from "@/types/admin/notice";
+import { inquiryTableColumn, inquiryTableData } from "@/types/inquiry";
+import React, { useMemo } from "react";
 import { usePagination, useTable } from "react-table";
 
-const main_table_data: noticeTableData[] = NOTICE_MOCK_DATA;
+const main_table_data: inquiryTableData[] = [
+  {
+    id: 1,
+    title: "안녕하세요",
+    author: "사람1",
+    date: "2022-01-01",
+    inquiry_status: true,
+  },
+  {
+    id: 2,
+    title: "안녕하세요2",
+    author: "사람2",
+    date: "2022-01-01",
+    inquiry_status: false,
+  },
+  {
+    id: 3,
+    title: "안녕하세요3",
+    author: "가천OJ 관리자",
+    date: "2022-01-01",
+    inquiry_status: true,
+  },
+];
 
-export const main_columns: noticeTableColumn[] = [
-    {
-      Header: "번호",
-      accessor: "notice_id",
-    },
-    {
-      Header: "제목",
-      accessor: "notice_title",
-    },
-    {
-      Header: "작성자",
-      accessor: "member_nickname",
-    },
-    {
-      Header: "작성일",
-      accessor: "notice_created_date",
-    },
-  ];
+const main_columns: inquiryTableColumn[] = [
+  { Header: "번호", accessor: "id" },
+  { Header: "제목", accessor: "title" },
+  { Header: "작성자", accessor: "author" },
+  { Header: "작성일", accessor: "date" },
+  { Header: "답변여부", accessor: "inquiry_status" },
+];
 
-export const NoticeManageTable = () => {
+export const InquiryManageTable = () => {
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
     getTableProps,
@@ -41,10 +51,10 @@ export const NoticeManageTable = () => {
     setPageSize,
     state,
     prepareRow,
-  } = useTable<noticeTableData>(
+  } = useTable<inquiryTableData>(
     {
       columns: main_columns,
-      data: main_table_data
+      data: main_table_data,
     },
     usePagination
   );
@@ -55,7 +65,7 @@ export const NoticeManageTable = () => {
   return (
     <div className="mt-20">
       <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
-        관리기능 &gt; 공지사항 관리
+        관리기능 &gt; 문의사항 관리
       </div>
 
       {/* 테이블 요소 생성 */}
@@ -80,25 +90,23 @@ export const NoticeManageTable = () => {
 
         <tbody {...getTableBodyProps()}>
           {/* 페이지에 해당하는 데이터 행들을 렌더링 */}
-          {page.map((row, index) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()} key={row.id}>
-                {row.cells.map((cell, index) => {
-                  return (
-                    <td
-                      
-                      className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
-                      {...cell.getCellProps()}
-                      key={cell.column.id}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                  <button className="border-b-2">삭제</button>
-                </td>
+                {row.cells.map((cell) => (
+                  <td
+                    className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
+                    {...cell.getCellProps()}
+                    key={cell.column.id}
+                  >
+                    {cell.value === true
+                      ? "답변완료"
+                      : cell.value === false
+                      ? "-"
+                      : cell.render("Cell")}
+                  </td>
+                ))}
               </tr>
             );
           })}
@@ -155,15 +163,7 @@ export const NoticeManageTable = () => {
           ))}
         </select>
       </div>
-      <div className="flex justify-end items-center mt-5">
-        <button
-          type="button"
-          className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
-        >
-          새 공지사항 작성
-        </button>
-      </div>
     </div>
   );
 };
-export default NoticeManageTable;
+export default InquiryManageTable;
