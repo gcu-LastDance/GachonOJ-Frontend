@@ -9,7 +9,7 @@ const page = ({ params }: { params : {inquiryId: number} }) => {
     created_date: "2024-04-13",
     title: "문의사항입니다1.",
     content: "문의사항 내용입니다1.",
-    inquiry_status: 0
+    status: 0
   },
   {   
     id: 2,
@@ -17,39 +17,45 @@ const page = ({ params }: { params : {inquiryId: number} }) => {
     created_date: "2024-04-13",
     title: "문의사항입니다2.",
     content: "문의사항 내용입니다2.",
-    inquiry_status: 1}
-];
-const inquiry = fetchedInquiry[params.inquiryId - 1];
+    status: 1}
+  ];
+  const inquiry = fetchedInquiry.find((item) => item.id == params.inquiryId);
   return (
-    <div className="flex flex-wrap mb-4 items-center">
-      <div className="container mx-auto mt-8">
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="flex-auto mb-4 items-center pr-60">
           <div className="px-6 py-2">
             <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2">
               <div className="text-gray-600 ">문의번호:</div>
-              <div className="font-bold ml-4">{inquiry.id}</div>
+              <div className="font-bold ml-4">{inquiry?.id}</div>
             </div>
             <div className="flex items-center border border-t-0 border-l-0 border-r-0 mb-2">
               <div className="flex py-2 mb-2">
                 <div className="text-gray-600">작성자:</div>
-                <div className="font-bold ml-4">{inquiry.author}</div>
+                <div className="font-bold ml-4 mr-20">{inquiry?.author}</div>
               </div>
               <div className="flex py-2  mb-2">
-                <div className="text-gray-600 ml-4">작성일:</div>
-                <div className="font-bold ml-4">{inquiry.created_date}</div>
+                <div className="text-gray-600 ml-20">작성일:</div>
+                <div className="font-bold ml-4">{inquiry?.created_date}</div>
               </div>
             </div>
             <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2 items-center">
               <div className="text-gray-600 ">제목:</div>
-              <h1 className="text-xl ml-4 font-bold">{inquiry.title}</h1>
+              <h1 className="text-xl ml-4 font-bold">{inquiry?.title}</h1>
             </div>
             <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2">
               <div className="text-gray-600">내용:</div>
-              <p className="mb-10 ml-4">{inquiry.content}</p>
+              <p className="mb-10 ml-4">{inquiry?.content}</p>
             </div>
-            <Inquiryempty/>
+            {inquiry?.status === 0 ? <Inquiryempty/> : <Inquiryreply inquiryId={inquiry?.id ?? 0} />}
           </div>
-        </div>
+          <div className="flex justify-end">
+        <button
+          name="back"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mb-5 mt-8 mr-8"
+        >
+          뒤로가기
+        </button>
+
+        
       </div>
     </div>
   );
