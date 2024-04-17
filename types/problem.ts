@@ -6,3 +6,5 @@ export interface RecProblemData {
   difficulty: difficulty;
   category?: string[];
 }
+
+

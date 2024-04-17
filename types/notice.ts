@@ -10,3 +10,4 @@ export type MainTableColumn = {
   Header: string;
   accessor: keyof MainTableData; // 'title', 'author', 또는 'date'
 };
+

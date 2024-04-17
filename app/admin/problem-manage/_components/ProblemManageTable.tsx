@@ -1,14 +1,46 @@
-import React, { useMemo } from "react";
-import PROBLEM_MOCK_DATA from "../../../../mocks/PROBLEM_MOCK_DATA.json";
-import { COLUMNS } from "../../../../types/ProblemManageColumns";
+import React from "react";
+import PROBLEM_MOCK_DATA from "@/mocks/PROBLEM_MOCK_DATA.json";
+import { problemTableColumn, problemTableData } from "@/types/admin/problem";
 import { usePagination, useTable } from "react-table";
 
-export const ProblemManageTable = () => {
-  // Columns 및 데이터를 useMemo를 사용하여 선언
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => PROBLEM_MOCK_DATA, []);
+const main_table_data: problemTableData[] = PROBLEM_MOCK_DATA;
 
-  // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
+export const main_columns: problemTableColumn[]  = [
+  {
+    Header: "번호",
+    accessor: "problem_id",
+  },
+  {
+    Header: "문제 제목",
+    accessor: "problem_title",
+  },
+  {
+    Header: "난이도",
+    accessor: "problem_diff",
+  },
+  {
+    Header: "상태",
+    accessor: "problem_status",
+  },
+  {
+    Header: "채점 수",
+    accessor: "submission_num",
+  },
+  {
+    Header: "정답 수",
+    accessor: "grading_num",
+  },
+  {
+    Header: "정답자 수",
+    accessor: "correct_num",
+  },
+  {
+    Header: "생성일",
+    accessor: "created_at",
+  },
+];
+
+const ProblemManageTable = () => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -24,10 +56,10 @@ export const ProblemManageTable = () => {
     setPageSize,
     state,
     prepareRow,
-  } = useTable(
+  } = useTable<problemTableData>(
     {
-      columns,
-      data,
+      columns: main_columns,
+      data: main_table_data
     },
     usePagination
   );
@@ -47,12 +79,13 @@ export const ProblemManageTable = () => {
       <table {...getTableProps()} className="w-full text-sm">
         <thead>
           {/* 테이블 헤더 생성 */}
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+          {headerGroups.map((headerGroup, index) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column) => (
                 <th
                   className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
                   {...column.getHeaderProps()}
+                  key={column.id}
                 >
                   {/* 컬럼 헤더 렌더링 */}
                   {column.render("Header")}
@@ -64,16 +97,16 @@ export const ProblemManageTable = () => {
 
         <tbody {...getTableBodyProps()}>
           {/* 페이지에 해당하는 데이터 행들을 렌더링 */}
-          {page.map((row, index) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
-              <tr key={index} {...row.getRowProps()}>
-                {row.cells.map((cell, index) => {
+              <tr {...row.getRowProps()} key={row.id}>
+                {row.cells.map((cell) => {
                   return (
                     <td
-                      key={index}
                       className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                       {...cell.getCellProps()}
+                      key={cell.column.id}
                     >
                       {cell.render("Cell")}
                     </td>

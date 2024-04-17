@@ -1,13 +1,30 @@
-import React, { useMemo } from "react";
-import NOTICE_MOCK_DATA from "../../../../../mocks/NOTICE_MOCK_DATA.json";
-import { COLUMNS } from "../../../../../types/NoticeManageColumns";
+import React from "react";
+import NOTICE_MOCK_DATA from "@/mocks/NOTICE_MOCK_DATA.json";
+import { noticeTableColumn, noticeTableData } from "@/types/admin/notice";
 import { usePagination, useTable } from "react-table";
 
-export const NoticeManageTable = () => {
-  // Columns 및 데이터를 useMemo를 사용하여 선언
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => NOTICE_MOCK_DATA, []);
+const main_table_data: noticeTableData[] = NOTICE_MOCK_DATA;
 
+export const main_columns: noticeTableColumn[] = [
+    {
+      Header: "번호",
+      accessor: "notice_id",
+    },
+    {
+      Header: "제목",
+      accessor: "notice_title",
+    },
+    {
+      Header: "작성자",
+      accessor: "member_nickname",
+    },
+    {
+      Header: "작성일",
+      accessor: "notice_created_date",
+    },
+  ];
+
+export const NoticeManageTable = () => {
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
     getTableProps,
@@ -24,10 +41,10 @@ export const NoticeManageTable = () => {
     setPageSize,
     state,
     prepareRow,
-  } = useTable(
+  } = useTable<noticeTableData>(
     {
-      columns,
-      data,
+      columns: main_columns,
+      data: main_table_data
     },
     usePagination
   );
@@ -45,13 +62,13 @@ export const NoticeManageTable = () => {
       <table {...getTableProps()} className="w-full text-sm">
         <thead>
           {/* 테이블 헤더 생성 */}
-          {headerGroups.map((headerGroup) => (
-            <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+          {headerGroups.map((headerGroup, index) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column) => (
                 <th
-                  key={column.id}
                   className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
                   {...column.getHeaderProps()}
+                  key={column.id}
                 >
                   {/* 컬럼 헤더 렌더링 */}
                   {column.render("Header")}
@@ -66,13 +83,14 @@ export const NoticeManageTable = () => {
           {page.map((row, index) => {
             prepareRow(row);
             return (
-              <tr key={index} {...row.getRowProps()}>
+              <tr {...row.getRowProps()} key={row.id}>
                 {row.cells.map((cell, index) => {
                   return (
                     <td
-                      key={index}
+                      
                       className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                       {...cell.getCellProps()}
+                      key={cell.column.id}
                     >
                       {cell.render("Cell")}
                     </td>
