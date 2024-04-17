@@ -1,4 +1,4 @@
-import HeaderNav from "@/components/nav/HeaderNav";
+import HeaderNav from "@/components/Nav/HeaderNav";
 import SiteFooter from "@/components/footer/SiteFooter";
 import React from "react";
 
