@@ -1,6 +1,7 @@
 import React from "react";
 import OngoingExams from "./_components/OngoingExams";
 import ShortCut from "./_components/ShortCut";
+import IncorrectRate from "./_components/IncorrectRate";
 export default function page() {
   return (
     <div>
@@ -11,6 +12,7 @@ export default function page() {
       <div>
         <OngoingExams></OngoingExams>
         <ShortCut></ShortCut>
+        <IncorrectRate></IncorrectRate>
       </div>
     </div>
   );

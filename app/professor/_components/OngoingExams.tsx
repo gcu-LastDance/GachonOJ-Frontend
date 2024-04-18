@@ -17,7 +17,7 @@ const OngoingExams = () => {
   ];
 
   return (
-    <div className="whitespace-nowrap flex flex-col shadow-md border-semiGrey bg-white overflow-x-auto w-1/2">
+    <div className="whitespace-nowrap flex flex-col shadow-md border-4 border-semiGrey bg-white overflow-x-auto w-1/2">
       <div className="flex">
       <div className="text-lg">진행중인 시험 </div>
       <div className="mt-1.5 ml-3"> <RxQuestionMarkCircled /> </div>
