@@ -4,7 +4,6 @@ import React from "react";
 import GachonOJ_logo_image from "@logo/gachonoj_logo.png";
 import { FaGithub } from "react-icons/fa";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function SiteFooter() {
   const gitHref = "https://github.com/gcu-LastDance";

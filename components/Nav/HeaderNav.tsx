@@ -32,7 +32,7 @@ export default function HeaderNav() {
           <Link href="/inquiry">
             <span>문의</span>
           </Link>
-          <Link href="/problem">
+          <Link href="/admin">
             <span>관리페이지</span>
           </Link>
         </div>
