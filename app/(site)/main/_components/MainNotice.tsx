@@ -52,7 +52,7 @@ export default function MainNotice() {
 
   return (
     <div className="flex pl-[3vw] mt-[1.5vh]">
-      <table {...getTableProps()} className="w-full mx-[2vw]">
+      <table {...getTableProps()} className="w-full">
         <thead>
           {headerGroups.map((headerGroup, index) => (
             <tr

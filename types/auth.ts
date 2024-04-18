@@ -1,4 +1,4 @@
-type permissionType = "guest" | "user" | "professor" | "admin";
+export type permissionType = "guest" | "member" | "professor" | "admin";
 
 export interface AuthType {
   nickname: string;

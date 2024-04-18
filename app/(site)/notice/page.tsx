@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function page() {
-  return <div>noice page!</div>;
+  return <div>notice page!</div>;
 }

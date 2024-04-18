@@ -19,7 +19,7 @@ export default function page() {
           </Link>
           <MainNotice />
           <div className="mt-[6vh]">
-            <Link href="/notice" className="inline-flex items-center">
+            <Link href="/problem" className="inline-flex items-center">
               <span className="font-PretendardSemiBold text-[1.8vw] text-primaryDark">
                 추천 알고리즘 문제
               </span>
