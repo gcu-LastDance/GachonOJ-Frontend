@@ -1,7 +1,6 @@
 import React from "react";
 import { RxQuestionMarkCircled } from "react-icons/rx";
 
-
 const OngoingExams = () => {
   // Replace this with your actual data
   const exams = [
@@ -10,23 +9,22 @@ const OngoingExams = () => {
     { id: 3, name: "Exam 3" },
     { id: 4, name: "Exam 4" },
     { id: 5, name: "Exam 5" },
-    { id: 6, name: "Exam 6" },
-    { id: 7, name: "Exam 7" },
-    { id: 8, name: "Exam 8" },
     // Add more exams as needed
   ];
 
   return (
-    <div className="whitespace-nowrap flex flex-col shadow-md border-4 border-semiGrey bg-white overflow-x-auto w-1/2">
-      <div className="flex">
-      <div className="text-lg">진행중인 시험 </div>
-      <div className="mt-1.5 ml-3"> <RxQuestionMarkCircled /> </div>
+    <div className="flex flex-wrap px-5 py-5 shadow-md border-4 border-semiGrey bg-white overflow-x-scroll">
+      <div className="flex items-center">
+        <div className="text-2xl">진행중인 시험</div>
+        <div className="ml-3">
+          <RxQuestionMarkCircled />
+        </div>
       </div>
-      <div className="flex">
+      <div className="flex pt-10 justify-center">
         {exams.map((exam) => (
           <div
             key={exam.id}
-            className="shrink-0 ml-5 mb-2 w-60 h-40 p-5 rounded-xl border border-gray-400"
+            className="shrink-0 mr-2 ml-2 mb-2 w-60 h-36 p-5 rounded-xl border border-gray-400"
           >
             <div className="text-lg font-semibold">컴퓨터공학과</div>
             <div className="text-md font-semibold">{exam.name}</div>
