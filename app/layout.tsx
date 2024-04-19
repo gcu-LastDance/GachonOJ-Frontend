@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@providers/theme-provider";
+import ReactQueryClient from "@/lib/ReactQueryClient";
 
 export const metadata: Metadata = {
   title: "GachonOJ",
   description: "GachonOJ is an online judge system for Gachon University.",
+  icons: {
+    icon: "/GCOJ.png",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ReactQueryClient>{children}</ReactQueryClient>
         </ThemeProvider>
       </body>
     </html>
