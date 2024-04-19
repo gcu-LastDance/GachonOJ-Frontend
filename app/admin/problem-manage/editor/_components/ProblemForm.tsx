@@ -1,5 +1,5 @@
 "use client";
-import { ProblemFormData } from "@/types/problemform";
+import { ProblemFormData } from "@/types/admin/problem";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 

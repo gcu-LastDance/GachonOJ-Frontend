@@ -36,6 +36,7 @@ const RAW_RUNTIME_STATE =
           ["autoprefixer", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:10.4.19"],\
           ["axios", "npm:1.6.8"],\
           ["axios-mock-adapter", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:1.22.0"],\
+          ["chart.js", "npm:4.4.2"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:14.1.4"],\
           ["msw", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:2.2.13"],\
@@ -44,6 +45,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.4.38"],\
           ["react", "npm:18.2.0"],\
           ["react-beautiful-dnd", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:13.1.1"],\
+          ["react-chartjs-2", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.2.0"],\
           ["react-dom", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:18.2.0"],\
           ["react-hook-form", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:7.51.2"],\
           ["react-icons", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.0.1"],\
@@ -744,6 +746,15 @@ const RAW_RUNTIME_STATE =
           ["@jridgewell/trace-mapping", "npm:0.3.25"],\
           ["@jridgewell/resolve-uri", "npm:3.1.2"],\
           ["@jridgewell/sourcemap-codec", "npm:1.4.15"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@kurkle/color", [\
+      ["npm:0.3.2", {\
+        "packageLocation": "../../../.yarn/berry/cache/@kurkle-color-npm-0.3.2-98f2086013-10c0.zip/node_modules/@kurkle/color/",\
+        "packageDependencies": [\
+          ["@kurkle/color", "npm:0.3.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1928,6 +1939,16 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/chalk-npm-5.3.0-d181999efb-10c0.zip/node_modules/chalk/",\
         "packageDependencies": [\
           ["chalk", "npm:5.3.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["chart.js", [\
+      ["npm:4.4.2", {\
+        "packageLocation": "../../../.yarn/berry/cache/chart.js-npm-4.4.2-e9b1497a6e-10c0.zip/node_modules/chart.js/",\
+        "packageDependencies": [\
+          ["chart.js", "npm:4.4.2"],\
+          ["@kurkle/color", "npm:0.3.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3388,6 +3409,7 @@ const RAW_RUNTIME_STATE =
           ["autoprefixer", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:10.4.19"],\
           ["axios", "npm:1.6.8"],\
           ["axios-mock-adapter", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:1.22.0"],\
+          ["chart.js", "npm:4.4.2"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:14.1.4"],\
           ["msw", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:2.2.13"],\
@@ -3396,6 +3418,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.4.38"],\
           ["react", "npm:18.2.0"],\
           ["react-beautiful-dnd", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:13.1.1"],\
+          ["react-chartjs-2", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.2.0"],\
           ["react-dom", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:18.2.0"],\
           ["react-hook-form", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:7.51.2"],\
           ["react-icons", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.0.1"],\
@@ -5662,6 +5685,32 @@ const RAW_RUNTIME_STATE =
           "@types/react-dom",\
           "@types/react",\
           "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-chartjs-2", [\
+      ["npm:5.2.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/react-chartjs-2-npm-5.2.0-03632f5179-10c0.zip/node_modules/react-chartjs-2/",\
+        "packageDependencies": [\
+          ["react-chartjs-2", "npm:5.2.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.2.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-chartjs-2-virtual-7f29411b28/4/.yarn/berry/cache/react-chartjs-2-npm-5.2.0-03632f5179-10c0.zip/node_modules/react-chartjs-2/",\
+        "packageDependencies": [\
+          ["react-chartjs-2", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.2.0"],\
+          ["@types/chart.js", null],\
+          ["@types/react", "npm:18.2.75"],\
+          ["chart.js", "npm:4.4.2"],\
+          ["react", "npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/chart.js",\
+          "@types/react",\
+          "chart.js",\
           "react"\
         ],\
         "linkType": "HARD"\

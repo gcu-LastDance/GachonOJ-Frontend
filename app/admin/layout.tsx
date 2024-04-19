@@ -1,11 +1,11 @@
-import AdminHeader from "@/components/nav/manage/AdminHeader";
-import BreadCrumbs from "@/components/nav/manage/BreadCrumbs";
+import AdminHeader from "@/components/Nav/manage/AdminHeader";
+import BreadCrumbs from "@/components/Nav/manage/BreadCrumbs";
 import React from "react";
 import SideAdminNav from "@/app/admin/_components/SideAdminNav";
 
 export default function layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex">
+    <div className="flex-auto">
       <SideAdminNav />
       <div className="ml-[14vw]">
         <AdminHeader />

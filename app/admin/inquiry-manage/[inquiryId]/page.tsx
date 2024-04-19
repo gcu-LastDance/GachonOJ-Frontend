@@ -21,7 +21,7 @@ const page = ({ params }: { params : {inquiryId: number} }) => {
   ];
   const inquiry = fetchedInquiry.find((item) => item.id == params.inquiryId);
   return (
-    <div className="flex-auto mb-4 items-center pr-60">
+    <div className="flex-auto mb-4 items-center">
           <div className="px-6 py-2">
             <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2">
               <div className="text-gray-600 ">문의번호:</div>
