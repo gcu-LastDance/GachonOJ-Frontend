@@ -4,7 +4,7 @@ import FullButton from "@/components/button/FullButton";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { SignUpData, SignUpFormData } from "@/types/auth";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -25,7 +25,10 @@ export default function SignupForm() {
     formState: { errors },
   } = useForm<SignUpFormData>();
 
+  /** 이메일 인증 완료 상태관리 */
   const [emailVerification, setEmailVerification] = useState(false);
+
+  /** 닉네임 중복 확인 완료 상태관리 */
   const [nicknameCheck, setNicknameCheck] = useState(false);
 
   /** 이용약관 및 개인정보수집 및 이용 동의 상태관리 */
@@ -44,6 +47,27 @@ export default function SignupForm() {
     setEmailVerification(true);
   };
 
+  /** 이메일 인증 코드 타이머 */
+  const [timeLeft, setTimeLeft] = useState(300);
+  const [timerActive, setTimerActive] = useState(false);
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  useEffect(() => {
+    if (timerActive && timeLeft > 0) {
+      const intervalId = setInterval(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+
+    // 시간이 만료되었을 때 경고 메시지
+    if (timeLeft === 0) {
+      alert("시간이 만료되었습니다. 인증번호를 다시 요청해주세요.");
+      setTimerActive(false); // 타이머 비활성화
+    }
+  }, [timerActive, timeLeft]);
+
   /** 이메일 인증 요청 API 호출 useMutation */
   const emailVerifyMutation = useMutation({
     mutationFn: emailVerifyAPI,
@@ -54,13 +78,15 @@ export default function SignupForm() {
       console.log(data);
       if (data.success) {
         setIsReadytoEmailVerification(true);
+        setTimerActive(true);
       }
     },
   });
 
   const handleEmailCodeVerification = () => {
+    const memberEmail = getValues("memberEmail");
     const emailCode = getValues("emailCode");
-    emailCodeVerifyMutation.mutate(emailCode);
+    emailCodeVerifyMutation.mutate({ memberEmail, emailCode });
   };
 
   const emailCodeVerifyMutation = useMutation({
@@ -100,14 +126,17 @@ export default function SignupForm() {
   const onSubmit = (data: SignUpData) => {
     if (!termsAgree || !privacyAgree) {
       alert("이용약관 및 개인정보수집 및 이용에 동의해주세요.");
+      return;
     }
 
     if (!emailVerification) {
       alert("이메일 인증을 완료해주세요.");
+      return;
     }
 
     if (!nicknameCheck) {
       alert("닉네임 중복확인을 완료해주세요.");
+      return;
     }
 
     signUpMutation.mutate(data);
@@ -120,7 +149,9 @@ export default function SignupForm() {
       console.log(error);
     },
     onSuccess: (data, variables, context) => {
-      router.push("/login");
+      if (data.success) {
+        router.push("/login");
+      }
     },
   });
 
@@ -171,17 +202,27 @@ export default function SignupForm() {
       </div>
       {isReadytoEmailVerification && (
         <div className="flex items-center mb-[2.3vh]">
-          <input
-            {...register("emailCode", {
-              required: "이메일 인증 코드는 필수입니다.",
-            })}
-            className="h-[4vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
-            placeholder="이메일로 전송된 인증코드를 입력하세요."
-          />
+          <div className="flex border-b-2 border-semiGrey w-[23.5vw] justify-between items-baseline">
+            <input
+              {...register("emailCode", {
+                required: "이메일 인증 코드는 필수입니다.",
+              })}
+              className="h-[4vh] w-[18vw] placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
+              placeholder="이메일로 전송된 인증코드를 입력하세요."
+            />
+            {isReadytoEmailVerification && (
+              <span className="font-PretendardMedium text-primaryBlue pr-[1vw]">
+                {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+              </span>
+            )}
+          </div>
           <button
             type="button"
+            disabled={emailVerification}
             onClick={handleEmailCodeVerification}
-            className="border-[1.5px] w-[6vw] h-[5vh] border-primaryBlue rounded-md ml-auto"
+            className={`${
+              emailVerification && `bg-primaryLightBlue`
+            } border-[1.5px] w-[6vw] h-[5vh] border-primaryBlue rounded-md ml-auto`}
           >
             <span className="font-PretendardSemiBold text-sm text-primaryBlue">
               확인
@@ -213,7 +254,10 @@ export default function SignupForm() {
         {/* <label>nickname</label> */}
         <input
           {...register("memberNickname", { required: true })}
-          className="h-[4vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
+          disabled={nicknameCheck}
+          className={`${
+            nicknameCheck && `bg-primaryLightBlue`
+          } h-[4vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none`}
           placeholder="닉네임을 입력하세요"
         />
         <button

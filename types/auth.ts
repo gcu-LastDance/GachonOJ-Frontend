@@ -6,8 +6,8 @@ export interface AuthType {
 }
 
 export interface LoginFormData {
-  email: string;
-  password: string;
+  memberEmail: string;
+  memberPassword: string;
 }
 
 export interface SignUpFormData {

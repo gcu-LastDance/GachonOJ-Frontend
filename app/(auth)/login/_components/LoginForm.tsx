@@ -1,26 +1,43 @@
 "use client";
 
+import { loginAPI } from "@/api/auth";
 import FullButton from "@/components/button/FullButton";
 import { LoginFormData } from "@/types/auth";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function LoginForm() {
+  const router = useRouter();
   const { register, handleSubmit } = useForm<LoginFormData>();
   const [isLoginReject, setIsLoginReject] = useState(false);
 
   const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+    loginMutation.mutate(data);
   };
+
+  const loginMutation = useMutation({
+    mutationFn: loginAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/main");
+      }
+    },
+  });
 
   return (
     <form className="mt-[8vh] mb-[6vh]">
       <div className="mb-[9vh]">
         <div className="flex flex-col mb-6">
           <input
-            {...register("email", {
+            {...register("memberEmail", {
               required: true,
               pattern: {
                 value: /^\S+@\S+\.\S+$/,
@@ -45,7 +62,8 @@ export default function LoginForm() {
         </div>
         <div className="mb-3">
           <input
-            {...register("password", { required: true })}
+            {...register("memberPassword", { required: true })}
+            type="password"
             placeholder="비밀번호를 입력하세요"
             className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey focus:outline-none"
           />

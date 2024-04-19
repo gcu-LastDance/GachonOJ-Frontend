@@ -1,5 +1,17 @@
 import { instanceNonAuth } from "@/lib/axiosConfig";
-import { SignUpData, SignUpFormData } from "@/types/auth";
+import { LoginFormData, SignUpData, SignUpFormData } from "@/types/auth";
+
+export const loginAPI = async (data: LoginFormData) => {
+  try {
+    const response = await instanceNonAuth.post(
+      process.env.NEXT_PUBLIC_M01_URL as string,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const signUpAPI = async (data: SignUpData) => {
   try {
@@ -25,11 +37,17 @@ export const emailVerifyAPI = async (email: string) => {
   }
 };
 
-export const emailCodeVerifyAPI = async (emailCode: string) => {
+export const emailCodeVerifyAPI = async ({
+  memberEmail,
+  emailCode,
+}: {
+  memberEmail: string;
+  emailCode: string;
+}) => {
   try {
     const response = await instanceNonAuth.post(
       process.env.NEXT_PUBLIC_M05_URL as string,
-      { emailCode }
+      { memberEmail: memberEmail, authCode: emailCode }
     );
     return response.data;
   } catch (error) {
