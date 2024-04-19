@@ -11,12 +11,13 @@ export interface LoginFormData {
 }
 
 export interface SignUpFormData {
-  email: string;
-  name: string;
-  stdnum: string;
-  nickname: string;
-  password: string;
-  passwordConfirm: string;
-  terms_agree: boolean;
-  privacy_agree: boolean;
+  memberEmail: string;
+  memberName: string;
+  memberNumber: string;
+  memberNickname: string;
+  memberPassword: string;
+  memberPasswordConfirm: string;
 }
+
+// terms_agree: boolean;
+// privacy_agree: boolean;

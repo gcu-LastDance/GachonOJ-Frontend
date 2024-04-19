@@ -6,6 +6,8 @@ import { SignUpFormData } from "@/types/auth";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { signUpAPI } from "@/api/auth";
 
 export default function SignupForm() {
   /** 회원가입 폼을 위한 useForm */
@@ -15,12 +17,23 @@ export default function SignupForm() {
   const [isReadytoEmailVerification, setIsReadytoEmailVerification] =
     useState(false);
 
+  const signUpMatation = useMutation({
+    mutationFn: signUpAPI,
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+    onSuccess: (data, variables, context) => {
+      console.log(data);
+    },
+  });
+
   const handleEmailVerification = () => {
     alert("인증코드가 발송되었습니다.");
     setIsReadytoEmailVerification(true);
   };
+
   const onSubmit = (data: SignUpFormData) => {
-    console.log(data);
+    signUpMatation.mutate(data);
   };
 
   return (
@@ -29,7 +42,7 @@ export default function SignupForm() {
         <div className="flex items-center">
           {/* <label>email</label> */}
           <input
-            {...register("email", { required: true })}
+            {...register("memberEmail", { required: true })}
             placeholder="이메일을 입력하세요"
             disabled={isReadytoEmailVerification}
             className="h-[5vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
@@ -77,13 +90,13 @@ export default function SignupForm() {
       <div className="flex mb-3">
         {/* <label>name</label> */}
         <input
-          {...register("name", { required: true })}
+          {...register("memberName", { required: true })}
           className="h-[5vh] w-[14.2vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
           placeholder="이름을 입력하세요"
         />
         {/* <label>stdnum</label> */}
         <input
-          {...register("stdnum", { required: true })}
+          {...register("memberNumber", { required: true })}
           className="h-[5vh] w-[14.2vw] ml-auto border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
           placeholder="학번을 입력하세요"
         />
@@ -91,7 +104,7 @@ export default function SignupForm() {
       <div className="flex items-center mb-3">
         {/* <label>nickname</label> */}
         <input
-          {...register("nickname", { required: true })}
+          {...register("memberNickname", { required: true })}
           className="h-[5vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
           placeholder="닉네임을 입력하세요"
         />
@@ -107,7 +120,7 @@ export default function SignupForm() {
       <div className="mb-3">
         {/* <label>password</label> */}
         <input
-          {...register("password", { required: true })}
+          {...register("memberPassword", { required: true })}
           className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
           placeholder="비밀번호를 입력하세요"
         />
@@ -119,7 +132,7 @@ export default function SignupForm() {
       <div>
         {/* <label>passwordConfirm</label> */}
         <input
-          {...register("passwordConfirm", { required: true })}
+          {...register("memberPasswordConfirm", { required: true })}
           className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey placeholder-text-xs focus:placeholder-semiGrey"
           placeholder="비밀번호를 한번 더 입력하세요"
         />
@@ -131,7 +144,7 @@ export default function SignupForm() {
           </label>
           <input
             type="checkbox"
-            className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2"
+            className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2 align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
           />
         </div>
         <div className="flex flex-col">
@@ -141,8 +154,8 @@ export default function SignupForm() {
             </label>
             <input
               type="checkbox"
-              {...register("terms_agree")}
-              className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2"
+              // {...register("terms_agree")}
+              className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2 align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
             />
             <button className="ml-auto flex items-center">
               <span className="font-PretendaradRegular text-sm text-realGrey">
@@ -157,8 +170,8 @@ export default function SignupForm() {
             </label>
             <input
               type="checkbox"
-              {...register("privacy_agree")}
-              className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2"
+              // {...register("privacy_agree")}
+              className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2 align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
             />
             <button className="ml-auto flex items-center">
               <span className="font-PretendaradRegular text-sm text-realGrey">
