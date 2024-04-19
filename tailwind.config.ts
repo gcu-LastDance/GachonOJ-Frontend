@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         primaryBlue: "#3B578D", // 프로젝트 메인 블루 컬러
+        primaryLightBlue: "#EAEEF5", // 메인 블루 컬러가 섞인 회색
         primaryGrey: "#F9FAFC", // 메인 블루 컬러가 섞인 회색
         primaryDark: "#262935", // 대부분의 텍스트에 사용
         primaryRed: "#C83838",

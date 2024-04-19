@@ -18,10 +18,16 @@ export default function PwInquiryForm() {
       <div className="mb-[5vh]">
         <div className="flex flex-col mb-6">
           <input
-            {...register("email", { required: true })}
+            {...register("email", {
+              required: true,
+              pattern: {
+                value: /^\S+@\S+\.\S+$/,
+                message: "유효하지 않은 이메일 형식입니다.",
+              },
+            })}
             placeholder="비밀번호 재설정을 위해 이메일을 입력하세요"
             type="text"
-            className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
+            className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey focus:outline-none"
           />
           <span className="font-PretendardLight text-xs text-realGrey mt-2">
             * 가입하신 이메일로 비밀번호 재설정이 가능합니다.

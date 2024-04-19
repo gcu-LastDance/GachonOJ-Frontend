@@ -8,7 +8,7 @@ export default function SignupCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-[50vw] mx-auto mb-[1vh] border-2 border-semiSemiGrey rounded-3xl overflow-hidden shadow-xl">
+    <div className="w-[50vw] mx-auto mb-[1vh] border-2 border-semiSemiGrey rounded-3xl overflow-hidden shadow-xl bg-white">
       <div className="flex bg-primaryGrey h-[12.5vh] items-center drop-shadow-none">
         <div className="w-[16vw] mx-auto">
           <Image src={GachonOJ_logo_image} alt="GachonOJ logo" />

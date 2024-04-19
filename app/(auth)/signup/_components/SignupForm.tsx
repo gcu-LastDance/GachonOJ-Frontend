@@ -2,50 +2,143 @@
 
 import FullButton from "@/components/button/FullButton";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { SignUpFormData } from "@/types/auth";
+import { SignUpData, SignUpFormData } from "@/types/auth";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { signUpAPI } from "@/api/auth";
+import {
+  emailCodeVerifyAPI,
+  emailVerifyAPI,
+  nicknameCheckAPI,
+  signUpAPI,
+} from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
-  /** 회원가입 폼을 위한 useForm */
-  const { register, handleSubmit } = useForm<SignUpFormData>();
+  const router = useRouter();
+  /** 회원가입 폼 useForm */
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<SignUpFormData>();
 
-  /** 정상적인 이메일을 입력한 뒤 이메일 인증 요청 버튼을 누른 상태인지 상태 관리 */
+  const [emailVerification, setEmailVerification] = useState(false);
+  const [nicknameCheck, setNicknameCheck] = useState(false);
+
+  /** 이용약관 및 개인정보수집 및 이용 동의 상태관리 */
+  const [termsAgree, setTermsAgree] = useState(false);
+  const [privacyAgree, setPrivacyAgree] = useState(false);
+
+  /** 이메일 인증 요청 상태관리 */
   const [isReadytoEmailVerification, setIsReadytoEmailVerification] =
     useState(false);
 
-  const signUpMatation = useMutation({
-    mutationFn: signUpAPI,
+  /** 이메일 인증 요청 버튼 이벤트 핸들러 */
+  const handleEmailVerification = () => {
+    // const email = getValues("memberEmail");
+    // emailVerifyMutation.mutate(email);
+    setIsReadytoEmailVerification(true);
+    setEmailVerification(true);
+  };
+
+  /** 이메일 인증 요청 API 호출 useMutation */
+  const emailVerifyMutation = useMutation({
+    mutationFn: emailVerifyAPI,
     onError: (error, variables, context) => {
       console.log(error);
     },
     onSuccess: (data, variables, context) => {
       console.log(data);
+      if (data.success) {
+        setIsReadytoEmailVerification(true);
+      }
     },
   });
 
-  const handleEmailVerification = () => {
-    alert("인증코드가 발송되었습니다.");
-    setIsReadytoEmailVerification(true);
+  const handleEmailCodeVerification = () => {
+    const emailCode = getValues("emailCode");
+    emailCodeVerifyMutation.mutate(emailCode);
   };
 
-  const onSubmit = (data: SignUpFormData) => {
-    signUpMatation.mutate(data);
+  const emailCodeVerifyMutation = useMutation({
+    mutationFn: emailCodeVerifyAPI,
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+    onSuccess: (data, variables, context) => {
+      console.log(data);
+      if (data.success) {
+        setEmailVerification(true);
+      }
+    },
+  });
+
+  /** 닉네임 중복 확인 버튼 이벤트 핸들러 */
+  const handleNicknameCheck = () => {
+    const nickname = getValues("memberNickname");
+    nicknameCheckMutation.mutate(nickname);
   };
+
+  /** 닉네임 중복 확인 API 호출 useMutation */
+  const nicknameCheckMutation = useMutation({
+    mutationFn: nicknameCheckAPI,
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+    onSuccess: (data, variables, context) => {
+      console.log(data);
+      if (data.success) {
+        setNicknameCheck(true);
+      }
+    },
+  });
+
+  /** 회원가입 폼 제출 이벤트 핸들러 */
+  const onSubmit = (data: SignUpData) => {
+    if (!termsAgree || !privacyAgree) {
+      alert("이용약관 및 개인정보수집 및 이용에 동의해주세요.");
+    }
+
+    if (!emailVerification) {
+      alert("이메일 인증을 완료해주세요.");
+    }
+
+    if (!nicknameCheck) {
+      alert("닉네임 중복확인을 완료해주세요.");
+    }
+
+    signUpMutation.mutate(data);
+  };
+
+  /** 회원가입 API 호출 useMutation */
+  const signUpMutation = useMutation({
+    mutationFn: signUpAPI,
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+    onSuccess: (data, variables, context) => {
+      router.push("/login");
+    },
+  });
 
   return (
     <form className="mt-6 mb-4">
-      <div className="mb-3">
+      <div className="mb-[1vh]">
         <div className="flex items-center">
-          {/* <label>email</label> */}
           <input
-            {...register("memberEmail", { required: true })}
+            {...register("memberEmail", {
+              required: true,
+              pattern: {
+                value: /^\S+@\S+\.\S+$/,
+                message: "유효하지 않은 이메일 형식입니다.",
+              },
+            })}
             placeholder="이메일을 입력하세요"
             disabled={isReadytoEmailVerification}
-            className="h-[5vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
+            className="h-[5vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey text-[0.95vw] focus:placeholder-semiGrey disabled:text-realGrey px-[0.5vw] focus:outline-none"
           />
           <button
             type="button"
@@ -54,7 +147,7 @@ export default function SignupForm() {
             className={`${
               isReadytoEmailVerification
                 ? "border-semiGrey bg-lightGrey cursor-not-allowed"
-                : ""
+                : "hover:bg-primaryLightBlue"
             } border-[1.5px] w-[6vw] h-[5vh] border-primaryBlue rounded-md ml-auto`}
           >
             <span
@@ -66,19 +159,28 @@ export default function SignupForm() {
             </span>
           </button>
         </div>
-        <span className="font-PretendardLight text-xs text-realGrey">
-          * 가천대학교 이메일로 가입이 가능합니다.
+        <span
+          className={`${
+            errors.memberEmail ? "text-primaryRed" : "text-realGrey"
+          } font-PretendardLight text-xs  pl-[0.5vw]`}
+        >
+          {!errors.memberEmail
+            ? "* 가천대학교 이메일로 가입이 가능합니다."
+            : errors.memberEmail.message}
         </span>
       </div>
       {isReadytoEmailVerification && (
-        <div className="flex items-center mb-3">
-          {/* <label>email</label> */}
+        <div className="flex items-center mb-[2.3vh]">
           <input
-            className="h-[5vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
+            {...register("emailCode", {
+              required: "이메일 인증 코드는 필수입니다.",
+            })}
+            className="h-[4vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
             placeholder="이메일로 전송된 인증코드를 입력하세요."
           />
           <button
             type="button"
+            onClick={handleEmailCodeVerification}
             className="border-[1.5px] w-[6vw] h-[5vh] border-primaryBlue rounded-md ml-auto"
           >
             <span className="font-PretendardSemiBold text-sm text-primaryBlue">
@@ -87,29 +189,36 @@ export default function SignupForm() {
           </button>
         </div>
       )}
-      <div className="flex mb-3">
+      <div className="flex mb-[2vh]">
         {/* <label>name</label> */}
         <input
           {...register("memberName", { required: true })}
-          className="h-[5vh] w-[14.2vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
+          className="h-[4vh] w-[14.2vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
           placeholder="이름을 입력하세요"
         />
         {/* <label>stdnum</label> */}
         <input
-          {...register("memberNumber", { required: true })}
-          className="h-[5vh] w-[14.2vw] ml-auto border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
+          {...register("memberNumber", {
+            required: true,
+            pattern: {
+              value: /^\d{9}$/,
+              message: "학번은 9자리 숫자여야 합니다.",
+            },
+          })}
+          className="h-[4vh] w-[14.2vw] ml-auto border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
           placeholder="학번을 입력하세요"
         />
       </div>
-      <div className="flex items-center mb-3">
+      <div className="flex items-center mb-[2vh]">
         {/* <label>nickname</label> */}
         <input
           {...register("memberNickname", { required: true })}
-          className="h-[5vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
+          className="h-[4vh] w-[23.5vw] border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
           placeholder="닉네임을 입력하세요"
         />
         <button
           type="button"
+          onClick={handleNicknameCheck}
           className="border-[1.5px] w-[6vw] h-[5vh] border-primaryBlue rounded-md ml-auto"
         >
           <span className="font-PretendardSemiBold text-sm text-primaryBlue">
@@ -117,64 +226,93 @@ export default function SignupForm() {
           </span>
         </button>
       </div>
-      <div className="mb-3">
+      <div className="mb-[2vh]">
         {/* <label>password</label> */}
         <input
-          {...register("memberPassword", { required: true })}
-          className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey"
+          {...register("memberPassword", {
+            required: true,
+            pattern: {
+              value:
+                /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~])[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?~]{8,25}$/,
+              message:
+                "비밀번호는 8-25자로 영문자, 숫자, 특수문자를 각각 최소 하나 이상 포함해야 합니다.",
+            },
+          })}
+          type="password"
+          className="h-[4vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
           placeholder="비밀번호를 입력하세요"
         />
-        <span className="font-PretendardLight text-xs text-realGrey">
-          * 영대소문자/숫자/특수문자를 모두 포함하고, 8자 이상 25자 이하여야
-          합니다.
+        <span
+          className={`${
+            errors.memberPassword ? "text-primaryRed" : "text-realGrey"
+          } font-PretendardLight text-xs  pl-[0.5vw]`}
+        >
+          {!errors.memberPassword
+            ? "* 영대소문자/숫자/특수문자를 모두 포함하고, 8자 이상 25자 이하여야합니다."
+            : errors.memberPassword.message}
         </span>
       </div>
       <div>
         {/* <label>passwordConfirm</label> */}
         <input
           {...register("memberPasswordConfirm", { required: true })}
-          className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey placeholder-text-xs focus:placeholder-semiGrey"
+          type="password"
+          className="h-[4vh] w-full border-b-2 border-semiGrey placeholder-realGrey placeholder-text-xs focus:placeholder-semiGrey px-[0.5vw] text-[0.95vw] focus:outline-none"
           placeholder="비밀번호를 한번 더 입력하세요"
         />
       </div>
       <div className="ml-10 mr-10 mt-5 mb-5">
         <div className="mb-3 flex items-center justify-center">
-          <label className="font-PretendardSemiBold text-sm text-realGrey">
+          <label className="font-PretendardSemiBold text-[1vw] text-realGrey">
             이용약관 및 개인정보수집 및 이용에 모두 동의합니다.
           </label>
           <input
             type="checkbox"
+            checked={termsAgree && privacyAgree}
+            onChange={
+              termsAgree || privacyAgree
+                ? () => {
+                    setTermsAgree(false);
+                    setPrivacyAgree(false);
+                  }
+                : () => {
+                    setTermsAgree(true);
+                    setPrivacyAgree(true);
+                  }
+            }
             className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2 align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
           />
         </div>
         <div className="flex flex-col">
           <div className="flex mb-1 items-center">
-            <label className="font-PretendardRegular text-sm text-realGrey">
+            <label className="font-PretendardRegular text-[0.9vw] text-realGrey">
               &#91;필수&#93; 이용약관 동의
             </label>
             <input
               type="checkbox"
-              // {...register("terms_agree")}
+              checked={termsAgree}
+              onChange={() => setTermsAgree(!termsAgree)}
               className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2 align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
             />
             <button className="ml-auto flex items-center">
-              <span className="font-PretendaradRegular text-sm text-realGrey">
+              <span className="font-PretendaradRegular text-[0.9vw] text-realGrey">
                 약관보기
               </span>
               <MdKeyboardArrowRight size="1.5rem" color="#767676" />
             </button>
           </div>
           <div className="flex items-center">
-            <label className="font-PretendardRegular text-sm text-realGrey">
+            <label className="font-PretendardRegular text-[0.9vw] text-realGrey">
               &#91;필수&#93; 이용약관 동의
             </label>
             <input
               type="checkbox"
-              // {...register("privacy_agree")}
+              checked={privacyAgree}
+              onChange={() => setPrivacyAgree(!privacyAgree)}
               className="appearance-none border-[1px] border-semiGrey rounded-full w-4 h-4 ml-2 align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
             />
             <button className="ml-auto flex items-center">
-              <span className="font-PretendaradRegular text-sm text-realGrey">
+              <span className="font-PretendaradRegular text-[0.9vw] text-realGrey">
                 약관보기
               </span>
               <MdKeyboardArrowRight size="1.5rem" color="#767676" />
