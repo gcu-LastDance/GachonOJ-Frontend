@@ -4,8 +4,12 @@ import Link from "next/link";
 import GachonOJ_logo_image from "@logo/gachonoj_logo.png";
 import React from "react";
 import Image from "next/image";
+import HeaderButton from "./HeaderButton";
+import useUserStore from "@/store/useUserStore";
 
 export default function HeaderNav() {
+  const { userPermission } = useUserStore();
+
   return (
     <header className="border-b-2 shadow-md">
       <div className="flex items-center w-[65vw] h-[7vh] mx-auto">
@@ -32,18 +36,14 @@ export default function HeaderNav() {
           <Link href="/inquiry">
             <span>문의</span>
           </Link>
-          <Link href="/admin">
-            <span>관리페이지</span>
-          </Link>
+          {(userPermission === "professor" || userPermission === "admin") && (
+            <Link href="/admin">
+              <span>관리페이지</span>
+            </Link>
+          )}
         </div>
         <div className="ml-auto">
-          <Link href="/login">
-            <div className="border-[0.15rem] pl-5 pr-5 pt-0.5 pb-0.5 rounded-lg border-primaryBlue">
-              <span className="font-PretendardMedium text-primaryBlue text-base">
-                로그인
-              </span>
-            </div>
-          </Link>
+          <HeaderButton />
         </div>
       </div>
     </header>

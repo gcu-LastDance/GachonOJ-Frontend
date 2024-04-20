@@ -1,5 +1,5 @@
 import { instanceNonAuth } from "@/lib/axiosConfig";
-import { LoginFormData, SignUpData, SignUpFormData } from "@/types/auth";
+import { LoginFormData, SignUpData } from "@/types/auth";
 
 export const loginAPI = async (data: LoginFormData) => {
   try {

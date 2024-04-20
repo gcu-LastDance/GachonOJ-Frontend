@@ -5,6 +5,12 @@ export interface memberData {
   nickname: string;
 }
 
+export interface MemberHoverProfileData {
+  memberEmail: string;
+  memberNickname: string;
+  rating: number;
+}
+
 export interface memberProbData extends memberData {
   solvedProb: number;
   triedProb: number;

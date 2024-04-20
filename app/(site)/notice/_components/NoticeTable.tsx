@@ -38,20 +38,50 @@ const main_table_data: MainTableData[] = [
     author: "가천OJ 관리자",
     date: "2022-01-01",
   },
+  {
+    id: 6,
+    title: "1서비스 정식 오픈을 위한 운영서버 점검 안내",
+    author: "가천OJ 관리자",
+    date: "2022-01-01",
+  },
+  {
+    id: 7,
+    title: "2서비스 정식 오픈을 위한 운영서버 점검 안내",
+    author: "가천OJ 관리자",
+    date: "2022-01-01",
+  },
+  {
+    id: 8,
+    title: "3서비스 정식 오픈을 위한 운영서버 점검 안내",
+    author: "가천OJ 관리자",
+    date: "2022-01-01",
+  },
+  {
+    id: 9,
+    title: "4서비스 정식 오픈을 위한 운영서버 점검 안내",
+    author: "GachonOJ",
+    date: "2022-01-01",
+  },
+  {
+    id: 10,
+    title: "5서비스 정식 오픈을 위한 운영서버 점검 안내",
+    author: "가천OJ 관리자",
+    date: "2022-01-01",
+  },
 ];
 
 const main_columns: MainTableColumn[] = [
-  { Header: "공지 제목", accessor: "title" },
+  { Header: "제목", accessor: "title" },
   { Header: "작성자", accessor: "author" },
   { Header: "게시일", accessor: "date" },
 ];
 
-export default function MainNotice() {
+export default function NoticeTable() {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable<MainTableData>({ columns: main_columns, data: main_table_data });
 
   return (
-    <div className="flex pl-[3vw] mt-[1.5vh]">
+    <div className="flex px-[2vw] mt-[1.5vh]">
       <table {...getTableProps()} className="w-full">
         <thead>
           {headerGroups.map((headerGroup, index) => (

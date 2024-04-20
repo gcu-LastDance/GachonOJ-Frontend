@@ -12,7 +12,7 @@ import {
   emailVerifyAPI,
   nicknameCheckAPI,
   signUpAPI,
-} from "@/api/auth";
+} from "@/api/authAPI";
 import { useRouter } from "next/navigation";
 
 export default function SignupForm() {

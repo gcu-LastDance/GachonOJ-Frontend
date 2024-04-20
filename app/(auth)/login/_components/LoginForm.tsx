@@ -1,9 +1,9 @@
 "use client";
 
-import { loginAPI } from "@/api/auth";
+import { loginAPI } from "@/api/authAPI";
 import FullButton from "@/components/button/FullButton";
 import { LoginFormData } from "@/types/auth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
