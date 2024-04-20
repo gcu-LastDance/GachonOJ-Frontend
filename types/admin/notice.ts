@@ -10,3 +10,9 @@ export type noticeTableColumn = {
   Header: string;
   accessor: keyof noticeTableData;
 };
+
+export interface noticeFormData {
+  title: string;
+  contents: string;
+
+}

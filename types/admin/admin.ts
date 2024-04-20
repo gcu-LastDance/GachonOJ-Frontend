@@ -17,7 +17,7 @@ export interface adminFormData {
   role: string;
   email: string;
   password: number;
-  passwordconfirm: string[];
+  passwordconfirm: string;
   name: string;
   nickname: string;
 }

@@ -1,12 +1,12 @@
 "use client";
-import { adminFormData } from "@/types/admin/admin";
+import { userFormData } from "@/types/admin/user";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 export default function EditAdminMyAccountForm() {
   const { register, handleSubmit, setValue, getValues } =
-    useForm<adminFormData>();
-  const onSubmit: SubmitHandler<adminFormData> = (data) => {
+    useForm<userFormData>();
+  const onSubmit: SubmitHandler<userFormData> = (data) => {
     console.log(data);
     // 여기서 데이터를 처리하거나 제출합니다.
   };
@@ -19,23 +19,27 @@ export default function EditAdminMyAccountForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex-auto ml-10 mt-10 mb-4 items-center">
         <div className="flex">
-        <div className="w-1/3 mb-5 sm:mb-0 flex items-center">
-          <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
-            번호
-          </label>
-          <input id="id" value="3" className="block font-medium mb-1 ml-10" />
-        </div>
-        <div className="w-full mb-5 sm:mb-0 flex items-center">
-          <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
-            권한
-          </label>
-          <input
-            id="role"
-            value="관리자"
-            {...register("role")}
-            className="block font-medium mb-1 ml-10"
-          />
-        </div>
+          <div className="w-1/3 mb-5 sm:mb-0 flex items-center">
+            <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
+              번호
+            </label>
+            <input
+              id="id"
+              value="13"
+              className="block font-medium mb-1 ml-10"
+            />
+          </div>
+          <div className="w-full mb-5 sm:mb-0 flex items-center">
+            <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
+              권한
+            </label>
+            <input
+              id="role"
+              value="사용자"
+              {...register("role")}
+              className="block font-medium mb-1 ml-10"
+            />
+          </div>
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
           <label htmlFor="email" className="w-28 block font-medium mb-1 mr-2">
@@ -45,7 +49,7 @@ export default function EditAdminMyAccountForm() {
             type="text"
             value="gachonOJ@gachonOJ.com"
             {...register("email")}
-            className="w-80 ml-10 px-3 py-2 focus:outline-none focus:border-blue-500"
+            className="w-80 ml-10 px-3 py-2 text-realGrey focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
@@ -80,8 +84,9 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
+            value="김사람"
             {...register("name")}
-            className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+            className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
@@ -93,8 +98,9 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
+            value="사람1"
             {...register("nickname")}
-            className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+            className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
           <button
             type="button"
@@ -103,6 +109,17 @@ export default function EditAdminMyAccountForm() {
           >
             이름과 동일하게 설정
           </button>
+        </div>
+        <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
+          <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
+            학번
+          </label>
+          <input
+            type="text"
+            {...register("user_number")}
+            value="201500000"
+            className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
+          />
         </div>
         <div className="flex justify-center">
           <button
@@ -114,7 +131,6 @@ export default function EditAdminMyAccountForm() {
           </button>
         </div>
       </div>
-
       <div className="flex justify-end">
         <button
           name="back"
