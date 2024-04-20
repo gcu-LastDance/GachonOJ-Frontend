@@ -6,12 +6,13 @@ export interface AuthType {
 }
 
 export interface LoginFormData {
-  email: string;
-  password: string;
+  memberEmail: string;
+  memberPassword: string;
 }
 
 export interface SignUpFormData {
   memberEmail: string;
+  emailCode: string;
   memberName: string;
   memberNumber: string;
   memberNickname: string;
@@ -19,5 +20,11 @@ export interface SignUpFormData {
   memberPasswordConfirm: string;
 }
 
-// terms_agree: boolean;
-// privacy_agree: boolean;
+export interface SignUpData {
+  memberEmail: string;
+  memberName: string;
+  memberNumber: string;
+  memberNickname: string;
+  memberPassword: string;
+  memberPasswordConfirm: string;
+}

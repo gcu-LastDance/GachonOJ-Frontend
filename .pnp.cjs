@@ -33,6 +33,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react-beautiful-dnd", "npm:13.1.8"],\
           ["@types/react-dom", "npm:18.2.24"],\
           ["@types/react-table", "npm:7.7.20"],\
+          ["@types/react-transition-group", "npm:4.4.10"],\
           ["autoprefixer", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:10.4.19"],\
           ["axios", "npm:1.6.8"],\
           ["axios-mock-adapter", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:1.22.0"],\
@@ -51,6 +52,7 @@ const RAW_RUNTIME_STATE =
           ["react-icons", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.0.1"],\
           ["react-spinners", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:0.13.8"],\
           ["react-table", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:7.8.0"],\
+          ["react-transition-group", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:4.4.5"],\
           ["shadcn-ui", "npm:0.8.0"],\
           ["tailwind-merge", "npm:2.2.2"],\
           ["tailwindcss", "npm:3.4.3"],\
@@ -1191,6 +1193,16 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/@types-react-table-npm-7.7.20-1ce3b86d1b-10c0.zip/node_modules/@types/react-table/",\
         "packageDependencies": [\
           ["@types/react-table", "npm:7.7.20"],\
+          ["@types/react", "npm:18.2.75"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/react-transition-group", [\
+      ["npm:4.4.10", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-react-transition-group-npm-4.4.10-5e11bed850-10c0.zip/node_modules/@types/react-transition-group/",\
+        "packageDependencies": [\
+          ["@types/react-transition-group", "npm:4.4.10"],\
           ["@types/react", "npm:18.2.75"]\
         ],\
         "linkType": "HARD"\
@@ -2422,6 +2434,17 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["dom-helpers", [\
+      ["npm:5.2.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/dom-helpers-npm-5.2.1-b38bb4470b-10c0.zip/node_modules/dom-helpers/",\
+        "packageDependencies": [\
+          ["dom-helpers", "npm:5.2.1"],\
+          ["@babel/runtime", "npm:7.24.4"],\
+          ["csstype", "npm:3.1.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["eastasianwidth", [\
       ["npm:0.2.0", {\
         "packageLocation": "../../../.yarn/berry/cache/eastasianwidth-npm-0.2.0-c37eb16bd1-10c0.zip/node_modules/eastasianwidth/",\
@@ -3406,6 +3429,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react-beautiful-dnd", "npm:13.1.8"],\
           ["@types/react-dom", "npm:18.2.24"],\
           ["@types/react-table", "npm:7.7.20"],\
+          ["@types/react-transition-group", "npm:4.4.10"],\
           ["autoprefixer", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:10.4.19"],\
           ["axios", "npm:1.6.8"],\
           ["axios-mock-adapter", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:1.22.0"],\
@@ -3424,6 +3448,7 @@ const RAW_RUNTIME_STATE =
           ["react-icons", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:5.0.1"],\
           ["react-spinners", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:0.13.8"],\
           ["react-table", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:7.8.0"],\
+          ["react-transition-group", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:4.4.5"],\
           ["shadcn-ui", "npm:0.8.0"],\
           ["tailwind-merge", "npm:2.2.2"],\
           ["tailwindcss", "npm:3.4.3"],\
@@ -5879,6 +5904,36 @@ const RAW_RUNTIME_STATE =
         ],\
         "packagePeers": [\
           "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-transition-group", [\
+      ["npm:4.4.5", {\
+        "packageLocation": "../../../.yarn/berry/cache/react-transition-group-npm-4.4.5-98ea4ef96e-10c0.zip/node_modules/react-transition-group/",\
+        "packageDependencies": [\
+          ["react-transition-group", "npm:4.4.5"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:4.4.5", {\
+        "packageLocation": "./.yarn/__virtual__/react-transition-group-virtual-edfdbe242f/4/.yarn/berry/cache/react-transition-group-npm-4.4.5-98ea4ef96e-10c0.zip/node_modules/react-transition-group/",\
+        "packageDependencies": [\
+          ["react-transition-group", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:4.4.5"],\
+          ["@babel/runtime", "npm:7.24.4"],\
+          ["@types/react", "npm:18.2.75"],\
+          ["@types/react-dom", "npm:18.2.24"],\
+          ["dom-helpers", "npm:5.2.1"],\
+          ["loose-envify", "npm:1.4.0"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
           "react"\
         ],\
         "linkType": "HARD"\

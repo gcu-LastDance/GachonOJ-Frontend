@@ -12,5 +12,6 @@ export const instanceAuth = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
+    // "Authorization":
   },
 });
