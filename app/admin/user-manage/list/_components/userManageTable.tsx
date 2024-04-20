@@ -1,40 +1,51 @@
-import { inquiryTableColumn, inquiryTableData } from "@/types/admin/inquiry";
+import { userTableColumn, userTableData } from "@types/admin/user";
 import React from "react";
 import { usePagination, useTable } from "react-table";
 
-const main_table_data: inquiryTableData[] = [
+const main_table_data: userTableData[] = [
   {
     id: 1,
-    title: "안녕하세요",
-    author: "사람1",
-    date: "2022-01-01",
-    inquiry_status: true,
+    email: "asdf@gachon.ac.kr",
+    name: "사람1",
+    member_number: 12345678,
+    nickname: "닉네임1",
+    role: "사용자",
+    created_date: "2024.12.21",
+
   },
   {
-    id: 2,
-    title: "안녕하세요2",
-    author: "사람2",
-    date: "2022-01-01",
-    inquiry_status: false,
+    id: 1,
+    email: "asdf@gachon.ac.kr",
+    name: "사람2",
+    member_number: 49398383,
+    nickname: "닉네임2",
+    role: "사용자",
+    created_date: "2024.12.21",
+
   },
   {
-    id: 3,
-    title: "안녕하세요3",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-    inquiry_status: true,
+    id: 1,
+    email: "asdf@gachon.ac.kr",
+    name: "사람3",
+    member_number: 89439838,
+    nickname: "닉네임3",
+    role: "사용자",
+    created_date: "2024.12.21",
+
   },
 ];
 
-const main_columns: inquiryTableColumn[] = [
+const main_columns: userTableColumn[] = [
   { Header: "번호", accessor: "id" },
-  { Header: "제목", accessor: "title" },
-  { Header: "작성자", accessor: "author" },
-  { Header: "작성일", accessor: "date" },
-  { Header: "답변여부", accessor: "inquiry_status" },
+  { Header: "제목", accessor: "email" },
+  { Header: "이름", accessor: "name" },
+  { Header: "학번", accessor: "member_number" },
+  { Header: "닉네임", accessor: "nickname" },
+  { Header: "권한", accessor: "role"},
+  { Header: "가입일", accessor: "created_date" },
 ];
 
-export const InquiryManageTable = () => {
+export const UserManageTable = () => {
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
     getTableProps,
@@ -51,7 +62,7 @@ export const InquiryManageTable = () => {
     setPageSize,
     state,
     prepareRow,
-  } = useTable<inquiryTableData>(
+  } = useTable<userTableData>(
     {
       columns: main_columns,
       data: main_table_data,
@@ -100,13 +111,16 @@ export const InquiryManageTable = () => {
                     {...cell.getCellProps()}
                     key={cell.column.id}
                   >
-                    {cell.value === true
-                      ? "답변완료"
-                      : cell.value === false
-                      ? "-"
-                      : cell.render("Cell")}
+               
+                      {cell.render("Cell")} 
                   </td>
                 ))}
+                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                  <button className="border-b-2">정보 수정</button>
+                </td>
+                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                  <button className="border-b-2">정보 삭제</button>
+                </td>
               </tr>
             );
           })}
@@ -166,4 +180,4 @@ export const InquiryManageTable = () => {
     </div>
   );
 };
-export default InquiryManageTable;
+export default UserManageTable;

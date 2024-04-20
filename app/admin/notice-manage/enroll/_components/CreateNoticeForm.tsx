@@ -1,11 +1,11 @@
 "use client";
-import { NoticeFormData } from "@/types/admin/notice";
+import { noticeFormData } from "@/types/admin/notice";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 export default function CreaetNoticeForm() {
-  const { register, handleSubmit } = useForm<NoticeFormData>();
-  const onSubmit: SubmitHandler<NoticeFormData> = (data) => {
+  const { register, handleSubmit } = useForm<noticeFormData>();
+  const onSubmit: SubmitHandler<noticeFormData> = (data) => {
     console.log(data);
     // 여기서 데이터를 처리하거나 제출합니다.
   };

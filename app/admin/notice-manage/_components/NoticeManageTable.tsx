@@ -6,23 +6,23 @@ import { usePagination, useTable } from "react-table";
 const main_table_data: noticeTableData[] = NOTICE_MOCK_DATA;
 
 export const main_columns: noticeTableColumn[] = [
-    {
-      Header: "번호",
-      accessor: "notice_id",
-    },
-    {
-      Header: "제목",
-      accessor: "notice_title",
-    },
-    {
-      Header: "작성자",
-      accessor: "member_nickname",
-    },
-    {
-      Header: "작성일",
-      accessor: "notice_created_date",
-    },
-  ];
+  {
+    Header: "번호",
+    accessor: "notice_id",
+  },
+  {
+    Header: "제목",
+    accessor: "notice_title",
+  },
+  {
+    Header: "작성자",
+    accessor: "member_nickname",
+  },
+  {
+    Header: "작성일",
+    accessor: "notice_created_date",
+  },
+];
 
 export const NoticeManageTable = () => {
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
@@ -44,7 +44,7 @@ export const NoticeManageTable = () => {
   } = useTable<noticeTableData>(
     {
       columns: main_columns,
-      data: main_table_data
+      data: main_table_data,
     },
     usePagination
   );
@@ -87,7 +87,6 @@ export const NoticeManageTable = () => {
                 {row.cells.map((cell, index) => {
                   return (
                     <td
-                      
                       className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                       {...cell.getCellProps()}
                       key={cell.column.id}

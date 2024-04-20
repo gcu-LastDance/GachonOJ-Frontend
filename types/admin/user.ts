@@ -1,10 +1,11 @@
 export interface userTableData {
-  index: number;
-  member_email: string;
-  member_name: string;
-  member_nickname: string;
-  member_role: string;
-  member_created_date: string;
+  id: number;
+  email: string;
+  name: string;
+  member_number: number;
+  nickname: string;
+  role: string;
+  created_date: string;
 }
 
 // 컬럼 타입 정의
