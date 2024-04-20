@@ -1,5 +1,5 @@
 "use client";
-import { NoticeFormData } from "@/types/NoticeForm";
+import { NoticeFormData } from "@/types/admin/notice";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 

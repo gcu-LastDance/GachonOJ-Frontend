@@ -1,12 +1,12 @@
 "use client";
-import { AdminFormData } from "@/types/adminForm";
+import { adminFormData } from "@/types/admin/admin";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 export default function EditAdminForm() {
   const { register, handleSubmit, setValue, getValues } =
-    useForm<AdminFormData>();
-  const onSubmit: SubmitHandler<AdminFormData> = (data) => {
+    useForm<adminFormData>();
+  const onSubmit: SubmitHandler<adminFormData> = (data) => {
     console.log(data);
     // 여기서 데이터를 처리하거나 제출합니다.
   };
