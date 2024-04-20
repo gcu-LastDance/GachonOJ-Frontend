@@ -2,6 +2,7 @@ import React from "react";
 import NOTICE_MOCK_DATA from "@/mocks/NOTICE_MOCK_DATA.json";
 import { noticeTableColumn, noticeTableData } from "@/types/admin/notice";
 import { usePagination, useTable } from "react-table";
+import Link from "next/link";
 
 const main_table_data: noticeTableData[] = NOTICE_MOCK_DATA;
 
@@ -91,7 +92,15 @@ export const NoticeManageTable = () => {
                       {...cell.getCellProps()}
                       key={cell.column.id}
                     >
-                      {cell.render("Cell")}
+                      {cell.column.Header === "제목" ? (
+                        <Link
+                          href={`/admin/notice-manage/${row.original.notice_id}`}
+                        >
+                          {cell.render("Cell")}
+                        </Link>
+                      ) : (
+                        cell.render("Cell")
+                      )}
                     </td>
                   );
                 })}

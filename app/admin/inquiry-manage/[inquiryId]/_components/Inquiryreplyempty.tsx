@@ -14,10 +14,10 @@ const Inquiryreplyempty: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex-auto flex flex-col">
-      <div className="flex mb-4 items-center">
+      <div className="flex py-3 mb-4 items-center">
         <label
           htmlFor="answer"
-          className="self-start text-gray-700 font-bold mb-2 mr-4"
+          className="self-start text-realGrey font-bold mb-2 mr-4"
         >
           답변 내용 작성
         </label>
@@ -27,7 +27,7 @@ const Inquiryreplyempty: React.FC = () => {
             name="answer"
             value={answer}
             onChange={handleChange}
-            className="shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded text-realGrey leading-tight focus:outline-none focus:shadow-outline"
             rows={5}
             required
           ></textarea>

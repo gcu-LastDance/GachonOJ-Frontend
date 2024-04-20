@@ -1,6 +1,7 @@
 import { inquiryTableColumn, inquiryTableData } from "@/types/admin/inquiry";
 import React from "react";
 import { usePagination, useTable } from "react-table";
+import Link from "next/link";
 
 const main_table_data: inquiryTableData[] = [
   {
@@ -100,11 +101,17 @@ export const InquiryManageTable = () => {
                     {...cell.getCellProps()}
                     key={cell.column.id}
                   >
-                    {cell.value === true
-                      ? "답변완료"
-                      : cell.value === false
-                      ? "-"
-                      : cell.render("Cell")}
+                    {cell.column.Header === "제목" ? (
+                      <Link href={`/admin/inquiry-manage/${row.original.id}`}>
+                        {cell.render("Cell")}
+                      </Link>
+                    ) : cell.value === true ? (
+                      "답변완료"
+                    ) : cell.value === false ? (
+                      "-"
+                    ) : (
+                      cell.render("Cell")
+                    )}
                   </td>
                 ))}
               </tr>

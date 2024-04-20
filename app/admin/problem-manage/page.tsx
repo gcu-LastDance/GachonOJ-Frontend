@@ -3,7 +3,7 @@ import ProblemManageTable from './_components/ProblemManageTable'
 
 function page() {
 	return (
-    	<div className="App-board">
+    	<div>
           <ProblemManageTable />
         </div>
     )

@@ -3,7 +3,7 @@ import CreateUserForm from './_components/CreateUserForm'
 
 function page() {
 	return (
-    	<div className="App-board">
+    	<div>
           <CreateUserForm />
         </div>
     )

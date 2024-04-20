@@ -31,9 +31,9 @@ const ProblemForm = () => {
         </div>
       <div className="flex flex-wrap mb-4 items-center">
         
-        <h2 className="text-2xl font-semibold mb-4 w-full">문제 설정</h2>
-        <div className="w-full sm:w-1/3 mb-4 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="memory" className="block font-medium mb-1 mr-2">
+        <div className="text-2xl font-PretendardBold mb-4 w-full">문제 설정</div>
+        <div className="w-1/3 text-xl flex items-center justify-start">
+          <label htmlFor="memory" className="block font-medium mb-1 mr-8">
             메모리 제한
           </label>
           <select
@@ -46,8 +46,8 @@ const ProblemForm = () => {
             <option value="2048">2GB</option>
           </select>
         </div>
-        <div className="w-full sm:w-1/3 mb-4 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="time" className="block font-medium mb-1 mr-2">
+        <div className="w-1/3 text-xl flex items-center justify-start">
+          <label htmlFor="time" className="block font-medium mb-1 mr-8">
             실행 시간 제한
           </label>
           <select
@@ -62,8 +62,8 @@ const ProblemForm = () => {
           </select>
         </div>
 
-        <div className="w-full sm:w-1/3 mb-4 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="difficulty" className="block font-medium mb-1 mr-2">
+        <div className="w-1/3 flex text-xl items-center justify-start">
+          <label htmlFor="difficulty" className="block font-medium mb-1 mr-8">
             난이도 설정
           </label>
           <select
@@ -77,8 +77,8 @@ const ProblemForm = () => {
             <option value="hard">어려움</option>
           </select>
         </div>
-        <div className="w-full sm:w-1/3 mb-4 mt-4 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="language" className="block font-medium mb-1 mr-6">
+        <div className="w-full mb-4 mt-4 sm:mb-0 flex items-center justify-start">
+          <label htmlFor="language" className="block text-xl mb-1 mr-6">
             가능 언어 설정
           </label>
           <div className="flex">
@@ -129,48 +129,48 @@ const ProblemForm = () => {
       </div>
 
       <div className="flex items-center mb-4">
-        <h2 className="text-2xl font-semibold mr-4 self-start">문제 제목</h2>
+        <div className="text-xl mr-4 min-w-20 self-start">문제 제목</div>
         <input
           type="text"
           {...register("title")}
-          className="w-[82.8vw] flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+          className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
         />
       </div>
       <div className="flex items-center mb-4">
-        <h2 className="text-2xl font-semibold mb-4 mr-4 self-start">
+        <div className="text-xl mb-4 mr-4 min-w-20 self-start">
           문제 본문
-        </h2>
+        </div>
         <textarea
           {...register("content")}
-          className="w-[82.8vw] flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+          className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={8}
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <h2 className="text-2xl font-semibold mb-4 mr-4 self-start">
+        <div className="text-xl mb-4 mr-4 min-w-20 self-start">
           입력 설명
-        </h2>
+        </div>
         <textarea
           {...register("inputDescription")}
-          className="w-[82.8vw] ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+          className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <h2 className="text-2xl font-semibold mb-4 mr-4 self-start">
+        <div className="text-xl mb-4 mr-4 min-w-20 self-start">
           출력 설명
-        </h2>
+        </div>
         <textarea
           {...register("outputDescription")}
-          className="w-[82.8vw] ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+          className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
         ></textarea>
       </div>
 
       <div className="flex items-center mb-4">
-        <h2 className="text-2xl font-semibold mb-4 mr-4 self-start">
+        <div className="text-xl mb-4 mr-4 self-start">
           테스트 케이스
-        </h2>
+        </div>
         <table className="flex-auto px-3 py-2 border">
           <thead>
             <tr>
@@ -200,7 +200,7 @@ const ProblemForm = () => {
         </table>
       </div>
       <div className="flex justify-end">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-4">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4">
           테스트 케이스 추가
         </button>
       </div>
@@ -208,14 +208,14 @@ const ProblemForm = () => {
         <button
           type="submit"
           name="register"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
+          className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8 mr-4"
         >
           등록하기
         </button>
         <button
           type="submit"
           name="save"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8"
+          className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8"
         >
           저장하기
         </button>

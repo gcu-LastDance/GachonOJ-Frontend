@@ -18,18 +18,18 @@ export default function CreateAdminForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex-auto ml-10 mt-10 mb-4 items-center">
         <div className="w-full mb-5 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
+          <label htmlFor="role" className="w-fit block font-medium mb-1 mr-5">
             권한
           </label>
           <input
             id="role"
             value="관리자"
             {...register("role")}
-            className="block font-medium mb-1 ml-10"
+            className="block font-medium mb-1 ml-5"
           />
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
-          <label htmlFor="email" className="w-28 block font-medium mb-1 mr-2">
+          <label htmlFor="email" className="w-28 block font-medium mb-1 ml-5">
             이메일
           </label>
           <input
