@@ -3,7 +3,7 @@ import CreateAdminForm from './_components/CreateAdminForm'
 
 function page() {
 	return (
-    	<div className="App-board">
+    	<div>
           <CreateAdminForm />
         </div>
     )

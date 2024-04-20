@@ -3,7 +3,7 @@ import CreateNoticeForm from './_components/CreateNoticeForm';
 
 function page() {
 	return (
-    	<div className="App-board">
+    	<div>
           <CreateNoticeForm />
         </div>
     )

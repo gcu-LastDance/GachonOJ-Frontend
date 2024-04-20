@@ -1,4 +1,4 @@
-import { userTableColumn, userTableData } from "@types/admin/user";
+import { userTableColumn, userTableData } from "@/types/admin/user";
 import React from "react";
 import { usePagination, useTable } from "react-table";
 
@@ -14,7 +14,7 @@ const main_table_data: userTableData[] = [
 
   },
   {
-    id: 1,
+    id: 2,
     email: "asdf@gachon.ac.kr",
     name: "사람2",
     member_number: 49398383,
@@ -24,7 +24,7 @@ const main_table_data: userTableData[] = [
 
   },
   {
-    id: 1,
+    id: 3,
     email: "asdf@gachon.ac.kr",
     name: "사람3",
     member_number: 89439838,
@@ -76,7 +76,7 @@ export const UserManageTable = () => {
   return (
     <div className="mt-20">
       <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
-        관리기능 &gt; 문의사항 관리
+        회원관리 &gt; 사용자 목록
       </div>
 
       {/* 테이블 요소 생성 */}

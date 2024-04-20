@@ -3,7 +3,7 @@ import UserManageTable from './_components/UserManageTable'
 
 function page() {
 	return (
-    	<div className="App-board">
+    	<div>
           <UserManageTable />
         </div>
     )

@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
+import React  from "react";
 import ADMIN_MOCK_DATA from "@/mocks/ADMIN_MOCK_DATA.json";
 import { adminTableColumn, adminTableData } from "@/types/admin/admin";
 import { usePagination, useTable } from "react-table";
+import Link from "next/link";
 
 const main_table_data: adminTableData[] = ADMIN_MOCK_DATA
 
@@ -167,12 +168,14 @@ const AdminManageTable = () => {
         </select>
       </div>
       <div className="flex justify-end items-center mt-5">
+        <Link href="./admin-manage/enroll">
         <button
           type="button"
           className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
         >
           새 관리자 생성
         </button>
+        </Link> 
       </div>
     </div>
   );

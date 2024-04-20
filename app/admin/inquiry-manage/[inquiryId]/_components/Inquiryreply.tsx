@@ -22,7 +22,7 @@ const Inquiryreply = ({ inquiryId }: { inquiryId: number }) => {
       <div className="flex mb-4 items-center">
         <label
           htmlFor="answer"
-          className="self-start text-gray-700 font-bold mb-2 mr-4"
+          className="self-start text-realGrey font-bold mb-2 mr-4"
         >
           답변 내용
         </label>

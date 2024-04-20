@@ -3,7 +3,7 @@ import NoticeDetailPage from "./_components/NoticeDetailPage";
 
 export default function page({ params }: { params: { noticeId: number } }) {
   return (
-    <div className="App-board">
+    <div>
       <NoticeDetailPage noticeId={params.noticeId} /> 
     </div>
   );

@@ -3,7 +3,7 @@ import EditAdminMyAccountForm from './_components/EditAdminMyAccountForm'
 
 function page() {
 	return (
-    	<div className="App-board">
+    	<div>
           <EditAdminMyAccountForm />
         </div>
     )

@@ -10,4 +10,5 @@ export interface inquiryTableData {
 export type inquiryTableColumn = {
   Header: string;
   accessor: keyof inquiryTableData; // 'title', 'author', 또는 'date'
+  Cell?: (props: { row: { original: { id: number } } }) => JSX.Element;
 };

@@ -9,9 +9,9 @@ export default function layout({ children }: { children: React.ReactNode }) {
       <SideAdminNav />
       <div className="ml-[14vw]">
         <AdminHeader />
-        <div className="mt-[7vh] py-[2.5vh] px-[2vw]">
+        <div className="py-[2.5vh] px-[2vw]">
           <BreadCrumbs />
-          <div>{children}</div>
+          <div className="font-PretendardRegular">{children}</div>
         </div>
       </div>
     </div>
