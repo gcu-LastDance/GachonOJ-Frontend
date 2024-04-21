@@ -1,4 +1,6 @@
-import React , {useEffect} from "react";
+'use client';
+
+import React from "react";
 import { usePagination, useTable } from "react-table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";

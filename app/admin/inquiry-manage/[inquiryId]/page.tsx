@@ -43,7 +43,7 @@ const page = ({ params }: { params: { inquiryId: number } }) => {
           <p className="mb-10 ml-11">{data?.result.inquiryContent}</p>
         </div>
         {data?.result.replyContent == null ? (
-          <Inquiryempty />
+          <Inquiryempty inquiryId={data?.result.inquiryId ?? 0}/>
         ) : (
           <Inquiryreply replyContent={data?.result.replyContent ?? 0} />
         )}

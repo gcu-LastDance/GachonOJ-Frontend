@@ -13,8 +13,7 @@ export interface inquiryTableData {
 // 컬럼 타입 정의
 export type inquiryTableColumn = {
   Header: string;
-  accessor: keyof inquiryTableData["result"]["content"]; 
-
+  accessor: keyof inquiryTableData["result"]["content"];
 };
 
 export interface inquiryContentsData {
@@ -26,4 +25,8 @@ export interface inquiryContentsData {
     inquiryCreatedDate: string;
     replyContent: string | null; // replyContent가 null일 수 있으므로 string 또는 null로 지정
   };
+}
+
+export interface replyFormData {
+  replyContents: string;
 }

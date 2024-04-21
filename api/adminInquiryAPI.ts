@@ -1,4 +1,5 @@
 import { instanceAuth } from "@/lib/axiosConfig";
+import { replyFormData } from "@/types/admin/inquiry";
 
 export const inquiryContentsAPI = async (inquiryId: number) => {
   try {
@@ -6,7 +7,7 @@ export const inquiryContentsAPI = async (inquiryId: number) => {
       inquiryId
     )}`;
     const response = await instanceAuth.get(url);
-    
+
     return response.data;
   } catch (error) {
     throw error;
@@ -23,3 +24,13 @@ export const inquiryListAPI = async () => {
     throw error;
   }
 };
+export const inquiryReplyAPI = async (inquiryId: number, data: replyFormData) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_B04_URL}/${inquiryId}/reply` as string;
+    const response = await instanceAuth.post(url, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
