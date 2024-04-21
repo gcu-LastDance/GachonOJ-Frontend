@@ -38,6 +38,7 @@ const RAW_RUNTIME_STATE =
           ["axios", "npm:1.6.8"],\
           ["axios-mock-adapter", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:1.22.0"],\
           ["chart.js", "npm:4.4.2"],\
+          ["dotenv", "npm:16.4.5"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:14.1.4"],\
           ["msw", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:2.2.13"],\
@@ -2445,6 +2446,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["dotenv", [\
+      ["npm:16.4.5", {\
+        "packageLocation": "../../../.yarn/berry/cache/dotenv-npm-16.4.5-bcb20eb95d-10c0.zip/node_modules/dotenv/",\
+        "packageDependencies": [\
+          ["dotenv", "npm:16.4.5"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["eastasianwidth", [\
       ["npm:0.2.0", {\
         "packageLocation": "../../../.yarn/berry/cache/eastasianwidth-npm-0.2.0-c37eb16bd1-10c0.zip/node_modules/eastasianwidth/",\
@@ -3434,6 +3444,7 @@ const RAW_RUNTIME_STATE =
           ["axios", "npm:1.6.8"],\
           ["axios-mock-adapter", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:1.22.0"],\
           ["chart.js", "npm:4.4.2"],\
+          ["dotenv", "npm:16.4.5"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:14.1.4"],\
           ["msw", "virtual:22c5b35ab7e104da7868cbf74cd84ddcc28d423231dada847cfb5ecc1389eb635f01fb306ed8692010818ae0608ab942b564f4d5ac0c24ee56e73036fcb58c8f#npm:2.2.13"],\
