@@ -1,21 +1,6 @@
 import React from 'react';
 
-
-const Inquiryreply = ({ inquiryId }: { inquiryId: number }) => {
-  const fetchedReply = [
-    {
-      replyId: 1,
-      inquiryId: 1,
-      content: "문의사항 답변입니다1",
-    },
-    {
-      replyId: 2,
-      inquiryId: 2,
-      content: "문의사항 답변입니다2",
-    },
-  ];
-
-  const inquiryReply = fetchedReply.find((reply) => reply.inquiryId === inquiryId);
+const Inquiryreply = ({ replyContent }: { replyContent: string }) => {
 
   return (
     <div className='flex items-center'>
@@ -28,7 +13,7 @@ const Inquiryreply = ({ inquiryId }: { inquiryId: number }) => {
         </label>
       </div>
       <div className='flex flex-col'>
-        <textarea value={inquiryReply?.content} readOnly className="resize-none" />
+        <textarea value={replyContent} readOnly className="resize-none" />
       </div>
     </div>
   );

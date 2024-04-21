@@ -1,41 +1,22 @@
-import { inquiryTableColumn, inquiryTableData } from "@/types/admin/inquiry";
+'use client';
+
 import React from "react";
 import { usePagination, useTable } from "react-table";
 import Link from "next/link";
-
-const main_table_data: inquiryTableData[] = [
-  {
-    id: 1,
-    title: "안녕하세요",
-    author: "사람1",
-    date: "2022-01-01",
-    inquiry_status: true,
-  },
-  {
-    id: 2,
-    title: "안녕하세요2",
-    author: "사람2",
-    date: "2022-01-01",
-    inquiry_status: false,
-  },
-  {
-    id: 3,
-    title: "안녕하세요3",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-    inquiry_status: true,
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { inquiryListAPI } from "@/api/adminInquiryAPI";
+import { inquiryTableColumn, inquiryTableData } from "@/types/admin/inquiry";
 
 const main_columns: inquiryTableColumn[] = [
-  { Header: "번호", accessor: "id" },
-  { Header: "제목", accessor: "title" },
-  { Header: "작성자", accessor: "author" },
-  { Header: "작성일", accessor: "date" },
-  { Header: "답변여부", accessor: "inquiry_status" },
+  { Header: "번호", accessor: "inquiryId" },
+  { Header: "제목", accessor: "inquiryTitle" },
+  { Header: "작성자", accessor: "memberNickname" },
+  { Header: "작성일", accessor: "inquiryCreatedDate" },
+  { Header: "답변여부", accessor: "inquiryStatus" },
 ];
 
-export const InquiryManageTable = () => {
+export const InquiryManageTable = ({ data }: { data: inquiryTableData[] }) => {
+
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
     getTableProps,
@@ -52,10 +33,10 @@ export const InquiryManageTable = () => {
     setPageSize,
     state,
     prepareRow,
-  } = useTable<inquiryTableData>(
+  } = useTable<inquiryTableData[]>(
     {
       columns: main_columns,
-      data: main_table_data,
+      data: data.result?.content || []
     },
     usePagination
   );
@@ -102,13 +83,11 @@ export const InquiryManageTable = () => {
                     key={cell.column.id}
                   >
                     {cell.column.Header === "제목" ? (
-                      <Link href={`/admin/inquiry-manage/${row.original.id}`}>
+                      <Link
+                        href={`/admin/inquiry-manage/${row.original.inquiryId}`}
+                      >
                         {cell.render("Cell")}
                       </Link>
-                    ) : cell.value === true ? (
-                      "답변완료"
-                    ) : cell.value === false ? (
-                      "-"
                     ) : (
                       cell.render("Cell")
                     )}
@@ -173,4 +152,17 @@ export const InquiryManageTable = () => {
     </div>
   );
 };
-export default InquiryManageTable;
+
+const InquiryManageTableContainer = () => {
+  const { data } = useQuery<inquiryTableData[]>({
+    queryKey: ["inquiryList"],
+    queryFn: inquiryListAPI,
+  }
+  );
+
+  if (!data) return null;
+  return <InquiryManageTable data={data} />;
+
+};
+
+export default InquiryManageTableContainer;
