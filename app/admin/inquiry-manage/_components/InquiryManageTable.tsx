@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { usePagination, useTable } from "react-table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -14,6 +14,7 @@ const main_columns: inquiryTableColumn[] = [
 ];
 
 export const InquiryManageTable = ({ data }: { data: inquiryTableData[] }) => {
+
   // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
   const {
     getTableProps,
@@ -30,10 +31,10 @@ export const InquiryManageTable = ({ data }: { data: inquiryTableData[] }) => {
     setPageSize,
     state,
     prepareRow,
-  } = useTable<inquiryTableData>(
+  } = useTable<inquiryTableData[]>(
     {
       columns: main_columns,
-      data,
+      data: data.result?.content || []
     },
     usePagination
   );
@@ -154,9 +155,12 @@ const InquiryManageTableContainer = () => {
   const { data } = useQuery<inquiryTableData[]>({
     queryKey: ["inquiryList"],
     queryFn: inquiryListAPI,
-  });
+  }
+  );
 
-  return <InquiryManageTable data={data || []} />;
+  if (!data) return null;
+  return <InquiryManageTable data={data} />;
+
 };
 
 export default InquiryManageTableContainer;

@@ -1,15 +1,19 @@
 export interface inquiryTableData {
-  inquiryId: number;
-  inquiryTitle: string;
-  memberNickname: string;
-  inquiryCreatedDate: string;
-  inquiryStatus: string;
+  result: {
+    content: {
+      inquiryId: number;
+      inquiryTitle: string;
+      memberNickname: string;
+      inquiryCreatedDate: string;
+      inquiryStatus: string;
+    };
+  };
 }
 
 // 컬럼 타입 정의
 export type inquiryTableColumn = {
   Header: string;
-  accessor: keyof inquiryTableData; // 'title', 'author', 또는 'date'
+  accessor: keyof inquiryTableData["result"]["content"]; 
 
 };
 

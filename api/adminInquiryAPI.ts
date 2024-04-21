@@ -5,7 +5,6 @@ export const inquiryContentsAPI = async (inquiryId: number) => {
     const url = `${process.env.NEXT_PUBLIC_B07_URL}/${encodeURIComponent(
       inquiryId
     )}`;
-    console.log(process.env.NEXT_PUBLIC_B07_URL)
     const response = await instanceAuth.get(url);
     
     return response.data;
