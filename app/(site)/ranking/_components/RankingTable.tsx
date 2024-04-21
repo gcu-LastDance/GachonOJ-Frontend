@@ -1,10 +1,15 @@
 "use client";
 
-import DiffBadge from "@/components/badge/DiffBadge";
 import RankBadge from "@/components/badge/RankBadge";
-import CategoryButton from "@/components/button/CategoryButton";
+import columnHelper from "@/lib/columnHelper";
 import { RankingTableColumn, RankingTableData } from "@/types/member";
 import { rank } from "@/types/rank";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import Link from "next/link";
 import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
@@ -23,26 +28,35 @@ export const ranking_table_data: RankingTableData[] = [
   { id: 10, nickname: "ScriptSage", rank: 0, rankExp: 7500, solvedProb: 105 },
 ];
 
-const ranking_table_columns: RankingTableColumn[] = [
-  {
-    Header: "등급",
-    accessor: "rank",
-    Cell: ({ value }: { value: rank }) => (
+const columns: ColumnDef<RankingTableData, any>[] = [
+  columnHelper("rank", {
+    header: "등급",
+    cell: (value) => (
       <div className="flex justify-center">
-        <RankBadge rank={value} />
+        <RankBadge rank={value as rank} />
       </div>
     ),
-  },
-  { Header: "닉네임", accessor: "nickname" },
-  { Header: "등급 경험치", accessor: "rankExp" },
-  { Header: "푼 문제 수", accessor: "solvedProb" },
+  }),
+  columnHelper("nickname", {
+    header: "닉네임",
+  }),
+  columnHelper("rankExp", {
+    header: "등급 경험치",
+  }),
+  columnHelper("solvedProb", {
+    header: "푼 문제 수",
+  }),
 ];
 
 export default function RankingTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [data, setData] = useState<RankingTableData[]>(ranking_table_data);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns: ranking_table_columns, data: ranking_table_data });
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
     <div className="flex flex-col">
@@ -57,61 +71,62 @@ export default function RankingTable() {
           <IoMdSearch className="absolute top-[1.5vh] left-[0.4vw]" />
         </div>
       </div>
-      <table {...getTableProps()} className="w-full">
+      <table className="w-full">
         <thead>
-          {headerGroups.map((headerGroup, index) => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <tr
-              {...headerGroup.getHeaderGroupProps()}
-              key={index}
+              key={headerGroup.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[0.95vw]"
             >
-              {headerGroup.headers.map((column) => (
+              {headerGroup.headers.map((header) => (
                 <th
-                  {...column.getHeaderProps()}
-                  key={column.id}
+                  key={header.id}
                   className={`${
-                    column.id === "nickname"
+                    header.id === "nickname"
                       ? "text-left w-[16vw] pl-[3vw]"
                       : "text-center w-[11w]"
                   }`}
                 >
-                  {column.render("Header")}
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                key={row.id}
-                className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
-              >
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    key={cell.column.id}
-                    className={`${
-                      cell.column.id === "nickname"
-                        ? "text-left pl-[3vw]"
-                        : "text-center"
-                    }  text-[0.95vw] font-PretendardLight text-realGrey`}
-                  >
-                    {cell.column.id === "title" ? (
-                      <Link href={`/notice/${row.original.id}`}>
-                        {cell.render("Cell")}
-                      </Link>
-                    ) : (
-                      cell.render("Cell")
-                    )}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.column.id}
+                  className={`${
+                    cell.column.id === "nickname"
+                      ? "text-left pl-[3vw]"
+                      : "text-center"
+                  }  text-[0.95vw] font-PretendardLight text-realGrey`}
+                >
+                  {cell.column.id === "title" ? (
+                    <Link href={`/notice/${row.original.id}`}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Link>
+                  ) : (
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
       <div className="flex mt-[2.3vh]">

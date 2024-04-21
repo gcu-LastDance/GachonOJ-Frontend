@@ -61,13 +61,12 @@ const options = {
 };
 
 const LanguageGraph = () => {
-    return (
-      <div className="flex flex-col justify-center items-center shadow-md border-semiGrey border-4 px-5 py-5 bg-white">
-        <div className="mb-8 text-2xl">학생 선호 언어 현황</div>
-        <Doughnut data={data} options={options} />
-      </div>
-    );
-  
-} ; 
+  return (
+    <div className="flex flex-col justify-center items-center shadow-md border-semiGrey border-4 px-5 py-5 bg-white">
+      <div className="mb-8 text-2xl">학생 선호 언어 현황</div>
+      <Doughnut data={data} options={options} />
+    </div>
+  );
+};
 
 export default LanguageGraph;
