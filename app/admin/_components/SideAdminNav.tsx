@@ -40,16 +40,16 @@ export default function SideAdminNav() {
             </span>
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[0.8vh] my-[1.2vh]">
-            <button>
+            <Link href="/admin/notice-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 공지사항 관리
               </p>
-            </button>
-            <button>
+            </Link>
+            <Link href="/admin/inquiry-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 문의사항 관리
               </p>
-            </button>
+            </Link>
           </div>
         </div>
         <div>
@@ -60,16 +60,16 @@ export default function SideAdminNav() {
             </span>
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[0.8vh] my-[1.2vh]">
-            <button>
+            <Link href="/admin/admin-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 관리자 목록
               </p>
-            </button>
-            <button>
+            </Link>
+            <Link href="/admin/admin-manage/my-account">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 내 계정 관리
               </p>
-            </button>
+            </Link>
           </div>
         </div>
         <div>
@@ -80,21 +80,21 @@ export default function SideAdminNav() {
             </span>
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[0.8vh] my-[1.2vh]">
-            <button>
+            <Link href="/admin/user-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 사용자 목록
               </p>
-            </button>
-            <button>
+            </Link>
+            <Link href="/admin/professor-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 교수 목록
               </p>
-            </button>
-            <button>
+            </Link>
+            <Link href="/admin/admin-manage/enroll">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 새로운 교수 추가
               </p>
-            </button>
+            </Link>
           </div>
         </div>
         <div>

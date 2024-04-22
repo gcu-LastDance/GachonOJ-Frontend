@@ -1,5 +1,6 @@
 "use client";
 
+import useUserStore from "@/store/useUserStore";
 import { permissionType } from "@/types/auth";
 import React from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -7,7 +8,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 const side_nav_user_data: SideNavUserData = {
   userImage: "",
   permission: "ROLE_ADMIN",
-  nickname: "가천OJ관리자",
+  nickname: "가천대 교수님",
 };
 
 /**
@@ -24,6 +25,8 @@ export interface SideNavUserData {
 }
 
 export default function SideNavAccount() {
+  const { userImg, userPermission } = useUserStore();
+
   return (
     <div className="flex items-centers space-x-[0.7vw]">
       <div>
@@ -31,7 +34,7 @@ export default function SideNavAccount() {
       </div>
       <div className="flex flex-col">
         <p className="font-PretendardSemiBold text-primaryDark text-[1.2vw]">
-          {side_nav_user_data.permission === "ROLE_ADMIN" ? "관리자" : "교수"}
+          {userPermission === "ROLE_ADMIN" ? "관리자" : "교수"}
         </p>
         <p className="font-PretendardRegular text-primaryDark text-[0.8vw]">
           {side_nav_user_data.nickname}

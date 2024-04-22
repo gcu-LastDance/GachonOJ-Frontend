@@ -4,7 +4,7 @@ import { loginAPI } from "@/api/authAPI";
 import FullButton from "@/components/button/FullButton";
 import useUserStore from "@/store/useUserStore";
 import { LoginFormData } from "@/types/auth";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -30,8 +30,8 @@ export default function LoginForm() {
       console.log(data);
       if (data.data.success) {
         setUser(
-          data.data.result.userImg,
-          data.data.result.userPermission,
+          data.data.result.memberImg,
+          data.data.result.memberRole,
           data.authToken
         );
         router.push("/main");

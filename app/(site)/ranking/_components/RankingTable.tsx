@@ -1,6 +1,7 @@
 "use client";
 
 import RankBadge from "@/components/badge/RankBadge";
+import PaginationBar from "@/components/pagination/PaginationBar";
 import columnHelper from "@/lib/columnHelper";
 import { RankingTableData } from "@/types/member";
 import { rank } from "@/types/rank";
@@ -15,16 +16,40 @@ import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
 export const ranking_table_data: RankingTableData[] = [
-  { id: 1, nickname: "CodeMaster", rank: 1, rankExp: 12000, solvedProb: 150 },
-  { id: 2, nickname: "AlgR1an", rank: 2, rankExp: 11500, solvedProb: 145 },
-  { id: 3, nickname: "DebugDwarf", rank: 3, rankExp: 11000, solvedProb: 140 },
-  { id: 4, nickname: "BinaryBard", rank: 4, rankExp: 10500, solvedProb: 135 },
-  { id: 5, nickname: "VarViking", rank: 4, rankExp: 10000, solvedProb: 130 },
-  { id: 6, nickname: "LoopLion", rank: 5, rankExp: 9500, solvedProb: 125 },
-  { id: 7, nickname: "FunctionFury", rank: 0, rankExp: 9000, solvedProb: 120 },
-  { id: 8, nickname: "MethodMage", rank: 0, rankExp: 8500, solvedProb: 115 },
-  { id: 9, nickname: "ClassCleric", rank: 0, rankExp: 8000, solvedProb: 110 },
-  { id: 10, nickname: "ScriptSage", rank: 0, rankExp: 7500, solvedProb: 105 },
+  {
+    id: 1,
+    nickname: "gachonCodeKing",
+    rank: 5,
+    rankExp: 12000,
+    solvedProb: 150,
+  },
+  {
+    id: 2,
+    nickname: "성적우수장학금 헌터",
+    rank: 5,
+    rankExp: 11500,
+    solvedProb: 145,
+  },
+  { id: 3, nickname: "SurVeine", rank: 4, rankExp: 11000, solvedProb: 140 },
+  {
+    id: 4,
+    nickname: "심화프로그래밍",
+    rank: 3,
+    rankExp: 10500,
+    solvedProb: 135,
+  },
+  { id: 5, nickname: "macbookpro", rank: 3, rankExp: 10000, solvedProb: 130 },
+  { id: 6, nickname: "batton", rank: 2, rankExp: 9500, solvedProb: 125 },
+  {
+    id: 7,
+    nickname: "가천대라곰빈백도둑",
+    rank: 2,
+    rankExp: 9000,
+    solvedProb: 120,
+  },
+  { id: 8, nickname: "학식메뉴봇", rank: 1, rankExp: 8500, solvedProb: 115 },
+  { id: 9, nickname: "graph", rank: 1, rankExp: 8000, solvedProb: 110 },
+  { id: 10, nickname: "PDSS", rank: 0, rankExp: 7500, solvedProb: 105 },
 ];
 
 const columns: ColumnDef<RankingTableData, any>[] = [
@@ -130,78 +155,8 @@ export default function RankingTable() {
           ))}
         </tbody>
       </table>
-      <div className="flex mt-[2.3vh]">
-        <div className="mx-auto w-[24vw] grid grid-cols-12 justify-center items-center border-[0.08vw] border-realGrey overflow-hidden rounded-lg font-PretendardLight text-realGrey">
-          <button type="button" className="py-[0.6vh]">
-            ⟨
-          </button>
-          <button
-            type="button"
-            className="bg-primaryBlue text-white py-[0.6vh]"
-          >
-            1
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            2
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            3
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            4
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            5
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            6
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            7
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            8
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            9
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            10
-          </button>
-          <button
-            type="button"
-            className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-          >
-            ⟩
-          </button>
-        </div>
+      <div className="mt-[2.3vh]">
+        <PaginationBar />
       </div>
     </div>
   );
