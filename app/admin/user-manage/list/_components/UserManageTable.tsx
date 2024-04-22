@@ -104,10 +104,10 @@ export default function UserManageTable() {
                 </td>
                 ))}
                 <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                  <button className="underline underline-offset-auto">정보 수정</button>
+                  <button className="underline underline-offset-8">정보 수정</button>
                 </td>
                 <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                  <button className="underline underline-offset-auto">정보 삭제</button>
+                  <button className="underline underline-offset-8s">정보 삭제</button>
                 </td>
               </tr>
             
