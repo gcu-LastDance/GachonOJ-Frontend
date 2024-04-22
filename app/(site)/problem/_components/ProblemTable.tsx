@@ -2,15 +2,17 @@
 
 import DiffBadge from "@/components/badge/DiffBadge";
 import CategoryButton from "@/components/button/CategoryButton";
+import columnHelper from "@/lib/columnHelper";
+import { ProblemTableData, difficulty } from "@/types/problem";
 import {
-  ProblemTableColumn,
-  ProblemTableData,
-  difficulty,
-} from "@/types/problem";
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import Link from "next/link";
 import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
-import { useTable } from "react-table";
 
 export const prob_table_data: ProblemTableData[] = [
   {
@@ -105,36 +107,46 @@ export const prob_table_data: ProblemTableData[] = [
   },
 ];
 
-const prob_table_columns: ProblemTableColumn[] = [
-  {
-    Header: "난이도",
-    accessor: "difficulty",
-    Cell: ({ value }: { value: difficulty }) => (
+const columns: ColumnDef<ProblemTableData, any>[] = [
+  columnHelper("difficulty", {
+    header: "난이도",
+    cell: (value) => (
       <div className="flex justify-center">
-        <DiffBadge difficulty={value} />
+        <DiffBadge difficulty={value as difficulty} />
       </div>
     ),
-  },
-  { Header: "문제 제목", accessor: "title" },
-  {
-    Header: "분류",
-    accessor: "category",
-    Cell: ({ value }: { value: string[] }) => (
+  }),
+  columnHelper("title", {
+    header: "문제 제목",
+  }),
+  columnHelper("category", {
+    header: "분류",
+    cell: (value) => (
       <div className="flex justify-center">
-        <CategoryButton categories={value} />
+        <CategoryButton categories={value as string[]} />
       </div>
     ),
-  },
-  { Header: "정답자 수", accessor: "correct" },
-  { Header: "정답률", accessor: "correctRate" },
-  { Header: "북마크", accessor: "isBookmarked" },
+  }),
+  columnHelper("correct", {
+    header: "정답자 수",
+  }),
+  columnHelper("correctRate", {
+    header: "정답률",
+  }),
+  columnHelper("isBookmarked", {
+    header: "북마크",
+  }),
 ];
 
 export default function ProblemTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [data, setData] = useState<ProblemTableData[]>(prob_table_data);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns: prob_table_columns, data: prob_table_data });
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
     <div className="flex flex-col">
@@ -159,69 +171,72 @@ export default function ProblemTable() {
             분류 선택
           </button>
         </div>
-        <div className="relative ml-auto">
+        <div className="flex ml-auto border-[0.1vw] border-realGrey h-[5vh] w-[12vw] rounded-lg px-[0.5vw] space-x-[0.3vw] items-center">
+          <IoMdSearch className="text-[1vw] text-primaryDark" />
           <input
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             placeholder="문제 제목을 검색해보세요"
-            className="h-[5vh] w-[12vw] border-[0.1vw] border-realGrey pl-[2vw] pr-[0.5vw] placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] rounded-lg"
+            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] focus:outline-none w-[9vw] h-[4vh]"
           />
-          <IoMdSearch className="absolute top-[1.5vh] left-[0.4vw]" />
         </div>
       </div>
-      <table {...getTableProps()} className="w-full">
+      <table className="w-full">
         <thead>
-          {headerGroups.map((headerGroup, index) => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <tr
-              {...headerGroup.getHeaderGroupProps()}
-              key={index}
+              key={headerGroup.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[0.95vw]"
             >
-              {headerGroup.headers.map((column) => (
+              {headerGroup.headers.map((header) => (
                 <th
-                  {...column.getHeaderProps()}
-                  key={column.id}
+                  key={header.id}
                   className={`${
-                    column.id === "title"
+                    header.id === "title"
                       ? "text-left w-[16vw]"
                       : "text-center w-[11w]"
                   }`}
                 >
-                  {column.render("Header")}
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                key={row.id}
-                className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
-              >
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    key={cell.column.id}
-                    className={`${
-                      cell.column.id === "title" ? "text-left" : "text-center"
-                    }  text-[0.95vw] font-PretendardLight text-realGrey`}
-                  >
-                    {cell.column.id === "title" ? (
-                      <Link href={`/notice/${row.original.id}`}>
-                        {cell.render("Cell")}
-                      </Link>
-                    ) : (
-                      cell.render("Cell")
-                    )}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.id}
+                  className={`${
+                    cell.column.id === "title" ? "text-left" : "text-center"
+                  } ${
+                    cell.column.id === "category" && "w-[8vw]"
+                  } text-[0.95vw] font-PretendardLight text-realGrey`}
+                >
+                  {cell.column.id === "title" ? (
+                    <Link href={`/notice/${cell.column.id}`}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Link>
+                  ) : (
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
       <div className="flex mt-[2.3vh]">

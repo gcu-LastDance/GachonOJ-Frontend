@@ -4,7 +4,7 @@ import GachonOJShortCut from "./_components/GachonOJShortCut";
 import IncorrectRate from "./_components/IncorrectRateQuestions";
 import IncorrectAlgorithm from "./_components/IncorrectAlgorithm";
 import GuideShortCut from "./_components/GuideShortCut";
-import LanguageGraph from "./_components/LanguageGraph";
+// import LanguageGraph from "./_components/LanguageGraph";
 
 export default function page() {
   return (
@@ -39,9 +39,7 @@ export default function page() {
           <div className="mb-3">
             <GachonOJShortCut />
           </div>
-          <div className="w-full h-max">
-            <LanguageGraph/>
-          </div>
+          <div className="w-full h-max">{/* <LanguageGraph/> */}</div>
         </div>
       </div>
     </div>

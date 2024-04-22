@@ -1,12 +1,13 @@
-'use client';
-import UserManageTable from './_components/UserManageTable'
+"use client";
+
+import UserManageTable from "./_components/userManageTable";
 
 function page() {
-	return (
-    	<div>
-          <UserManageTable />
-        </div>
-    )
+  return (
+    <div>
+      <UserManageTable />
+    </div>
+  );
 }
 
 export default page;
