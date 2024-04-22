@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instanceNonAuth = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
