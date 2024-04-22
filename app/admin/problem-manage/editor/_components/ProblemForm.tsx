@@ -14,24 +14,25 @@ const ProblemForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-end">
-          <button
-            type="submit"
-            name="register"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mr-4 rounded-lg mt-8"
-          >
-            등록하기
-          </button>
-          <button
-            type="submit"
-            name="save"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8"
-          >
-            저장하기
-          </button>
-        </div>
+        <button
+          type="submit"
+          name="register"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mr-4 rounded-lg mt-8"
+        >
+          등록하기
+        </button>
+        <button
+          type="submit"
+          name="save"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8"
+        >
+          저장하기
+        </button>
+      </div>
       <div className="flex flex-wrap mb-4 items-center">
-        
-        <div className="text-2xl font-PretendardBold mb-4 w-full">문제 설정</div>
+        <div className="text-2xl font-PretendardBold mb-4 w-full">
+          문제 설정
+        </div>
         <div className="w-1/3 text-xl flex items-center justify-start">
           <label htmlFor="memory" className="block font-medium mb-1 mr-8">
             메모리 제한
@@ -52,7 +53,6 @@ const ProblemForm = () => {
           </label>
           <select
             id="time"
-            
             {...register("time")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
@@ -68,7 +68,6 @@ const ProblemForm = () => {
           </label>
           <select
             id="difficulty"
-            
             {...register("difficulty")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
@@ -85,7 +84,6 @@ const ProblemForm = () => {
             <input
               type="checkbox"
               id="language-c"
-            
               value="C"
               {...register("language")}
               className="mr-2"
@@ -96,7 +94,6 @@ const ProblemForm = () => {
             <input
               type="checkbox"
               id="language-cpp"
-            
               value="C++"
               {...register("language")}
               className="mr-2"
@@ -107,7 +104,6 @@ const ProblemForm = () => {
             <input
               type="checkbox"
               id="language-java"
-              
               value="JAVA"
               {...register("language")}
               className="mr-2"
@@ -118,7 +114,6 @@ const ProblemForm = () => {
             <input
               type="checkbox"
               id="language-python"
-              
               value="Python"
               {...register("language")}
               className="mr-2"
@@ -137,9 +132,7 @@ const ProblemForm = () => {
         />
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 min-w-20 self-start">
-          문제 본문
-        </div>
+        <div className="text-xl mb-4 mr-4 min-w-20 self-start">문제 본문</div>
         <textarea
           {...register("content")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -147,9 +140,7 @@ const ProblemForm = () => {
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 min-w-20 self-start">
-          입력 설명
-        </div>
+        <div className="text-xl mb-4 mr-4 min-w-20 self-start">입력 설명</div>
         <textarea
           {...register("inputDescription")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -157,9 +148,7 @@ const ProblemForm = () => {
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 min-w-20 self-start">
-          출력 설명
-        </div>
+        <div className="text-xl mb-4 mr-4 min-w-20 self-start">출력 설명</div>
         <textarea
           {...register("outputDescription")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -168,9 +157,7 @@ const ProblemForm = () => {
       </div>
 
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 self-start">
-          테스트 케이스
-        </div>
+        <div className="text-xl mb-4 mr-4 self-start">테스트 케이스</div>
         <table className="flex-auto px-3 py-2 border">
           <thead>
             <tr>

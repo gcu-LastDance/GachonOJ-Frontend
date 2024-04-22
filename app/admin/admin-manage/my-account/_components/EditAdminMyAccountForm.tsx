@@ -19,23 +19,23 @@ export default function EditAdminMyAccountForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex-auto ml-10 mt-10 mb-4 items-center">
         <div className="flex">
-        <div className="w-1/3 mb-5 sm:mb-0 flex items-center">
-          <label htmlFor="role" className="w-fit block font-medium mb-1 mr-5">
-            번호
-          </label>
-          <input id="id" value="3" className="block font-medium mb-1 ml-5" />
-        </div>
-        <div className="w-full mb-5 sm:mb-0 flex items-center">
-          <label htmlFor="role" className="w-fit block font-medium mb-1 mr-5">
-            권한
-          </label>
-          <input
-            id="role"
-            value="관리자"
-            {...register("role")}
-            className="block font-medium mb-1 ml-5"
-          />
-        </div>
+          <div className="w-1/3 mb-5 sm:mb-0 flex items-center">
+            <label htmlFor="role" className="w-fit block font-medium mb-1 mr-5">
+              번호
+            </label>
+            <input id="id" value="3" className="block font-medium mb-1 ml-5" />
+          </div>
+          <div className="w-full mb-5 sm:mb-0 flex items-center">
+            <label htmlFor="role" className="w-fit block font-medium mb-1 mr-5">
+              권한
+            </label>
+            <input
+              id="role"
+              value="관리자"
+              {...register("role")}
+              className="block font-medium mb-1 ml-5"
+            />
+          </div>
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
           <label htmlFor="email" className="w-28 block font-medium mb-1 mr-2">

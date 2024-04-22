@@ -1,8 +1,7 @@
 import { permissionType } from "@/types/auth";
 
 export const memberPermisionMap: Record<permissionType, string> = {
-  guest: "손님",
-  member: "사용자",
-  professor: "교수",
-  admin: "관리자",
+  ROLE_STUDENT: "학생",
+  ROLE_PROFESSOR: "교수",
+  ROLE_ADMIN: "관리자",
 };
