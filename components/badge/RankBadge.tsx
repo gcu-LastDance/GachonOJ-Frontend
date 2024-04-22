@@ -8,7 +8,7 @@ export default function RankBadge({ rank }: { rank: number }) {
   const rankImg = rankImageMap[rank as rank];
 
   return (
-    <div className="w-[2.2vw]">
+    <div>
       <Image src={rankImg} alt="Rank Image" />
     </div>
   );

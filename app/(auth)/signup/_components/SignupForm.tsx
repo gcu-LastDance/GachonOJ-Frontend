@@ -41,10 +41,10 @@ export default function SignupForm() {
 
   /** 이메일 인증 요청 버튼 이벤트 핸들러 */
   const handleEmailVerification = () => {
-    // const email = getValues("memberEmail");
-    // emailVerifyMutation.mutate(email);
-    setIsReadytoEmailVerification(true);
-    setEmailVerification(true);
+    const email = getValues("memberEmail");
+    emailVerifyMutation.mutate(email);
+    // setIsReadytoEmailVerification(true);
+    // setEmailVerification(true);
   };
 
   /** 이메일 인증 코드 타이머 */

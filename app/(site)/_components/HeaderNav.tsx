@@ -36,7 +36,12 @@ export default function HeaderNav() {
           <Link href="/inquiry">
             <span>문의</span>
           </Link>
-          {(userPermission === "professor" || userPermission === "admin") && (
+          {userPermission === "ROLE_PROFESSOR" && (
+            <Link href="/professor">
+              <span>관리페이지</span>
+            </Link>
+          )}
+          {userPermission === "ROLE_ADMIN" && (
             <Link href="/admin">
               <span>관리페이지</span>
             </Link>

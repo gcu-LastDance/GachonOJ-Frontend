@@ -1,6 +1,6 @@
 import { permissionType } from "@/types/auth";
 import { create } from "zustand";
-
+import { persist } from "zustand/middleware";
 interface UserState {
   userImg: string | null;
   userPermission: permissionType | null;
@@ -16,27 +16,25 @@ interface UserState {
   setUserDrop: () => void;
 }
 
-const useUserStore = create<UserState>((set) => ({
-  userImg: null,
-  userPermission: "guest",
-  token: null,
+const useUserStore = create(
+  persist<UserState>(
+    (set) => ({
+      userImg: null,
+      userPermission: null,
+      token: null,
 
-  // 사용자 이미지 설정
-  setUserImg: (userImg) => set({ userImg }),
-
-  // 사용자 권한 설정
-  setUserPermission: (userPermission) => set({ userPermission }),
-
-  // 토큰 설정
-  setToken: (token) => set({ token }),
-
-  // 로그인 시 사용자 이미지, 권한, 토큰 설정
-  setUser: (userImg, userPermission, token) =>
-    set({ userImg, userPermission, token }),
-
-  // 로그아웃 시 모든 상태 초기화
-  setUserDrop: () =>
-    set({ userImg: null, userPermission: "guest", token: null }),
-}));
+      setUserImg: (userImg) => set({ userImg }),
+      setUserPermission: (userPermission) => set({ userPermission }),
+      setToken: (token) => set({ token }),
+      setUser: (userImg, userPermission, token) =>
+        set({ userImg, userPermission, token }),
+      setUserDrop: () =>
+        set({ userImg: null, userPermission: null, token: null }),
+    }),
+    {
+      name: "user", // 스토리지에 저장될 때 사용될 키
+    }
+  )
+);
 
 export default useUserStore;
