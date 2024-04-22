@@ -2,6 +2,7 @@
 
 import { loginAPI } from "@/api/authAPI";
 import FullButton from "@/components/button/FullButton";
+import useUserStore from "@/store/useUserStore";
 import { LoginFormData } from "@/types/auth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function LoginForm() {
   const router = useRouter();
+  const { setUser } = useUserStore();
   const { register, handleSubmit } = useForm<LoginFormData>();
   const [isLoginReject, setIsLoginReject] = useState(false);
 
@@ -26,7 +28,12 @@ export default function LoginForm() {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.success) {
+      if (data.data.success) {
+        setUser(
+          data.data.result.userImg,
+          data.data.result.userPermission,
+          data.authToken
+        );
         router.push("/main");
       }
     },

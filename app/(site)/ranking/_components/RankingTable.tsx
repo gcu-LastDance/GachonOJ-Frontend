@@ -32,7 +32,9 @@ const columns: ColumnDef<RankingTableData, any>[] = [
     header: "등급",
     cell: (value) => (
       <div className="flex justify-center">
-        <RankBadge rank={value as rank} />
+        <div className="w-[2vw]">
+          <RankBadge rank={value as rank} />
+        </div>
       </div>
     ),
   }),

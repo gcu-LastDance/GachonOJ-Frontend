@@ -5,7 +5,8 @@ export const hoverProfileAPI = async () => {
     const response = await instanceAuth.get(
       process.env.NEXT_PUBLIC_M28_URL as string
     );
-    return response.data;
+    if (response.data.suceess === false) throw Error;
+    return response.data.result;
   } catch (error) {
     throw error;
   }

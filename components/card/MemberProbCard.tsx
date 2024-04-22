@@ -34,7 +34,9 @@ export default function MemberProbCard() {
         )}
       </div>
       <div className="flex space-x-[0.2vw] items-center">
-        <RankBadge rank={member_prob_data.rank} />
+        <div className="w-[2.2vw]">
+          <RankBadge rank={member_prob_data.rank} />
+        </div>
         <span className="font-PretendardSemiBold text-[1vw] text-primaryDark">
           {member_prob_data.nickname}
         </span>

@@ -1,19 +1,39 @@
 import { hoverProfileAPI } from "@/api/memberAPI";
+import RankBadge from "@/components/badge/RankBadge";
 import useUserStore from "@/store/useUserStore";
 import { MemberHoverProfileData } from "@/types/member";
-import { useQuery } from "@tanstack/react-query";
+import { rank } from "@/types/rank";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { CiUser } from "react-icons/ci";
+import { RiUser3Line } from "react-icons/ri";
+import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+import { logoutAPI } from "@/api/authAPI";
 
 export default function HeaderMemberDropdown() {
+  const router = useRouter();
   const { userImg, setUserDrop } = useUserStore();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = () => {
     setUserDrop();
   };
+
+  const logoutMutation = useMutation({
+    mutationFn: logoutAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.data.success) {
+        router.push("/main");
+      }
+    },
+  });
 
   const { data } = useQuery<MemberHoverProfileData>({
     queryKey: ["hoverProfile"],
@@ -42,39 +62,56 @@ export default function HeaderMemberDropdown() {
       </button>
       {showDropdown && (
         <div
-          className="absolute z-10 bg-white divide-y divide-semiGrey rounded-lg shadow w-[12vw]"
+          className="absolute z-10 bg-white divide-y divide-semiGrey rounded-lg shadow w-[12vw] border-[0.1vw]"
           onMouseEnter={() => setShowDropdown(true)}
           onMouseLeave={() => setShowDropdown(false)}
         >
-          <ul className="py-2 text-[1vw] text-gray-700">
-            <li className="border-b border-gray-300">
-              {data?.rating}
-              {data?.memberEmail}
-              {data?.memberNickname}
+          <ul className="text-[1vw] text-gray-700">
+            <li className="border-b border-gray-300 w-full flex flex-col px-[1vw] pb-[1.5vh] pt-[2vh]">
+              <div className="flex items-center">
+                <div className="w-[1.4vw] mr-[0.5vw]">
+                  <RankBadge rank={data?.rating as rank} />
+                </div>
+                <span className="font-PretendardMedium text-primaryDark text-[1vw]">
+                  {data?.memberNickname}
+                </span>
+              </div>
+              <span className="font-PretendardLight text-realGrey text-[0.8vw] mx-auto mt-[1vh]">
+                {data?.memberEmail}
+              </span>
             </li>
             <li className="border-b border-gray-300">
               <Link
                 href="/profile"
-                className="block px-4 py-2 hover:bg-gray-100"
+                className="flex items-center px-[1vw] py-[1.4vh] hover:bg-gray-100"
               >
-                사용자 대시보드
+                <RiUser3Line className="text-[1.3vw] text-primaryDark mr-[0.8vw]" />
+                <span className="font-PretendardLight text-[0.9vw] text-primaryDark">
+                  사용자 대시보드
+                </span>
               </Link>
             </li>
             <li className="border-b border-gray-300">
               <Link
                 href="/내정보수정"
-                className="block px-4 py-2 hover:bg-gray-100"
+                className="flex items-center px-[1vw] py-[1.4vh] hover:bg-gray-100"
               >
-                내 정보 수정
+                <IoSettingsOutline className="text-[1.3vw] text-primaryDark mr-[0.8vw]" />
+                <span className="font-PretendardLight text-[0.9vw] text-primaryDark">
+                  내 정보 수정
+                </span>
               </Link>
             </li>
             <li>
               <Link
                 href="/main"
                 onClick={handleLogout}
-                className="block px-4 py-2 hover:bg-gray-100"
+                className="flex items-center px-[1vw] py-[1.6vh] hover:bg-gray-100"
               >
-                로그아웃
+                <IoLogOutOutline className="text-[1.3vw] text-primaryRed mr-[0.8vw]" />
+                <span className="font-PretendardRegular text-[0.9vw] text-primaryRed">
+                  로그아웃
+                </span>
               </Link>
             </li>
           </ul>

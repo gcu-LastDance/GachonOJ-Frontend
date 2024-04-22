@@ -1,4 +1,4 @@
-export type permissionType = "guest" | "member" | "professor" | "admin";
+export type permissionType = "ROLE_STUDENT" | "ROLE_PROFESSOR" | "ROLE_ADMIN";
 
 export interface AuthType {
   nickname: string;

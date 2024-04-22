@@ -12,6 +12,20 @@ export const instanceAuth = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-    "Authorization": "Bearer eyJ0eXBlIjoiYWNjZXNzIiwiYWxnIjoiSFMyNTYifQ.eyJyb2xlIjoiUk9MRV9TVFVERU5UIiwibWVtYmVySWQiOjksImlhdCI6MTcxMzcwMDA5MSwiZXhwIjoxNzEzNzg2NDkxfQ.jhDiioXJRv4aw9WrjvGWBeCqf3lYkUezvJvcboAJIRo",
   },
 });
+
+instanceAuth.interceptors.request.use(
+  (config) => {
+    const userString = localStorage.getItem("user");
+    const user = userString ? JSON.parse(userString) : null;
+
+    config.headers["Authorization"] = config.headers["Authorization"] =
+      user.state.token;
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
