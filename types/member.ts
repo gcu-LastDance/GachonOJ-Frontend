@@ -1,8 +1,17 @@
+import { rank } from "./rank";
+
 export interface memberData {
-  permission: string;
+  permission?: string;
   profileImg?: string;
-  rank: number;
-  nickname: string;
+  rating: rank;
+  memberNickname: string;
+}
+
+export interface MemberProfileData {
+  profileImg?: string;
+  rating: rank;
+  memberNickname: string;
+  memberIntroduction?: string;
 }
 
 export interface MemberHoverProfileData {
@@ -12,9 +21,9 @@ export interface MemberHoverProfileData {
 }
 
 export interface memberProbData extends memberData {
-  solvedProb: number;
-  triedProb: number;
-  bookmarkedProb: number;
+  solvedProblemCount: number;
+  tryProblemCount: number;
+  bookmarkedProblemCount: number;
 }
 
 export interface RankingTableData {
@@ -31,4 +40,10 @@ export interface RankingTableColumn {
   Header: string;
   accessor: keyof RankingTableColumnAccesor;
   Cell?: (props: { value: any }) => React.ReactNode;
+}
+
+export interface RatingData {
+  currentExp: number;
+  nextExp: number;
+  consecutiveSolvedDate: number;
 }

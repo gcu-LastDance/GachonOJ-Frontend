@@ -1,5 +1,3 @@
-"use client";
-
 import DiffBadge from "@/components/badge/DiffBadge";
 import CategoryButton from "@/components/button/CategoryButton";
 import PaginationBar from "@/components/pagination/PaginationBar";
@@ -18,7 +16,7 @@ import { IoMdSearch } from "react-icons/io";
 export const prob_table_data: ProblemTableData[] = [
   {
     id: 1,
-    title: "영희의 대중교통 여행 이야기",
+    title: "Two Sum",
     difficulty: 1,
     category: ["Array"],
     correct: 150,
@@ -27,7 +25,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 2,
-    title: "철수의 버스 노선도",
+    title: "Add Two Numbers",
     difficulty: 2,
     category: ["Linked List"],
     correct: 120,
@@ -36,7 +34,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 3,
-    title: "기찻길",
+    title: "Repeating Characters",
     difficulty: 3,
     category: ["String", "Hash Table"],
     correct: 200,
@@ -45,7 +43,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 4,
-    title: "디자인 딜레마",
+    title: "Median of Two Sorted Arrays",
     difficulty: 4,
     category: ["Array", "Divide and Conquer"],
     correct: 100,
@@ -54,7 +52,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 5,
-    title: "게임이론",
+    title: "Longest Palindromic Substring",
     difficulty: 2,
     category: ["String", "Dynamic Programming"],
     correct: 180,
@@ -63,7 +61,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 6,
-    title: "영희의 일본 여행 이야기",
+    title: "Zigzag Conversion",
     difficulty: 2,
     category: ["String"],
     correct: 110,
@@ -72,7 +70,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 7,
-    title: "조깅시간!",
+    title: "Reverse Integer",
     difficulty: 0,
     category: ["Math"],
     correct: 300,
@@ -81,7 +79,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 8,
-    title: "신도시 계획",
+    title: "String to Integer (atoi)",
     difficulty: 3,
     category: ["String", "Math"],
     correct: 130,
@@ -90,7 +88,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 9,
-    title: "실적발표",
+    title: "Palindrome Number",
     difficulty: 1,
     category: ["Math"],
     correct: 250,
@@ -99,7 +97,7 @@ export const prob_table_data: ProblemTableData[] = [
   },
   {
     id: 10,
-    title: "커뮤니티 게임",
+    title: "Regular Expression Matching",
     difficulty: 4,
     category: ["String", "Dynamic Programming"],
     correct: 75,
@@ -139,7 +137,7 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
   }),
 ];
 
-export default function ProblemTable() {
+export default function MemberProblemTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [data, setData] = useState<ProblemTableData[]>(prob_table_data);
 
@@ -150,39 +148,19 @@ export default function ProblemTable() {
   });
 
   return (
-    <div className="flex flex-col">
-      <div className="h-[5.5vh] my-[1.5vh] mx-[1.5vw] flex items-end">
-        <div className="flex space-x-[1.1vw]">
-          <button
-            type="button"
-            className="w-[10vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
-          >
-            난이도 오름차순
-          </button>
-          <button
-            type="button"
-            className="w-[7vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
-          >
-            난이도 선택
-          </button>
-          <button
-            type="button"
-            className="w-[7vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
-          >
-            분류 선택
-          </button>
-        </div>
-        <div className="flex ml-auto border-[0.1vw] border-realGrey h-[5vh] w-[12vw] rounded-lg px-[0.5vw] space-x-[0.3vw] items-center">
-          <IoMdSearch className="text-[1vw] text-primaryDark" />
-          <input
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            placeholder="문제 제목을 검색해보세요"
-            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] focus:outline-none w-[9vw] h-[4vh]"
-          />
-        </div>
+    <div className="flex flex-col items-center">
+      <div className="h-[5.5vh] flex mb-[2.5vh]">
+        <button className="flex w-[16.3vw] h-[5.5vh] items-center justify-center bg-white">
+          북마크 문제 : 10제
+        </button>
+        <button className="flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey">
+          도전중인 문제
+        </button>
+        <button className="flex w-[16.3vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey">
+          해결한 문제
+        </button>
       </div>
-      <table className="w-full">
+      <table className="w-[47vw]">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr

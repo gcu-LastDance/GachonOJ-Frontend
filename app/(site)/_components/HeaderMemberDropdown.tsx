@@ -19,6 +19,7 @@ export default function HeaderMemberDropdown() {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = () => {
+    logoutMutation.mutate();
     setUserDrop();
   };
 
@@ -45,6 +46,7 @@ export default function HeaderMemberDropdown() {
       <button
         onMouseEnter={() => setShowDropdown(true)}
         onMouseLeave={() => setShowDropdown(false)}
+        onClick={() => router.push("/profile")}
         className="flex text-white border-[0.15vw] w-[2.5vw] h-[2.5vw] border-realGrey hover:ring-4 hover:ring-semiGrey rounded-full items-center justify-center"
         type="button"
       >

@@ -12,15 +12,15 @@ export default function SiteFooter() {
   };
 
   return (
-    <footer className="bg-lightGrey bottom-0 w-full min-h-[30vh]">
+    <footer className="bg-lightGrey bottom-0 w-full min-h-[20vh]">
       <div className="w-[65vw] flex flex-col mx-auto pt-9 pb-9">
-        <div className="w-[13vw] ml-[-0.15vw]">
+        <div className="w-[11vw] ml-[-0.15vw]">
           <Image src={GachonOJ_logo_image} alt="GachonOJ logo" />
         </div>
-        <span className="font-PretendardRegular text-primaryDark mt-2 mb-4">
+        <span className="font-PretendardRegular text-primaryDark text-[0.8vw] mt-2 mb-4">
           한국어
         </span>
-        <span className="font-PretendardThin text-realGrey mb-2">
+        <span className="font-PretendardThin text-realGrey text-[0.7vw] mb-2">
           2024 가천대학교 컴퓨터공학과 종합프로젝트 이병문 교수님 팀 라스트댄스
           나민혁 은현수 정현진 조기헌
           <br />
@@ -28,13 +28,13 @@ export default function SiteFooter() {
           만들어진 비상업 비영리 서비스입니다.
         </span>
         <div className="flex items-end">
-          <span className="font-PretendardLight text-primaryDark">
+          <span className="font-PretendardLight text-primaryDark text-[0.8vw]">
             이용약관
           </span>
-          <span className="font-PretendardLight text-primaryDark ml-4">
+          <span className="font-PretendardLight text-primaryDark text-[0.8vw] ml-4">
             개인정보처리방침
           </span>
-          <span className="font-PretendardLight text-primaryDark ml-4">
+          <span className="font-PretendardLight text-primaryDark text-[0.8vw] ml-4">
             도움말
           </span>
           <button
