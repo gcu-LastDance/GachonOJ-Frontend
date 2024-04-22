@@ -171,14 +171,14 @@ export default function ProblemTable() {
             분류 선택
           </button>
         </div>
-        <div className="relative ml-auto">
+        <div className="flex ml-auto border-[0.1vw] border-realGrey h-[5vh] w-[12vw] rounded-lg px-[0.5vw] space-x-[0.3vw] items-center">
+          <IoMdSearch className="text-[1vw] text-primaryDark" />
           <input
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             placeholder="문제 제목을 검색해보세요"
-            className="h-[5vh] w-[12vw] border-[0.1vw] border-realGrey pl-[2vw] pr-[0.5vw] placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] rounded-lg"
+            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] focus:outline-none w-[9vw] h-[4vh]"
           />
-          <IoMdSearch className="absolute top-[1.5vh] left-[0.4vw]" />
         </div>
       </div>
       <table className="w-full">
@@ -219,7 +219,9 @@ export default function ProblemTable() {
                   key={cell.id}
                   className={`${
                     cell.column.id === "title" ? "text-left" : "text-center"
-                  }  text-[0.95vw] font-PretendardLight text-realGrey`}
+                  } ${
+                    cell.column.id === "category" && "w-[8vw]"
+                  } text-[0.95vw] font-PretendardLight text-realGrey`}
                 >
                   {cell.column.id === "title" ? (
                     <Link href={`/notice/${cell.column.id}`}>

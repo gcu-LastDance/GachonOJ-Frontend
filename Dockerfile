@@ -1,5 +1,5 @@
 # 1단계: 환경 설정 및 종속성 설치
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
 
 # pnpm 설치
@@ -29,7 +29,7 @@ COPY . .
 RUN pnpm build
 
 # 3단계: 실행 이미지 준비
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /usr/src/app
 
 # 시스템 사용자 설정

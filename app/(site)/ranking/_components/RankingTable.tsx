@@ -2,7 +2,7 @@
 
 import RankBadge from "@/components/badge/RankBadge";
 import columnHelper from "@/lib/columnHelper";
-import { RankingTableColumn, RankingTableData } from "@/types/member";
+import { RankingTableData } from "@/types/member";
 import { rank } from "@/types/rank";
 import {
   ColumnDef,
@@ -13,7 +13,6 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
-import { useTable } from "react-table";
 
 export const ranking_table_data: RankingTableData[] = [
   { id: 1, nickname: "CodeMaster", rank: 1, rankExp: 12000, solvedProb: 150 },
@@ -61,14 +60,14 @@ export default function RankingTable() {
   return (
     <div className="flex flex-col">
       <div className="h-[5.5vh] my-[1.5vh] mx-[1.5vw] flex items-end">
-        <div className="relative ml-auto">
+        <div className="flex ml-auto border-[0.1vw] border-realGrey h-[5vh] w-[12vw] rounded-lg px-[0.5vw] space-x-[0.3vw] items-center">
+          <IoMdSearch className="text-[1vw] text-primaryDark" />
           <input
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             placeholder="닉네임으로 검색해보세요"
-            className="h-[5vh] w-[12vw] border-[0.1vw] border-realGrey pl-[2vw] pr-[0.5vw] placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] rounded-lg"
+            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] focus:outline-none w-[9vw] h-[4vh]"
           />
-          <IoMdSearch className="absolute top-[1.5vh] left-[0.4vw]" />
         </div>
       </div>
       <table className="w-full">
