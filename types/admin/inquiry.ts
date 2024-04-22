@@ -1,19 +1,21 @@
-export interface inquiryTableData {
+export interface inquiryListData {
   result: {
-    content: {
-      inquiryId: number;
-      inquiryTitle: string;
-      memberNickname: string;
-      inquiryCreatedDate: string;
-      inquiryStatus: string;
-    };
+    content: inquiryTableData[];
   };
+}
+
+export interface inquiryTableData {
+  inquiryId: number;
+  inquiryTitle: string;
+  memberNickname: string;
+  inquiryCreatedDate: string;
+  inquiryStatus: string;
 }
 
 // 컬럼 타입 정의
 export type inquiryTableColumn = {
   Header: string;
-  accessor: keyof inquiryTableData["result"]["content"];
+  accessor: keyof inquiryTableData;
 };
 
 export interface inquiryContentsData {
