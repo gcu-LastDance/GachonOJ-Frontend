@@ -1,8 +1,14 @@
 export interface noticeTableData {
-  notice_id: number;
-  notice_title: string;
-  member_nickname: string;
-  notice_created_date: string;
+  noticeId: number;
+  noticeTitle: string;
+  memberNickname: string;
+  noticeCreatedDate: string;
+}
+
+export interface noticeListData {
+  result: {
+    content: noticeTableData[];
+  };
 }
 
 // 컬럼 타입 정의

@@ -8,10 +8,10 @@ export const instanceNonAuth = axios.create({
 });
 
 export const instanceAuth = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: "/api",
   withCredentials: true,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   },
 });
 
@@ -29,3 +29,4 @@ instanceAuth.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+

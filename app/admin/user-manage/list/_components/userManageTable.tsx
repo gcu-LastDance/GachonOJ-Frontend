@@ -1,5 +1,5 @@
 import { userTableData } from "@/types/admin/user";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import columnHelper from "@/lib/columnHelper";
 import {
   ColumnDef,
@@ -17,6 +17,7 @@ export const main_table_data: userTableData[] = [
     nickname: "닉네임1",
     role: "사용자",
     created_date: "2024.12.21",
+
   },
   {
     id: 2,
@@ -26,6 +27,7 @@ export const main_table_data: userTableData[] = [
     nickname: "닉네임2",
     role: "사용자",
     created_date: "2024.12.21",
+
   },
   {
     id: 3,
@@ -35,17 +37,18 @@ export const main_table_data: userTableData[] = [
     nickname: "닉네임3",
     role: "사용자",
     created_date: "2024.12.21",
+
   },
 ];
 
-const columns: ColumnDef<userTableData, any>[] = [
-  columnHelper("id", { header: "번호" }),
-  columnHelper("email", { header: "이메일" }),
-  columnHelper("name", { header: "이름" }),
-  columnHelper("member_number", { header: "학번" }),
-  columnHelper("nickname", { header: "닉네임" }),
-  columnHelper("role", { header: "권한" }),
-  columnHelper("created_date", { header: "가입일" }),
+const columns : ColumnDef<userTableData, any>[] = [
+  columnHelper("id", {header: "번호"}),
+  columnHelper("email", {header: "이메일"}),
+  columnHelper("name", {header: "이름"}),
+  columnHelper("member_number", {header: "학번"}),
+  columnHelper("nickname", {header: "닉네임"}),
+  columnHelper("role", {header: "권한"}),
+  columnHelper("created_date", {header: "가입일"}),
 ];
 
 export default function UserManageTable() {
@@ -76,9 +79,9 @@ export default function UserManageTable() {
                 >
                   {/* 컬럼 헤더 렌더링 */}
                   {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </th>
               ))}
             </tr>
@@ -89,8 +92,8 @@ export default function UserManageTable() {
           {/* 페이지에 해당하는 데이터 행들을 렌더링 */}
           {table.getRowModel().rows.map((row) => (
             <tr
-              key={row.id}
-              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
+            key={row.id}
+            className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
               {row.getVisibleCells().map((cell) => (
                 <td
@@ -99,21 +102,18 @@ export default function UserManageTable() {
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
+                ))}
+                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                  <button className="underline underline-offset-8">정보 수정</button>
+                </td>
+                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                  <button className="underline underline-offset-8s">정보 삭제</button>
+                </td>
+              </tr>
+            
               ))}
-              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <button className="underline underline-offset-8">
-                  정보 수정
-                </button>
-              </td>
-              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <button className="underline underline-offset-8s">
-                  정보 삭제
-                </button>
-              </td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </div>
-  );
+  )
 }
