@@ -20,7 +20,6 @@ export default function HeaderMemberDropdown() {
 
   const handleLogout = () => {
     logoutMutation.mutate();
-    setUserDrop();
   };
 
   const logoutMutation = useMutation({
@@ -30,7 +29,8 @@ export default function HeaderMemberDropdown() {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.data.success) {
+      if (data.success) {
+        setUserDrop();
         router.push("/main");
       }
     },

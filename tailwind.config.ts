@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        primaryDeepBlue: "#48506F",
         primaryBlue: "#3B578D", // 프로젝트 메인 블루 컬러
         primaryLightBlue: "#EAEEF5", // 메인 블루 컬러가 섞인 회색
         primaryGrey: "#F9FAFC", // 메인 블루 컬러가 섞인 회색

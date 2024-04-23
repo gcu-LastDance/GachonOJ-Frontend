@@ -4,6 +4,7 @@ import { RecProblemData } from "../../types/problem";
 import React, { useState } from "react";
 import DiffBadge from "../badge/DiffBadge";
 import { IoArrowForwardSharp } from "react-icons/io5";
+import Link from "next/link";
 
 /**
  * RecProblemCard
@@ -21,9 +22,13 @@ export default function RecProblemCard({ data }: { data: RecProblemData }) {
   };
 
   return (
-    <div className="flex flex-col border-[0.11vw] rounded-lg border-semiGrey py-[1.3vw] px-[3vh] space-y-[2vh]">
+    <div className="flex flex-col border-[0.11vw] rounded-lg border-semiGrey py-[2.1vh] px-[1.2vw] space-y-[2vh] w-[17vw] h-[20vh] justify-center">
       <DiffBadge difficulty={data.difficulty} />
-      <span className="font-PretendardRegular text-[1.2vw]">{data.title}</span>
+      <Link href="/algorithm-ide/1">
+        <span className="font-PretendardRegular text-[1.2vw]">
+          {data.title}
+        </span>
+      </Link>
       <div className="flex justify-between items-end">
         {!isShowCategory ? (
           <button onClick={handleShowCategory} type="button">
@@ -36,7 +41,9 @@ export default function RecProblemCard({ data }: { data: RecProblemData }) {
             {data.category?.join(", ")}
           </span>
         )}
-        <IoArrowForwardSharp className="text-[2vw] text-realGrey" />
+        <Link href="/algorithm-ide/1">
+          <IoArrowForwardSharp className="text-[2vw] text-realGrey" />
+        </Link>
       </div>
     </div>
   );

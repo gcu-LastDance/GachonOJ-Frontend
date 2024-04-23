@@ -51,8 +51,8 @@ export default function MainNotice() {
     useTable<MainTableData>({ columns: main_columns, data: main_table_data });
 
   return (
-    <div className="flex pl-[3vw] mt-[1.5vh]">
-      <table {...getTableProps()} className="w-full">
+    <div className="flex ml-[3vw] mt-[1.5vh]">
+      <table {...getTableProps()} className="w-[58vw]">
         <thead>
           {headerGroups.map((headerGroup, index) => (
             <tr
