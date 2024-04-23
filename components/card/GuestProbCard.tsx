@@ -17,7 +17,7 @@ export default function GuestProbCard() {
           clipPath: "polygon(0% 0%, 0% 100%, 50% 85%, 100% 100%, 100% 0%)",
         }}
       >
-        <div className="flex flex-col items-center space-y-[1vh] font-PretendardRegular text-white">
+        <div className="flex flex-col items-center space-y-[1vh] font-PretendardRegular text-white text-[0.9vw]">
           <span>가천대학교 학우님</span>
           <span>반갑습니다</span>
           <span>지금 바로</span>

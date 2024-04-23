@@ -203,7 +203,7 @@ export default function MemberProblemTable() {
                   } text-[0.95vw] font-PretendardLight text-realGrey`}
                 >
                   {cell.column.id === "title" ? (
-                    <Link href={`/notice/${cell.column.id}`}>
+                    <Link href={`/algorithm-ide/1`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

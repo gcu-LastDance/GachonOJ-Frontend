@@ -1,4 +1,4 @@
-import { instanceNonAuth } from "@/lib/axiosConfig";
+import { instanceAuth, instanceNonAuth } from "@/lib/axiosConfig";
 import { LoginFormData, SignUpData } from "@/types/auth";
 
 export const loginAPI = async (data: LoginFormData) => {
@@ -74,7 +74,7 @@ export const nicknameCheckAPI = async (nickname: string) => {
 
 export const logoutAPI = async () => {
   try {
-    const response = await instanceNonAuth.post(
+    const response = await instanceAuth.post(
       process.env.NEXT_PUBLIC_M29_URL as string
     );
     return response.data;

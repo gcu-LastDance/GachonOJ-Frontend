@@ -35,6 +35,9 @@ export default function LoginForm() {
           data.authToken
         );
         router.push("/main");
+      } else if (data.data.code === 401) {
+        alert("이메일 혹은 비밀번호가 일치하지 않습니다.");
+        // setIsLoginReject(true);
       }
     },
   });

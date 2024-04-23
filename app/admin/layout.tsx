@@ -11,7 +11,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
         <AdminHeader />
         <div className="py-[2.5vh] px-[2vw]">
           <BreadCrumbs />
-          <div className="font-PretendardRegular">{children}</div>
+          <div className="font-PretendardRegular mt-[6vh]">{children}</div>
         </div>
       </div>
     </div>
