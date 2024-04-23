@@ -100,8 +100,8 @@ const InquiryManageTableContainer = () => {
   const { data } = useQuery<inquiryListData>({
     queryKey: ["inquiryList"],
     queryFn: inquiryListAPI,
+    
   });
-
   if (!data) return null;
   return <InquiryManageTable tableData={data.result.content} />;
 };

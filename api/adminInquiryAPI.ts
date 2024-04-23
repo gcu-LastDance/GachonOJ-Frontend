@@ -19,7 +19,9 @@ export const inquiryListAPI = async () => {
     const response = await instanceAuth.get(
       process.env.NEXT_PUBLIC_B02_URL as string
     );
+
     return response.data;
+    
   } catch (error) {
     throw error;
   }
