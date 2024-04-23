@@ -11,7 +11,7 @@ export const instanceAuth = axios.create({
   baseURL: "/api",
   withCredentials: true,
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   },
 });
 
@@ -29,4 +29,3 @@ instanceAuth.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-

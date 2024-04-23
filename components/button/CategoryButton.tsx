@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 
-export default function CategoryButton({
-  categories,
-}: {
-  categories: string[];
-}) {
+export default function CategoryButton({ categories }: { categories: string }) {
   const [isShowCategory, setIsShowCategory] = useState<boolean>(false);
 
   const handleShowCategory = () => {
@@ -21,7 +17,7 @@ export default function CategoryButton({
         </button>
       ) : (
         <span className="font-PretendardLight text-[0.8vw] text-realGrey">
-          {categories?.join(", ")}
+          {categories}
         </span>
       )}
     </div>

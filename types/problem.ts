@@ -8,11 +8,11 @@ export interface RecProblemData {
 }
 
 export interface ProblemTableData {
-  id: number;
-  title: string;
-  difficulty: difficulty;
-  category?: string[];
-  correct: number;
+  problemId: number;
+  problemTitle: string;
+  problemDiff: difficulty;
+  problemClass?: string;
+  correctPeople: number;
   correctRate: number;
   isBookmarked: boolean;
 }
