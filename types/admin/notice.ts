@@ -18,8 +18,8 @@ export type noticeTableColumn = {
 };
 
 export interface noticeFormData {
-  title: string;
-  contents: string;
+  noticeTitle: string;
+  noticeContents: string;
 }
 
 export interface NoticeDetailData {

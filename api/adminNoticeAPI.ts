@@ -1,4 +1,5 @@
 import { instanceAuth } from "@/lib/axiosConfig";
+import { noticeFormData } from "@/types/admin/notice";
 
 export const noticeListAPI = async () => {
   try {
@@ -7,7 +8,6 @@ export const noticeListAPI = async () => {
     );
 
     return response.data;
-    
   } catch (error) {
     throw error;
   }
@@ -19,6 +19,18 @@ export const noticeContentsAPI = async (noticeId: number) => {
       noticeId
     )}`;
     const response = await instanceAuth.get(url);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const noticeEnrollAPI = async(data: noticeFormData) => {
+  try {
+    const response = await instanceAuth.post(
+      process.env.NEXT_PUBLIC_B05_URL as string, data
+    );
 
     return response.data;
   } catch (error) {
