@@ -22,9 +22,11 @@ export default function AdminHeader() {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        setUserDrop();
         router.push("/main");
       }
+    },
+    onSettled: () => {
+      setUserDrop();
     },
   });
 

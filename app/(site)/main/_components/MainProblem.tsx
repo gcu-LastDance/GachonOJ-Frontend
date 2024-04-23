@@ -24,7 +24,7 @@ const main_table_data: RecProblemData[] = [
     id: 3,
     title: "후위표기식 변환",
     difficulty: 2,
-    category: ["그래프 이론", "DFS", "BFS"],
+    category: ["스택", "구현"],
   },
   {
     id: 4,
