@@ -5,3 +5,9 @@ export interface NoticeTableData {
   memberNickname: string;
   noticeCreatedDate: string;
 }
+
+export interface NoticeDetailData {
+  noticeTitle: string;
+  noticeCreatedDate: string;
+  noticeContents: string;
+}

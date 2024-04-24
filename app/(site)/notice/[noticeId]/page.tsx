@@ -1,9 +1,9 @@
-import { NoticeDetailData } from "@/types/admin/notice";
+import { NoticeDetailData } from "@/types/notice";
 import React from "react";
 
 const notice_detail_data: NoticeDetailData = {
   noticeTitle: "가천OJ 임시 점검 안내(완료)",
-  createdDate: "2024-04-01",
+  noticeCreatedDate: "2024-04-01",
   noticeContents:
     "안녕하십니까 가천OJ입니다. 가천OJ 채점서비스 안정화를 위해 임시 점검을 진행합니다. 이용에 불편을 드려서 죄송합니다.",
 };
@@ -24,7 +24,7 @@ export default function page({ params }: { params: { noticeId: number } }) {
             게시일
           </span>
           <span className="font-PretendardLight text-[1vw]">
-            {notice_detail_data.createdDate}
+            {notice_detail_data.noticeCreatedDate}
           </span>
         </div>
         <div className="flex">
@@ -38,8 +38,4 @@ export default function page({ params }: { params: { noticeId: number } }) {
       </div>
     </div>
   );
-}
-
-{
-  /* <div>notice num {params.noticeId}</div> */
 }

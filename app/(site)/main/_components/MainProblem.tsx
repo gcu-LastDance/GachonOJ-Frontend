@@ -2,11 +2,6 @@ import RecProblemCard from "@/components/card/RecProblemCard";
 import { RecProblemData } from "@/types/problem";
 import React from "react";
 
-// id: number;
-//   title: string;
-//   difficulty: difficulty;
-//   category?: string[];
-
 const main_table_data: RecProblemData[] = [
   {
     id: 1,
