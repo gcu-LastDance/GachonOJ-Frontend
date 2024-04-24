@@ -4,7 +4,7 @@ import React from "react";
 import ProblemTable from "./_components/ProblemTable";
 import GuestProbCard from "@/components/card/GuestProbCard";
 import useUserStore from "@/store/useUserStore";
-import MemberProbCard from "@/components/card/MemberProbCard";
+import MemberProbInfoCard from "@/components/card/MemberProbInfoCard";
 
 export default function page() {
   const { token } = useUserStore();
@@ -16,7 +16,7 @@ export default function page() {
       </span>
       <div className="flex justify-between">
         <div className="w-[13vw] h-[73vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
-          {!token ? <GuestProbCard /> : <MemberProbCard />}
+          {!token ? <GuestProbCard /> : <MemberProbInfoCard />}
         </div>
         <div className="w-[49vw] h-[73vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
           <ProblemTable />

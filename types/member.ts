@@ -7,6 +7,17 @@ export interface memberData {
   memberNickname: string;
 }
 
+export interface memberProbInfoData extends memberData {
+  solvedProblemCount: number;
+  tryProblemCount: number;
+  bookmarkedProblemCount: number;
+}
+
+export interface memberTestInfoData extends memberData {
+  memberName: string;
+  memberNumber: string;
+}
+
 export interface MemberProfileData {
   profileImg?: string;
   rating: rank;
@@ -20,28 +31,13 @@ export interface MemberHoverProfileData {
   rating: number;
 }
 
-export interface memberProbData extends memberData {
-  solvedProblemCount: number;
-  tryProblemCount: number;
-  bookmarkedProblemCount: number;
-}
-
 export interface RankingTableData {
-  id: number;
-  nickname: string;
-  rank: number;
-  rankExp: number;
-  solvedProb: number;
+  memberId: number;
+  memberNickname: string;
+  rating: rank;
+  memberRank: number;
+  memberSolved: number;
 }
-
-type RankingTableColumnAccesor = Omit<RankingTableData, "id">;
-
-export interface RankingTableColumn {
-  Header: string;
-  accessor: keyof RankingTableColumnAccesor;
-  Cell?: (props: { value: any }) => React.ReactNode;
-}
-
 export interface RatingData {
   currentExp: number;
   nextExp: number;

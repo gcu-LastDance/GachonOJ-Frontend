@@ -1,6 +1,6 @@
 "use client";
 
-import { memberProbData } from "@/types/member";
+import { memberProbInfoData } from "@/types/member";
 import React from "react";
 import RankBadge from "../badge/RankBadge";
 import { CiUser } from "react-icons/ci";
@@ -8,7 +8,7 @@ import Image from "next/image";
 import { memberPermisionMap } from "@/constants/memberConstants";
 import { permissionType } from "@/types/auth";
 import { useQuery } from "@tanstack/react-query";
-import { memberProbCardAPI } from "@/api/memberAPI";
+import { memberProbInfoCardAPI } from "@/api/memberAPI";
 import { rank } from "@/types/rank";
 import useUserStore from "@/store/useUserStore";
 
@@ -21,12 +21,12 @@ import useUserStore from "@/store/useUserStore";
 //   bookmarkedProb: 30,
 // };
 
-export default function MemberProbCard() {
+export default function MemberProbInfoCard() {
   const { userImg, userPermission } = useUserStore();
 
-  const { data } = useQuery<memberProbData>({
+  const { data } = useQuery<memberProbInfoData>({
     queryKey: ["memberProbCard"],
-    queryFn: memberProbCardAPI,
+    queryFn: memberProbInfoCardAPI,
   });
 
   return (
@@ -55,9 +55,9 @@ export default function MemberProbCard() {
         </span>
       </div>
       <div className="flex flex-col mt-[6vh] space-y-[3vh] font-PretendardLight text-[1.2vw] text-realGrey items-center">
-        <p>해결한 문제: {data?.solvedProblemCount ?? 0}</p>
-        <p>도전중인 문제: {data?.tryProblemCount ?? 0}</p>
-        <p>북마크 문제: {data?.bookmarkedProblemCount ?? 0}</p>
+        <p>해결한 문제 : {data?.solvedProblemCount ?? 0}</p>
+        <p>도전중인 문제 : {data?.tryProblemCount ?? 0}</p>
+        <p>북마크 문제 : {data?.bookmarkedProblemCount ?? 0}</p>
       </div>
     </div>
   );
