@@ -24,7 +24,7 @@ export default function CreaetNoticeForm() {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("");
+        router.push("admin/notice-manage/list");
       }
     },
   });
@@ -73,7 +73,6 @@ export default function CreaetNoticeForm() {
           <Link href="/board/admin/notice">
           <button
             onClick={handleSubmit(onSubmit)}
-
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
           >
             공지등록
