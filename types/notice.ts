@@ -1,13 +1,7 @@
-export interface MainTableData {
-  id: number;
-  title: string;
-  author: string;
-  date: string;
+/** 메인 공지 테이블 데이터 */
+export interface NoticeTableData {
+  noticeId: number;
+  noticeTitle: string;
+  memberNickname: string;
+  noticeCreatedDate: string;
 }
-
-// 컬럼 타입 정의
-export type MainTableColumn = {
-  Header: string;
-  accessor: keyof MainTableData;
-};
-

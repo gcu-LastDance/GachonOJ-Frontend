@@ -18,99 +18,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
-// export const prob_table_data: ProblemTableData[] = [
-//   {
-//     id: 1,
-//     title: "영희의 대중교통 여행 이야기",
-//     difficulty: 1,
-//     category: ["Array"],
-//     correct: 150,
-//     correctRate: 75.5,
-//     isBookmarked: true,
-//   },
-//   {
-//     id: 2,
-//     title: "철수의 버스 노선도",
-//     difficulty: 2,
-//     category: ["Linked List"],
-//     correct: 120,
-//     correctRate: 60.5,
-//     isBookmarked: false,
-//   },
-//   {
-//     id: 3,
-//     title: "기찻길",
-//     difficulty: 3,
-//     category: ["String", "Hash Table"],
-//     correct: 200,
-//     correctRate: 85.0,
-//     isBookmarked: true,
-//   },
-//   {
-//     id: 4,
-//     title: "디자인 딜레마",
-//     difficulty: 4,
-//     category: ["Array", "Divide and Conquer"],
-//     correct: 100,
-//     correctRate: 50.0,
-//     isBookmarked: false,
-//   },
-//   {
-//     id: 5,
-//     title: "게임이론",
-//     difficulty: 2,
-//     category: ["String", "Dynamic Programming"],
-//     correct: 180,
-//     correctRate: 90.2,
-//     isBookmarked: true,
-//   },
-//   {
-//     id: 6,
-//     title: "영희의 일본 여행 이야기",
-//     difficulty: 2,
-//     category: ["String"],
-//     correct: 110,
-//     correctRate: 55.0,
-//     isBookmarked: false,
-//   },
-//   {
-//     id: 7,
-//     title: "조깅시간!",
-//     difficulty: 0,
-//     category: ["Math"],
-//     correct: 300,
-//     correctRate: 95.0,
-//     isBookmarked: true,
-//   },
-//   {
-//     id: 8,
-//     title: "신도시 계획",
-//     difficulty: 3,
-//     category: ["String", "Math"],
-//     correct: 130,
-//     correctRate: 65.0,
-//     isBookmarked: false,
-//   },
-//   {
-//     id: 9,
-//     title: "실적발표",
-//     difficulty: 1,
-//     category: ["Math"],
-//     correct: 250,
-//     correctRate: 88.3,
-//     isBookmarked: true,
-//   },
-//   {
-//     id: 10,
-//     title: "커뮤니티 게임",
-//     difficulty: 4,
-//     category: ["String", "Dynamic Programming"],
-//     correct: 75,
-//     correctRate: 37.5,
-//     isBookmarked: false,
-//   },
-// ];
-
 const columns: ColumnDef<ProblemTableData, any>[] = [
   columnHelper("problemDiff", {
     header: "난이도",
@@ -150,12 +57,7 @@ export default function ProblemTable() {
   const [diff, setDiff] = useState<difficulty>();
   const [sortType, setSortType] = useState<string>("");
 
-  const {
-    data: problemData,
-    isLoading,
-    isError,
-    error,
-  } = useQuery<ProblemTableData[]>({
+  const { data: problemData } = useQuery<ProblemTableData[]>({
     queryKey: [
       "problemTableGuest",
       pageNum,
@@ -174,10 +76,8 @@ export default function ProblemTable() {
       }),
   });
 
-  const [data, setData] = useState<ProblemTableData[]>(problemData ?? []);
-
   const table = useReactTable({
-    data,
+    data: problemData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

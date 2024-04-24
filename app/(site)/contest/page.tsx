@@ -1,3 +1,4 @@
+import MemberTestInfoCard from "@/components/card/MemberTestInfoCard";
 import React from "react";
 
 export default function page() {
@@ -6,9 +7,12 @@ export default function page() {
       <span className="font-PretendardSemiBold text-[1.8vw] text-primaryDark mb-[3vh]">
         대회
       </span>
-      <div className="flex flex-col">
-        <div className="w-[65vw] h-[18vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
-          대회 페이지입니다.
+      <div className="flex justify-between">
+        <div className="w-[13vw] h-[73vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
+          <MemberTestInfoCard />
+        </div>
+        <div className="w-[49vw] h-[73vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
+          대회페이지 테이블
         </div>
       </div>
     </div>

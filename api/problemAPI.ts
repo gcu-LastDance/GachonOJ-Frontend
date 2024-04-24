@@ -15,8 +15,11 @@ export const problemTableGuestAPI = async ({
   sortType?: string;
 }) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P01_URL as string}?page=${pageNum}`;
+    const url = `${
+      process.env.NEXT_PUBLIC_P01_URL as string
+    }?pageNo=${pageNum}`;
     const response = await instanceNonAuth.get(url);
+    console.log(url);
     console.log(response);
     return response.data.result.content;
   } catch (error) {

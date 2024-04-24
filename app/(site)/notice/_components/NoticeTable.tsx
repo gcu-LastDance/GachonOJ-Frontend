@@ -1,142 +1,101 @@
 "use client";
 
-import { MainTableColumn, MainTableData } from "@/types/notice";
-import { ColumnDef } from "@tanstack/react-table";
+import { noticeTableAPI } from "@/api/noticeAPI";
+import columnHelper from "@/lib/columnHelper";
+import { NoticeTableData } from "@/types/notice";
+import { useQuery } from "@tanstack/react-query";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { MdKeyboardArrowRight } from "react-icons/md";
-import { useTable } from "react-table";
+import React from "react";
 
-const main_table_data: MainTableData[] = [
-  {
-    id: 1,
-    title: "1서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 2,
-    title: "2서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 3,
-    title: "3서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 4,
-    title: "4서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "GachonOJ",
-    date: "2022-01-01",
-  },
-  {
-    id: 5,
-    title: "5서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 6,
-    title: "1서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 7,
-    title: "2서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 8,
-    title: "3서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-  {
-    id: 9,
-    title: "4서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "GachonOJ",
-    date: "2022-01-01",
-  },
-  {
-    id: 10,
-    title: "5서비스 정식 오픈을 위한 운영서버 점검 안내",
-    author: "가천OJ 관리자",
-    date: "2022-01-01",
-  },
-];
-
-const main_columns: MainTableColumn[] = [
-  { Header: "제목", accessor: "title" },
-  { Header: "작성자", accessor: "author" },
-  { Header: "게시일", accessor: "date" },
+const columns: ColumnDef<NoticeTableData, any>[] = [
+  columnHelper("noticeTitle", {
+    header: "공지 제목",
+  }),
+  columnHelper("memberNickname", {
+    header: "작성자",
+  }),
+  columnHelper("noticeCreatedDate", {
+    header: "게시일",
+  }),
 ];
 
 export default function NoticeTable() {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<MainTableData>({ columns: main_columns, data: main_table_data });
+  const { data: mainNoticeTabledata } = useQuery<NoticeTableData[]>({
+    queryKey: ["mainNoticeTable"],
+    queryFn: noticeTableAPI,
+    refetchOnMount: "always",
+  });
+
+  const table = useReactTable({
+    data: mainNoticeTabledata || [],
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
     <div className="flex px-[2vw] mt-[1.5vh]">
-      <table {...getTableProps()} className="w-full">
+      <table className="w-[58vw]">
         <thead>
-          {headerGroups.map((headerGroup, index) => (
+          {table.getHeaderGroups().map((headerGroup, index) => (
             <tr
-              {...headerGroup.getHeaderGroupProps()}
               key={index}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
             >
-              {headerGroup.headers.map((column) => (
+              {headerGroup.headers.map((header) => (
                 <th
-                  {...column.getHeaderProps()}
-                  key={column.id}
+                  key={header.id}
                   className={`${
-                    column.id === "title"
+                    header.id === "noticeTitle"
                       ? "text-left w-[28vw] pl-[3vw]"
                       : "text-center w-[12.5w]"
                   }`}
                 >
-                  {column.render("Header")}
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                key={row.id}
-                className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
-              >
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    key={cell.column.id}
-                    className={`${
-                      cell.column.id === "title"
-                        ? "text-left pl-[3vw]"
-                        : "text-center"
-                    }  text-[1vw] font-PretendardLight text-realGrey`}
-                  >
-                    {cell.column.id === "title" ? (
-                      <Link href={`/notice/${row.original.id}`}>
-                        {cell.render("Cell")}
-                      </Link>
-                    ) : (
-                      cell.render("Cell")
-                    )}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.column.id}
+                  className={`${
+                    cell.column.id === "noticeTitle"
+                      ? "text-left pl-[3vw]"
+                      : "text-center"
+                  }  text-[1vw] font-PretendardLight text-realGrey`}
+                >
+                  {cell.column.id === "noticeTitle" ? (
+                    <Link href={`/notice/${row.original.noticeId}`}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Link>
+                  ) : (
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

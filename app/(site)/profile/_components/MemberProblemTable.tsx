@@ -11,103 +11,102 @@ import {
 } from "@tanstack/react-table";
 import Link from "next/link";
 import React, { useState } from "react";
-import { IoMdSearch } from "react-icons/io";
 
 export const prob_table_data: ProblemTableData[] = [
   {
-    id: 1,
-    title: "Two Sum",
-    difficulty: 1,
-    category: ["Array"],
-    correct: 150,
-    correctRate: 75.5,
-    isBookmarked: true,
-  },
-  {
-    id: 2,
-    title: "Add Two Numbers",
-    difficulty: 2,
-    category: ["Linked List"],
-    correct: 120,
-    correctRate: 60.5,
+    problemId: 1,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
     isBookmarked: false,
   },
   {
-    id: 3,
-    title: "Repeating Characters",
-    difficulty: 3,
-    category: ["String", "Hash Table"],
-    correct: 200,
-    correctRate: 85.0,
-    isBookmarked: true,
-  },
-  {
-    id: 4,
-    title: "Median of Two Sorted Arrays",
-    difficulty: 4,
-    category: ["Array", "Divide and Conquer"],
-    correct: 100,
-    correctRate: 50.0,
+    problemId: 2,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
     isBookmarked: false,
   },
   {
-    id: 5,
-    title: "Longest Palindromic Substring",
-    difficulty: 2,
-    category: ["String", "Dynamic Programming"],
-    correct: 180,
-    correctRate: 90.2,
-    isBookmarked: true,
-  },
-  {
-    id: 6,
-    title: "Zigzag Conversion",
-    difficulty: 2,
-    category: ["String"],
-    correct: 110,
-    correctRate: 55.0,
+    problemId: 3,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
     isBookmarked: false,
   },
   {
-    id: 7,
-    title: "Reverse Integer",
-    difficulty: 0,
-    category: ["Math"],
-    correct: 300,
-    correctRate: 95.0,
-    isBookmarked: true,
-  },
-  {
-    id: 8,
-    title: "String to Integer (atoi)",
-    difficulty: 3,
-    category: ["String", "Math"],
-    correct: 130,
-    correctRate: 65.0,
+    problemId: 4,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
     isBookmarked: false,
   },
   {
-    id: 9,
-    title: "Palindrome Number",
-    difficulty: 1,
-    category: ["Math"],
-    correct: 250,
-    correctRate: 88.3,
-    isBookmarked: true,
+    problemId: 5,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
+    isBookmarked: false,
   },
   {
-    id: 10,
-    title: "Regular Expression Matching",
-    difficulty: 4,
-    category: ["String", "Dynamic Programming"],
-    correct: 75,
+    problemId: 6,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
+    isBookmarked: false,
+  },
+  {
+    problemId: 7,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
+    isBookmarked: false,
+  },
+  {
+    problemId: 8,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
+    isBookmarked: false,
+  },
+  {
+    problemId: 9,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
+    correctRate: 37.5,
+    isBookmarked: false,
+  },
+  {
+    problemId: 10,
+    problemTitle: "Regular Expression Matching",
+    problemDiff: 4,
+    problemClass: "String",
+    correctPeople: 75,
     correctRate: 37.5,
     isBookmarked: false,
   },
 ];
 
 const columns: ColumnDef<ProblemTableData, any>[] = [
-  columnHelper("difficulty", {
+  columnHelper("problemDiff", {
     header: "난이도",
     cell: (value) => (
       <div className="flex justify-center">
@@ -115,18 +114,18 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
       </div>
     ),
   }),
-  columnHelper("title", {
+  columnHelper("problemTitle", {
     header: "문제 제목",
   }),
-  columnHelper("category", {
+  columnHelper("problemClass", {
     header: "분류",
     cell: (value) => (
       <div className="flex justify-center">
-        <CategoryButton categories={value as string[]} />
+        <CategoryButton categories={value as string} />
       </div>
     ),
   }),
-  columnHelper("correct", {
+  columnHelper("correctPeople", {
     header: "정답자 수",
   }),
   columnHelper("correctRate", {

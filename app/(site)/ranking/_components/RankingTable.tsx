@@ -1,10 +1,12 @@
 "use client";
 
+import { rankingTableAPI } from "@/api/memberAPI";
 import RankBadge from "@/components/badge/RankBadge";
 import PaginationBar from "@/components/pagination/PaginationBar";
 import columnHelper from "@/lib/columnHelper";
 import { RankingTableData } from "@/types/member";
 import { rank } from "@/types/rank";
+import { useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
   flexRender,
@@ -15,45 +17,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
-export const ranking_table_data: RankingTableData[] = [
-  {
-    id: 1,
-    nickname: "gachonCodeKing",
-    rank: 5,
-    rankExp: 12000,
-    solvedProb: 150,
-  },
-  {
-    id: 2,
-    nickname: "성적우수장학금 헌터",
-    rank: 5,
-    rankExp: 11500,
-    solvedProb: 145,
-  },
-  { id: 3, nickname: "SurVeine", rank: 4, rankExp: 11000, solvedProb: 140 },
-  {
-    id: 4,
-    nickname: "심화프로그래밍",
-    rank: 3,
-    rankExp: 10500,
-    solvedProb: 135,
-  },
-  { id: 5, nickname: "macbookpro", rank: 3, rankExp: 10000, solvedProb: 130 },
-  { id: 6, nickname: "batton", rank: 2, rankExp: 9500, solvedProb: 125 },
-  {
-    id: 7,
-    nickname: "가천대라곰빈백도둑",
-    rank: 2,
-    rankExp: 9000,
-    solvedProb: 120,
-  },
-  { id: 8, nickname: "학식메뉴봇", rank: 1, rankExp: 8500, solvedProb: 115 },
-  { id: 9, nickname: "graph", rank: 1, rankExp: 8000, solvedProb: 110 },
-  { id: 10, nickname: "PDSS", rank: 0, rankExp: 7500, solvedProb: 105 },
-];
-
 const columns: ColumnDef<RankingTableData, any>[] = [
-  columnHelper("rank", {
+  columnHelper("rating", {
     header: "등급",
     cell: (value) => (
       <div className="flex justify-center">
@@ -63,23 +28,29 @@ const columns: ColumnDef<RankingTableData, any>[] = [
       </div>
     ),
   }),
-  columnHelper("nickname", {
+  columnHelper("memberNickname", {
     header: "닉네임",
   }),
-  columnHelper("rankExp", {
+  columnHelper("memberRank", {
     header: "등급 경험치",
   }),
-  columnHelper("solvedProb", {
+  columnHelper("memberSolved", {
     header: "푼 문제 수",
   }),
 ];
 
 export default function RankingTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
-  const [data, setData] = useState<RankingTableData[]>(ranking_table_data);
+  const [pageNum, setPageNum] = useState<number>(1);
+
+  const { data: rakingData } = useQuery<RankingTableData[]>({
+    queryKey: ["rankingTable", pageNum, searchKeyword],
+    queryFn: () => rankingTableAPI({ pageNum, searchKeyword }),
+    refetchOnMount: "always",
+  });
 
   const table = useReactTable({
-    data,
+    data: rakingData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -108,7 +79,7 @@ export default function RankingTable() {
                 <th
                   key={header.id}
                   className={`${
-                    header.id === "nickname"
+                    header.id === "memberNickname"
                       ? "text-left w-[16vw] pl-[3vw]"
                       : "text-center w-[11w]"
                   }`}
@@ -134,21 +105,12 @@ export default function RankingTable() {
                 <td
                   key={cell.column.id}
                   className={`${
-                    cell.column.id === "nickname"
+                    cell.column.id === "memberNickname"
                       ? "text-left pl-[3vw]"
                       : "text-center"
                   }  text-[0.95vw] font-PretendardLight text-realGrey`}
                 >
-                  {cell.column.id === "title" ? (
-                    <Link href={`/notice/${row.original.id}`}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Link>
-                  ) : (
-                    flexRender(cell.column.columnDef.cell, cell.getContext())
-                  )}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
             </tr>
