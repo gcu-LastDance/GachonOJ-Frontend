@@ -6,10 +6,12 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { noticeListAPI } from "@/api/adminNoticeAPI";
+import { noticeDeleteAPI, noticeListAPI } from "@/api/adminNoticeAPI";
 import { noticeListData, noticeTableData } from "@/types/admin/notice";
+import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const columns: ColumnDef<noticeTableData, any>[] = [
   columnHelper("noticeId", { header: "번호" }),
@@ -18,7 +20,30 @@ const columns: ColumnDef<noticeTableData, any>[] = [
   columnHelper("noticeCreatedDate", { header: "작성일" }),
 ];
 
-export function NoticeManageTable({ tableData }: { tableData: noticeTableData[] }) {
+export function NoticeManageTable({
+  tableData,
+}: {
+  tableData: noticeTableData[];
+}) {
+  const router = useRouter();
+
+  const onDelete = (noticeId: number) => {
+    DeleteMutation.mutate(noticeId);
+  };
+
+  const DeleteMutation = useMutation({
+    mutationFn: (noticeId: number) => noticeDeleteAPI(noticeId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/notice-manage/list");
+      }
+    },
+  });
+
   const [data, setData] = useState<noticeTableData[]>(tableData);
 
   const table = useReactTable({
@@ -45,7 +70,10 @@ export function NoticeManageTable({ tableData }: { tableData: noticeTableData[] 
                   key={header.id}
                 >
                   {/* 컬럼 헤더 렌더링 */}
-                  {flexRender(header.column.columnDef.header, header.getContext())}
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
                 </th>
               ))}
             </tr>
@@ -65,8 +93,13 @@ export function NoticeManageTable({ tableData }: { tableData: noticeTableData[] 
                   key={cell.id}
                 >
                   {cell.column.columnDef.header === "제목" ? (
-                    <Link href={`/admin/notice-manage/${row.original.noticeId}`}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <Link
+                      href={`/admin/notice-manage/${row.original.noticeId}`}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </Link>
                   ) : (
                     flexRender(cell.column.columnDef.cell, cell.getContext())
@@ -74,25 +107,26 @@ export function NoticeManageTable({ tableData }: { tableData: noticeTableData[] 
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <button className="border-b-2">삭제</button>
+                <Link href={`board/admin/notice/${row.original.noticeId}`}>
+                  <button onClick={() => onDelete(row.original.noticeId)}>
+                    삭제
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {/* 페이지 이동 및 페이지 크기 조절을 위한 컨트롤 영역 */}
       <div className="flex justify-end items-center mt-5">
         <Link href="enroll">
-        <button
-          type="button"
-          className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
-        >
-          새 공지사항 작성
-        </button>
+          <button
+            type="button"
+            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
+          >
+            새 공지사항 작성
+          </button>
         </Link>
       </div>
-     
     </div>
   );
 }
@@ -103,9 +137,9 @@ const NoticeManageTableContainer = () => {
     queryFn: noticeListAPI,
   });
 
-  if(!data) return null;
+  if (!data) return null;
 
   return <NoticeManageTable tableData={data?.result.content} />;
-}
+};
 
-export default NoticeManageTableContainer
+export default NoticeManageTableContainer;

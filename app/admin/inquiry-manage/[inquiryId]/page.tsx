@@ -16,7 +16,7 @@ const page = ({ params }: { params: { inquiryId: number } }) => {
       <div className="px-6 py-2">
         <div className="flex py-3 border border-t-0 border-l-0 border-r-0 mb-2">
           <div className="text-realGrey ">문의 번호</div>
-          <div className="font-bold ml-4">{data?.result.inquiryId}</div>
+          <div className="font-bold ml-4">{params.inquiryId}</div>
         </div>
         <div className="flex items-center border border-t-0 border-l-0 border-r-0 mb-2">
           <div className="flex py-2 mb-2">

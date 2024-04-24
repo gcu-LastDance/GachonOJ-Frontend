@@ -16,14 +16,15 @@ export type noticeTableColumn = {
   Header: string;
   accessor: keyof noticeTableData;
 };
-
 export interface noticeFormData {
   noticeTitle: string;
+  noticeCreatedDate: string;
   noticeContents: string;
 }
 
-export interface NoticeDetailData {
-  noticeTitle: string;
-  createdDate: string;
-  noticeContents: string;
+export interface noticeContentsData {
+  result: 
+    noticeFormData & { memberNickname: string };
+  
 }
+

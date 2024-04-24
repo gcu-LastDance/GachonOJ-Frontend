@@ -15,7 +15,7 @@ export const noticeListAPI = async () => {
 
 export const noticeContentsAPI = async (noticeId: number) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_B07_URL}/${encodeURIComponent(
+    const url = `${process.env.NEXT_PUBLIC_B11_URL}/${encodeURIComponent(
       noticeId
     )}`;
     const response = await instanceAuth.get(url);
@@ -31,6 +31,19 @@ export const noticeEnrollAPI = async(data: noticeFormData) => {
     const response = await instanceAuth.post(
       process.env.NEXT_PUBLIC_B05_URL as string, data
     );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const noticeDeleteAPI = async(noticeId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_B12_URL}/${encodeURIComponent(
+      noticeId
+    )}`;
+    const response = await instanceAuth.delete(url);
 
     return response.data;
   } catch (error) {
