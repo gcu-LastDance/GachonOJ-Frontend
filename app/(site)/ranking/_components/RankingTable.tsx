@@ -46,12 +46,11 @@ export default function RankingTable() {
   const { data: rakingData } = useQuery<RankingTableData[]>({
     queryKey: ["rankingTable", pageNum, searchKeyword],
     queryFn: () => rankingTableAPI({ pageNum, searchKeyword }),
+    refetchOnMount: "always",
   });
 
-  const [data, setData] = useState<RankingTableData[]>(rakingData ?? []);
-
   const table = useReactTable({
-    data,
+    data: rakingData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -80,7 +79,7 @@ export default function RankingTable() {
                 <th
                   key={header.id}
                   className={`${
-                    header.id === "nickname"
+                    header.id === "memberNickname"
                       ? "text-left w-[16vw] pl-[3vw]"
                       : "text-center w-[11w]"
                   }`}
@@ -106,7 +105,7 @@ export default function RankingTable() {
                 <td
                   key={cell.column.id}
                   className={`${
-                    cell.column.id === "nickname"
+                    cell.column.id === "memberNickname"
                       ? "text-left pl-[3vw]"
                       : "text-center"
                   }  text-[0.95vw] font-PretendardLight text-realGrey`}

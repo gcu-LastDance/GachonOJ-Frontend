@@ -76,10 +76,8 @@ export default function ProblemTable() {
       }),
   });
 
-  const [data, setData] = useState<ProblemTableData[]>(problemData ?? []);
-
   const table = useReactTable({
-    data,
+    data: problemData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
