@@ -1,59 +1,36 @@
-import { userTableData } from "@/types/admin/user";
-import React, {useState} from "react";
-import columnHelper from "@/lib/columnHelper";
+import React, { useState } from "react";
+import Link from "next/link";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
-export const main_table_data: userTableData[] = [
-  {
-    id: 1,
-    email: "asdf@gachon.ac.kr",
-    name: "사람1",
-    member_number: 12345678,
-    nickname: "닉네임1",
-    role: "사용자",
-    created_date: "2024.12.21",
-
-  },
-  {
-    id: 2,
-    email: "asdf@gachon.ac.kr",
-    name: "사람2",
-    member_number: 49398383,
-    nickname: "닉네임2",
-    role: "사용자",
-    created_date: "2024.12.21",
-
-  },
-  {
-    id: 3,
-    email: "asdf@gachon.ac.kr",
-    name: "사람3",
-    member_number: 89439838,
-    nickname: "닉네임3",
-    role: "사용자",
-    created_date: "2024.12.21",
-
-  },
-];
+import { userListAPI } from "@/api/adminUserAPI";
+import { userListData, userTableData } from "@/types/admin/user";
+import { useMutation } from "@tanstack/react-query";
+import columnHelper from "@/lib/columnHelper";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const columns : ColumnDef<userTableData, any>[] = [
-  columnHelper("id", {header: "번호"}),
-  columnHelper("email", {header: "이메일"}),
-  columnHelper("name", {header: "이름"}),
-  columnHelper("member_number", {header: "학번"}),
-  columnHelper("nickname", {header: "닉네임"}),
-  columnHelper("role", {header: "권한"}),
-  columnHelper("created_date", {header: "가입일"}),
+  columnHelper("memberId", {header: "번호"}),
+  columnHelper("memberEmail", {header: "이메일"}),
+  columnHelper("memberName", {header: "이름"}),
+  columnHelper("memberNumber", {header: "학번"}),
+  columnHelper("memberNickname", {header: "닉네임"}),
+  columnHelper("memberRole", {header: "권한"}),
+  columnHelper("memberCreatedDate", {header: "가입일"}),
 ];
 
-export default function UserManageTable() {
-  const [data, setData] = useState<userTableData[]>(main_table_data);
-  // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
+export function UserManageTable({
+  tableData,
+}: {
+  tableData: userTableData[];
+}) {
+  const router = useRouter();
+
+  const [data, setData] = useState<userTableData[]>(tableData);
 
   const table = useReactTable({
     data,
@@ -104,7 +81,9 @@ export default function UserManageTable() {
                 </td>
                 ))}
                 <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                  <Link href="edit">
                   <button className="underline underline-offset-auto">정보 수정</button>
+                  </Link>
                 </td>
                 <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                   <button className="underline underline-offset-auto">정보 삭제</button>
@@ -114,6 +93,29 @@ export default function UserManageTable() {
               ))}
         </tbody>
       </table>
+      <div className="flex justify-end items-center mt-5">
+        <Link href="enroll">
+          <button
+            type="button"
+            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
+          >
+            새 사용자 생성
+          </button>
+        </Link>
+      </div>
     </div>
   )
 }
+
+const UserManageTableContainer = () => {
+  const { data } = useQuery<userListData>({
+    queryKey: ["uesrList"],
+    queryFn: userListAPI,
+  });
+
+  if (!data) return null;
+  console.log(data);
+  return <UserManageTable tableData={data?.result.content} />;
+};
+
+export default UserManageTableContainer;

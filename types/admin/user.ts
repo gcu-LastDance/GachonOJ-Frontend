@@ -1,11 +1,17 @@
 export interface userTableData {
-  id: number;
-  email: string;
-  name: string;
+  memberId: number;
+  memberEmail: string;
+  memberName: string;
   member_number: number;
-  nickname: string;
-  role: string;
-  created_date: string;
+  memberNickname: string;
+  memberRole: string;
+  memberCreatedDate: string;
+}
+
+export interface userListData {
+  result: {
+    content: userTableData[];
+  };
 }
 
 // 컬럼 타입 정의
