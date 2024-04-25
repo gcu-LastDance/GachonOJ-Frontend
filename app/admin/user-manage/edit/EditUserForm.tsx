@@ -6,7 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-function EditUserForm({data, memberId}: {data: userContentData, memberId: number}) {
+function EditUserForm({
+  data,
+  memberId,
+}: {
+  data: userContentData;
+  memberId: number;
+}) {
   const router = useRouter();
   const formdata = data.result;
   const {
@@ -16,7 +22,6 @@ function EditUserForm({data, memberId}: {data: userContentData, memberId: number
     getValues,
     formState: { errors },
   } = useForm<userFormData>();
-
 
   const onSubmit = (data: userFormData) => {
     ModifyMutation.mutate(data);
@@ -57,12 +62,16 @@ function EditUserForm({data, memberId}: {data: userContentData, memberId: number
             <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
               권한
             </label>
-            <input
+            <select
               id="role"
               value={formdata.memberRole}
               {...register("memberRole")}
               className="block font-medium mb-1 ml-10"
-            />
+            >
+              <option value="학생">학생</option>
+              <option value="교수">교수</option>
+              <option value="관리자">관리자</option>
+            </select>
           </div>
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
