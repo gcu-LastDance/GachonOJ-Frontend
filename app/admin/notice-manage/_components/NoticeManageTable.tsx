@@ -107,11 +107,8 @@ export function NoticeManageTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`board/admin/notice/${row.original.noticeId}`}>
-                  <button
-                    className="underline underline-offset-auto"
-                    onClick={() => onDelete(row.original.noticeId)}
-                  >
+                <Link href={`/board/admin/notice/list`}>
+                  <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.noticeId)}>
                     삭제
                   </button>
                 </Link>

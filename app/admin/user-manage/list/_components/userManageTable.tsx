@@ -6,10 +6,10 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { userListAPI } from "@/api/adminUserAPI";
+import { userDeleteAPI, userListAPI } from "@/api/adminUserAPI";
 import { userListData, userTableData } from "@/types/admin/user";
 import columnHelper from "@/lib/columnHelper";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 const columns: ColumnDef<userTableData, any>[] = [
@@ -24,6 +24,24 @@ const columns: ColumnDef<userTableData, any>[] = [
 
 
 export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
+
+  const router = useRouter();
+
+  const onDelete = (memberId: number) => {
+    DeleteMutation.mutate(memberId);
+  };
+
+  const DeleteMutation = useMutation({
+    mutationFn: (memberId: number) => userDeleteAPI(memberId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/user-manage/list");
+      }
+    }})
 
   const [data, setData] = useState<userTableData[]>(tableData);
 
@@ -80,7 +98,7 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
                   href={{
                     pathname: "edit",
                     query: { memberId: row.original.memberId },
-                  }}  as ="edit"
+                  }}  // as ="edit"
                 >
                   <button className="underline underline-offset-auto">
                     정보 수정
@@ -90,9 +108,11 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <button className="underline underline-offset-auto">
+                <Link href="/admin/user-manage/list">
+                <button className="underline underline-offset-auto" onClick={() => onDelete(row.original.memberId)}>
                   정보 삭제
                 </button>
+                </Link>
               </td>
             </tr>
           ))}

@@ -53,10 +53,10 @@ export const userModifyAPI = async(data: userFormData) => {
 };
 
 
-export const userDeleteAPI = async(noticeId: number) => {
+export const userDeleteAPI = async(memberId: number) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_M40_URL}/${encodeURIComponent(
-      noticeId
+    const url = `${process.env.NEXT_PUBLIC_M33_URL}/${encodeURIComponent(
+      memberId
     )}`;
     const response = await instanceAuth.delete(url);
 
