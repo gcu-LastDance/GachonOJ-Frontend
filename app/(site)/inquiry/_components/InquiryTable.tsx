@@ -22,6 +22,13 @@ const columns: ColumnDef<InquiryTableData, any>[] = [
   }),
   columnHelper("inquiryStatus", {
     header: "상태",
+    cell: (value) => {
+      const statusStyle =
+        value === "답변 완료" ? "text-primaryBlue" : "text-primaryRed";
+      return (
+        <span className={statusStyle}>{value}</span> // 조건에 따른 스타일 적용
+      );
+    },
   }),
 ];
 
@@ -52,7 +59,7 @@ export default function InquiryTable() {
                   key={header.id}
                   className={`${
                     header.id === "inquiryTitle"
-                      ? "text-left w-[28vw] pl-[3vw]"
+                      ? "text-left w-[26vw] pl-[3vw]"
                       : "text-center w-[12.5w]"
                   }`}
                 >
@@ -83,7 +90,7 @@ export default function InquiryTable() {
                   }  text-[1vw] font-PretendardLight text-realGrey`}
                 >
                   {cell.column.id === "inquiryTitle" ? (
-                    <Link href={`/notice/${row.original.inquiryId}`}>
+                    <Link href={`/inquiry/${row.original.inquiryId}`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
