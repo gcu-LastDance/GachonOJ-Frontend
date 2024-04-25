@@ -1,7 +1,9 @@
+import { difficulty } from "../problem";
+
 export interface problemTableData {
   problem_id: number;
   problem_title: string;
-  problem_diff: number;
+  problem_diff: difficulty;
   problem_status: string;
   submission_num: number;
   grading_num: number;
@@ -18,7 +20,7 @@ export type problemTableColumn = {
 export interface ProblemFormData {
   memory: string;
   time: string;
-  difficulty: number;
+  difficulty: difficulty;
   language: string[];
   title: string;
   content: string;

@@ -23,3 +23,14 @@ export const noticeTableAPI = async () => {
     throw error;
   }
 };
+
+export const noticeDetailAPI = async (noticeId: number) => {
+  try {
+    const response = await instanceNonAuth.get(
+      `${process.env.NEXT_PUBLIC_B11_URL}/${noticeId}`
+    );
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};

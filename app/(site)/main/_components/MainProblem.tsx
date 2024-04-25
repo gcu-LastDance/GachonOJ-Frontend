@@ -6,37 +6,37 @@ const main_table_data: RecProblemData[] = [
   {
     id: 1,
     title: "후위표기식 변환",
-    difficulty: 0,
+    difficulty: "1단계",
     category: ["그래프 이론", "다익스트라"],
   },
   {
     id: 2,
     title: "후위표기식 변환",
-    difficulty: 1,
+    difficulty: "1단계",
     category: ["그래프 이론", "DFS", "BFS"],
   },
   {
     id: 3,
     title: "후위표기식 변환",
-    difficulty: 2,
+    difficulty: "1단계",
     category: ["스택", "구현"],
   },
   {
     id: 4,
     title: "가천대역 길찾기",
-    difficulty: 3,
+    difficulty: "1단계",
     category: ["그래프 이론", "다익스트라"],
   },
   {
     id: 5,
     title: "가천대역 길찾기",
-    difficulty: 4,
+    difficulty: "1단계",
     category: ["그래프 이론", "다익스트라"],
   },
   {
     id: 6,
     title: "가천대역 길찾기",
-    difficulty: 1,
+    difficulty: "1단계",
     category: ["다이나믹프로그래밍"],
   },
 ];

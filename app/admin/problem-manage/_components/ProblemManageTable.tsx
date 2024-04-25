@@ -2,10 +2,16 @@ import React from "react";
 import PROBLEM_MOCK_DATA from "@/mocks/PROBLEM_MOCK_DATA.json";
 import { problemTableColumn, problemTableData } from "@/types/admin/problem";
 import { usePagination, useTable } from "react-table";
+import { difficulty } from "@/types/problem";
 
-const main_table_data: problemTableData[] = PROBLEM_MOCK_DATA;
+const main_table_data: problemTableData[] = PROBLEM_MOCK_DATA.map(
+  (problem) => ({
+    ...problem,
+    problem_diff: problem.problem_diff as difficulty, // Cast 'problem_diff' to 'difficulty'
+  })
+);
 
-export const main_columns: problemTableColumn[]  = [
+export const main_columns: problemTableColumn[] = [
   {
     Header: "번호",
     accessor: "problem_id",
@@ -59,7 +65,7 @@ const ProblemManageTable = () => {
   } = useTable<problemTableData>(
     {
       columns: main_columns,
-      data: main_table_data
+      data: main_table_data,
     },
     usePagination
   );
