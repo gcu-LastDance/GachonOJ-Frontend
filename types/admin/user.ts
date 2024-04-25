@@ -12,7 +12,7 @@ export interface userTableData {
 export interface userListData {
   // 수정 하지 말것
   result: {
-    content: userTableData;
+    content: userTableData[];
   };
 }
 

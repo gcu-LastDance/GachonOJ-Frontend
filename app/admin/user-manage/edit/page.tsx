@@ -9,7 +9,6 @@ function page() {
           <EditUserForm />
         </div>
     )
-    console.log("page");
 }
 
 export default page;

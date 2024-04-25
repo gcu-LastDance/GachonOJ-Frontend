@@ -1,12 +1,13 @@
 "use client";
-import { userContentAPI } from "@/api/adminUserAPI";
-import { userContentData, userFormData, userTableData } from "@/types/admin/user";
-import { useQuery } from "@tanstack/react-query";
+import { userContentAPI, userModifyAPI } from "@/api/adminUserAPI";
+import { userContentData, userFormData } from "@/types/admin/user";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 function EditUserForm({data, memberId}: {data: userContentData, memberId: number}) {
+  const router = useRouter();
   const formdata = data.result;
   const {
     register,
@@ -15,9 +16,24 @@ function EditUserForm({data, memberId}: {data: userContentData, memberId: number
     getValues,
     formState: { errors },
   } = useForm<userFormData>();
-  const onSubmit: SubmitHandler<userFormData> = (data) => {
-    // 여기서 데이터를 처리하거나 제출합니다.
+
+
+  const onSubmit = (data: userFormData) => {
+    ModifyMutation.mutate(data);
   };
+
+  const ModifyMutation = useMutation({
+    mutationFn: (data: userFormData) => userModifyAPI(data),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("admin/notice-manage/list");
+      }
+    },
+  });
 
   const handleAutoFillNickname = () => {
     setValue("memberNickname", getValues("memberName"));
@@ -154,6 +170,7 @@ function EditUserForm({data, memberId}: {data: userContentData, memberId: number
 const UserContentsContainer = () => {
   const params = useSearchParams();
   const memberId = Number(params.get("memberId"));
+  console.log(memberId);
   const { data } = useQuery<userContentData>({
     queryKey: ["userContent"],
     queryFn: () => userContentAPI(memberId),

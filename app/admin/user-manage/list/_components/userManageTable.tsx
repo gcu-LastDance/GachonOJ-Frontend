@@ -7,7 +7,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { userListAPI } from "@/api/adminUserAPI";
-import { userContentData, userTableData } from "@/types/admin/user";
+import { userListData, userTableData } from "@/types/admin/user";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -22,8 +22,8 @@ const columns: ColumnDef<userTableData, any>[] = [
   columnHelper("memberCreatedDate", { header: "가입일" }),
 ];
 
+
 export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
-  const router = useRouter();
 
   const [data, setData] = useState<userTableData[]>(tableData);
 
@@ -80,11 +80,12 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
                   href={{
                     pathname: "edit",
                     query: { memberId: row.original.memberId },
-                  }} // as={"/edit"}
+                  }}  as ="edit"
                 >
                   <button className="underline underline-offset-auto">
                     정보 수정
                   </button>
+                 
                 </Link>
               </td>
 
@@ -112,8 +113,8 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
 }
 
 const UserManageTableContainer = () => {
-  const { data } = useQuery<userContentData>({
-    queryKey: ["uesrList"],
+  const { data } = useQuery<userListData>({
+    queryKey: ["userList"],
     queryFn: userListAPI,
   });
 

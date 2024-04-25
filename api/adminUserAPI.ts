@@ -42,7 +42,7 @@ export const userEnrollAPI = async(data: userFormData) => {
 
 export const userModifyAPI = async(data: userFormData) => {
   try {
-    const response = await instanceAuth.post(
+    const response = await instanceAuth.put(
       process.env.NEXT_PUBLIC_M25_URL as string, data
     );
 
@@ -52,11 +52,10 @@ export const userModifyAPI = async(data: userFormData) => {
   }
 };
 
-// API가 없음
 
 export const userDeleteAPI = async(noticeId: number) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_M02_URL}/${encodeURIComponent(
+    const url = `${process.env.NEXT_PUBLIC_M40_URL}/${encodeURIComponent(
       noticeId
     )}`;
     const response = await instanceAuth.delete(url);
