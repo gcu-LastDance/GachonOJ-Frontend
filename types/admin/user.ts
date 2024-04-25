@@ -1,17 +1,24 @@
 export interface userTableData {
+  // 수정 하지 말것
   memberId: number;
   memberEmail: string;
   memberName: string;
-  member_number: number;
+  memberNumber: number;
   memberNickname: string;
   memberRole: string;
   memberCreatedDate: string;
 }
 
 export interface userListData {
+  // 수정 하지 말것
   result: {
-    content: userTableData[];
+    content: userTableData;
   };
+}
+
+export interface userContentData {
+  // 수정 하지 말것
+  result: userTableData;
 }
 
 // 컬럼 타입 정의
@@ -21,12 +28,13 @@ export type userTableColumn = {
 };
 
 export interface userFormData {
-  role: string;
-  email: string;
-  password: number;
-  passwordconfirm: string;
-  name: string;
-  nickname: string;
-  user_number: number;
-  member_number: number;
+  memberId: number;
+  memberEmail: string;
+  memberName: string;
+  memberNumber: number;
+  memberNickname: string;
+  memberRole: string;
+  memberCreatedDate: string;
+  memberPassword: string;
+  memberPasswordConfirm: string;
 }

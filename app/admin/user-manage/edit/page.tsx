@@ -1,5 +1,7 @@
 'use client';
-import EditUserForm from './_components/EditUserForm'
+
+import EditUserForm from "./EditUserForm";
+
 
 function page() {
 	return (
@@ -7,6 +9,7 @@ function page() {
           <EditUserForm />
         </div>
     )
+    console.log("page");
 }
 
 export default page;

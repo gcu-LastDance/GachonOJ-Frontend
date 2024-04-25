@@ -1,18 +1,26 @@
 "use client";
-import { userFormData } from "@/types/admin/user";
+import { userContentAPI } from "@/api/adminUserAPI";
+import { userContentData, userFormData, userTableData } from "@/types/admin/user";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-export default function EditAdminMyAccountForm() {
-  const { register, handleSubmit, setValue, getValues } =
-    useForm<userFormData>();
+function EditUserForm({data, memberId}: {data: userContentData, memberId: number}) {
+  const formdata = data.result;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm<userFormData>();
   const onSubmit: SubmitHandler<userFormData> = (data) => {
-    console.log(data);
     // 여기서 데이터를 처리하거나 제출합니다.
   };
 
   const handleAutoFillNickname = () => {
-    setValue("nickname", getValues("name"));
+    setValue("memberNickname", getValues("memberName"));
   };
 
   return (
@@ -25,7 +33,7 @@ export default function EditAdminMyAccountForm() {
             </label>
             <input
               id="id"
-              value="13"
+              value={memberId}
               className="block font-medium mb-1 ml-10"
             />
           </div>
@@ -35,8 +43,8 @@ export default function EditAdminMyAccountForm() {
             </label>
             <input
               id="role"
-              value="사용자"
-              {...register("role")}
+              value={formdata.memberRole}
+              {...register("memberRole")}
               className="block font-medium mb-1 ml-10"
             />
           </div>
@@ -47,8 +55,8 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
-            value="gachonOJ@gachonOJ.com"
-            {...register("email")}
+            value={formdata.memberEmail}
+            {...register("memberEmail")}
             className="w-80 ml-10 px-3 py-2 text-realGrey focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -61,7 +69,7 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="password"
-            {...register("password")}
+            {...register("memberPassword")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -74,7 +82,7 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="password"
-            {...register("passwordconfirm")}
+            {...register("memberPasswordConfirm")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -84,8 +92,8 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
-            value="김사람"
-            {...register("name")}
+            value={formdata.memberName}
+            {...register("memberName")}
             className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -98,8 +106,8 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
-            value="사람1"
-            {...register("nickname")}
+            value={formdata.memberNickname}
+            {...register("memberNickname")}
             className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
           <button
@@ -116,8 +124,8 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
-            {...register("user_number")}
-            value="201500000"
+            {...register("memberNumber")}
+            value={formdata.memberNumber}
             className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -142,3 +150,17 @@ export default function EditAdminMyAccountForm() {
     </form>
   );
 }
+
+const UserContentsContainer = () => {
+  const params = useSearchParams();
+  const memberId = Number(params.get("memberId"));
+  const { data } = useQuery<userContentData>({
+    queryKey: ["userContent"],
+    queryFn: () => userContentAPI(memberId),
+  });
+
+  if (!data) return null;
+  return <EditUserForm data={data} memberId={memberId} />;
+};
+
+export default UserContentsContainer;

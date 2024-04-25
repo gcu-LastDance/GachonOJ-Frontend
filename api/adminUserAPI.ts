@@ -16,13 +16,12 @@ export const userListAPI = async () => {
 };
 
 
-export const userContentAPI = async (noticeId: number) => {
+export const userContentAPI = async (memberId: number) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_M11_URL}/${encodeURIComponent(
-      noticeId
+    const url = `${process.env.NEXT_PUBLIC_M32_URL}/${encodeURIComponent(
+      memberId
     )}`;
     const response = await instanceAuth.get(url);
-
     return response.data;
   } catch (error) {
     throw error;
