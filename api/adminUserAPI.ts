@@ -40,11 +40,12 @@ export const userEnrollAPI = async(data: userFormData) => {
   }
 };
 
-export const userModifyAPI = async(data: userFormData) => {
+export const userModifyAPI = async(memberId:number, data: userFormData) => {
   try {
-    const response = await instanceAuth.put(
-      process.env.NEXT_PUBLIC_M25_URL as string, data
-    );
+    const url = `${process.env.NEXT_PUBLIC_M31_URL}/${encodeURIComponent(
+      memberId
+    )}`;
+    const response = await instanceAuth.put(url, data);
 
     return response.data;
   } catch (error) {

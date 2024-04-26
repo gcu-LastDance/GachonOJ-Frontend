@@ -2,9 +2,10 @@
 import { userContentAPI, userModifyAPI } from "@/api/adminUserAPI";
 import { userContentData, userFormData } from "@/types/admin/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 function EditUserForm({
   data,
@@ -28,7 +29,7 @@ function EditUserForm({
   };
 
   const ModifyMutation = useMutation({
-    mutationFn: (data: userFormData) => userModifyAPI(data),
+    mutationFn: (data: userFormData) => userModifyAPI(memberId, data),
     onError: (error) => {
       console.log(error);
     },
@@ -64,9 +65,9 @@ function EditUserForm({
             </label>
             <select
               id="role"
-              value={formdata.memberRole}
+              defaultValue={formdata.memberRole}
               {...register("memberRole")}
-              className="block font-medium mb-1 ml-10"
+              className="font-medium mb-1 ml-10"
             >
               <option value="학생">학생</option>
               <option value="교수">교수</option>
@@ -88,7 +89,7 @@ function EditUserForm({
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
           <label
             htmlFor="password"
-            className="w-28 block font-medium mb-1 mr-2"
+            className="w-28 font-medium mb-1 mr-2"
           >
             비밀번호
           </label>
@@ -101,7 +102,7 @@ function EditUserForm({
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
           <label
             htmlFor="passwordconfirm"
-            className="w-28 block font-medium mb-1 mr-2"
+            className="w-28 font-medium mb-1 mr-2"
           >
             비밀번호 확인
           </label>
@@ -112,12 +113,12 @@ function EditUserForm({
           />
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
+          <label htmlFor="name" className="w-28 font-medium mb-1 mr-2">
             이름
           </label>
           <input
             type="text"
-            value={formdata.memberName}
+            defaultValue={formdata.memberName}
             {...register("memberName")}
             className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
@@ -125,13 +126,13 @@ function EditUserForm({
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
           <label
             htmlFor="nickname"
-            className="w-28 block font-medium mb-1 mr-2"
+            className="w-28 font-medium mb-1 mr-2"
           >
             닉네임
           </label>
           <input
             type="text"
-            value={formdata.memberNickname}
+            defaultValue={formdata.memberNickname}
             {...register("memberNickname")}
             className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
@@ -144,24 +145,24 @@ function EditUserForm({
           </button>
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
+          <label htmlFor="name" className="w-28 font-medium mb-1 mr-2">
             학번
           </label>
           <input
             type="text"
             {...register("memberNumber")}
-            value={formdata.memberNumber}
+            defaultValue={formdata.memberNumber}
             className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="flex justify-center">
-          <button
-            name="submit"
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
-          >
-            변경사항 저장
-          </button>
+        <Link href="/admin/user-manage/list">
+        <button
+          onClick={handleSubmit(onSubmit)}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold  py-2 px-4 rounded-lg mt-8 mr-8"
+        > 
+          변경사항 저장
+        </button></Link>
         </div>
       </div>
       <div className="flex justify-end">
