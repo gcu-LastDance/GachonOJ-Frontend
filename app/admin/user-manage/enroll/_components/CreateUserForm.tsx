@@ -40,16 +40,12 @@ export default function CreateAdminForm() {
           <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
             권한
           </label>
-          <select
-              id="role"
-              value=""
-              {...register("memberRole")}
-              className="block font-medium mb-1 ml-10"
-            >
-              <option value="학생">학생</option>
-              <option value="교수">교수</option>
-              <option value="관리자">관리자</option>
-            </select>
+          <input
+            id="role"
+            value="학생"
+            {...register("memberRole")}
+            className="block font-medium mb-1 ml-10"
+          />
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
           <label htmlFor="email" className="w-28 block font-medium mb-1 mr-2">
