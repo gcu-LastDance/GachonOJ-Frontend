@@ -1,59 +1,49 @@
-import { userTableData } from "@/types/admin/user";
-import React, {useState} from "react";
-import columnHelper from "@/lib/columnHelper";
+import React, { useState } from "react";
+import Link from "next/link";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { userDeleteAPI, userListAPI } from "@/api/adminUserAPI";
+import { userListData, userTableData } from "@/types/admin/user";
+import columnHelper from "@/lib/columnHelper";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-export const main_table_data: userTableData[] = [
-  {
-    id: 1,
-    email: "asdf@gachon.ac.kr",
-    name: "사람1",
-    member_number: 12345678,
-    nickname: "닉네임1",
-    role: "사용자",
-    created_date: "2024.12.21",
-
-  },
-  {
-    id: 2,
-    email: "asdf@gachon.ac.kr",
-    name: "사람2",
-    member_number: 49398383,
-    nickname: "닉네임2",
-    role: "사용자",
-    created_date: "2024.12.21",
-
-  },
-  {
-    id: 3,
-    email: "asdf@gachon.ac.kr",
-    name: "사람3",
-    member_number: 89439838,
-    nickname: "닉네임3",
-    role: "사용자",
-    created_date: "2024.12.21",
-
-  },
+const columns: ColumnDef<userTableData, any>[] = [
+  columnHelper("memberId", { header: "번호" }),
+  columnHelper("memberEmail", { header: "이메일" }),
+  columnHelper("memberName", { header: "이름" }),
+  columnHelper("memberNumber", { header: "학번" }),
+  columnHelper("memberNickname", { header: "닉네임" }),
+  columnHelper("memberRole", { header: "권한" }),
+  columnHelper("memberCreatedDate", { header: "가입일" }),
 ];
 
-const columns : ColumnDef<userTableData, any>[] = [
-  columnHelper("id", {header: "번호"}),
-  columnHelper("email", {header: "이메일"}),
-  columnHelper("name", {header: "이름"}),
-  columnHelper("member_number", {header: "학번"}),
-  columnHelper("nickname", {header: "닉네임"}),
-  columnHelper("role", {header: "권한"}),
-  columnHelper("created_date", {header: "가입일"}),
-];
 
-export default function UserManageTable() {
-  const [data, setData] = useState<userTableData[]>(main_table_data);
-  // useTable 훅을 사용하여 테이블을 생성하고 테이블에 필요한 상태 및 동작을 설정
+export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
+
+  const router = useRouter();
+
+  const onDelete = (memberId: number) => {
+    DeleteMutation.mutate(memberId);
+  };
+
+  const DeleteMutation = useMutation({
+    mutationFn: (memberId: number) => userDeleteAPI(memberId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/user-manage/list");
+      }
+    }})
+
+  const [data, setData] = useState<userTableData[]>(tableData);
 
   const table = useReactTable({
     data,
@@ -79,9 +69,9 @@ export default function UserManageTable() {
                 >
                   {/* 컬럼 헤더 렌더링 */}
                   {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
                 </th>
               ))}
             </tr>
@@ -92,8 +82,8 @@ export default function UserManageTable() {
           {/* 페이지에 해당하는 데이터 행들을 렌더링 */}
           {table.getRowModel().rows.map((row) => (
             <tr
-            key={row.id}
-            className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
+              key={row.id}
+              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
               {row.getVisibleCells().map((cell) => (
                 <td
@@ -102,18 +92,54 @@ export default function UserManageTable() {
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
-                ))}
-                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                  <button className="underline underline-offset-8">정보 수정</button>
-                </td>
-                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                  <button className="underline underline-offset-8s">정보 삭제</button>
-                </td>
-              </tr>
-            
               ))}
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  href={{
+                    pathname: "edit",
+                    query: { memberId: row.original.memberId },
+                  }}  // as ="edit"
+                >
+                  <button className="underline underline-offset-auto">
+                    정보 수정
+                  </button>
+                 
+                </Link>
+              </td>
+
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link href="/admin/user-manage/list">
+                <button className="underline underline-offset-auto" onClick={() => onDelete(row.original.memberId)}>
+                  정보 삭제
+                </button>
+                </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <div className="flex justify-end items-center mt-5">
+        <Link href="enroll">
+          <button
+            type="button"
+            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
+          >
+            새 사용자 생성
+          </button>
+        </Link>
+      </div>
     </div>
-  )
+  );
 }
+
+const UserManageTableContainer = () => {
+  const { data } = useQuery<userListData>({
+    queryKey: ["userList"],
+    queryFn: userListAPI,
+  });
+
+  if (!data) return null;
+  return <UserManageTable tableData={data?.result.content} />;
+};
+
+export default UserManageTableContainer;

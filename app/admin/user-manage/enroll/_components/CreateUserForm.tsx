@@ -1,17 +1,36 @@
 "use client";
 import { userFormData } from "@/types/admin/user";
 import React from "react";
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm} from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { userEnrollAPI } from "@/api/adminUserAPI";
+import Link from "next/link";
 
 export default function CreateAdminForm() {
-  const { register, handleSubmit, setValue, getValues } = useForm<userFormData>();
-  const onSubmit: SubmitHandler<userFormData> = (data) => {
-    console.log(data);
-    // 여기서 데이터를 처리하거나 제출합니다.
+  const router = useRouter();
+  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<userFormData>();
+
+  const onSubmit = (data: userFormData) => {
+    EnrollMutation.mutate(data);
   };
+  
+  const EnrollMutation = useMutation({
+    mutationFn: (data: userFormData) => userEnrollAPI(data),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/user-manage/list");
+      }
+    },
+  });
+
 
   const handleAutoFillNickname = () => {
-    setValue("nickname", getValues("name"));
+    setValue("memberNickname", getValues("memberName"));
   };
 
   return (
@@ -23,8 +42,8 @@ export default function CreateAdminForm() {
           </label>
           <input
             id="role"
-            value="사용자"
-            {...register("role")}
+            value="학생"
+            {...register("memberRole")}
             className="block font-medium mb-1 ml-10"
           />
         </div>
@@ -34,7 +53,7 @@ export default function CreateAdminForm() {
           </label>
           <input
             type="text"
-            {...register("email")}
+            {...register("memberEmail")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -44,7 +63,7 @@ export default function CreateAdminForm() {
           </label>
           <input
             type="password"
-            {...register("password")}
+            {...register("memberPassword")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -54,7 +73,7 @@ export default function CreateAdminForm() {
           </label>
           <input
             type="password"
-            {...register("passwordconfirm")}
+            {...register("memberPasswordConfirm")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -64,7 +83,7 @@ export default function CreateAdminForm() {
           </label>
           <input
             type="text"
-            {...register("name")}
+            {...register("memberName")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -74,7 +93,7 @@ export default function CreateAdminForm() {
           </label>
           <input
             type="text"
-            {...register("nickname")}
+            {...register("memberNickname")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
           <button
@@ -91,18 +110,18 @@ export default function CreateAdminForm() {
           </label>
           <input
             type="text"
-            {...register("user_number")}
+            {...register("memberNumber")}
             className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
           />
           </div>
         <div className="flex justify-center">
+          <Link href="member/admin/members">
         <button
-          name="submit"
-          type="submit"
+          onClick={handleSubmit(onSubmit)}
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold  py-2 px-4 rounded-lg mt-8 mr-8"
-        >
+        > 
           회원 생성
-        </button>
+        </button></Link>
         </div>
 
         

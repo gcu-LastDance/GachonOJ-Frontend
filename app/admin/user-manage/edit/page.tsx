@@ -1,5 +1,7 @@
 'use client';
-import EditUserForm from './_components/EditUserForm'
+
+import EditUserForm from "./EditUserForm";
+
 
 function page() {
 	return (

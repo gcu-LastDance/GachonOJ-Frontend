@@ -82,7 +82,7 @@ export default function SideAdminNav() {
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[0.8vh] my-[1.2vh]">
             <Link href="/admin/user-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
-                사용자 목록
+                학생 목록
               </p>
             </Link>
             <Link href="/admin/professor-manage/list">
