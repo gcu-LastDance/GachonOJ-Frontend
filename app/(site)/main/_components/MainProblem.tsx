@@ -1,51 +1,22 @@
+"use client";
+
+import { recProblemAPI } from "@/api/problemAPI";
 import RecProblemCard from "@/components/card/RecProblemCard";
 import { RecProblemData } from "@/types/problem";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
-const main_table_data: RecProblemData[] = [
-  {
-    id: 1,
-    title: "후위표기식 변환",
-    difficulty: "1단계",
-    category: ["그래프 이론", "다익스트라"],
-  },
-  {
-    id: 2,
-    title: "후위표기식 변환",
-    difficulty: "1단계",
-    category: ["그래프 이론", "DFS", "BFS"],
-  },
-  {
-    id: 3,
-    title: "후위표기식 변환",
-    difficulty: "1단계",
-    category: ["스택", "구현"],
-  },
-  {
-    id: 4,
-    title: "가천대역 길찾기",
-    difficulty: "1단계",
-    category: ["그래프 이론", "다익스트라"],
-  },
-  {
-    id: 5,
-    title: "가천대역 길찾기",
-    difficulty: "1단계",
-    category: ["그래프 이론", "다익스트라"],
-  },
-  {
-    id: 6,
-    title: "가천대역 길찾기",
-    difficulty: "1단계",
-    category: ["다이나믹프로그래밍"],
-  },
-];
-
 export default function MainProblem() {
+  const { data: recProblemData } = useQuery<RecProblemData[]>({
+    queryKey: ["recProblem"],
+    queryFn: recProblemAPI,
+    refetchOnMount: "always",
+  });
+
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-y-[6vh] gap-x-[3vw] ml-[3vw] my-[4vh]">
-      {main_table_data.map((data) => (
-        <RecProblemCard key={data.id} data={data} />
+      {recProblemData?.map((data: RecProblemData) => (
+        <RecProblemCard key={data.problemId} data={data} />
       ))}
     </div>
   );

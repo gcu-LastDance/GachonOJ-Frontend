@@ -1,10 +1,10 @@
 export type difficulty = "0단계" | "1단계" | "2단계" | "3단계" | "4단계";
 
 export interface RecProblemData {
-  id: number;
-  title: string;
-  difficulty: difficulty;
-  category?: string[];
+  problemId: number;
+  problemTitle: string;
+  problemDiff: difficulty;
+  problemClass: string;
 }
 
 export interface ProblemTableData {

@@ -1,6 +1,18 @@
 import { instanceNonAuth } from "@/lib/axiosConfig";
 import { difficulty } from "@/types/problem";
 
+export const recProblemAPI = async () => {
+  try {
+    const response = await instanceNonAuth.get(
+      process.env.NEXT_PUBLIC_P17_URL as string
+    );
+    console.log(response.data);
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const problemTableGuestAPI = async ({
   pageNum,
   searchKeyword,
