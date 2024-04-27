@@ -42,7 +42,7 @@ export default function CreateAdminForm() {
           </label>
           <input
             id="role"
-            value="학생"
+            value="교수"
             {...register("memberRole")}
             className="block font-medium mb-1 ml-10"
           />
@@ -57,8 +57,6 @@ export default function CreateAdminForm() {
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
-       
-
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
           <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
             이름
@@ -86,16 +84,6 @@ export default function CreateAdminForm() {
             이름과 동일하게 설정
           </button>
         </div>
-        <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
-            학번
-          </label>
-          <input
-            type="text"
-            {...register("memberNumber")}
-            className="w-80 ml-10 px-3 py-2 text-realGrey border rounded-lg focus:outline-none focus:border-blue-500"
-          />
-          </div>
         <div className="flex justify-center">
           <Link href="member/admin/members">
         <button

@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { userDeleteAPI, userListAPI } from "@/api/adminUserAPI";
+import { professorListAPI, userDeleteAPI } from "@/api/adminUserAPI";
 import { userListData, userTableData } from "@/types/admin/user";
 import columnHelper from "@/lib/columnHelper";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -16,7 +16,6 @@ const columns: ColumnDef<userTableData, any>[] = [
   columnHelper("memberId", { header: "번호" }),
   columnHelper("memberEmail", { header: "이메일" }),
   columnHelper("memberName", { header: "이름" }),
-  columnHelper("memberNumber", { header: "학번" }),
   columnHelper("memberNickname", { header: "닉네임" }),
   columnHelper("memberRole", { header: "권한" }),
   columnHelper("memberCreatedDate", { header: "가입일" }),
@@ -54,7 +53,7 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
   return (
     <div className="mt-20">
       <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
-        회원관리 &gt; 사용자 목록
+        회원관리 &gt; 교수 목록
       </div>
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
@@ -134,8 +133,8 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
 
 const UserManageTableContainer = () => {
   const { data } = useQuery<userListData>({
-    queryKey: ["userList"],
-    queryFn: userListAPI,
+    queryKey: ["profesorList"],
+    queryFn: professorListAPI,
   });
 
   if (!data) return null;
