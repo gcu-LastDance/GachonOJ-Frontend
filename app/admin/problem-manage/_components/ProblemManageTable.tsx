@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ColumnDef,
@@ -6,11 +6,12 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { problemListAPI  } from "@/api/adminProblemAPI";
+import { problemListAPI } from "@/api/adminProblemAPI";
 import { problemListData, problemTableData } from "@/types/admin/problem";
 import columnHelper from "@/lib/columnHelper";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { GrSearch } from "react-icons/gr";
 
 const columns: ColumnDef<problemTableData, any>[] = [
   columnHelper("problemId", { header: "번호" }),
@@ -23,9 +24,28 @@ const columns: ColumnDef<problemTableData, any>[] = [
   columnHelper("problemCreatedDate", { header: "생성일" }),
 ];
 
-
-export function ProblemManageTable({ tableData }: { tableData: problemTableData[] }) {
+export function ProblemManageTable({
+  tableData,
+  searchTerm,
+  setSearchTerm,
+}: {
+  tableData: problemTableData[];
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+}) {
   const [data, setData] = useState<problemTableData[]>(tableData);
+
+  const [showInput, setShowInput] = useState(false);
+
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchIconClick = () => {
+    setShowInput(true);
+  };
 
   const table = useReactTable({
     data,
@@ -38,6 +58,25 @@ export function ProblemManageTable({ tableData }: { tableData: problemTableData[
       <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
         문제 관리 &gt; 문제 목록
       </div>
+      <div className="flex justify-end">
+        {showInput ? (
+          <input
+            className="p-2"
+            type="search"
+            placeholder="검색어를 입력하세요"
+            value={searchTerm}
+            onChange={handleSearchInputChange}
+          />
+        ) : (
+          <div
+            className="w-fit border-2 p-2 rounded-lg"
+            onClick={handleSearchIconClick}
+          >
+            <GrSearch />
+          </div>
+        )}
+      </div>
+
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -80,20 +119,19 @@ export function ProblemManageTable({ tableData }: { tableData: problemTableData[
                   href={{
                     pathname: "edit",
                     query: { memberId: row.original.problemId },
-                  }}  // as ="edit"
+                  }} // as ="edit"
                 >
                   <button className="underline underline-offset-auto">
                     수정
                   </button>
-                 
                 </Link>
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link href="/admin/user-manage/list">
-                <button className="underline underline-offset-auto">
-                  삭제
-                </button>
+                  <button className="underline underline-offset-auto">
+                    삭제
+                  </button>
                 </Link>
               </td>
             </tr>
@@ -115,13 +153,30 @@ export function ProblemManageTable({ tableData }: { tableData: problemTableData[
 }
 
 const ProblemManageTableContainer = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
   const { data } = useQuery<problemListData>({
-    queryKey: ["problemList"],
-    queryFn: problemListAPI,
+    queryKey: ["problemList", debouncedSearchTerm], 
+    queryFn: () => problemListAPI(debouncedSearchTerm),
   });
 
   if (!data) return null;
-  return <ProblemManageTable tableData={data?.result.content} />;
+  return (
+    <ProblemManageTable
+      tableData={data?.result.content}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+    />
+  );
 };
 
 export default ProblemManageTableContainer;

@@ -34,14 +34,13 @@ export default function CreateAdminForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <div className="flex-auto ml-10 mt-10 mb-4 items-center">
         <div className="w-full mb-5 sm:mb-0 flex items-center justify-start">
           <label htmlFor="role" className="w-28 block font-medium mb-1 mr-2">
             권한
           </label>
           <input
-            id="role"
             value="교수"
             {...register("memberRole")}
             className="block font-medium mb-1 ml-10"

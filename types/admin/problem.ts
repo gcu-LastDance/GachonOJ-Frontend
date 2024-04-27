@@ -6,7 +6,7 @@ export interface problemTableData {
   correctPeople: number;
   correctSubmit: number;
   submitCount: number;
-  problemCreatedData: string;
+  problemCreatedDate: string;
 }
 
 export interface problemListData {
