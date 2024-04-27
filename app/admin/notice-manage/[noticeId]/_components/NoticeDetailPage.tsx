@@ -38,7 +38,7 @@ const NoticeDetailPage = ({ noticeId }: { noticeId: number }) => {
         </div>
         <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2">
           <div className="text-realGrey">내용</div>
-          <p className="mb-10 ml-11">{data?.result.noticeContents}</p>
+          <p className="mb-10 ml-11">{data?.result.noticeContent}</p>
         </div>
       </div>
     </div>

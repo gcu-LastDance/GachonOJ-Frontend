@@ -5,6 +5,8 @@ import { userFormData } from "@/types/admin/user";
 export const userListAPI = async () => {
   try {
     const memberRole = "학생";
+
+    
     const url = `${process.env.NEXT_PUBLIC_M09_URL}?memberRole=${encodeURIComponent(memberRole)}`;
 
     const response = await instanceAuth.get(url);
@@ -15,6 +17,20 @@ export const userListAPI = async () => {
   }
 };
 
+export const professorListAPI = async () => {
+  try {
+    const memberRole = "교수";
+
+    
+    const url = `${process.env.NEXT_PUBLIC_M09_URL}?memberRole=${encodeURIComponent(memberRole)}`;
+
+    const response = await instanceAuth.get(url);
+    
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const userContentAPI = async (memberId: number) => {
   try {
