@@ -16,6 +16,7 @@ const columns: ColumnDef<userTableData, any>[] = [
   columnHelper("memberId", { header: "번호" }),
   columnHelper("memberEmail", { header: "이메일" }),
   columnHelper("memberName", { header: "이름" }),
+  columnHelper("memberNumber", { header: "학번" }),
   columnHelper("memberNickname", { header: "닉네임" }),
   columnHelper("memberRole", { header: "권한" }),
   columnHelper("memberCreatedDate", { header: "가입일" }),
@@ -38,7 +39,7 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/user-manage/list");
+        router.push("/admin/professor-manage/list");
       }
     }})
 

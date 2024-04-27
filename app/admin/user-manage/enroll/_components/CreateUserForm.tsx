@@ -57,8 +57,26 @@ export default function CreateAdminForm() {
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
-       
-
+        <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
+          <label htmlFor="password" className="w-28 block font-medium mb-1 mr-2">
+            비밀번호
+          </label>
+          <input
+            type="password"
+            {...register("memberPassword")}
+            className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
+          <label htmlFor="passwordconfirm" className="w-28 block font-medium mb-1 mr-2">
+            비밀번호 확인
+          </label>
+          <input
+            type="password"
+            {...register("memberPasswordConfirm")}
+            className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+          />
+        </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
           <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
             이름
