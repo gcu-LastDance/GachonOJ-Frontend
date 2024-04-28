@@ -59,3 +59,26 @@ export const rankingTableAPI = async ({
     throw error;
   }
 };
+
+export const memberProgramLangAPI = async () => {
+  try {
+    const response = await instanceAuth.get(
+      process.env.NEXT_PUBLIC_M27_URL as string
+    );
+    return response.data.result.memberLang;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const memberProgramLangPatchAPI = async (lang: string) => {
+  try {
+    const response = await instanceAuth.put(
+      process.env.NEXT_PUBLIC_M10_URL as string,
+      { lang }
+    );
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
