@@ -1,22 +1,38 @@
 "use client";
-import { adminFormData } from "@/types/admin/admin";
+import { MyInfoModifyAPI } from "@/api/adminUserAPI";
+import { userFormData } from "@/types/admin/user";
+import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export default function EditAdminMyAccountForm() {
-  const { register, handleSubmit, setValue, getValues } =
-    useForm<adminFormData>();
-  const onSubmit: SubmitHandler<adminFormData> = (data) => {
-    console.log(data);
-    // 여기서 데이터를 처리하거나 제출합니다.
-  };
+  const router = useRouter();
+  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<userFormData>();
 
+  const onSubmit = (data: userFormData) => {
+    ModifyMutation.mutate(data);
+  };
+  
+  const ModifyMutation = useMutation({
+    mutationFn: (data: userFormData) => MyInfoModifyAPI(data),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin");
+      }
+    },
+  });
   const handleAutoFillNickname = () => {
-    setValue("nickname", getValues("name"));
+    setValue("memberNickname", getValues("memberName"));
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <div className="flex-auto ml-10 mt-10 mb-4 items-center">
         <div className="flex">
           <div className="w-1/3 mb-5 sm:mb-0 flex items-center">
@@ -53,7 +69,7 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
-            {...register("name")}
+            {...register("memberName")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -66,7 +82,7 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
-            {...register("nickname")}
+            {...register("memberNickname")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
           <button
@@ -78,13 +94,14 @@ export default function EditAdminMyAccountForm() {
           </button>
         </div>
         <div className="flex justify-center">
+          <Link href="/member/info">
           <button
-            name="submit"
-            type="submit"
+            onClick={handleSubmit(onSubmit)}
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
           >
             변경사항 저장
           </button>
+          </Link>
         </div>
       </div>
 

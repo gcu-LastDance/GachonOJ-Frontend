@@ -38,3 +38,8 @@ export interface userFormData {
   memberPassword: string;
   memberPasswordConfirm: string;
 }
+
+export interface MyInfoModifyFormData {
+  memberName: string;
+  memberNickname: string;
+}

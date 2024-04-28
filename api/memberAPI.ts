@@ -1,4 +1,5 @@
 import { instanceAuth } from "@/lib/axiosConfig";
+import { userFormData } from "@/types/admin/user";
 
 export const hoverProfileAPI = async () => {
   try {
@@ -55,6 +56,19 @@ export const rankingTableAPI = async ({
       const response = await instanceAuth.get(url);
       return response.data.result.content;
     }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const modifyMyInfoAPI = async (data: userFormData) => {
+  try {
+    const response = await instanceAuth.post(
+      process.env.NEXT_PUBLIC_M08_URL as string,
+      data
+    );
+
+    return response.data;
   } catch (error) {
     throw error;
   }
