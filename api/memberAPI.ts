@@ -61,15 +61,3 @@ export const rankingTableAPI = async ({
   }
 };
 
-export const modifyMyInfoAPI = async (data: userFormData) => {
-  try {
-    const response = await instanceAuth.post(
-      process.env.NEXT_PUBLIC_M08_URL as string,
-      data
-    );
-
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};

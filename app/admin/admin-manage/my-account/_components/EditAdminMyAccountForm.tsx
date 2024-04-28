@@ -1,22 +1,26 @@
 "use client";
-import { MyInfoModifyAPI } from "@/api/adminUserAPI";
-import { userFormData } from "@/types/admin/user";
-import { useMutation } from "@tanstack/react-query";
+import { MyInfoModifyAPI, getMyInfoAPI} from "@/api/adminUserAPI";
+import { myInfoModifyFormData, userContentData } from "@/types/admin/user";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export default function EditAdminMyAccountForm() {
+function EditAdminMyAccountForm({
+  data,
+}: {
+  data: userContentData;
+})  {
   const router = useRouter();
-  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<userFormData>();
+  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<myInfoModifyFormData>();
 
-  const onSubmit = (data: userFormData) => {
+  const onSubmit = (data: myInfoModifyFormData) => {
     ModifyMutation.mutate(data);
   };
   
   const ModifyMutation = useMutation({
-    mutationFn: (data: userFormData) => MyInfoModifyAPI(data),
+    mutationFn: (data: myInfoModifyFormData) => MyInfoModifyAPI(data),
     onError: (error) => {
       console.log(error);
     },
@@ -34,31 +38,13 @@ export default function EditAdminMyAccountForm() {
   return (
     <form>
       <div className="flex-auto ml-10 mt-10 mb-4 items-center">
-        <div className="flex">
-          <div className="w-1/3 mb-5 sm:mb-0 flex items-center">
-            <label htmlFor="role" className="w-fit block font-medium mb-1 mr-5">
-              번호
-            </label>
-            <input id="id" value="3" className="block font-medium mb-1 ml-5" />
-          </div>
-          <div className="w-full mb-5 sm:mb-0 flex items-center">
-            <label htmlFor="role" className="w-fit block font-medium mb-1 mr-5">
-              권한
-            </label>
-            <input
-              id="role"
-              value="관리자"
-              className="block font-medium mb-1 ml-5"
-            />
-          </div>
-        </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
           <label htmlFor="email" className="w-28 block font-medium mb-1 mr-2">
             이메일
           </label>
           <input
             type="text"
-            value="gachonOJ@gachonOJ.com"
+            value={data?.result.memberEmail}
             className="w-80 ml-10 px-3 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -69,6 +55,7 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
+            defaultValue={data?.result.memberName}
             {...register("memberName")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
@@ -82,6 +69,7 @@ export default function EditAdminMyAccountForm() {
           </label>
           <input
             type="text"
+            defaultValue={data?.result.memberNickname}
             {...register("memberNickname")}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
@@ -116,3 +104,15 @@ export default function EditAdminMyAccountForm() {
     </form>
   );
 }
+
+const EditAdminMyAccountContainer = () => {
+  const { data } = useQuery<userContentData>({
+    queryKey: ["getMyInfo"],
+    queryFn: () => getMyInfoAPI(),
+  });
+
+  if (!data) return null;
+  return <EditAdminMyAccountForm data={data} />;
+};
+
+export default EditAdminMyAccountContainer;

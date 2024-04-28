@@ -35,11 +35,9 @@ export interface userFormData {
   memberNickname: string;
   memberRole: string;
   memberCreatedDate: string;
-  memberPassword: string;
-  memberPasswordConfirm: string;
 }
 
-export interface MyInfoModifyFormData {
+export interface myInfoModifyFormData {
   memberName: string;
   memberNickname: string;
 }

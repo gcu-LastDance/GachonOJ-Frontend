@@ -1,5 +1,5 @@
 import { instanceAuth } from "@/lib/axiosConfig";
-import { userFormData } from "@/types/admin/user";
+import { myInfoModifyFormData, userFormData } from "@/types/admin/user";
 
 export const userListAPI = async () => {
   try {
@@ -83,3 +83,27 @@ export const userDeleteAPI = async (memberId: number) => {
     throw error;
   }
 };
+
+export const MyInfoModifyAPI = async (data: myInfoModifyFormData) => {
+  try {
+    const response = await instanceAuth.post(
+      process.env.NEXT_PUBLIC_M08_URL as string,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getMyInfoAPI = async () => {
+  try {
+    const response = await instanceAuth.get(
+      process.env.NEXT_PUBLIC_M11_URL as string
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
