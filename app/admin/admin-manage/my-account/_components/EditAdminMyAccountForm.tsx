@@ -32,7 +32,6 @@ export default function EditAdminMyAccountForm() {
             <input
               id="role"
               value="관리자"
-              {...register("role")}
               className="block font-medium mb-1 ml-5"
             />
           </div>
@@ -44,36 +43,10 @@ export default function EditAdminMyAccountForm() {
           <input
             type="text"
             value="gachonOJ@gachonOJ.com"
-            {...register("email")}
             className="w-80 ml-10 px-3 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
-        <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
-          <label
-            htmlFor="password"
-            className="w-28 block font-medium mb-1 mr-2"
-          >
-            비밀번호
-          </label>
-          <input
-            type="password"
-            {...register("password")}
-            className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
-          <label
-            htmlFor="passwordconfirm"
-            className="w-28 block font-medium mb-1 mr-2"
-          >
-            비밀번호 확인
-          </label>
-          <input
-            type="password"
-            {...register("passwordconfirm")}
-            className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
+
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
           <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
             이름
