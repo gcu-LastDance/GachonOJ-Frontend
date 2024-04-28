@@ -90,7 +90,7 @@ export default function SideAdminNav() {
                 교수 목록
               </p>
             </Link>
-            <Link href="/admin/admin-manage/enroll">
+            <Link href="/admin/professor-manage/enroll">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 새로운 교수 추가
               </p>

@@ -1,4 +1,5 @@
 import { instanceAuth } from "@/lib/axiosConfig";
+import { userFormData } from "@/types/admin/user";
 
 export const hoverProfileAPI = async () => {
   try {
@@ -59,3 +60,4 @@ export const rankingTableAPI = async ({
     throw error;
   }
 };
+
