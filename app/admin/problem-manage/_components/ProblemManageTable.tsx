@@ -160,24 +160,23 @@ const ProblemManageTableContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     // searchTerm이 변경될 때마다 debouncedSearchTerm을 업데이트합니다.
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 1000);
-  
+
     return () => clearTimeout(timer);
   }, [searchTerm]);
-  
+
   useEffect(() => {
     // debouncedSearchTerm이 변경될 때마다 데이터를 갱신합니다.
-    queryClient.invalidateQueries({ queryKey: ['problemList'] });
+    queryClient.invalidateQueries({ queryKey: ["problemList"] });
   }, [debouncedSearchTerm]);
-  
 
-  const { data } = useQuery<problemListData> ({
+  const { data } = useQuery<problemListData>({
     queryKey: ["problemList", debouncedSearchTerm],
     queryFn: () => problemListAPI(debouncedSearchTerm),
     enabled: debouncedSearchTerm !== undefined, // 검색어가 있을 때만 API 호출

@@ -16,7 +16,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 1,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -25,7 +25,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 2,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -34,7 +34,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 3,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -43,7 +43,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 4,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -52,7 +52,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 5,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -61,7 +61,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 6,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -70,7 +70,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 7,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -79,7 +79,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 8,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -88,7 +88,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 9,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,
@@ -97,7 +97,7 @@ export const prob_table_data: ProblemTableData[] = [
   {
     problemId: 10,
     problemTitle: "Regular Expression Matching",
-    problemDiff: 4,
+    problemDiff: "2단계",
     problemClass: "String",
     correctPeople: 75,
     correctRate: 37.5,

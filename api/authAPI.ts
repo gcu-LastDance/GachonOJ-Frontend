@@ -60,6 +60,17 @@ export const emailCodeVerifyAPI = async ({
   }
 };
 
+export const withDrawalAPI = async () => {
+  try {
+    const response = await instanceAuth.delete(
+      process.env.NEXT_PUBLIC_M02_URL as string
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const nicknameCheckAPI = async (nickname: string) => {
   try {
     const response = await instanceNonAuth.post(

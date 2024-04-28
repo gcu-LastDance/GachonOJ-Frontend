@@ -23,10 +23,10 @@ export default function RecProblemCard({ data }: { data: RecProblemData }) {
 
   return (
     <div className="flex flex-col border-[0.11vw] rounded-lg border-semiGrey py-[2.1vh] px-[1.2vw] space-y-[2vh] w-[17vw] h-[20vh] justify-center">
-      <DiffBadge difficulty={data.difficulty} />
+      <DiffBadge difficulty={data.problemDiff} />
       <Link href="/algorithm-ide/1">
         <span className="font-PretendardRegular text-[1.2vw]">
-          {data.title}
+          {data.problemTitle}
         </span>
       </Link>
       <div className="flex justify-between items-end">
@@ -38,7 +38,7 @@ export default function RecProblemCard({ data }: { data: RecProblemData }) {
           </button>
         ) : (
           <span className="font-PretendardLight text-[0.8vw] text-realGrey">
-            {data.category?.join(", ")}
+            {data.problemClass}
           </span>
         )}
         <Link href="/algorithm-ide/1">

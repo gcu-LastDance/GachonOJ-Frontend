@@ -7,7 +7,7 @@ const problem_data: ProblemDetailData = {
   title: "후위표기식 변환",
   problemText:
     "가천이는 최근 정보처리기사를 준비하면서 저학년때 배웠던 후위표기식을 다시 만나게 되었다. 가천이는 기억이 가물가물하여 자신이 수행한 후위표기식이 올바른지 혼자 확인할 수 없으므로, 가천이를 돕기 위해 올바른 후위표기식 변환값을 알려주자",
-  difficulty: 2,
+  difficulty: "1단계",
   inputInfo: "후위표기식이 str이 주어진다.",
   outputInfo: "올바른 후위표기식 변환값 answer을 출력한다.",
   examples: [

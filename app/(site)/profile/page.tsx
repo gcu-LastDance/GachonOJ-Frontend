@@ -6,6 +6,7 @@ import { GoQuestion } from "react-icons/go";
 import ProfileCard from "./_components/ProfileCard";
 import RatingHelperCard from "./_components/RatingHelperCard";
 import MemberProblemTable from "./_components/MemberProblemTable";
+import Link from "next/link";
 
 export default function page() {
   return (
@@ -43,13 +44,13 @@ export default function page() {
               </div>
             </div>
             <div className="flex w-[13vw] h-[8vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden py-[1.5vh] px-[1vw] justify-center items-center">
-              <button
-                onClick={() => alert("회원 탈퇴하기 미구현")}
-                type="button"
+              <Link
+                href="/profile/withdrawal"
+                scroll={false}
                 className="font-PretendardRegular underline underline-offset-4 text-[0.9vw] text-realGrey decoration-realGrey"
               >
                 회원 탈퇴하기
-              </button>
+              </Link>
             </div>
           </div>
           <div className="w-[49vw] h-[73vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">

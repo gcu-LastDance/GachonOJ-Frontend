@@ -10,4 +10,5 @@ export interface NoticeDetailData {
   noticeTitle: string;
   noticeCreatedDate: string;
   noticeContents: string;
+  memberNickname: string;
 }
