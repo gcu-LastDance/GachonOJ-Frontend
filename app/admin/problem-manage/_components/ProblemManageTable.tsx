@@ -9,7 +9,7 @@ import {
 import { problemListAPI } from "@/api/adminProblemAPI";
 import { problemListData, problemTableData } from "@/types/admin/problem";
 import columnHelper from "@/lib/columnHelper";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { GrSearch } from "react-icons/gr";
 
@@ -34,6 +34,10 @@ export function ProblemManageTable({
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [data, setData] = useState<problemTableData[]>(tableData);
+
+  useEffect(() => {
+    setData(tableData);
+  }, [tableData]);
 
   const [showInput, setShowInput] = useState(false);
 
@@ -156,17 +160,28 @@ const ProblemManageTableContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
+  const queryClient = useQueryClient()
+
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+    // searchTerm이 변경될 때마다 debouncedSearchTerm을 업데이트합니다.
+    const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 1000);
-
-    return () => clearTimeout(delayDebounceFn);
+  
+    return () => clearTimeout(timer);
   }, [searchTerm]);
+  
+  useEffect(() => {
+    // debouncedSearchTerm이 변경될 때마다 데이터를 갱신합니다.
+    queryClient.invalidateQueries({ queryKey: ['problemList'] });
+  }, [debouncedSearchTerm]);
+  
 
-  const { data } = useQuery<problemListData>({
-    queryKey: ["problemList", debouncedSearchTerm], 
+  const { data } = useQuery<problemListData> ({
+    queryKey: ["problemList", debouncedSearchTerm],
     queryFn: () => problemListAPI(debouncedSearchTerm),
+    enabled: debouncedSearchTerm !== undefined, // 검색어가 있을 때만 API 호출
+    staleTime: 0,
   });
 
   if (!data) return null;
