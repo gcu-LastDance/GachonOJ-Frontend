@@ -28,6 +28,10 @@ export default function page() {
     },
   });
 
+  const handleWithDrawalCommit = () => {
+    withDrawalMutation.mutate();
+  };
+
   return (
     <ModalLarge>
       <div className="flex flex-col items-center py-[5.5vh]">
@@ -43,7 +47,7 @@ export default function page() {
         <div className="flex space-x-[2vw] mt-[7vh]">
           <button
             type="button"
-            onClick={() => {}}
+            onClick={handleWithDrawalCommit}
             className="flex border-[0.15vw] border-primaryBlue bg-white w-[13vw] h-[4vh] items-center justify-center rounded-[0.2vw]"
           >
             <span className="text-primaryBlue font-PretendardSemiBold text-[0.85vw]">

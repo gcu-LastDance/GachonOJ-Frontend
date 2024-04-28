@@ -11,3 +11,8 @@ export interface InquiryDetailData {
   inquiryCreatedDate: string;
   replyContents: string;
 }
+
+export interface InquiryFormData {
+  inquiryTitle: string;
+  inquiryContents: string;
+}
