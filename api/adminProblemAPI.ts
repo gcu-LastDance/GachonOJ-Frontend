@@ -12,3 +12,16 @@ export const problemListAPI = async (search:string) => {
     throw error;
   }
 };
+
+export const problemDeleteAPI = async(problemId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P15_URL}/${encodeURIComponent(
+      problemId
+    )}`;
+    const response = await instanceAuth.delete(url);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
