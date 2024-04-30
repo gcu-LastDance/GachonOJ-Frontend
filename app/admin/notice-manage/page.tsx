@@ -1,5 +1,5 @@
 'use client';
-import NoticeManageTable from './_components/NoticeManageTable'
+import NoticeManageTable from './list/_components/NoticeManageTable'
 
 function page() {
 	return (
