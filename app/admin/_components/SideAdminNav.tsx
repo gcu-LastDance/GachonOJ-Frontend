@@ -121,14 +121,19 @@ export default function SideAdminNav() {
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[0.8vh] my-[1.2vh]">
             <button>
-              <p className="font-PretendardLight text-realGrey text-[0.75vw]">
-                시험 목록
-              </p>
+              <Link href="/admin/exam-manage/list">
+                <p className="font-PretendardLight text-realGrey text-[0.75vw]">
+                  시험 목록
+                </p>
+              </Link>
             </button>
+
             <button>
-              <p className="font-PretendardLight text-realGrey text-[0.75vw]">
-                대회 목록
-              </p>
+              <Link href="/admin/contest-manage/list">
+                <p className="font-PretendardLight text-realGrey text-[0.75vw]">
+                  대회 목록
+                </p>
+              </Link>
             </button>
           </div>
         </div>

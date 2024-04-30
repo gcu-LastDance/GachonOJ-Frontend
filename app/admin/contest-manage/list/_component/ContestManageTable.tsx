@@ -6,14 +6,14 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { examListAPI } from "@/api/adminExamAPI";
-import { examListData, examTableData } from "@/types/admin/exam";
+import { contestListData, contestTableData } from "@/types/admin/contest";
 import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { contestListAPI } from "@/api/adminContestAPI";
 
-const columns: ColumnDef<examTableData, any>[] = [
+const columns: ColumnDef<contestTableData, any>[] = [
   columnHelper("examId", { header: "인덱스" }),
   columnHelper("examTitle", { header: "제목" }),
   columnHelper("examMemo", { header: "메모" }),
@@ -23,10 +23,10 @@ const columns: ColumnDef<examTableData, any>[] = [
   columnHelper("examCreatedDate", { header: "작성일" }),
 ];
 
-export function ExamManageTable({
+export function ContestManageTable({
   tableData,
 }: {
-  tableData: examTableData[];
+  tableData: contestTableData[];
 }) {
   const router = useRouter();
 
@@ -48,7 +48,7 @@ export function ExamManageTable({
   //   },
   // });
 
-  const [data, setData] = useState<examTableData[]>(tableData);
+  const [data, setData] = useState<contestTableData[]>(tableData);
 
   const table = useReactTable({
     data,
@@ -59,7 +59,7 @@ export function ExamManageTable({
   return (
     <div className="mt-20">
       <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4">
-        관리기능 &gt; 시험 관리
+        관리기능 &gt; 대회 관리
       </div>
 
       {/* 테이블 요소 생성 */}
@@ -137,15 +137,15 @@ export function ExamManageTable({
   );
 }
 
-const ExamManageTableConatiner = () => {
-  const { data } = useQuery<examListData>({
-    queryKey: ["examList"],
-    queryFn: () => examListAPI("시험"),
+const ContestManageTableConatiner = () => {
+  const { data } = useQuery<contestListData>({
+    queryKey: ["contestList"],
+    queryFn: () => contestListAPI("대회"),
   });
 
   if (!data) return null;
 
-  return <ExamManageTable tableData={data?.result.content} />;
+  return <ContestManageTable tableData={data?.result.content} />;
 };
 
-export default ExamManageTableConatiner;
+export default ContestManageTableConatiner;

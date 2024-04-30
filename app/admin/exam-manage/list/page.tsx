@@ -1,5 +1,5 @@
 "use client";
-import ExamManageTable from "../_components/ExamManageTable";
+import ExamManageTable from "./_components/ExamManageTable";
 
 function page() {
   return (
