@@ -77,10 +77,8 @@ export function ProblemManageTable({
   });
 
   return (
-    <div className="mt-20">
-      <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
-        문제 관리 &gt; 문제 목록
-      </div>
+    <div>
+
       <div className="flex justify-end">
         {showInput ? (
           <input

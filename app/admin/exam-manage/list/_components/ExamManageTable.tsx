@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { examListAPI } from "@/api/adminExamAPI";
+import { examDeleteAPI, examListAPI } from "@/api/adminExamAPI";
 import { examListData, examTableData } from "@/types/admin/exam";
 import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
@@ -30,23 +30,23 @@ export function ExamManageTable({
 }) {
   const router = useRouter();
 
-  // const onDelete = (noticeId: number) => {
-  //   DeleteMutation.mutate(noticeId);
-  // };
+  const onDelete = (examId: number) => {
+    DeleteMutation.mutate(examId);
+  };
 
   
-  // const DeleteMutation = useMutation({
-  //   mutationFn: (examId: number) => noticeDeleteAPI(examId),
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  //   onSuccess: (data) => {
-  //     console.log(data);
-  //     if (data.success) {
-  //       router.push("/admin/exam-manage/list");
-  //     }
-  //   },
-  // });
+  const DeleteMutation = useMutation({
+    mutationFn: (examId: number) => examDeleteAPI(examId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/exam-manage/list");
+      }
+    },
+  });
 
   const [data, setData] = useState<examTableData[]>(tableData);
 
@@ -57,10 +57,7 @@ export function ExamManageTable({
   });
 
   return (
-    <div className="mt-20">
-      <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4">
-        관리기능 &gt; 시험 관리
-      </div>
+    <div>
 
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
@@ -111,9 +108,9 @@ export function ExamManageTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/board/admin/notice/list`}>
+                <Link href={`/admin/exam-manage/list`}>
                   <button className="underline underline-offset-auto"
-                  // onClick={() => onDelete(row.original.noticeId)}
+                  onClick={() => onDelete(row.original.examId)}
                   >
                     삭제
                   </button>
@@ -129,7 +126,7 @@ export function ExamManageTable({
             type="button"
             className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
           >
-            새 공지사항 작성
+            새로운 시험 등록
           </button>
         </Link>
       </div>

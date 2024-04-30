@@ -31,7 +31,7 @@ export default function AdminManageTable() {
   });
 
   return (
-    <div className="mt-20">
+    <div>
       <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
         관리자관리 &gt; 관리자 목록
       </div>
