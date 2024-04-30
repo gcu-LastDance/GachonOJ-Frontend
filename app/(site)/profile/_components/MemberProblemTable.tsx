@@ -149,13 +149,22 @@ export default function MemberProblemTable() {
   return (
     <div className="flex flex-col items-center">
       <div className="h-[5.5vh] flex mb-[2.5vh]">
-        <button className="flex w-[16.3vw] h-[5.5vh] items-center justify-center bg-white">
+        <button
+          type="button"
+          className="flex w-[16.3vw] h-[5.5vh] items-center justify-center bg-white"
+        >
           북마크 문제 : 10제
         </button>
-        <button className="flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey">
+        <button
+          type="button"
+          className="flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey"
+        >
           도전중인 문제
         </button>
-        <button className="flex w-[16.3vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey">
+        <button
+          type="button"
+          className="flex w-[16.3vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey"
+        >
           해결한 문제
         </button>
       </div>
