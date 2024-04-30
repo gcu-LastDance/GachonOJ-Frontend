@@ -1,4 +1,4 @@
-import { instanceAuth } from "@/lib/axiosConfig";
+import { instanceAuth, instanceNonAuth } from "@/lib/axiosConfig";
 import { userFormData } from "@/types/admin/user";
 
 export const hoverProfileAPI = async () => {
@@ -47,13 +47,13 @@ export const rankingTableAPI = async ({
       const url = `${
         process.env.NEXT_PUBLIC_M12_URL as string
       }?page=${pageNum}`;
-      const response = await instanceAuth.get(url);
+      const response = await instanceNonAuth.get(url);
       return response.data.result.content;
     } else {
       const url = `${
         process.env.NEXT_PUBLIC_M12_URL as string
       }?page=${pageNum}&search=${searchKeyword}`;
-      const response = await instanceAuth.get(url);
+      const response = await instanceNonAuth.get(url);
       return response.data.result.content;
     }
   } catch (error) {
@@ -66,6 +66,7 @@ export const memberProgramLangAPI = async () => {
     const response = await instanceAuth.get(
       process.env.NEXT_PUBLIC_M27_URL as string
     );
+    console.log(response.data.result.memberLang);
     return response.data.result.memberLang;
   } catch (error) {
     throw error;
@@ -78,6 +79,7 @@ export const memberProgramLangPatchAPI = async (lang: string) => {
       process.env.NEXT_PUBLIC_M10_URL as string,
       { lang }
     );
+    console.log(response.data.result);
     return response.data.result;
   } catch (error) {
     throw error;

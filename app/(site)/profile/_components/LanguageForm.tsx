@@ -11,6 +11,7 @@ export default function LanguageForm() {
   const queryClient = useQueryClient();
   // 라디오 버튼 변경을 처리하는 함수
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
     memberProgramLangMutation.mutate(event.target.value);
   };
 
