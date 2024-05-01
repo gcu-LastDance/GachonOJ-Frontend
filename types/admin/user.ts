@@ -32,6 +32,8 @@ export interface userFormData {
   memberEmail: string;
   memberName: string;
   memberNumber: number;
+  memberPassword: string;
+  memberPasswordConfirm: string;
   memberNickname: string;
   memberRole: string;
   memberCreatedDate: string;
