@@ -53,11 +53,7 @@ export function NoticeManageTable({
   });
 
   return (
-    <div className="mt-20">
-      <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4">
-        관리기능 &gt; 공지사항 관리
-      </div>
-
+    <div>
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>

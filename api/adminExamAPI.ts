@@ -1,9 +1,9 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 
-export const problemListAPI = async (search:string) => {
+export const examListAPI = async (type:string) => {
   try {
 
-    const url = `${process.env.NEXT_PUBLIC_P11_URL}?search=${encodeURIComponent(search)}`;
+    const url = `${process.env.NEXT_PUBLIC_P02_URL}?type=${encodeURIComponent(type)}`;
 
     const response = await instanceAuth.get(url);
     
@@ -13,10 +13,11 @@ export const problemListAPI = async (search:string) => {
   }
 };
 
-export const problemDeleteAPI = async(problemId: number) => {
+
+export const examDeleteAPI = async(examId: number) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P15_URL}/${encodeURIComponent(
-      problemId
+    const url = `${process.env.NEXT_PUBLIC_P05_URL}/${encodeURIComponent(
+      examId
     )}`;
     const response = await instanceAuth.delete(url);
 

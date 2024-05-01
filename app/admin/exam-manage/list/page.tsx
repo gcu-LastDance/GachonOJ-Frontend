@@ -1,10 +1,10 @@
 "use client";
-import NoticeManageTable from "./_components/NoticeManageTable";
+import ExamManageTable from "./_components/ExamManageTable";
 
 function page() {
   return (
     <div>
-      <NoticeManageTable />
+      <ExamManageTable />
     </div>
   );
 }

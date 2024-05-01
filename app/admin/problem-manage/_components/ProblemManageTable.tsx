@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { problemListAPI } from "@/api/adminProblemAPI";
+import { problemDeleteAPI, problemListAPI } from "@/api/adminProblemAPI";
 import { problemListData, problemTableData } from "@/types/admin/problem";
 import columnHelper from "@/lib/columnHelper";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -57,11 +57,28 @@ export function ProblemManageTable({
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const router = useRouter();
+
+  const onDelete = (problemId: number) => {
+    DeleteMutation.mutate(problemId);
+  };
+
+  const DeleteMutation = useMutation({
+    mutationFn: (problemId: number) => problemDeleteAPI(problemId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/problem-manage");
+      }
+    },
+  });
+
   return (
-    <div className="mt-20">
-      <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
-        문제 관리 &gt; 문제 목록
-      </div>
+    <div>
+
       <div className="flex justify-end">
         {showInput ? (
           <input
@@ -132,8 +149,8 @@ export function ProblemManageTable({
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href="/admin/user-manage/list">
-                  <button className="underline underline-offset-auto">
+              <Link href={`/board/admin/problem-manage/list`}>
+                  <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.problemId)}>
                     삭제
                   </button>
                 </Link>

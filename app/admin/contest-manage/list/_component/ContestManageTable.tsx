@@ -6,44 +6,49 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { userDeleteAPI, userListAPI } from "@/api/adminUserAPI";
-import { userListData, userTableData } from "@/types/admin/user";
+import { contestListData, contestTableData } from "@/types/admin/contest";
+import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { contestDeleteAPI, contestListAPI } from "@/api/adminContestAPI";
 
-const columns: ColumnDef<userTableData, any>[] = [
-  columnHelper("memberId", { header: "번호" }),
-  columnHelper("memberEmail", { header: "이메일" }),
-  columnHelper("memberName", { header: "이름" }),
-  columnHelper("memberNumber", { header: "학번" }),
-  columnHelper("memberNickname", { header: "닉네임" }),
-  columnHelper("memberRole", { header: "권한" }),
-  columnHelper("memberCreatedDate", { header: "가입일" }),
+const columns: ColumnDef<contestTableData, any>[] = [
+  columnHelper("examId", { header: "인덱스" }),
+  columnHelper("examTitle", { header: "제목" }),
+  columnHelper("examMemo", { header: "메모" }),
+  columnHelper("memberNickname", { header: "생성자" }),
+  columnHelper("examStatus", { header: "상태" }),
+  columnHelper("examUpdatedDate", { header: "최종 수정일" }),
+  columnHelper("examCreatedDate", { header: "작성일" }),
 ];
 
-
-export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
-
+export function ContestManageTable({
+  tableData,
+}: {
+  tableData: contestTableData[];
+}) {
   const router = useRouter();
 
-  const onDelete = (memberId: number) => {
-    DeleteMutation.mutate(memberId);
+  const onDelete = (noticeId: number) => {
+    DeleteMutation.mutate(noticeId);
   };
 
+  
   const DeleteMutation = useMutation({
-    mutationFn: (memberId: number) => userDeleteAPI(memberId),
+    mutationFn: (examId: number) => contestDeleteAPI(examId),
     onError: (error) => {
       console.log(error);
     },
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/user-manage/list");
+        router.push("/admin/contest-manage/list");
       }
-    }})
+    },
+  });
 
-  const [data, setData] = useState<userTableData[]>(tableData);
+  const [data, setData] = useState<contestTableData[]>(tableData);
 
   const table = useReactTable({
     data,
@@ -53,6 +58,9 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
 
   return (
     <div>
+      <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4">
+        관리기능 &gt; 대회 관리
+      </div>
 
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
@@ -88,28 +96,27 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                   key={cell.id}
                 >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {cell.column.columnDef.header === "제목" ? (
+                    <Link
+                      href={`/admin/exam-manage/${row.original.examId}`}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Link>
+                  ) : (
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link
-                  href={{
-                    pathname: "edit",
-                    query: { memberId: row.original.memberId },
-                  }}  // as ="edit"
-                >
-                  <button className="underline underline-offset-auto">
-                    정보 수정
+                <Link href={`/admin/contest-manage/list`}>
+                  <button className="underline underline-offset-auto"
+                  onClick={() => onDelete(row.original.examId)}
+                  >
+                    삭제
                   </button>
-                 
-                </Link>
-              </td>
-
-              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href="/admin/user-manage/list">
-                <button className="underline underline-offset-auto" onClick={() => onDelete(row.original.memberId)}>
-                  정보 삭제
-                </button>
                 </Link>
               </td>
             </tr>
@@ -122,7 +129,7 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
             type="button"
             className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
           >
-            새 사용자 생성
+            새로운 대회 등록
           </button>
         </Link>
       </div>
@@ -130,14 +137,15 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
   );
 }
 
-const UserManageTableContainer = () => {
-  const { data } = useQuery<userListData>({
-    queryKey: ["userList"],
-    queryFn: userListAPI,
+const ContestManageTableConatiner = () => {
+  const { data } = useQuery<contestListData>({
+    queryKey: ["contestList"],
+    queryFn: () => contestListAPI("대회"),
   });
 
   if (!data) return null;
-  return <UserManageTable tableData={data?.result.content} />;
+
+  return <ContestManageTable tableData={data?.result.content} />;
 };
 
-export default UserManageTableContainer;
+export default ContestManageTableConatiner;

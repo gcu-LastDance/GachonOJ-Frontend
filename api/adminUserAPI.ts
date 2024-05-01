@@ -1,4 +1,4 @@
-import { instanceAuth } from "@/lib/axiosConfig";
+import { instanceAuth, instanceAuthWithMultipart} from "@/lib/axiosConfig";
 import { myInfoModifyFormData, userFormData } from "@/types/admin/user";
 
 export const userListAPI = async () => {
@@ -85,10 +85,19 @@ export const userDeleteAPI = async (memberId: number) => {
 };
 
 export const MyInfoModifyAPI = async (data: myInfoModifyFormData) => {
+
   try {
-    const response = await instanceAuth.post(
+
+    const formData = new FormData();
+    const info = data;
+    formData.append(
+      'info',
+      new Blob([JSON.stringify(info)], { type: 'application/json' })
+   );
+
+    const response = await instanceAuthWithMultipart.put(
       process.env.NEXT_PUBLIC_M08_URL as string,
-      data
+      formData
     );
 
     return response.data;

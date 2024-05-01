@@ -51,10 +51,8 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
   });
 
   return (
-    <div className="mt-20">
-      <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4 ">
-        회원관리 &gt; 교수 목록
-      </div>
+    <div>
+
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
