@@ -15,7 +15,30 @@ export const instanceAuth = axios.create({
   },
 });
 
+export const instanceAuthWithMultipart = axios.create({
+  baseURL: "/api",
+  withCredentials: true,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
 instanceAuth.interceptors.request.use(
+  (config) => {
+    const userString = localStorage.getItem("user");
+    const user = userString ? JSON.parse(userString) : null;
+
+    config.headers["Authorization"] = config.headers["Authorization"] =
+      user.state.token;
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+instanceAuthWithMultipart.interceptors.request.use(
   (config) => {
     const userString = localStorage.getItem("user");
     const user = userString ? JSON.parse(userString) : null;

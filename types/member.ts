@@ -43,3 +43,33 @@ export interface RatingData {
   nextExp: number;
   consecutiveSolvedDate: number;
 }
+
+export interface MemberProfileDashBoardData {
+  memberNickname: string;
+  memberIntroduce: string;
+  rating: rank;
+  memberRank: number;
+  needRank: number;
+}
+
+export interface MemberIntroProfileData {
+  memberNickname: string;
+  memberIntroduce?: string;
+  rating: rank;
+}
+
+export interface RatingHelperData {
+  rating: rank;
+  memberRank: number;
+  needRank: number;
+}
+
+export interface MemberSettingData {
+  memberEmail: string;
+  memberName: string;
+  memberNumber: string;
+  memberIntroduce: string;
+  memberNickname: string;
+  memberImg?: string;
+  rating: rank;
+}

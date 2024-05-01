@@ -85,3 +85,14 @@ export const memberProgramLangPatchAPI = async (lang: string) => {
     throw error;
   }
 };
+
+export const memberProfileDashBoardAPI = async () => {
+  try {
+    const response = await instanceAuth.get(
+      process.env.NEXT_PUBLIC_M35_URL as string
+    );
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};

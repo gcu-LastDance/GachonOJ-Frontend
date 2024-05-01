@@ -7,8 +7,18 @@ import ProfileCard from "./_components/ProfileCard";
 import RatingHelperCard from "./_components/RatingHelperCard";
 import MemberProblemTable from "./_components/MemberProblemTable";
 import Link from "next/link";
+import { MemberProfileDashBoardData } from "@/types/member";
+import { memberProfileDashBoardAPI } from "@/api/memberAPI";
+import { useQuery } from "@tanstack/react-query";
 
 export default function page() {
+  const { data: memberProfileDashBoardData } =
+    useQuery<MemberProfileDashBoardData>({
+      queryKey: ["memberProfileDashBoard"],
+      queryFn: memberProfileDashBoardAPI,
+      refetchOnMount: "always",
+    });
+
   return (
     <div className="flex flex-col mt-[4.5vh] mb-[10vh]">
       <span className="font-PretendardSemiBold text-[1.8vw] text-primaryDark mb-[3vh]">
@@ -16,7 +26,7 @@ export default function page() {
       </span>
       <div className="flex flex-col">
         <div className="w-[65vw] h-[18vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
-          <ProfileCard />
+          <ProfileCard data={memberProfileDashBoardData!} />
         </div>
         <div className="flex justify-between mt-[4vh]">
           <div className="flex flex-col space-y-[4vh]">
@@ -27,7 +37,7 @@ export default function page() {
                 </span>
                 <GoQuestion size="1vw" color="#767676" />
               </div>
-              <RatingHelperCard />
+              <RatingHelperCard data={memberProfileDashBoardData!} />
             </div>
             <div className="w-[13vw] h-[31vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden py-[1.5vh] px-[1vw]">
               <div className="flex items-center">
