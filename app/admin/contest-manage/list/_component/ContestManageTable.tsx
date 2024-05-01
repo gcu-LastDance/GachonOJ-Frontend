@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { contestListAPI } from "@/api/adminContestAPI";
+import { contestDeleteAPI, contestListAPI } from "@/api/adminContestAPI";
 
 const columns: ColumnDef<contestTableData, any>[] = [
   columnHelper("examId", { header: "인덱스" }),
@@ -30,23 +30,23 @@ export function ContestManageTable({
 }) {
   const router = useRouter();
 
-  // const onDelete = (noticeId: number) => {
-  //   DeleteMutation.mutate(noticeId);
-  // };
+  const onDelete = (noticeId: number) => {
+    DeleteMutation.mutate(noticeId);
+  };
 
   
-  // const DeleteMutation = useMutation({
-  //   mutationFn: (examId: number) => noticeDeleteAPI(examId),
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  //   onSuccess: (data) => {
-  //     console.log(data);
-  //     if (data.success) {
-  //       router.push("/admin/exam-manage/list");
-  //     }
-  //   },
-  // });
+  const DeleteMutation = useMutation({
+    mutationFn: (examId: number) => contestDeleteAPI(examId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/contest-manage/list");
+      }
+    },
+  });
 
   const [data, setData] = useState<contestTableData[]>(tableData);
 
@@ -111,9 +111,9 @@ export function ContestManageTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/board/admin/notice/list`}>
+                <Link href={`/admin/contest-manage/list`}>
                   <button className="underline underline-offset-auto"
-                  // onClick={() => onDelete(row.original.noticeId)}
+                  onClick={() => onDelete(row.original.examId)}
                   >
                     삭제
                   </button>
