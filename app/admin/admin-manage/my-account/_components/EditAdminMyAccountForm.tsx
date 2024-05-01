@@ -27,7 +27,7 @@ function EditAdminMyAccountForm({
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin");
+        router.push("/admin/admin-manage/my-account");
       }
     },
   });
