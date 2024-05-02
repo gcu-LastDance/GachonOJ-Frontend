@@ -1,10 +1,10 @@
 "use client";
-import ExamManageTable from "./_components/ExamManageTable";
+import ExamTable from "./_components/ExamTable";
 
 function page() {
   return (
     <div>
-      <ExamManageTable />
+      <ExamTable />
     </div>
   );
 }

@@ -6,41 +6,31 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { examListAPI } from "@/api/professorExamAPI";
-import { examListData, examTableData } from "@/types/admin/exam";
-import { useMutation } from "@tanstack/react-query";
+import { inquiryListAPI } from "@/api/professorInquiryAPI";
+import { inquiryTableData, inquiryListData } from "@/types/professor/inquiry";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
-const columns: ColumnDef<examTableData, any>[] = [
-  columnHelper("examId", { header: "인덱스" }),
-  columnHelper("examTitle", { header: "제목" }),
-  columnHelper("examMemo", { header: "메모" }),
-  columnHelper("examStatus", { header: "상태" }),
-  columnHelper("examUpdatedDate", { header: "최종 수정일" }),
-  columnHelper("examCreatedDate", { header: "작성일" }),
+const columns: ColumnDef<inquiryTableData, any>[] = [
+  columnHelper("inquiryId", { header: "번호" }),
+  columnHelper("inquiryTitle", { header: "제목" }),
+  columnHelper("inquiryCreatedDate", { header: "작성일" }),
+  columnHelper("inquiryStatus", { header: "답변여부" }),
 ];
 
-export function ExamManageTable({
+export function InquiryTable({
   tableData,
 }: {
-  tableData: examTableData[];
+  tableData: inquiryTableData[];
 }) {
-  const router = useRouter();
-
-
-  const [data, setData] = useState<examTableData[]>(tableData);
-
+  const [data, setData] = useState<inquiryTableData[]>(tableData);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
   return (
     <div>
-
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -77,7 +67,7 @@ export function ExamManageTable({
                 >
                   {cell.column.columnDef.header === "제목" ? (
                     <Link
-                      href={`/admin/exam-manage/${row.original.examId}`}
+                      href={`/professor/inquiry/${row.original.inquiryId}`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -89,26 +79,17 @@ export function ExamManageTable({
                   )}
                 </td>
               ))}
-              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/admin/exam-manage/list`}>
-                  <button className="underline underline-offset-auto"
-                  // onClick={() => onDelete(row.original.examId)}
-                  >
-                    삭제
-                  </button>
-                </Link>
-              </td>
             </tr>
           ))}
         </tbody>
       </table>
       <div className="flex justify-end items-center mt-5">
-        <Link href="enroll">
+        <Link href="write">
           <button
             type="button"
             className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
           >
-            새로운 시험 등록
+            새 문의사항 작성
           </button>
         </Link>
       </div>
@@ -116,15 +97,14 @@ export function ExamManageTable({
   );
 }
 
-const ExamManageTableConatiner = () => {
-  const { data } = useQuery<examListData>({
-    queryKey: ["ProfessorexamList"],
-    queryFn: examListAPI
+const InquiryTableContainer = () => {
+  const { data } = useQuery<inquiryListData>({
+    queryKey: ["professorinquiryList"],
+    queryFn: inquiryListAPI,
+    
   });
-
   if (!data) return null;
-
-  return <ExamManageTable tableData={data?.result.content} />;
+  return <InquiryTable tableData={data.result.content} />;
 };
 
-export default ExamManageTableConatiner;
+export default InquiryTableContainer;

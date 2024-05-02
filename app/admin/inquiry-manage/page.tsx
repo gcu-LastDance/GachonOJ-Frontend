@@ -3,7 +3,7 @@ import InquiryManageTable from './_components/InquiryManageTable'
 
 function page() {
 	return (
-    	<div className="App-board">
+    	<div>
           <InquiryManageTable />
         </div>
     )

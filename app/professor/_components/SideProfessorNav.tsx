@@ -67,7 +67,7 @@ export default function SideProfessorNav() {
                 교수님 이용 가이드
               </p>
             </Link>
-            <Link href="/admin/professor-manage/list">
+            <Link href="/professor/inquiry/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 서비스 문의
               </p>
