@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 const Inquiryreplyempty = ({ inquiryId }: { inquiryId: number }) => {
   const router = useRouter();
+  console.log(inquiryId)
   const { register, handleSubmit, formState: { errors } } = useForm<replyFormData>();
 
   const onSubmit = (data: replyFormData) => {
