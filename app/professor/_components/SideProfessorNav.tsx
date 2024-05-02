@@ -41,9 +41,11 @@ export default function SideProfessorNav() {
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[1vh] my-[1.5vh]">
             <button>
+              <Link href="/professor/exam-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 시험 목록
               </p>
+              </Link>
             </button>
             <button>
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
