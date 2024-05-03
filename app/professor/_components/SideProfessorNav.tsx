@@ -82,7 +82,7 @@ export default function SideProfessorNav() {
             </span>
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[1vh] my-[1.5vh]">
-            <Link href="/admin/notice-manage/list">
+            <Link href="/professor/my-account">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 계정 정보 수정
               </p>
