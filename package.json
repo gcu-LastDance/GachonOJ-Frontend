@@ -11,7 +11,6 @@
   "dependencies": {
     "@tanstack/react-query": "^5.29.2",
     "@tanstack/react-table": "^8.15.3",
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@uiw/codemirror-theme-github": "^4.21.25",
     "@uiw/codemirror-theme-vscode": "^4.21.25",
     "@uiw/react-codemirror": "^4.21.25",
