@@ -1,5 +1,5 @@
 import { instanceAuth, instanceAuthWithMultipart} from "@/lib/axiosConfig";
-import {myInfoModifyFormData} from "@/types/professor/user";
+import { myInfoModifyFormData } from "@/types/professor/user";
 
 export const myInfoModifyAPI  = async ({
   data,
@@ -30,6 +30,17 @@ export const getMyInfoAPI = async () => {
   try {
     const response = await instanceAuth.get(
       process.env.NEXT_PUBLIC_M11_URL as string
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const withDrawalAPI = async () => {
+  try {
+    const response = await instanceAuth.delete(
+      process.env.NEXT_PUBLIC_M02_URL as string
     );
     return response.data;
   } catch (error) {

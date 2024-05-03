@@ -1,6 +1,6 @@
 "use client";
 
-import { inquirySubmitAPI } from "@/api/professorInquiryAPI";
+import { inquirySubmitAPI } from "@/api/professor/professorInquiryAPI";
 import { InquiryFormData } from "@/types/professor/inquiry";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";

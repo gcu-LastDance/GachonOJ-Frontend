@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { noticeContentsAPI } from "@/api/adminNoticeAPI";
+import { noticeContentsAPI } from "@/api/admin/adminNoticeAPI";
 import { noticeContentsData } from "@/types/admin/notice";
 
 const NoticeDetailPage = ({ noticeId }: { noticeId: number }) => {

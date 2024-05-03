@@ -1,5 +1,5 @@
 "use client";
-import { myInfoModifyAPI, getMyInfoAPI } from "@/api/professorInfoAPI";
+import { myInfoModifyAPI, getMyInfoAPI } from "@/api/professor/professorInfoAPI";
 import useUserStore from "@/store/useUserStore";
 import { myInfoModifyFormData, userContentData } from "@/types/professor/user";
 import { useMutation, useQuery } from "@tanstack/react-query";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { inquiryReplyAPI } from "@/api/adminInquiryAPI";
+import { inquiryReplyAPI } from "@/api/admin/adminInquiryAPI";
 import { replyFormData } from "@/types/admin/inquiry";
 import { useRouter } from "next/navigation";
 

@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { inquiryListAPI } from "@/api/professorInquiryAPI";
+import { inquiryListAPI } from "@/api/professor/professorInquiryAPI";
 import { inquiryTableData, inquiryListData } from "@/types/professor/inquiry";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";

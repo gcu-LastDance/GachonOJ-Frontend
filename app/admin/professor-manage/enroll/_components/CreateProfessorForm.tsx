@@ -4,7 +4,7 @@ import React from "react";
 import { useForm} from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { userEnrollAPI } from "@/api/adminUserAPI";
+import { userEnrollAPI } from "@/api/admin/adminUserAPI";
 import Link from "next/link";
 
 export default function CreateAdminForm() {

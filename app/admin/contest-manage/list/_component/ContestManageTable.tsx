@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { contestDeleteAPI, contestListAPI } from "@/api/adminContestAPI";
+import { contestDeleteAPI, contestListAPI } from "@/api/admin/adminContestAPI";
 
 const columns: ColumnDef<contestTableData, any>[] = [
   columnHelper("examId", { header: "인덱스" }),
