@@ -10,5 +10,5 @@ export default function page() {
     router.push("/profile");
   }, []);
 
-  return null;
+  return <></>;
 }
