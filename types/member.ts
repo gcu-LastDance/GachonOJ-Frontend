@@ -73,3 +73,15 @@ export interface MemberSettingData {
   memberImg?: string;
   rating: rank;
 }
+
+export interface MemberSettingPutData {
+  memberName: string;
+  memberNickname: string;
+  memberIntroduce: string;
+}
+
+export interface MemberPasswordPutData {
+  memberPassword: string;
+  memberNewPassword: string;
+  memberNewPasswordConfirm: string;
+}

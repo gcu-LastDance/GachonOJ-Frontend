@@ -1,5 +1,7 @@
 export type difficulty = "0단계" | "1단계" | "2단계" | "3단계" | "4단계";
 
+export type ProfileProblemType = "bookmark" | "wrong" | "solved";
+
 export interface RecProblemData {
   problemId: number;
   problemTitle: string;
