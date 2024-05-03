@@ -35,9 +35,9 @@ export function ProblemManageTable({
 }) {
   const [data, setData] = useState<problemTableData[]>(tableData);
 
-  // useEffect(() => {
-  //   setData(tableData);
-  // }, [tableData]);
+  useEffect(() => {
+    setData(tableData);
+  }, [tableData]);
 
   const [showInput, setShowInput] = useState(false);
 
@@ -78,6 +78,7 @@ export function ProblemManageTable({
 
   return (
     <div>
+
       <div className="flex justify-end">
         {showInput ? (
           <input
@@ -148,11 +149,8 @@ export function ProblemManageTable({
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/board/admin/problem-manage/list`}>
-                  <button
-                    className="underline underline-offset-auto"
-                    onClick={() => onDelete(row.original.problemId)}
-                  >
+              <Link href={`/board/admin/problem-manage/list`}>
+                  <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.problemId)}>
                     삭제
                   </button>
                 </Link>
@@ -181,19 +179,19 @@ const ProblemManageTableContainer = () => {
 
   const queryClient = useQueryClient();
 
-  // useEffect(() => {
-  //   // searchTerm이 변경될 때마다 debouncedSearchTerm을 업데이트합니다.
-  //   const timer = setTimeout(() => {
-  //     setDebouncedSearchTerm(searchTerm);
-  //   }, 1000);
+  useEffect(() => {
+    // searchTerm이 변경될 때마다 debouncedSearchTerm을 업데이트합니다.
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 1000);
 
-  //   return () => clearTimeout(timer);
-  // }, [searchTerm]);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
-  // useEffect(() => {
-  //   // debouncedSearchTerm이 변경될 때마다 데이터를 갱신합니다.
-  //   queryClient.invalidateQueries({ queryKey: ["problemList"] });
-  // }, [debouncedSearchTerm]);
+  useEffect(() => {
+    // debouncedSearchTerm이 변경될 때마다 데이터를 갱신합니다.
+    queryClient.invalidateQueries({ queryKey: ["problemList"] });
+  }, [debouncedSearchTerm]);
 
   const { data } = useQuery<problemListData>({
     queryKey: ["problemList", debouncedSearchTerm],
