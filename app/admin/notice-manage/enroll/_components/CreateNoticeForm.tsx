@@ -1,5 +1,5 @@
 "use client";
-import { noticeEnrollAPI } from "@/api/adminNoticeAPI";
+import { noticeEnrollAPI } from "@/api/admin/adminNoticeAPI";
 import { noticeFormData } from "@/types/admin/notice";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";

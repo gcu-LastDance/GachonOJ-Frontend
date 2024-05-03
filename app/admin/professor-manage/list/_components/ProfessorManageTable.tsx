@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { professorListAPI, userDeleteAPI } from "@/api/adminUserAPI";
+import { professorListAPI, userDeleteAPI } from "@/api/admin/adminUserAPI";
 import { userListData, userTableData } from "@/types/admin/user";
 import columnHelper from "@/lib/columnHelper";
 import { useMutation, useQuery } from "@tanstack/react-query";

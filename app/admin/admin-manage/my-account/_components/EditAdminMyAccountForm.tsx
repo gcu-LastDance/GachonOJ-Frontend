@@ -1,5 +1,5 @@
 "use client";
-import { MyInfoModifyAPI, getMyInfoAPI} from "@/api/adminUserAPI";
+import { MyInfoModifyAPI, getMyInfoAPI} from "@/api/admin/adminUserAPI";
 import { myInfoModifyFormData, userContentData } from "@/types/admin/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";

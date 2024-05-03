@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { noticeDeleteAPI, noticeListAPI } from "@/api/adminNoticeAPI";
+import { noticeDeleteAPI, noticeListAPI } from "@/api/admin/adminNoticeAPI";
 import { noticeListData, noticeTableData } from "@/types/admin/notice";
 import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";

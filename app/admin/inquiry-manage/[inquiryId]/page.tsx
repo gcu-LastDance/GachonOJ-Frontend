@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Inquiryreply from "./_components/Inquiryreply";
 import Inquiryempty from "./_components/Inquiryreplyempty";
-import { inquiryContentsAPI } from "@/api/adminInquiryAPI";
+import { inquiryContentsAPI } from "@/api/admin/adminInquiryAPI";
 import { inquiryContentsData } from "@/types/admin/inquiry";
 
 const page = ({ params }: { params: { inquiryId: number } }) => {

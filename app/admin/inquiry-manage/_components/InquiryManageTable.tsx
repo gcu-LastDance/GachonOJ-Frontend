@@ -8,7 +8,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { inquiryListAPI } from "@/api/adminInquiryAPI";
+import { inquiryListAPI } from "@/api/admin/adminInquiryAPI";
 import { inquiryTableData, inquiryListData } from "@/types/admin/inquiry";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";

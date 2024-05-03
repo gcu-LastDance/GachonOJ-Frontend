@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { examDeleteAPI, examListAPI } from "@/api/adminExamAPI";
+import { examDeleteAPI, examListAPI } from "@/api/admin/adminExamAPI";
 import { examListData, examTableData } from "@/types/admin/exam";
 import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";

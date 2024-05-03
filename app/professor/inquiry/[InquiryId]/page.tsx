@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import Inquiryreply from "./_components/Inquiryreply";
-import { inquiryContentsAPI } from "@/api/professorInquiryAPI";
+import { inquiryContentsAPI } from "@/api/professor/professorInquiryAPI";
 import { inquiryContentsData } from "@/types/professor/inquiry";
 
 const page = ({ params }: { params: { InquiryId: number } }) => {
