@@ -1,5 +1,9 @@
-import { instanceAuth, instanceNonAuth } from "@/lib/axiosConfig";
-import { userFormData } from "@/types/admin/user";
+import {
+  instanceAuth,
+  instanceAuthWithMultipart,
+  instanceNonAuth,
+} from "@/lib/axiosConfig";
+import { MemberPasswordPutData, MemberSettingPutData } from "@/types/member";
 
 export const hoverProfileAPI = async () => {
   try {
@@ -80,6 +84,65 @@ export const memberProgramLangPatchAPI = async (lang: string) => {
       { lang }
     );
     console.log(response.data.result);
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const memberProfileDashBoardAPI = async () => {
+  try {
+    const response = await instanceAuth.get(
+      process.env.NEXT_PUBLIC_M35_URL as string
+    );
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const memberSettingGetAPI = async () => {
+  try {
+    const response = await instanceAuth.get(
+      process.env.NEXT_PUBLIC_M11_URL as string
+    );
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const memberSettingPutAPI = async ({
+  data,
+  memberImg,
+}: {
+  data: MemberSettingPutData;
+  memberImg: string | null;
+}) => {
+  try {
+    const formData = new FormData();
+    formData.append("img", memberImg as unknown as Blob);
+    formData.append(
+      "info",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
+    const response = await instanceAuthWithMultipart.put(
+      process.env.NEXT_PUBLIC_M08_URL as string,
+      formData
+    );
+    console.log(response.data);
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const memberPasswordPutAPI = async (data: MemberPasswordPutData) => {
+  try {
+    const response = await instanceAuth.put(
+      process.env.NEXT_PUBLIC_M34_URL as string,
+      data
+    );
     return response.data.result;
   } catch (error) {
     throw error;

@@ -97,7 +97,7 @@ export default function HeaderMemberDropdown() {
             </li>
             <li className="border-b border-gray-300">
               <Link
-                href="/내정보수정"
+                href="/profile/settings"
                 className="flex items-center px-[1vw] py-[1.4vh] hover:bg-gray-100"
               >
                 <IoSettingsOutline className="text-[1.3vw] text-primaryDark mr-[0.8vw]" />

@@ -2,7 +2,11 @@ import DiffBadge from "@/components/badge/DiffBadge";
 import CategoryButton from "@/components/button/CategoryButton";
 import PaginationBar from "@/components/pagination/PaginationBar";
 import columnHelper from "@/lib/columnHelper";
-import { ProblemTableData, difficulty } from "@/types/problem";
+import {
+  ProblemTableData,
+  ProfileProblemType,
+  difficulty,
+} from "@/types/problem";
 import {
   ColumnDef,
   flexRender,
@@ -139,6 +143,12 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
 export default function MemberProblemTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [data, setData] = useState<ProblemTableData[]>(prob_table_data);
+  const [menu, setMenu] = useState<ProfileProblemType>("bookmark");
+
+  const activeMenuCss =
+    "flex w-[16.3vw] h-[5.5vh] items-center justify-center bg-white";
+  const inactiveMenuCss =
+    "flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-semiSemiGrey bg-lightGrey";
 
   const table = useReactTable({
     data,
@@ -151,19 +161,38 @@ export default function MemberProblemTable() {
       <div className="h-[5.5vh] flex mb-[2.5vh]">
         <button
           type="button"
-          className="flex w-[16.3vw] h-[5.5vh] items-center justify-center bg-white"
+          onClick={() => setMenu("bookmark")}
+          className={
+            menu === "bookmark"
+              ? activeMenuCss + " border-r-[0.15vw]"
+              : menu === "solved"
+              ? inactiveMenuCss + " border-r-[0.15vw]"
+              : inactiveMenuCss
+          }
         >
           북마크 문제 : 10제
         </button>
         <button
           type="button"
-          className="flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey"
+          onClick={() => setMenu("wrong")}
+          className={
+            menu === "wrong"
+              ? activeMenuCss + " border-x-[0.15vw]"
+              : inactiveMenuCss
+          }
         >
           도전중인 문제
         </button>
         <button
           type="button"
-          className="flex w-[16.3vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-l-[0.15vw] border-semiSemiGrey bg-lightGrey"
+          onClick={() => setMenu("solved")}
+          className={
+            menu === "solved"
+              ? activeMenuCss + " border-l-[0.15vw]"
+              : menu === "bookmark"
+              ? inactiveMenuCss + " border-l-[0.15vw]"
+              : inactiveMenuCss
+          }
         >
           해결한 문제
         </button>
