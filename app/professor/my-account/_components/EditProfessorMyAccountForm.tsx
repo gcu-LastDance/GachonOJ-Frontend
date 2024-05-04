@@ -1,5 +1,8 @@
 "use client";
-import { myInfoModifyAPI, getMyInfoAPI } from "@/api/professor/professorInfoAPI";
+import {
+  myInfoModifyAPI,
+  getMyInfoAPI,
+} from "@/api/professor/professorInfoAPI";
 import useUserStore from "@/store/useUserStore";
 import { myInfoModifyFormData, userContentData } from "@/types/professor/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -37,7 +40,7 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-
+        router.push("/professor/my-account");
       }
     },
   });

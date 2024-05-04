@@ -1,12 +1,12 @@
-'use client';
-import CreateProfessor from './_components/CreateProfessorForm'
+"use client";
+import CreateProfessor from "./_components/CreateProfessorForm";
 
 function page() {
-	return (
-    	<div>
-          <CreateProfessor />
-        </div>
-    )
+  return (
+    <div>
+      <CreateProfessor />
+    </div>
+  );
 }
 
 export default page;

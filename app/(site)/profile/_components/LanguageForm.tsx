@@ -5,7 +5,7 @@ import {
   memberProgramLangPatchAPI,
 } from "@/api/memberAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React from "react";
 
 export default function LanguageForm() {
   const queryClient = useQueryClient();
@@ -15,7 +15,7 @@ export default function LanguageForm() {
     memberProgramLangMutation.mutate(event.target.value);
   };
 
-  const { data: memberProgramLangData } = useQuery<String>({
+  const { data: memberProgramLangData } = useQuery<string>({
     queryKey: ["memberProgramLang"],
     queryFn: memberProgramLangAPI,
   });
