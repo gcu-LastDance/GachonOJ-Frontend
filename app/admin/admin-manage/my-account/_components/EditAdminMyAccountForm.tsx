@@ -144,7 +144,7 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
           <button
             type="button"
             onClick={handleAutoFillNickname}
-            className="ml-2 px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
           >
             이름과 동일하게 설정
           </button>

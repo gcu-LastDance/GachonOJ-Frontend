@@ -34,7 +34,6 @@ export function ContestManageTable({
     DeleteMutation.mutate(noticeId);
   };
 
-  
   const DeleteMutation = useMutation({
     mutationFn: (examId: number) => contestDeleteAPI(examId),
     onError: (error) => {
@@ -97,9 +96,7 @@ export function ContestManageTable({
                   key={cell.id}
                 >
                   {cell.column.columnDef.header === "제목" ? (
-                    <Link
-                      href={`/admin/exam-manage/${row.original.examId}`}
-                    >
+                    <Link href={`/admin/exam-manage/${row.original.examId}`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -111,13 +108,12 @@ export function ContestManageTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/admin/contest-manage/list`}>
-                  <button className="underline underline-offset-auto"
+                <button
+                  className="underline underline-offset-auto"
                   onClick={() => onDelete(row.original.examId)}
-                  >
-                    삭제
-                  </button>
-                </Link>
+                >
+                  삭제
+                </button>
               </td>
             </tr>
           ))}
