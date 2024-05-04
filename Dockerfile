@@ -61,6 +61,7 @@ RUN pnpm install --frozen-lockfile
 # 2단계: 애플리케이션 빌드
 FROM node:20-alpine AS builder
 WORKDIR /usr/src/app
+RUN npm install -g pnpm
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
 RUN pnpm build
