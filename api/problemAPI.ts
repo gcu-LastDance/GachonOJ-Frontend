@@ -1,5 +1,5 @@
-import { instanceNonAuth } from "@/lib/axiosConfig";
-import { difficulty } from "@/types/problem";
+import { instanceAuth, instanceNonAuth } from "@/lib/axiosConfig";
+import { ProfileProblemType, difficulty } from "@/types/problem";
 
 export const recProblemAPI = async () => {
   try {
@@ -33,6 +33,21 @@ export const problemTableGuestAPI = async ({
     const response = await instanceNonAuth.get(url);
     console.log(url);
     console.log(response);
+    return response.data.result.content;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const memberProblemTableAPI = async ({
+  menu,
+}: {
+  menu: ProfileProblemType;
+}) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P20_URL as string}?type=${menu}`;
+    const response = await instanceAuth.get(url);
+    console.log(response.data);
     return response.data.result.content;
   } catch (error) {
     throw error;
