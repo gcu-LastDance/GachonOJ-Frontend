@@ -33,7 +33,7 @@ const ProblemForm = () => {
         <div className="text-2xl font-PretendardBold mb-4 w-full">
           문제 설정
         </div>
-        <div className="w-1/3 text-xl flex items-center justify-start">
+        <div className="w-1/3 text-lg flex items-center justify-start">
           <label htmlFor="memory" className="block font-medium mb-1 mr-8">
             메모리 제한
           </label>
@@ -47,7 +47,7 @@ const ProblemForm = () => {
             <option value="2048">2GB</option>
           </select>
         </div>
-        <div className="w-1/3 text-xl flex items-center justify-start">
+        <div className="w-1/3 text-lg flex items-center justify-start">
           <label htmlFor="time" className="block font-medium mb-1 mr-8">
             실행 시간 제한
           </label>
@@ -62,7 +62,7 @@ const ProblemForm = () => {
           </select>
         </div>
 
-        <div className="w-1/3 flex text-xl items-center justify-start">
+        <div className="w-1/3 flex text-lg items-center justify-start">
           <label htmlFor="difficulty" className="block font-medium mb-1 mr-8">
             난이도 설정
           </label>
@@ -71,60 +71,46 @@ const ProblemForm = () => {
             {...register("difficulty")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
-            <option value="easy">쉬움</option>
-            <option value="medium">보통</option>
-            <option value="hard">어려움</option>
+            <option value="1">매우 쉬움</option>
+            <option value="2">쉬움</option>
+            <option value="3">보통</option>
+            <option value="4">어려움</option>
+            <option value="5">매우 어려움</option>
           </select>
         </div>
-        <div className="w-full mb-4 mt-4 sm:mb-0 flex items-center justify-start">
-          <label htmlFor="language" className="block text-xl mb-1 mr-6">
-            가능 언어 설정
+        <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
+          <label htmlFor="difficulty" className="block font-medium mb-1 mr-8">
+            분류
           </label>
-          <div className="flex">
-            <input
-              type="checkbox"
-              id="language-c"
-              value="C"
-              {...register("language")}
-              className="mr-2"
-            />
-            <label htmlFor="language-c" className="mr-4">
-              C
-            </label>
-            <input
-              type="checkbox"
-              id="language-cpp"
-              value="C++"
-              {...register("language")}
-              className="mr-2"
-            />
-            <label htmlFor="language-cpp" className="mr-4">
-              C++
-            </label>
-            <input
-              type="checkbox"
-              id="language-java"
-              value="JAVA"
-              {...register("language")}
-              className="mr-2"
-            />
-            <label htmlFor="language-java" className="mr-4">
-              JAVA
-            </label>
-            <input
-              type="checkbox"
-              id="language-python"
-              value="Python"
-              {...register("language")}
-              className="mr-2"
-            />
-            <label htmlFor="language-python">Python</label>
-          </div>
+          <select
+            id="class"
+            {...register("class")}
+            className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+          >
+            <option value="BINARY_SEARCH">이분 탐색</option>
+            <option value="GRAPH">그래프</option>
+            <option value="DYNAMIC_PROGRAMMING">동적 계획법</option>
+            <option value="GREEDY">그리디</option>
+            <option value="BRUTE_FORCE">완전 탐색</option>
+            <option value="IMPLEMENTATION">구현</option>
+            <option value="STRING">문자열</option>
+            <option value="MATH">수학</option>
+            <option value="SORT">정렬</option>
+            <option value="DATA_STRUCTURE">자료 구조</option>
+            <option value="DFS_BFS">DFS/BFS</option>
+            <option value="TWO_POINTER">투 포인터</option>
+            <option value="BACKTRACKING">백트래킹</option>
+            <option value="SIMULATION">시뮬레이션</option>
+            <option value="SHORT_PATH">최단 경로</option>
+            <option value="TREE">트리</option>
+            <option value="HASH">해시</option>
+            <option value="ETC">기타</option>
+          </select>
         </div>
       </div>
 
       <div className="flex items-center mb-4">
-        <div className="text-xl mr-4 min-w-20 self-start">문제 제목</div>
+        <div className="text-lg mr-4 min-w-30 self-start flex-shrink-0">문제 제목</div>
         <input
           type="text"
           {...register("title")}
@@ -132,7 +118,7 @@ const ProblemForm = () => {
         />
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 min-w-20 self-start">문제 본문</div>
+        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">문제 본문</div>
         <textarea
           {...register("content")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -140,7 +126,7 @@ const ProblemForm = () => {
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 min-w-20 self-start">입력 설명</div>
+        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">입력 설명</div>
         <textarea
           {...register("inputDescription")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -148,7 +134,7 @@ const ProblemForm = () => {
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 min-w-20 self-start">출력 설명</div>
+        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">출력 설명</div>
         <textarea
           {...register("outputDescription")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -157,7 +143,7 @@ const ProblemForm = () => {
       </div>
 
       <div className="flex items-center mb-4">
-        <div className="text-xl mb-4 mr-4 self-start">테스트 케이스</div>
+        <div className="text-lg mb-4 mr-4 self-start">테스트 케이스</div>
         <table className="flex-auto px-3 py-2 border">
           <thead>
             <tr>

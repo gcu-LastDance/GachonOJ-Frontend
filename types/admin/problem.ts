@@ -32,4 +32,5 @@ export interface ProblemFormData {
   content: string;
   inputDescription: string;
   outputDescription: string;
+  class: string;
 }
