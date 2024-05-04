@@ -10,5 +10,5 @@ export default function page() {
     router.push("/profile/settings");
   }, []);
 
-  return null;
+  return <></>;
 }

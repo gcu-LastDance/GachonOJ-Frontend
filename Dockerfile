@@ -1,5 +1,5 @@
 # 1단계: 환경 설정 및 종속성 설치
-FROM node:20-alpine AS deps
+FROM node:18-alpine AS deps
 RUN apk add --no-cache libc6-compat
 
 # pnpm 설치
@@ -15,7 +15,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # 2단계: 애플리케이션 빌드
-FROM node:20-alpine AS builder
+FROM node:18-alpine AS builder
 WORKDIR /usr/src/app
 
 # pnpm 설치
@@ -29,7 +29,7 @@ COPY . .
 RUN pnpm build
 
 # 3단계: 실행 이미지 준비
-FROM node:20-alpine AS runner
+FROM node:18-alpine AS runner
 WORKDIR /usr/src/app
 
 # 시스템 사용자 설정
