@@ -1,5 +1,6 @@
 "use client";
 import { ProblemFormData } from "@/types/admin/problem";
+import Link from "next/link";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -168,11 +169,13 @@ const ProblemForm = () => {
           </tbody>
         </table>
       </div>
+      <Link href="/admin/problem-manage/editor/testcase">
       <div className="flex justify-end">
         <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4">
           테스트 케이스 추가
         </button>
       </div>
+      </Link>
       <div className="flex justify-end">
         <button
           type="submit"
