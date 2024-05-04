@@ -54,13 +54,13 @@
 FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat && \
     npm install -g pnpm
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # 2단계: 애플리케이션 빌드
 FROM node:20-alpine AS builder
-WORKDIR /usr/src/app
+WORKDIR /app
 RUN npm install -g pnpm
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
@@ -68,7 +68,7 @@ RUN pnpm build
 
 # 3단계: 실행 이미지 준비
 FROM node:20-alpine AS runner
-WORKDIR /usr/src/app
+WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs --ingroup nodejs
 COPY --from=builder /usr/src/app/public ./public
