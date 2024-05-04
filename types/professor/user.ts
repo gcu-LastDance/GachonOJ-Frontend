@@ -9,6 +9,7 @@ export interface userFormData {
 export interface myInfoModifyFormData {
   memberName: string;
   memberNickname: string;
+  memberImg: File | null;
 }
 
 export interface userContentData {

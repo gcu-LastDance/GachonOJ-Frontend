@@ -20,13 +20,16 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     getValues,
     formState: { errors },
   } = useForm<myInfoModifyFormData>();
-  const { userImg } = useUserStore();
-  const fileInput = useRef<HTMLInputElement>(null);
 
-  const [memberImg, setMemberImg] = useState(userImg);
+
+
+  const userImg = data?.result.memberImg;
+
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [memberImg, setMemberImg] = useState(userImg || null);
 
   const onSubmit = (data: myInfoModifyFormData) => {
-    ModifyMutation.mutate({ data, memberImg });
+    ModifyMutation.mutate({ data, memberImg: fileInput.current?.files?.[0] || null });
   };
 
   const ModifyMutation = useMutation({
@@ -46,14 +49,9 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     // 내가 받을 파일은 하나기 때문에 index 0값의 이미지를 가짐
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e: any) => {
-      if (reader.readyState === 2) {
-        // 파일 onLoad가 성공하면 2, 진행 중은 1, 실패는 0 반환
-        setMemberImg(e.target.result);
-      }
-    };
+    setMemberImg(URL.createObjectURL(file)); // 이미지 미리보기 표시
+    // setValue를 통해 파일 정보를 직접 전달
+    setValue("memberImg", file);
   };
 
   const handleAutoFillNickname = () => {
@@ -119,7 +117,6 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
           )}
           <input
             type="file"
-            accept="image/*"
             ref={fileInput}
             onChange={handleImageChange}
             style={{ display: "none" }}
