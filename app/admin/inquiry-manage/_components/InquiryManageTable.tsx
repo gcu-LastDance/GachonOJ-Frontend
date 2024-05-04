@@ -8,10 +8,11 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { inquiryListAPI } from "@/api/admin/adminInquiryAPI";
+import { inquiryDeleteAPI, inquiryListAPI } from "@/api/admin/adminInquiryAPI";
 import { inquiryTableData, inquiryListData } from "@/types/admin/inquiry";
 import columnHelper from "@/lib/columnHelper";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {useRouter} from "next/navigation";
 
 const columns: ColumnDef<inquiryTableData, any>[] = [
   columnHelper("inquiryId", { header: "번호" }),
@@ -27,6 +28,23 @@ export function InquiryManageTable({
   tableData: inquiryTableData[];
 }) {
   const [data, setData] = useState<inquiryTableData[]>(tableData);
+  const router = useRouter();
+  const onDelete = (inquiryId: number) => {
+    DeleteMutation.mutate(inquiryId);
+  };
+
+  const DeleteMutation = useMutation({
+    mutationFn: (inquiryId: number) => inquiryDeleteAPI(inquiryId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("/admin/notice-manage/list");
+      }
+    },
+  });
 
   const table = useReactTable({
     data,
@@ -86,6 +104,12 @@ export function InquiryManageTable({
                   )}
                 </td>
               ))}
+                 <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+
+                  <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.inquiryId)}>
+                    삭제
+                  </button>
+              </td>
             </tr>
           ))}
         </tbody>
