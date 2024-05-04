@@ -82,7 +82,7 @@ export function ProblemManageTable({
       <div className="flex justify-end">
         {showInput ? (
           <input
-            className="p-2"
+            className="p-2 border-2 rounded-lg px-4"
             type="search"
             placeholder="검색어를 입력하세요"
             value={searchTerm}

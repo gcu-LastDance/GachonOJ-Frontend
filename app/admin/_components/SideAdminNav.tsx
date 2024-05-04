@@ -60,11 +60,6 @@ export default function SideAdminNav() {
             </span>
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[0.8vh] my-[1.2vh]">
-            <Link href="/admin/admin-manage/list">
-              <p className="font-PretendardLight text-realGrey text-[0.75vw]">
-                관리자 목록
-              </p>
-            </Link>
             <Link href="/admin/admin-manage/my-account">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 내 계정 관리
@@ -105,7 +100,7 @@ export default function SideAdminNav() {
             </span>
           </div>
           <div className="flex flex-col items-start ml-[1.5vw] space-y-[0.8vh] my-[1.2vh]">
-            <Link href="/admin/problem-manage">
+            <Link href="/admin/problem-manage/list">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 문제 목록
               </p>

@@ -60,7 +60,6 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
       if (memberImg) {
         setUserImg(memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg);
       }
-    
     } else alert("닉네임 중복 확인을 해주세요.");
   };
 
