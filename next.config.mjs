@@ -2,6 +2,7 @@
 const nextConfig = {
   output: "standalone",
   swcMinify: true,
+  staticPageGenerationTimeout: 1000,
   async rewrites() {
     return [
       {
