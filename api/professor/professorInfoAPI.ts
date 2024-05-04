@@ -50,3 +50,15 @@ export const withDrawalAPI = async () => {
     throw error;
   }
 };
+
+export const nicknameCheckAPI = async (nickname: string) => {
+  try {
+    const response = await instanceAuth.post(
+      process.env.NEXT_PUBLIC_M07_URL as string,
+      { memberNickname: nickname }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

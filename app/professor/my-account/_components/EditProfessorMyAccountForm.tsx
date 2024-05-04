@@ -1,17 +1,24 @@
 "use client";
-import { myInfoModifyAPI, getMyInfoAPI } from "@/api/professor/professorInfoAPI";
+import {
+  myInfoModifyAPI,
+  getMyInfoAPI,
+  nicknameCheckAPI,
+} from "@/api/professor/professorInfoAPI";
 import useUserStore from "@/store/useUserStore";
 import { myInfoModifyFormData, userContentData } from "@/types/professor/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
 function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
+
+
+
   const router = useRouter();
   const {
     register,
@@ -21,16 +28,47 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     formState: { errors },
   } = useForm<myInfoModifyFormData>();
 
+  const nicknameCheckMutation = useMutation({
+    mutationFn: nicknameCheckAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.result.available) {
+        setNicknameCheck(true);
+      }
+    },
+  });
 
+  /** 닉네임 중복 확인 버튼 이벤트 핸들러 */
+  const handleNicknameCheck = () => {
+    const nickname = getValues("memberNickname");
+    nicknameCheckMutation.mutate(nickname);
+  };
+
+  const [nicknameCheck, setNicknameCheck] = useState(true);
 
   const userImg = data?.result.memberImg;
-
   const fileInput = useRef<HTMLInputElement>(null);
   const [memberImg, setMemberImg] = useState(userImg || null);
 
   const onSubmit = (data: myInfoModifyFormData) => {
-    ModifyMutation.mutate({ data, memberImg: fileInput.current?.files?.[0] || null });
+    if (nicknameCheck) {
+      console.log(nicknameCheck)
+      ModifyMutation.mutate({
+        data,
+        memberImg: fileInput.current?.files?.[0] || null,
+      });
+    }
+    else
+      alert("닉네임 중복 확인을 해주세요.");
   };
+  
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 닉네임이 변경될 때마다 setNicknameCheck(false) 호출
+    setNicknameCheck(false);
+  }
 
   const ModifyMutation = useMutation({
     mutationFn: myInfoModifyAPI,
@@ -40,7 +78,6 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-
       }
     },
   });
@@ -93,13 +130,20 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
           <input
             type="text"
             defaultValue={data?.result.memberNickname}
-            {...register("memberNickname")}
+            {...register("memberNickname", { onChange: handleNicknameChange })}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
           <button
             type="button"
+            onClick={handleNicknameCheck}
+            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
+          >
+            중복 확인
+          </button>
+          <button
+            type="button"
             onClick={handleAutoFillNickname}
-            className="ml-2 px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
           >
             이름과 동일하게 설정
           </button>
