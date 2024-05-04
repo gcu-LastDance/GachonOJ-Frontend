@@ -4,20 +4,17 @@ import {
   getMyInfoAPI,
   nicknameCheckAPI,
 } from "@/api/professor/professorInfoAPI";
-import useUserStore from "@/store/useUserStore";
 import { myInfoModifyFormData, userContentData } from "@/types/professor/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
 function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
-
-
 
   const router = useRouter();
   const {
@@ -51,7 +48,7 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
 
   const userImg = data?.result.memberImg;
   const fileInput = useRef<HTMLInputElement>(null);
-  const [memberImg, setMemberImg] = useState(userImg || null);
+  const [memberImg, setMemberImg] = useState<string | File | null>(userImg || null);
 
   const onSubmit = (data: myInfoModifyFormData) => {
     if (nicknameCheck) {
@@ -82,6 +79,10 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     },
   });
 
+  const handleAutoFillNickname = () => {
+    setValue("memberNickname", getValues("memberName"));
+  };
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     // 내가 받을 파일은 하나기 때문에 index 0값의 이미지를 가짐
     const file = e.target.files?.[0];
@@ -89,10 +90,6 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     setMemberImg(URL.createObjectURL(file)); // 이미지 미리보기 표시
     // setValue를 통해 파일 정보를 직접 전달
     setValue("memberImg", file);
-  };
-
-  const handleAutoFillNickname = () => {
-    setValue("memberNickname", getValues("memberName"));
   };
 
   return (
@@ -149,11 +146,11 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
           </button>
         </div>
         <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
-          {!memberImg || memberImg === "" ? (
+          {!memberImg || memberImg === null ? (
             <CiUser className="text-[4vw] text-semiGrey" />
           ) : (
             <Image
-              src={memberImg}
+              src={typeof memberImg === 'string' ? memberImg : URL.createObjectURL(memberImg)}
               alt="Member Profile Image"
               layout="fill"
               objectFit="cover"

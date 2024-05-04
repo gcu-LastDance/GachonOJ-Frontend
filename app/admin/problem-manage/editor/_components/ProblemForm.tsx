@@ -38,7 +38,6 @@ const ProblemForm = () => {
             메모리 제한
           </label>
           <select
-            id="memory"
             {...register("memory")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
@@ -52,7 +51,6 @@ const ProblemForm = () => {
             실행 시간 제한
           </label>
           <select
-            id="time"
             {...register("time")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
@@ -67,7 +65,6 @@ const ProblemForm = () => {
             난이도 설정
           </label>
           <select
-            id="difficulty"
             {...register("difficulty")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
@@ -83,7 +80,6 @@ const ProblemForm = () => {
             분류
           </label>
           <select
-            id="class"
             {...register("class")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
