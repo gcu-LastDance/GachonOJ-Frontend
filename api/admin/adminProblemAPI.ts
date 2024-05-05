@@ -1,19 +1,20 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 
-export const problemListAPI = async (search:string) => {
+export const problemListAPI = async (search: string) => {
   try {
-
-    const url = `${process.env.NEXT_PUBLIC_P11_URL}?search=${encodeURIComponent(search)}`;
+    const url = `${process.env.NEXT_PUBLIC_P11_URL}?search=${encodeURIComponent(
+      search
+    )}`;
 
     const response = await instanceAuth.get(url);
-    
+
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
-export const problemDeleteAPI = async(problemId: number) => {
+export const problemDeleteAPI = async (problemId: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P15_URL}/${encodeURIComponent(
       problemId
@@ -22,6 +23,6 @@ export const problemDeleteAPI = async(problemId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

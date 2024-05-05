@@ -8,7 +8,7 @@ export const scheduledContestAPI = async () => {
     const response = await instanceAuth.get(url);
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -18,7 +18,7 @@ export const pastContestAPI = async () => {
     const response = await instanceAuth.get(url);
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -28,7 +28,7 @@ export const scheduledExamAPI = async () => {
     const response = await instanceAuth.get(url);
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -38,6 +38,6 @@ export const pastExamAPI = async () => {
     const response = await instanceAuth.get(url);
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

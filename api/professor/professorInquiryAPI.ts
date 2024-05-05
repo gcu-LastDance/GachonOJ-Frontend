@@ -9,7 +9,7 @@ export const inquiryListAPI = async () => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -19,9 +19,9 @@ export const inquirySubmitAPI = async (data: InquiryFormData) => {
       process.env.NEXT_PUBLIC_B03_URL as string,
       data
     );
-    return response.data;;
+    return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -34,6 +34,6 @@ export const inquiryContentsAPI = async (inquiryId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

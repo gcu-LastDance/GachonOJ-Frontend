@@ -26,6 +26,7 @@ export default function LanguageForm() {
       console.log(error);
     },
     onSuccess: (data) => {
+      console.log("mutation here");
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ["memberProgramLang"] });
     },

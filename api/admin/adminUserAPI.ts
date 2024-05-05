@@ -1,4 +1,4 @@
-import { instanceAuth, instanceAuthWithMultipart} from "@/lib/axiosConfig";
+import { instanceAuth, instanceAuthWithMultipart } from "@/lib/axiosConfig";
 import { myInfoModifyFormData, userFormData } from "@/types/admin/user";
 
 export const userListAPI = async () => {
@@ -13,7 +13,7 @@ export const userListAPI = async () => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -29,7 +29,7 @@ export const professorListAPI = async () => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -41,7 +41,7 @@ export const userContentAPI = async (memberId: number) => {
     const response = await instanceAuth.get(url);
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -54,7 +54,7 @@ export const userEnrollAPI = async (data: userFormData) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -67,7 +67,7 @@ export const userModifyAPI = async (memberId: number, data: userFormData) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -80,20 +80,18 @@ export const userDeleteAPI = async (memberId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
 export const MyInfoModifyAPI = async (data: myInfoModifyFormData) => {
-
   try {
-
     const formData = new FormData();
     const info = data;
     formData.append(
-      'info',
-      new Blob([JSON.stringify(info)], { type: 'application/json' })
-   );
+      "info",
+      new Blob([JSON.stringify(info)], { type: "application/json" })
+    );
 
     const response = await instanceAuthWithMultipart.put(
       process.env.NEXT_PUBLIC_M08_URL as string,
@@ -102,7 +100,7 @@ export const MyInfoModifyAPI = async (data: myInfoModifyFormData) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -113,6 +111,6 @@ export const getMyInfoAPI = async () => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
-}
+};

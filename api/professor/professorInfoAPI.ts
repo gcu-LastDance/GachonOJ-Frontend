@@ -1,7 +1,7 @@
-import { instanceAuth, instanceAuthWithMultipart} from "@/lib/axiosConfig";
+import { instanceAuth, instanceAuthWithMultipart } from "@/lib/axiosConfig";
 import { myInfoModifyFormData } from "@/types/professor/user";
 
-export const myInfoModifyAPI  = async ({
+export const myInfoModifyAPI = async ({
   data,
   memberImg,
 }: {
@@ -22,7 +22,7 @@ export const myInfoModifyAPI  = async ({
     console.log(response.data);
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -33,7 +33,7 @@ export const getMyInfoAPI = async () => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -44,6 +44,6 @@ export const withDrawalAPI = async () => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

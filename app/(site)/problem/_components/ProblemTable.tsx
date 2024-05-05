@@ -126,7 +126,7 @@ export default function ProblemTable() {
                 <th
                   key={header.id}
                   className={`${
-                    header.id === "title"
+                    header.id === "problemTitle"
                       ? "text-left w-[16vw]"
                       : "text-center w-[11w]"
                   }`}
@@ -152,13 +152,15 @@ export default function ProblemTable() {
                 <td
                   key={cell.id}
                   className={`${
-                    cell.column.id === "title" ? "text-left" : "text-center"
+                    cell.column.id === "problemTitle"
+                      ? "text-left"
+                      : "text-center"
                   } ${
-                    cell.column.id === "category" && "w-[8vw]"
+                    cell.column.id === "problemClass" && "w-[8vw]"
                   } text-[0.95vw] font-PretendardLight text-realGrey`}
                 >
-                  {cell.column.id === "title" ? (
-                    <Link href={`/algorithm-ide/1`}>
+                  {cell.column.id === "problemTitle" ? (
+                    <Link href={`/algorithm-ide/${row.original.problemId}`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

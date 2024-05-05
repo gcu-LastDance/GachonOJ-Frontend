@@ -14,7 +14,7 @@ export const inquiryTableAPI = async () => {
     console.log(response.data.result.content);
     return response.data.result.content;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -30,7 +30,7 @@ export const inquiryDetailAPI = async (inquiryId: number) => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -42,6 +42,6 @@ export const inquirySubmitAPI = async (data: InquiryFormData) => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
