@@ -52,6 +52,7 @@
 
 
 FROM node:20-alpine AS base
+RUN npm install -g pnpm@9.1.0
 
 # Install dependencies only when needed
 FROM base AS deps
