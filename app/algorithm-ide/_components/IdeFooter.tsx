@@ -1,17 +1,20 @@
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import React from "react";
 
 export default function IdeFooter() {
+  const params = useParams();
+
   return (
     <footer className="fixed bottom-0 flex border-t-2 shadow-md h-[5.5vh] px-[1.5vw] w-screen bg-white items-center">
-      <button
-        type="button"
-        className="border-[0.13vw] w-[7vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue"
+      <Link
+        href={`/algorithm-ide/${params.problemId}/history`}
+        className="flex border-[0.13vw] w-[7vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">
           제출이력 확인
         </span>
-      </button>
+      </Link>
       <button
         type="button"
         className="border-[0.13vw] w-[5vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-auto"

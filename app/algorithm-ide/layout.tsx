@@ -8,16 +8,16 @@ import IdeFooter from "./_components/IdeFooter";
 
 export default function layout({
   children,
-  settingModal,
+  modal,
 }: {
   children: React.ReactNode;
-  settingModal: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   const { token } = useUserStore();
 
   return (
     <div className="flex flex-col">
-      {settingModal}
+      {modal}
       <div className="z-30 relative">
         <IdeHeader />
       </div>

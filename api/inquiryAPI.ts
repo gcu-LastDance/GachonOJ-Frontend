@@ -40,7 +40,7 @@ export const inquirySubmitAPI = async (data: InquiryFormData) => {
       process.env.NEXT_PUBLIC_B03_URL as string,
       data
     );
-    return response.data.result;
+    return response.data;
   } catch (error) {
     throw new Error(String(error));
   }

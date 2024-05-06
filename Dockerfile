@@ -12,8 +12,8 @@ WORKDIR /usr/src/app
 COPY package.json pnpm-lock.yaml ./
 
 # 종속성 설치 (lock 파일을 기반으로)
-RUN pnpm install
-# RUN pnpm install --frozen-lockfile
+# RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # 2단계: 애플리케이션 빌드
 FROM node:18-alpine AS builder

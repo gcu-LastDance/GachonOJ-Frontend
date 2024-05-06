@@ -82,10 +82,10 @@ export const memberProgramLangPatchAPI = async (lang: string) => {
   try {
     const response = await instanceAuth.put(
       process.env.NEXT_PUBLIC_M10_URL as string,
-      { lang }
+      { memberLang: lang }
     );
-    console.log(response.data.result);
-    return response.data.result;
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     throw new Error(String(error));
   }

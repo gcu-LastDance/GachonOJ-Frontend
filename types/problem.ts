@@ -29,9 +29,17 @@ export interface ProblemTableData {
  */
 export interface ProblemDetailData {
   problemTitle: string;
+  problemDiff: difficulty;
   problemContents: string;
   problemInputContents: string;
   problemOutputContents: string;
   testcaseInputs: string[];
   testcaseOutputs: string[];
+}
+
+export interface SubmitHistoryData {
+  submitId: number;
+  submitTime: string;
+  submitResult: string;
+  submitLang: string;
 }

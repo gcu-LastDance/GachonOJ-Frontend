@@ -1,20 +1,24 @@
 "use client";
 
 import { loginAPI } from "@/api/authAPI";
+import { memberProgramLangAPI } from "@/api/memberAPI";
 import FullButton from "@/components/button/FullButton";
+import { useProgramLangStore } from "@/store/useProgramLangStore";
 import useUserStore from "@/store/useUserStore";
 import { LoginFormData } from "@/types/auth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function LoginForm() {
   const router = useRouter();
   const { setUser } = useUserStore();
+  const { setProgramLang } = useProgramLangStore();
   const { register, handleSubmit } = useForm<LoginFormData>();
+  const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
   const [isLoginReject, setIsLoginReject] = useState(false);
 
   const onSubmit = (data: LoginFormData) => {
@@ -34,13 +38,25 @@ export default function LoginForm() {
           data.data.result.memberRole,
           data.authToken
         );
+        setIsLoginSuccessful(true);
         router.push("/main");
       } else if (data.data.code === 401) {
-        alert("이메일 혹은 비밀번호가 일치하지 않습니다.");
-        // setIsLoginReject(true);
+        setIsLoginReject(true);
       }
     },
   });
+
+  const { data: memberProgramLangData } = useQuery({
+    queryKey: ["memberProgramLang"],
+    queryFn: memberProgramLangAPI,
+    enabled: isLoginSuccessful, // 로그인 성공했을 때만 쿼리 실행
+  });
+
+  useEffect(() => {
+    if (memberProgramLangData) {
+      setProgramLang(memberProgramLangData);
+    }
+  }, [memberProgramLangData]);
 
   return (
     <form className="mt-[8vh] mb-[6vh]">
