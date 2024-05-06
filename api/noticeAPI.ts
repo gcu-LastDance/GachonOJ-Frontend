@@ -32,6 +32,5 @@ export const noticeDetailAPI = async (noticeId: number) => {
     return response.data.result;
   } catch (error) {
     throw new Error(String(error));
-    ror(String(error));
   }
 };
