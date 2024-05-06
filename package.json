@@ -53,5 +53,6 @@
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   },
+  "sideEffects": false,
   "packageManager": "pnpm@9.1.0"
 }
