@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
-  swcMinify: true,
+  swcMinify: false,
   staticPageGenerationTimeout: 1000,
   async rewrites() {
     return [
