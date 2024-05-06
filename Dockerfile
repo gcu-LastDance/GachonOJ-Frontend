@@ -1,47 +1,28 @@
-# # 1단계: 환경 설정 및 종속성 설치
-# FROM node:18-alpine AS deps
-# RUN apk add --no-cache libc6-compat
-
-# # pnpm 버전 9.1.0 설치
-# RUN npm install -g pnpm@9.1.0
-
-# # 명령어를 실행할 디렉터리 지정
-# WORKDIR /usr/src/app
-
-# # 종속성 파일 복사
-# COPY package.json pnpm-lock.yaml ./
-
-# # 종속성 설치 (lock 파일을 기반으로)
-# RUN pnpm install --frozen-lockfile
-
-# # 2단계: 애플리케이션 빌드
-# FROM node:18-alpine AS builder
-# WORKDIR /usr/src/app
-
-# # pnpm 버전 9.1.0 설치
-# RUN npm install -g pnpm@9.1.0
-
-# # 빌드 종속성 복사
-# COPY --from=deps /usr/src/app/node_modules ./node_modules
-# COPY . .
-
-
-# 기본 이미지 설정
-FROM node:20-alpine
-
-# 작업 디렉토리 설정
-WORKDIR /usr/src/app
-
-# 의존성 파일 복사
-COPY package.json package-lock.json ./
+# 1단계: 환경 설정 및 종속성 설치
+FROM node:20-alpine AS deps
+RUN apk add --no-cache libc6-compat
 
 # pnpm 버전 9.1.0 설치
 RUN npm install -g pnpm@9.1.0
 
-# 의존성 설치
-RUN pnpm install
+# 명령어를 실행할 디렉터리 지정
+WORKDIR /usr/src/app
 
-# 소스 코드 복사
+# 종속성 파일 복사
+COPY package.json pnpm-lock.yaml ./
+
+# 종속성 설치 (lock 파일을 기반으로)
+RUN pnpm install --frozen-lockfile
+
+# 2단계: 애플리케이션 빌드
+FROM node:20-alpine AS builder
+WORKDIR /usr/src/app
+
+# pnpm 버전 9.1.0 설치
+RUN npm install -g pnpm@9.1.0
+
+# 빌드 종속성 복사
+COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
 
 # Next.js 빌드 실행
