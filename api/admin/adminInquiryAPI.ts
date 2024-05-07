@@ -36,3 +36,15 @@ export const inquiryReplyAPI = async (inquiryId: number, data: replyFormData) =>
   }
 };
 
+export const inquiryDeleteAPI = async(inquiryId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_B14_URL}/${encodeURIComponent(
+      inquiryId
+    )}`;
+    const response = await instanceAuth.delete(url);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

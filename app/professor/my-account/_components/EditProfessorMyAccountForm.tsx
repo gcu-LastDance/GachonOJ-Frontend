@@ -1,6 +1,9 @@
 "use client";
-import { myInfoModifyAPI, getMyInfoAPI } from "@/api/professor/professorInfoAPI";
-import useUserStore from "@/store/useUserStore";
+import {
+  myInfoModifyAPI,
+  getMyInfoAPI,
+  nicknameCheckAPI,
+} from "@/api/professor/professorInfoAPI";
 import { myInfoModifyFormData, userContentData } from "@/types/professor/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -10,8 +13,10 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
+import useUserStore from "@/store/useUserStore";
 
 function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
+  const { setUserImg } = useUserStore();
   const router = useRouter();
   const {
     register,
@@ -20,14 +25,50 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     getValues,
     formState: { errors },
   } = useForm<myInfoModifyFormData>();
-  const { userImg } = useUserStore();
-  const fileInput = useRef<HTMLInputElement>(null);
 
-  const [memberImg, setMemberImg] = useState(userImg);
+  const nicknameCheckMutation = useMutation({
+    mutationFn: nicknameCheckAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.result.available) {
+        setNicknameCheck(true);
+      }
+    },
+  });
+
+  /** 닉네임 중복 확인 버튼 이벤트 핸들러 */
+  const handleNicknameCheck = () => {
+    const nickname = getValues("memberNickname");
+    nicknameCheckMutation.mutate(nickname);
+  };
+
+  const [nicknameCheck, setNicknameCheck] = useState(true);
+
+  const userImg = data?.result.memberImg;
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [memberImg, setMemberImg] = useState<string | File | null>(userImg || null);
 
   const onSubmit = (data: myInfoModifyFormData) => {
-    ModifyMutation.mutate({ data, memberImg });
+    if (nicknameCheck) {
+      ModifyMutation.mutate({
+        data,
+        memberImg: fileInput.current?.files?.[0] || null,
+      });
+      if (memberImg) {
+        setUserImg(memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg);
+      }
+    }
+    else
+      alert("닉네임 중복 확인을 해주세요.");
   };
+  
+  const NicknameStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 닉네임이 변경될 때마다 setNicknameCheck(false) 호출
+    setNicknameCheck(false);
+  }
 
   const ModifyMutation = useMutation({
     mutationFn: myInfoModifyAPI,
@@ -37,27 +78,21 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-
       }
     },
   });
 
+  const handleAutoFillNickname = () => {
+    setValue("memberNickname", getValues("memberName"));
+  };
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     // 내가 받을 파일은 하나기 때문에 index 0값의 이미지를 가짐
     const file = e.target.files?.[0];
+    console.log(file);
     if (!file) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e: any) => {
-      if (reader.readyState === 2) {
-        // 파일 onLoad가 성공하면 2, 진행 중은 1, 실패는 0 반환
-        setMemberImg(e.target.result);
-      }
-    };
-  };
-
-  const handleAutoFillNickname = () => {
-    setValue("memberNickname", getValues("memberName"));
+    setMemberImg(URL.createObjectURL(file)); // 이미지 미리보기 표시
+    setValue("memberImg", file);
   };
 
   return (
@@ -95,23 +130,30 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
           <input
             type="text"
             defaultValue={data?.result.memberNickname}
-            {...register("memberNickname")}
+            {...register("memberNickname", { onChange: NicknameStatusChange })}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
           <button
             type="button"
+            onClick={handleNicknameCheck}
+            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
+          >
+            중복 확인
+          </button>
+          <button
+            type="button"
             onClick={handleAutoFillNickname}
-            className="ml-2 px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
           >
             이름과 동일하게 설정
           </button>
         </div>
         <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
-          {!memberImg || memberImg === "" ? (
+          {!memberImg || memberImg === null ? (
             <CiUser className="text-[4vw] text-semiGrey" />
           ) : (
             <Image
-              src={memberImg}
+              src={typeof memberImg === 'string' ? memberImg : URL.createObjectURL(memberImg)}
               alt="Member Profile Image"
               layout="fill"
               objectFit="cover"
@@ -119,7 +161,6 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
           )}
           <input
             type="file"
-            accept="image/*"
             ref={fileInput}
             onChange={handleImageChange}
             style={{ display: "none" }}

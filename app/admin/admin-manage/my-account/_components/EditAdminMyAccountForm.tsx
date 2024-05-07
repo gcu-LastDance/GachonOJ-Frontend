@@ -1,38 +1,98 @@
 "use client";
-import { MyInfoModifyAPI, getMyInfoAPI} from "@/api/admin/adminUserAPI";
+import {
+  myInfoModifyAPI,
+  getMyInfoAPI,
+  nicknameCheckAPI,
+} from "@/api/admin/adminUserAPI";
 import { myInfoModifyFormData, userContentData } from "@/types/admin/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { CiUser } from "react-icons/ci";
+import Image from "next/image";
+import { IoSettingsOutline } from "react-icons/io5";
+import useUserStore from "@/store/useUserStore";
 
-function EditAdminMyAccountForm({
-  data,
-}: {
-  data: userContentData;
-})  {
+function EditAdminMyAccountForm({ data }: { data: userContentData }) {
+  const { setUserImg } = useUserStore();
   const router = useRouter();
-  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<myInfoModifyFormData>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm<myInfoModifyFormData>();
+
+  const nicknameCheckMutation = useMutation({
+    mutationFn: nicknameCheckAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.result.available) {
+        setNicknameCheck(true);
+      }
+    },
+  });
+
+  const handleNicknameCheck = () => {
+    const nickname = getValues("memberNickname");
+    nicknameCheckMutation.mutate(nickname);
+  };
+
+  const [nicknameCheck, setNicknameCheck] = useState(true);
+
+  const userImg = data?.result.memberImg;
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [memberImg, setMemberImg] = useState<string | File | null>(userImg || null);
 
   const onSubmit = (data: myInfoModifyFormData) => {
-    ModifyMutation.mutate(data);
+    if (nicknameCheck) {
+      console.log(nicknameCheck);
+      ModifyMutation.mutate({
+        data,
+        memberImg: fileInput.current?.files?.[0] || null,
+      });
+      if (memberImg) {
+        setUserImg(memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg);
+      }
+    } else alert("닉네임 중복 확인을 해주세요.");
   };
-  
+
+  const NicknameStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 닉네임이 변경될 때마다 setNicknameCheck(false) 호출
+    setNicknameCheck(false);
+  };
+
+ 
   const ModifyMutation = useMutation({
-    mutationFn: (data: myInfoModifyFormData) => MyInfoModifyAPI(data),
+    mutationFn: myInfoModifyAPI,
     onError: (error) => {
       console.log(error);
     },
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/admin-manage/my-account");
       }
     },
   });
+
   const handleAutoFillNickname = () => {
     setValue("memberNickname", getValues("memberName"));
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 내가 받을 파일은 하나기 때문에 index 0값의 이미지를 가짐
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setMemberImg(URL.createObjectURL(file)); // 이미지 미리보기 표시
+
+    // setValue를 통해 파일 정보를 직접 전달
+    setValue("memberImg", file);
   };
 
   return (
@@ -70,25 +130,66 @@ function EditAdminMyAccountForm({
           <input
             type="text"
             defaultValue={data?.result.memberNickname}
-            {...register("memberNickname")}
+            {...register("memberNickname", { onChange: NicknameStatusChange })}
             className="w-80 ml-10 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
           <button
             type="button"
+            onClick={handleNicknameCheck}
+            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
+          >
+            중복 확인
+          </button>
+          <button
+            type="button"
             onClick={handleAutoFillNickname}
-            className="ml-2 px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
           >
             이름과 동일하게 설정
           </button>
         </div>
+   <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
+          {!memberImg || memberImg === null ? (
+            <CiUser className="text-[4vw] text-semiGrey" />
+          ) : (
+            <Image
+              src={typeof memberImg === 'string' ? memberImg : URL.createObjectURL(memberImg)}
+              alt="Member Profile Image"
+              layout="fill"
+              objectFit="cover"
+            />
+          )}
+          <input
+            type="file"
+            ref={fileInput}
+            onChange={handleImageChange}
+            style={{ display: "none" }}
+          />
+        </div>
+        <div className="flex mt-[1vh]">
+          <button
+            type="button"
+            onClick={() => fileInput?.current?.click()}
+            className="hover:bg-primaryLightBlue border-[0.11vw] w-[4vh] h-[4vh] border-primaryBlue rounded-[0.4vw] font-PretendardSemiBold flex text-primaryBlue items-center justify-center"
+          >
+            <IoSettingsOutline className="text-[1.5vw] text-primaryBlue" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setMemberImg("")}
+            className="hover:bg-primaryLightBlue border-[0.11vw] w-[5vw] h-[4vh] border-primaryBlue rounded-[0.4vw] font-PretendardRegular text-[0.7vw] text-primaryBlue ml-[0.5vw]"
+          >
+            기본이미지로
+          </button>
+        </div>
         <div className="flex justify-center">
           <Link href="/member/info">
-          <button
-            onClick={handleSubmit(onSubmit)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
-          >
-            변경사항 저장
-          </button>
+            <button
+              onClick={handleSubmit(onSubmit)}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
+            >
+              변경사항 저장
+            </button>
           </Link>
         </div>
       </div>

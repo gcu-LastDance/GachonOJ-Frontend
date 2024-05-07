@@ -105,11 +105,11 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href="/admin/user-manage/list">
+            
                 <button className="underline underline-offset-auto" onClick={() => onDelete(row.original.memberId)}>
                   정보 삭제
                 </button>
-                </Link>
+
               </td>
             </tr>
           ))}

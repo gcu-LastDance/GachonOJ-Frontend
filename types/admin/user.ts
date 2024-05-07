@@ -7,6 +7,7 @@ export interface userTableData {
   memberNickname: string;
   memberRole: string;
   memberCreatedDate: string;
+  memberImg: File | string | null;
 }
 
 export interface userListData {
@@ -19,6 +20,7 @@ export interface userListData {
 export interface userContentData {
   // 수정 하지 말것
   result: userTableData;
+
 }
 
 // 컬럼 타입 정의
@@ -42,4 +44,5 @@ export interface userFormData {
 export interface myInfoModifyFormData {
   memberName: string;
   memberNickname: string;
+  memberImg: File | string| null;
 }

@@ -25,7 +25,7 @@ export default function BreadCrumbs() {
   const curPageTopic = breadCrumbsMap[pathNameArr[0]] || "";
 
   return (
-    <div className="flex items-center">
+    <div className="mt-[10vh] flex items-center">
       {pathNameArr.map((path, index) => (
         <div key={index} className="flex items-center">
           <span className="font-PretendardSemiBold text-[1.3vw] text-realGrey">

@@ -108,13 +108,13 @@ export function ExamManageTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/admin/exam-manage/list`}>
+              
                   <button className="underline underline-offset-auto"
                   onClick={() => onDelete(row.original.examId)}
                   >
                     삭제
                   </button>
-                </Link>
+          
               </td>
             </tr>
           ))}

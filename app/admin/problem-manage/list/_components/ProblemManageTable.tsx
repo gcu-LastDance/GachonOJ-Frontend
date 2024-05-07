@@ -82,7 +82,7 @@ export function ProblemManageTable({
       <div className="flex justify-end">
         {showInput ? (
           <input
-            className="p-2"
+            className="p-2 border-2 rounded-lg px-4"
             type="search"
             placeholder="검색어를 입력하세요"
             value={searchTerm}
@@ -149,18 +149,18 @@ export function ProblemManageTable({
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-              <Link href={`/board/admin/problem-manage/list`}>
+            
                   <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.problemId)}>
                     삭제
                   </button>
-                </Link>
+
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       <div className="flex justify-end items-center mt-5">
-        <Link href="enroll">
+        <Link href="/admin/problem-manage/editor">
           <button
             type="button"
             className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
