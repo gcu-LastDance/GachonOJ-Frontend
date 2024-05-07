@@ -15,7 +15,7 @@ export default function ModalLarge({
             <Image src={GachonOJ_logo_image} alt="GachonOJ logo" />
           </div>
         </div>
-        <div className="h-[40vh] mx-auto drop-shadow-none bg-white">
+        <div className="h-[50vh] mx-auto drop-shadow-none bg-white">
           {children}
         </div>
         <div className="bg-primaryGrey h-[12vh] drop-shadow-none" />

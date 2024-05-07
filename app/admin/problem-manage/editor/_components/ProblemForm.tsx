@@ -1,7 +1,7 @@
 "use client";
 import { ProblemFormData } from "@/types/admin/problem";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 const ProblemForm = () => {
@@ -11,6 +11,35 @@ const ProblemForm = () => {
     console.log(data);
     // 여기서 데이터를 처리하거나 제출합니다.
   };
+
+  const [testCases, setTestCases] = useState([
+    {
+      testcaseInput: "5\n 8\n 1 2 2\n 1 3 3\n 1 4 1\n 1 5 10\n 2 4 2\n 3 4 1\n 3 5 1\n 4 5 3\n 1 5",
+      testcaseOutput: "4",
+      testcaseStatus: "VISIBLE"
+    }
+  ]);
+
+  const handleAddTestCase = (newInput: string, newOutput: string) => {
+    setTestCases(prevTestCases => [
+      ...prevTestCases,
+      {
+        testcaseInput: newInput,
+        testcaseOutput: newOutput,
+        testcaseStatus: "INVISIBLE"
+      }
+    ]);
+  };
+
+
+  const handleCheckboxChange = (index: number) => {
+    const updatedTestCases = [...testCases];
+    updatedTestCases[index].testcaseStatus =
+      updatedTestCases[index].testcaseStatus === "VISIBLE" ? "INVISIBLE" : "VISIBLE";
+    setTestCases(updatedTestCases);
+  };
+
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,7 +136,9 @@ const ProblemForm = () => {
       </div>
 
       <div className="flex items-center mb-4">
-        <div className="text-lg mr-4 min-w-30 self-start flex-shrink-0">문제 제목</div>
+        <div className="text-lg mr-4 min-w-30 self-start flex-shrink-0">
+          문제 제목
+        </div>
         <input
           type="text"
           {...register("title")}
@@ -115,7 +146,9 @@ const ProblemForm = () => {
         />
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">문제 본문</div>
+        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">
+          문제 본문
+        </div>
         <textarea
           {...register("content")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -123,7 +156,9 @@ const ProblemForm = () => {
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">입력 설명</div>
+        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">
+          입력 설명
+        </div>
         <textarea
           {...register("inputDescription")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -131,7 +166,9 @@ const ProblemForm = () => {
         ></textarea>
       </div>
       <div className="flex items-center mb-4">
-        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">출력 설명</div>
+        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">
+          출력 설명
+        </div>
         <textarea
           {...register("outputDescription")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
@@ -152,12 +189,18 @@ const ProblemForm = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="w-min border text-center">1</td>
-              <td className="border px-4 py-2">입력 데이터</td>
-              <td className="border px-4 py-2">출력 데이터</td>
+          {testCases.map((testCase, index) => (
+            <tr key={index}>
+              <td className="w-min border text-center">{index + 1}</td>
+              <td className="border px-4 py-2">{testCase.testcaseInput}</td>
+              <td className="border px-4 py-2">{testCase.testcaseOutput}</td>
               <td className="border px-2 py-2 text-center">
-                <input type="checkbox" className="text-blue-500"></input>
+                <input
+                  type="checkbox"
+                  className="text-blue-500"
+                  checked={testCase.testcaseStatus === "VISIBLE"}
+                  onChange={() => handleCheckboxChange(index)}
+                />
               </td>
               <td className="w-min flex-auto text-center border">
                 <button>보기</button>
@@ -165,16 +208,16 @@ const ProblemForm = () => {
                 <button>삭제</button>
               </td>
             </tr>
-            {/* 다른 테스트 케이스들 */}
-          </tbody>
+          ))}
+        </tbody>
         </table>
       </div>
       <Link href="/admin/problem-manage/editor/testcase">
-      <div className="flex justify-end">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4">
-          테스트 케이스 추가
-        </button>
-      </div>
+        <div className="flex justify-end">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4">
+            테스트 케이스 추가
+          </button>
+        </div>
       </Link>
       <div className="flex justify-end">
         <button
