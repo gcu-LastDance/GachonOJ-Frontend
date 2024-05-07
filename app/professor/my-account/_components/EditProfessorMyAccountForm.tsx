@@ -4,7 +4,6 @@ import {
   getMyInfoAPI,
   nicknameCheckAPI,
 } from "@/api/professor/professorInfoAPI";
-import useUserStore from "@/store/useUserStore";
 import { myInfoModifyFormData, userContentData } from "@/types/professor/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
