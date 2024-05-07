@@ -15,17 +15,11 @@ export default function RatingHelperCard({ data }: { data: RatingHelperData }) {
       <div className="flex flex-col items-center">
         <div>
           <span className="font-PretendardRegular text-primaryDark text-[0.9vw]">
-            현재
-          </span>
-          <span className="font-PretendardBold text-primaryBlue text-[1vw] mx-[0.4vw]">
-            {""}
-          </span>
-          <span className="font-PretendardRegular text-primaryDark text-[0.9vw]">
-            일 연속 해결
+            얼마 남지 않았어요
           </span>
         </div>
         <span className="font-PretendardRegular text-primaryDark text-[0.9vw]">
-          대단합니다!
+          오늘도 화이팅입니다!
         </span>
       </div>
     </div>

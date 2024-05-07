@@ -1,3 +1,6 @@
+"use client";
+
+import { logoutAPI } from "@/api/authAPI";
 import { hoverProfileAPI } from "@/api/memberAPI";
 import RankBadge from "@/components/badge/RankBadge";
 import useUserStore from "@/store/useUserStore";
@@ -6,14 +9,13 @@ import { rank } from "@/types/rank";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { CiUser } from "react-icons/ci";
-import { RiUser3Line } from "react-icons/ri";
 import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
-import { useRouter } from "next/navigation";
-import { logoutAPI } from "@/api/authAPI";
+import { RiUser3Line } from "react-icons/ri";
 
-export default function HeaderMemberDropdown() {
+export default function IdeHeaderMemberDropdown() {
   const router = useRouter();
   const { userImg, setUserDrop } = useUserStore();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -66,7 +68,8 @@ export default function HeaderMemberDropdown() {
       </button>
       {showDropdown && (
         <div
-          className="absolute bg-white divide-y divide-semiGrey rounded-lg shadow w-[12vw] border-[0.1vw] z-50"
+          className="absolute bg-white divide-y divide-semiGrey rounded-lg shadow w-[12vw] border-[0.1vw]"
+          style={{ left: "calc(87%)" }}
           onMouseEnter={() => setShowDropdown(true)}
           onMouseLeave={() => setShowDropdown(false)}
         >

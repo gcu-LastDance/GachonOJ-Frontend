@@ -10,7 +10,7 @@ export const inquiryContentsAPI = async (inquiryId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -21,22 +21,25 @@ export const inquiryListAPI = async () => {
     );
 
     return response.data;
-    
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
-export const inquiryReplyAPI = async (inquiryId: number, data: replyFormData) => {
+export const inquiryReplyAPI = async (
+  inquiryId: number,
+  data: replyFormData
+) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_B04_URL}/${inquiryId}/reply` as string;
+    const url =
+      `${process.env.NEXT_PUBLIC_B04_URL}/${inquiryId}/reply` as string;
     const response = await instanceAuth.post(url, data);
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
-export const inquiryDeleteAPI = async(inquiryId: number) => {
+export const inquiryDeleteAPI = async (inquiryId: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_B14_URL}/${encodeURIComponent(
       inquiryId
@@ -45,6 +48,6 @@ export const inquiryDeleteAPI = async(inquiryId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

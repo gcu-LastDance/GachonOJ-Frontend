@@ -24,7 +24,7 @@ export default function RecProblemCard({ data }: { data: RecProblemData }) {
   return (
     <div className="flex flex-col border-[0.11vw] rounded-lg border-semiGrey py-[2.1vh] px-[1.2vw] space-y-[2vh] w-[17vw] h-[20vh] justify-center">
       <DiffBadge difficulty={data.problemDiff} />
-      <Link href="/algorithm-ide/1">
+      <Link href={`/algorithm-ide/${data.problemId}`}>
         <span className="font-PretendardRegular text-[1.2vw]">
           {data.problemTitle}
         </span>
@@ -41,7 +41,7 @@ export default function RecProblemCard({ data }: { data: RecProblemData }) {
             {data.problemClass}
           </span>
         )}
-        <Link href="/algorithm-ide/1">
+        <Link href={`/algorithm-ide/${data.problemId}`}>
           <IoArrowForwardSharp className="text-[2vw] text-realGrey" />
         </Link>
       </div>

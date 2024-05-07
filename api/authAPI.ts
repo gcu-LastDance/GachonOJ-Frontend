@@ -14,7 +14,7 @@ export const loginAPI = async (data: LoginFormData) => {
       authToken,
     };
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -26,7 +26,7 @@ export const signUpAPI = async (data: SignUpData) => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -38,7 +38,7 @@ export const emailVerifyAPI = async (email: string) => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -56,7 +56,7 @@ export const emailCodeVerifyAPI = async ({
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -67,7 +67,7 @@ export const withDrawalAPI = async () => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -79,7 +79,7 @@ export const nicknameCheckAPI = async (nickname: string) => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -90,6 +90,6 @@ export const logoutAPI = async () => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

@@ -8,7 +8,7 @@ export const mainNoticeTableAPI = async () => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -20,7 +20,7 @@ export const noticeTableAPI = async () => {
     );
     return response.data.result.content;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -31,6 +31,6 @@ export const noticeDetailAPI = async (noticeId: number) => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

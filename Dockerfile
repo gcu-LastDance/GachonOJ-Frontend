@@ -2,8 +2,8 @@
 FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
 
-# pnpm 설치
-RUN npm install -g pnpm
+# pnpm 버전 9.1.0 설치
+RUN npm install -g pnpm@9.1.0
 
 # 명령어를 실행할 디렉터리 지정
 WORKDIR /usr/src/app
@@ -15,11 +15,11 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # 2단계: 애플리케이션 빌드
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /usr/src/app
 
-# pnpm 설치
-RUN npm install -g pnpm
+# pnpm 버전 9.1.0 설치
+RUN npm install -g pnpm@9.1.0
 
 # 빌드 종속성 복사
 COPY --from=deps /usr/src/app/node_modules ./node_modules

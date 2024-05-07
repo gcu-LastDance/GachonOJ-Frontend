@@ -4,6 +4,7 @@ import {
   getMyInfoAPI,
   nicknameCheckAPI,
 } from "@/api/professor/professorInfoAPI";
+import useUserStore from "@/store/useUserStore";
 import { myInfoModifyFormData, userContentData } from "@/types/professor/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -49,7 +50,9 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
 
   const userImg = data?.result.memberImg;
   const fileInput = useRef<HTMLInputElement>(null);
-  const [memberImg, setMemberImg] = useState<string | File | null>(userImg || null);
+  const [memberImg, setMemberImg] = useState<string | File | null>(
+    userImg || null
+  );
 
   const onSubmit = (data: myInfoModifyFormData) => {
     if (nicknameCheck) {
@@ -58,17 +61,17 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
         memberImg: fileInput.current?.files?.[0] || null,
       });
       if (memberImg) {
-        setUserImg(memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg);
+        setUserImg(
+          memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg
+        );
       }
-    }
-    else
-      alert("닉네임 중복 확인을 해주세요.");
+    } else alert("닉네임 중복 확인을 해주세요.");
   };
-  
+
   const NicknameStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 닉네임이 변경될 때마다 setNicknameCheck(false) 호출
     setNicknameCheck(false);
-  }
+  };
 
   const ModifyMutation = useMutation({
     mutationFn: myInfoModifyAPI,
@@ -78,6 +81,7 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
+        router.push("/professor/my-account");
       }
     },
   });
@@ -153,7 +157,11 @@ function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
             <CiUser className="text-[4vw] text-semiGrey" />
           ) : (
             <Image
-              src={typeof memberImg === 'string' ? memberImg : URL.createObjectURL(memberImg)}
+              src={
+                typeof memberImg === "string"
+                  ? memberImg
+                  : URL.createObjectURL(memberImg)
+              }
               alt="Member Profile Image"
               layout="fill"
               objectFit="cover"

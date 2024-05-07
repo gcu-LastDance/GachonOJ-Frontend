@@ -1,12 +1,12 @@
-'use client';
-import NoticeManageTable from './list/_components/NoticeManageTable'
+"use client";
+import NoticeManageTable from "./list/_components/NoticeManageTable";
 
 function page() {
-	return (
-    	<div>
-          <NoticeManageTable />
-        </div>
-    )
+  return (
+    <div>
+      <NoticeManageTable />
+    </div>
+  );
 }
 
 export default page;

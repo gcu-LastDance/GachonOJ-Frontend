@@ -8,14 +8,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 export default function CreaetNoticeForm() {
-
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors } } = useForm<noticeFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<noticeFormData>();
 
   const onSubmit = (data: noticeFormData) => {
     EnrollMutation.mutate(data);
   };
-  
+
   const EnrollMutation = useMutation({
     mutationFn: (data: noticeFormData) => noticeEnrollAPI(data),
     onError: (error) => {
@@ -60,23 +63,22 @@ export default function CreaetNoticeForm() {
       <div className="flex justify-center ml-48">
         <div>
           <Link href="/admin/notice-manage/list">
-          <button
-            name="back"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
-          >
-            뒤로가기
-          </button>
+            <button
+              name="back"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
+            >
+              뒤로가기
+            </button>
           </Link>
         </div>
         <div>
-    
           <Link href="/board/admin/notice">
-          <button
-            onClick={handleSubmit(onSubmit)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
-          >
-            공지등록
-          </button>
+            <button
+              onClick={handleSubmit(onSubmit)}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
+            >
+              공지등록
+            </button>
           </Link>
         </div>
       </div>

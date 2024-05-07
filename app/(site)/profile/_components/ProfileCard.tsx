@@ -7,12 +7,6 @@ import React from "react";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
-const member_profile_data: MemberProfileData = {
-  rating: 1,
-  memberNickname: "라스트댄스",
-  memberIntroduction: "가천대학교 컴퓨터공학과 18",
-};
-
 export default function ProfileCard({
   data,
 }: {

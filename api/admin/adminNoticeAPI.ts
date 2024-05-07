@@ -9,7 +9,7 @@ export const noticeListAPI = async () => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -22,23 +22,24 @@ export const noticeContentsAPI = async (noticeId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
-export const noticeEnrollAPI = async(data: noticeFormData) => {
+export const noticeEnrollAPI = async (data: noticeFormData) => {
   try {
     const response = await instanceAuth.post(
-      process.env.NEXT_PUBLIC_B05_URL as string, data
+      process.env.NEXT_PUBLIC_B05_URL as string,
+      data
     );
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
-export const noticeDeleteAPI = async(noticeId: number) => {
+export const noticeDeleteAPI = async (noticeId: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_B12_URL}/${encodeURIComponent(
       noticeId
@@ -47,6 +48,6 @@ export const noticeDeleteAPI = async(noticeId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

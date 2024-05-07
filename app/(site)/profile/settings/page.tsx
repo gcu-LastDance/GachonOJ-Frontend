@@ -83,10 +83,10 @@ export default function page() {
 
   const memberSettingMutation = useMutation({
     mutationFn: memberSettingPutAPI,
-    onError: (error, variables, context) => {
+    onError: (error) => {
       console.log(error);
     },
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data) => {
       console.log(data);
       if (data.success) {
         alert("수정이 완료되었습니다.");

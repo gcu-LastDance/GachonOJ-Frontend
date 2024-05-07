@@ -1,5 +1,5 @@
-import { instanceNonAuth } from "@/lib/axiosConfig";
-import { difficulty } from "@/types/problem";
+import { instanceAuth, instanceNonAuth } from "@/lib/axiosConfig";
+import { ProfileProblemType, difficulty } from "@/types/problem";
 
 export const recProblemAPI = async () => {
   try {
@@ -9,7 +9,7 @@ export const recProblemAPI = async () => {
     console.log(response.data);
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -35,6 +35,32 @@ export const problemTableGuestAPI = async ({
     console.log(response);
     return response.data.result.content;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
+  }
+};
+
+export const memberProblemTableAPI = async ({
+  menu,
+}: {
+  menu: ProfileProblemType;
+}) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P20_URL as string}?type=${menu}`;
+    const response = await instanceAuth.get(url);
+    console.log(response.data);
+    return response.data.result.content;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const problemDetailAPI = async (problemId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P21_URL as string}/${problemId}`;
+    const response = await instanceAuth.get(url);
+    console.log(response.data);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
   }
 };

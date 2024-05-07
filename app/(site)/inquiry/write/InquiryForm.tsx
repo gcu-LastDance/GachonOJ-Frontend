@@ -23,8 +23,7 @@ export default function InquiryForm() {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.data.success) {
-        alert("문의 제출에 성공했습니다.");
+      if (data.success) {
         router.push("/inquiry");
       } else {
         alert("문의 제출에 실패했습니다.");

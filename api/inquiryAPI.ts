@@ -14,7 +14,7 @@ export const inquiryTableAPI = async () => {
     console.log(response.data.result.content);
     return response.data.result.content;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -30,7 +30,7 @@ export const inquiryDetailAPI = async (inquiryId: number) => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -40,8 +40,8 @@ export const inquirySubmitAPI = async (data: InquiryFormData) => {
       process.env.NEXT_PUBLIC_B03_URL as string,
       data
     );
-    return response.data.result;
+    return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

@@ -1,4 +1,4 @@
-import { instanceAuth, instanceAuthWithMultipart} from "@/lib/axiosConfig";
+import { instanceAuth, instanceAuthWithMultipart } from "@/lib/axiosConfig";
 import { myInfoModifyFormData, userFormData } from "@/types/admin/user";
 
 export const userListAPI = async () => {
@@ -13,7 +13,7 @@ export const userListAPI = async () => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -29,7 +29,7 @@ export const professorListAPI = async () => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -41,7 +41,7 @@ export const userContentAPI = async (memberId: number) => {
     const response = await instanceAuth.get(url);
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -54,7 +54,7 @@ export const userEnrollAPI = async (data: userFormData) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -67,7 +67,7 @@ export const userModifyAPI = async (memberId: number, data: userFormData) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -80,7 +80,7 @@ export const userDeleteAPI = async (memberId: number) => {
 
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -107,7 +107,7 @@ export const myInfoModifyAPI = async ({
     console.log(response.data);
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -118,9 +118,9 @@ export const getMyInfoAPI = async () => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
-}
+};
 
 export const nicknameCheckAPI = async (nickname: string) => {
   try {
@@ -130,6 +130,6 @@ export const nicknameCheckAPI = async (nickname: string) => {
     );
     return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };

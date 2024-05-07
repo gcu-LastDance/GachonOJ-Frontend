@@ -1,3 +1,4 @@
+import { memberProblemTableAPI } from "@/api/problemAPI";
 import DiffBadge from "@/components/badge/DiffBadge";
 import CategoryButton from "@/components/button/CategoryButton";
 import PaginationBar from "@/components/pagination/PaginationBar";
@@ -7,6 +8,7 @@ import {
   ProfileProblemType,
   difficulty,
 } from "@/types/problem";
+import { useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
   flexRender,
@@ -15,99 +17,6 @@ import {
 } from "@tanstack/react-table";
 import Link from "next/link";
 import React, { useState } from "react";
-
-export const prob_table_data: ProblemTableData[] = [
-  {
-    problemId: 1,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 2,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 3,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 4,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 5,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 6,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 7,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 8,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 9,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-  {
-    problemId: 10,
-    problemTitle: "Regular Expression Matching",
-    problemDiff: "2단계",
-    problemClass: "String",
-    correctPeople: 75,
-    correctRate: 37.5,
-    isBookmarked: false,
-  },
-];
 
 const columns: ColumnDef<ProblemTableData, any>[] = [
   columnHelper("problemDiff", {
@@ -142,7 +51,6 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
 
 export default function MemberProblemTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
-  const [data, setData] = useState<ProblemTableData[]>(prob_table_data);
   const [menu, setMenu] = useState<ProfileProblemType>("bookmark");
 
   const activeMenuCss =
@@ -150,8 +58,14 @@ export default function MemberProblemTable() {
   const inactiveMenuCss =
     "flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-semiSemiGrey bg-lightGrey";
 
+  const { data: problemData } = useQuery<ProblemTableData[]>({
+    queryKey: ["problemTableGuest"],
+    queryFn: () => memberProblemTableAPI({ menu: menu }),
+    refetchOnMount: "always",
+  });
+
   const table = useReactTable({
-    data,
+    data: problemData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -170,7 +84,7 @@ export default function MemberProblemTable() {
               : inactiveMenuCss
           }
         >
-          북마크 문제 : 10제
+          북마크 문제
         </button>
         <button
           type="button"

@@ -10,10 +10,11 @@ export const hoverProfileAPI = async () => {
     const response = await instanceAuth.get(
       process.env.NEXT_PUBLIC_M28_URL as string
     );
-    if (response.data.suceess === false) throw Error;
+    if (response.data.suceess === false)
+      throw new Error(String(response.data.message));
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -24,7 +25,7 @@ export const memberProbInfoCardAPI = async () => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -35,7 +36,7 @@ export const memberTestInfoCardAPI = async () => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -61,7 +62,7 @@ export const rankingTableAPI = async ({
       return response.data.result.content;
     }
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -73,7 +74,7 @@ export const memberProgramLangAPI = async () => {
     console.log(response.data.result.memberLang);
     return response.data.result.memberLang;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -81,12 +82,12 @@ export const memberProgramLangPatchAPI = async (lang: string) => {
   try {
     const response = await instanceAuth.put(
       process.env.NEXT_PUBLIC_M10_URL as string,
-      { lang }
+      { memberLang: lang }
     );
-    console.log(response.data.result);
-    return response.data.result;
+    console.log(response.data);
+    return response.data;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -97,7 +98,7 @@ export const memberProfileDashBoardAPI = async () => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -108,7 +109,7 @@ export const memberSettingGetAPI = async () => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -133,7 +134,7 @@ export const memberSettingPutAPI = async ({
     console.log(response.data);
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
 
@@ -145,6 +146,6 @@ export const memberPasswordPutAPI = async (data: MemberPasswordPutData) => {
     );
     return response.data.result;
   } catch (error) {
-    throw error;
+    throw new Error(String(error));
   }
 };
