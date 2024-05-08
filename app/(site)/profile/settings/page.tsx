@@ -51,7 +51,7 @@ export default function page() {
     reader.onload = (e: any) => {
       if (reader.readyState === 2) {
         // 파일 onLoad가 성공하면 2, 진행 중은 1, 실패는 0 반환
-        setMemberImg(e.target.result);
+        setMemberImg(URL.createObjectURL(file));
       }
     };
   };

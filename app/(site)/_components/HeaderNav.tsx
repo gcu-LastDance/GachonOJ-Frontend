@@ -11,7 +11,7 @@ export default function HeaderNav() {
   const { userPermission } = useUserStore();
 
   return (
-    <header className="border-b-2 shadow-md">
+    <header className="border-b-[0.1vw] shadow-md">
       <div className="flex items-center w-[65vw] h-[7vh] mx-auto">
         <div>
           <Link href="/main">

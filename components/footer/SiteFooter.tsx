@@ -12,7 +12,7 @@ export default function SiteFooter() {
   };
 
   return (
-    <footer className="bg-lightGrey bottom-0 w-full min-h-[20vh]">
+    <footer className="bg-lightGrey bottom-0 w-full h-[36vh]">
       <div className="w-[65vw] flex flex-col mx-auto pt-9 pb-9">
         <div className="w-[11vw] ml-[-0.15vw]">
           <Image src={GachonOJ_logo_image} alt="GachonOJ logo" />
