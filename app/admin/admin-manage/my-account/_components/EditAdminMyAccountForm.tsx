@@ -141,14 +141,14 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
           <button
             type="button"
             onClick={handleNicknameCheck}
-            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
+            className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
           >
             중복 확인
           </button>
           <button
             type="button"
             onClick={handleAutoFillNickname}
-            className="hover:bg-primaryLightBlue border-2 w-fit px-5 h-10 border-primaryBlue rounded-md font-PretendardSemiBold text-sm text-primaryBlue ml-5"
+            className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
           >
             이름과 동일하게 설정
           </button>

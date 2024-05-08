@@ -34,7 +34,7 @@ export interface ProblemFormData {
   problemTimeLimit: number;
   problemDiff: number;
   problemTitle: string;
-  problemContent: string;
+  problemContents: string;
   problemInputContents: string;
   problemOutputContents: string;
   problemClass: string;

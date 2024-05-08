@@ -136,14 +136,14 @@ function EditUserForm({
           <button
             type="button"
             onClick={handleAutoFillNickname}
-            className="ml-2 px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
           >
             이름과 동일하게 설정
           </button>
           <button
             type="button"
             onClick={handleNicknameCheck}
-            className="ml-2 px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
           >
             중복 확인
           </button>

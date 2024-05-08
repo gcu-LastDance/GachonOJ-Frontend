@@ -203,7 +203,7 @@ const ProblemManageTableContainer = () => {
   if (!data) return null;
   return (
     <ProblemManageTable
-      tableData={data?.result.content}
+      tableData={data?.result?.content}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
     />

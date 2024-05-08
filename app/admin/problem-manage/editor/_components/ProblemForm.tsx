@@ -2,7 +2,7 @@
 import { ProblemFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTestCaseStore } from "@/store/useTestCaseStore";
 import { problemEnrollAPI } from "@/api/admin/adminProblemAPI";
 import { useMutation } from "@tanstack/react-query";
@@ -27,6 +27,7 @@ export default function ProblemForm() {
     const newData = { ...data, testcases, problemStatus: "SAVED" };
     EnrollMutation.mutate(newData);
   };
+  
   const EnrollMutation = useMutation({
     mutationFn: (data: ProblemFormData) => problemEnrollAPI(data),
     onError: (error) => {
@@ -105,11 +106,11 @@ export default function ProblemForm() {
             {...register("problemMemoryLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
-            <option value={128}>128MB</option>
-            <option value={256}>256MB</option>
-            <option value={512}>512MB</option>
-            <option value={1024}>1GB</option>
-            <option value={2048}>2GB</option>
+            <option value="128">128MB</option>
+            <option value="256">256MB</option>
+            <option value="512">512MB</option>
+            <option value="1024">1GB</option>
+            <option value="2048">2GB</option>
           </select>
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
@@ -120,9 +121,9 @@ export default function ProblemForm() {
             {...register("problemTimeLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
-            <option value={1}>1초</option>
-            <option value={2}>2초</option>
-            <option value={3}>3초</option>
+            <option value="1">1초</option>
+            <option value="2">2초</option>
+            <option value="3">3초</option>
           </select>
         </div>
 
@@ -134,11 +135,11 @@ export default function ProblemForm() {
             {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
-            <option value={1}>매우 쉬움</option>
-            <option value={2}>쉬움</option>
-            <option value={3}>보통</option>
-            <option value={4}>어려움</option>
-            <option value={5}>매우 어려움</option>
+            <option value="1">매우 쉬움</option>
+            <option value="2">쉬움</option>
+            <option value="3">보통</option>
+            <option value="4">어려움</option>
+            <option value="5">매우 어려움</option>
           </select>
         </div>
         <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
@@ -186,7 +187,7 @@ export default function ProblemForm() {
           문제 본문
         </div>
         <textarea
-          {...register("problemContent")}
+          {...register("problemContents")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={8}
         ></textarea>
