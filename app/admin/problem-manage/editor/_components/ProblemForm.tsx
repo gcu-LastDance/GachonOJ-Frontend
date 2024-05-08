@@ -105,11 +105,11 @@ export default function ProblemForm() {
             {...register("problemMemoryLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
-            <option value="128">128MB</option>
-            <option value="256">256MB</option>
-            <option value="512">512MB</option>
-            <option value="1024">1GB</option>
-            <option value="2048">2GB</option>
+            <option value={128}>128MB</option>
+            <option value={256}>256MB</option>
+            <option value={512}>512MB</option>
+            <option value={1024}>1GB</option>
+            <option value={2048}>2GB</option>
           </select>
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
@@ -120,9 +120,9 @@ export default function ProblemForm() {
             {...register("problemTimeLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
-            <option value="1">1초</option>
-            <option value="2">2초</option>
-            <option value="3">3초</option>
+            <option value={1}>1초</option>
+            <option value={2}>2초</option>
+            <option value={3}>3초</option>
           </select>
         </div>
 
@@ -134,11 +134,11 @@ export default function ProblemForm() {
             {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
-            <option value="1">매우 쉬움</option>
-            <option value="2">쉬움</option>
-            <option value="3">보통</option>
-            <option value="4">어려움</option>
-            <option value="5">매우 어려움</option>
+            <option value={1}>매우 쉬움</option>
+            <option value={2}>쉬움</option>
+            <option value={3}>보통</option>
+            <option value={4}>어려움</option>
+            <option value={5}>매우 어려움</option>
           </select>
         </div>
         <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
@@ -211,6 +211,16 @@ export default function ProblemForm() {
           rows={4}
         ></textarea>
       </div>
+      <div className="flex items-center mb-4">
+        <div className="text-lg mb-4 mr-4 min-w-20 self-start flex-shrink-0">
+          프롬프트
+        </div>
+        <textarea
+          {...register("problemPrompt")}
+          className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+          rows={4}
+        ></textarea>
+      </div>
 
       <div className="flex items-center mb-4">
         <div className="text-lg mb-4 mr-4 self-start">테스트 케이스</div>
@@ -239,8 +249,8 @@ export default function ProblemForm() {
                   />
                 </td>
                 <td className="w-min flex-auto text-center border">
-                  <button type="button">수정</button>
-                  <button type="button">삭제</button>
+                  <button type="button" className="underline underline-offset-auto pr-5">수정</button>
+                  <button type="button" className="underline underline-offset-auto pl-5">삭제</button>
                 </td>
               </tr>
             ))}

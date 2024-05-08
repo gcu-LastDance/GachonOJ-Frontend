@@ -30,9 +30,9 @@ export interface TestCase {
 }
 
 export interface ProblemFormData {
-  problemMemoryLimit: string;
-  problemTimeLimit: string;
-  problemDiff: difficulty;
+  problemMemoryLimit: number;
+  problemTimeLimit: number;
+  problemDiff: number;
   problemTitle: string;
   problemContent: string;
   problemInputContents: string;

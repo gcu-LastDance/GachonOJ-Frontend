@@ -33,8 +33,13 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.result.available) {
+      if (data.result.available === true) {
         setNicknameCheck(true);
+        alert("사용 가능한 닉네임입니다.");
+      }
+      else {
+        setNicknameCheck(false);
+        alert("이미 사용 중인 닉네임입니다.");
       }
     },
   });
