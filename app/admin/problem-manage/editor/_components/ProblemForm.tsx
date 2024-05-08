@@ -1,59 +1,93 @@
 "use client";
-import { ProblemFormData } from "@/types/admin/problem";
+import { ProblemFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useTestCaseStore } from "@/store/useTestCaseStore";
+import { problemEnrollAPI } from "@/api/admin/adminProblemAPI";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-const ProblemForm = () => {
-  const { register, handleSubmit } = useForm<ProblemFormData>();
+export default function ProblemForm() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProblemFormData>();
 
-  const onSubmit: SubmitHandler<ProblemFormData> = (data) => {
-    console.log(data);
-    // 여기서 데이터를 처리하거나 제출합니다.
+  const onSubmit = (data: ProblemFormData) => {
+    const testcases = TestCaseList;
+    const newData = { ...data, testcases, problemStatus: "REGISTERED" };
+    EnrollMutation.mutate(newData);
   };
 
-  const [testCases, setTestCases] = useState([
-    {
-      testcaseInput: "5\n 8\n 1 2 2\n 1 3 3\n 1 4 1\n 1 5 10\n 2 4 2\n 3 4 1\n 3 5 1\n 4 5 3\n 1 5",
-      testcaseOutput: "4",
-      testcaseStatus: "VISIBLE"
-    }
-  ]);
-
-  const handleAddTestCase = (newInput: string, newOutput: string) => {
-    setTestCases(prevTestCases => [
-      ...prevTestCases,
-      {
-        testcaseInput: newInput,
-        testcaseOutput: newOutput,
-        testcaseStatus: "INVISIBLE"
+  const onSave = (data: ProblemFormData) => {
+    const testcases = TestCaseList
+    const newData = { ...data, testcases, problemStatus: "SAVED" };
+    EnrollMutation.mutate(newData);
+  };
+  const EnrollMutation = useMutation({
+    mutationFn: (data: ProblemFormData) => problemEnrollAPI(data),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        router.push("admin/problem-manage/list");
       }
-    ]);
+    },
+  });
+
+  const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
+  const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
+    useTestCaseStore();
+
+  const addTestCase = () => {
+    const newTestCase = {
+      testcaseInput: testcaseInput,
+      testcaseOutput: testcaseOutput,
+      testcaseStatus: testcaseStatus,
+    };
+    // 이전 상태를 가져와서 새로운 테스트 케이스를 추가한 후 상태를 업데이트합니다.
+    setTestCases((prevTestcases) => [...prevTestcases, newTestCase]);
   };
 
+  useEffect(() => {
+    if (testcaseInput && testcaseOutput) {
+      addTestCase();
+    }
+  }, [testcaseInput, testcaseOutput]);
+
+  useEffect(() => {
+    setTestCases([]);
+    setTestCase(null, null, null);
+  }, []);
 
   const handleCheckboxChange = (index: number) => {
-    const updatedTestCases = [...testCases];
+    console.log(TestCaseList);
+    const updatedTestCases = [...TestCaseList];
     updatedTestCases[index].testcaseStatus =
-      updatedTestCases[index].testcaseStatus === "VISIBLE" ? "INVISIBLE" : "VISIBLE";
+      updatedTestCases[index].testcaseStatus === "VISIBLE"
+        ? "INVISIBLE"
+        : "VISIBLE";
     setTestCases(updatedTestCases);
   };
 
-  
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <div className="flex justify-end">
         <button
-          type="submit"
-          name="register"
+          type="button"
+          onClick={handleSubmit(onSubmit)}
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mr-4 rounded-lg mt-8"
         >
           등록하기
         </button>
         <button
-          type="submit"
-          name="save"
+          type="button"
+          onClick={handleSubmit(onSave)}
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8"
         >
           저장하기
@@ -68,9 +102,11 @@ const ProblemForm = () => {
             메모리 제한
           </label>
           <select
-            {...register("memory")}
+            {...register("problemMemoryLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
+            <option value="128">128MB</option>
+            <option value="256">256MB</option>
             <option value="512">512MB</option>
             <option value="1024">1GB</option>
             <option value="2048">2GB</option>
@@ -81,7 +117,7 @@ const ProblemForm = () => {
             실행 시간 제한
           </label>
           <select
-            {...register("time")}
+            {...register("problemTimeLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
             <option value="1">1초</option>
@@ -95,7 +131,7 @@ const ProblemForm = () => {
             난이도 설정
           </label>
           <select
-            {...register("difficulty")}
+            {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
             <option value="1">매우 쉬움</option>
@@ -110,7 +146,7 @@ const ProblemForm = () => {
             분류
           </label>
           <select
-            {...register("class")}
+            {...register("problemClass")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
             <option value="BINARY_SEARCH">이분 탐색</option>
@@ -141,7 +177,7 @@ const ProblemForm = () => {
         </div>
         <input
           type="text"
-          {...register("title")}
+          {...register("problemTitle")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
         />
       </div>
@@ -150,7 +186,7 @@ const ProblemForm = () => {
           문제 본문
         </div>
         <textarea
-          {...register("content")}
+          {...register("problemContent")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={8}
         ></textarea>
@@ -160,7 +196,7 @@ const ProblemForm = () => {
           입력 설명
         </div>
         <textarea
-          {...register("inputDescription")}
+          {...register("problemInputContents")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
         ></textarea>
@@ -170,7 +206,7 @@ const ProblemForm = () => {
           출력 설명
         </div>
         <textarea
-          {...register("outputDescription")}
+          {...register("problemOutputContents")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
         ></textarea>
@@ -189,27 +225,26 @@ const ProblemForm = () => {
             </tr>
           </thead>
           <tbody>
-          {testCases.map((testCase, index) => (
-            <tr key={index}>
-              <td className="w-min border text-center">{index + 1}</td>
-              <td className="border px-4 py-2">{testCase.testcaseInput}</td>
-              <td className="border px-4 py-2">{testCase.testcaseOutput}</td>
-              <td className="border px-2 py-2 text-center">
-                <input
-                  type="checkbox"
-                  className="text-blue-500"
-                  checked={testCase.testcaseStatus === "VISIBLE"}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-              </td>
-              <td className="w-min flex-auto text-center border">
-                <button>보기</button>
-                <button>수정</button>
-                <button>삭제</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+            {TestCaseList.map((testCase, index) => (
+              <tr key={index}>
+                <td className="w-min border text-center">{index + 1}</td>
+                <td className="border px-4 py-2">{testCase.testcaseInput}</td>
+                <td className="border px-4 py-2">{testCase.testcaseOutput}</td>
+                <td className="border px-2 py-2 text-center">
+                  <input
+                    type="checkbox"
+                    className="text-blue-500"
+                    checked={testCase.testcaseStatus === "VISIBLE"}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                </td>
+                <td className="w-min flex-auto text-center border">
+                  <button type="button">수정</button>
+                  <button type="button">삭제</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
       <Link href="/admin/problem-manage/editor/testcase">
@@ -221,15 +256,15 @@ const ProblemForm = () => {
       </Link>
       <div className="flex justify-end">
         <button
-          type="submit"
-          name="register"
+        onClick={handleSubmit(onSubmit)}
+          type="button"
           className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8 mr-4"
         >
           등록하기
         </button>
         <button
-          type="submit"
-          name="save"
+        onClick={handleSubmit(onSave)}
+          type="button"
           className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8"
         >
           저장하기
@@ -237,6 +272,4 @@ const ProblemForm = () => {
       </div>
     </form>
   );
-};
-
-export default ProblemForm;
+}

@@ -1,6 +1,6 @@
 "use client";
-import ProblemManageTable from "./_components/ProblemManageTable";
 
+import ProblemManageTable from "./list/_components/ProblemManageTable";
 function page() {
   return (
     <div>

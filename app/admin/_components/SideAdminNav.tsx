@@ -13,9 +13,10 @@ import { PiCodeBlockBold, PiShootingStarBold } from "react-icons/pi";
 export default function SideAdminNav() {
   return (
     <div className="h-screen w-[14vw] border-[0.1vw] border-semiGrey flex flex-col items-center fixed bg-white">
-      <div className="w-[10vw] mt-[2vh] mb-[3.5vh]">
+      
+      <Link href="/main" className="w-[10vw] mt-[2vh] mb-[3.5vh]">
         <Image src={GachonOJ_logo_image} alt="GachonOJ logo" />
-      </div>
+      </Link>
       <SideNavUser />
       <div className="flex flex-col mt-[4vh] mb-[3vh] space-y-[1.6vh]">
         <Link href="/main" className="flex items-center space-x-[0.4vw]">

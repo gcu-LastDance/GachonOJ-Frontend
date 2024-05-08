@@ -1,5 +1,5 @@
 import { instanceAuth } from "@/lib/axiosConfig";
-
+import { ProblemFormData } from "@/types/admin/problem";
 export const problemListAPI = async (search: string) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P11_URL}?search=${encodeURIComponent(
@@ -25,4 +25,18 @@ export const problemDeleteAPI = async (problemId: number) => {
   } catch (error) {
     throw new Error(String(error));
   }
+};
+
+export const problemEnrollAPI = async (data: ProblemFormData) => {
+  try {
+    const response = await instanceAuth.post(
+      process.env.NEXT_PUBLIC_P12_URL as string,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+
 };

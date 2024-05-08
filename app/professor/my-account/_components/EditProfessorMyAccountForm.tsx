@@ -14,7 +14,6 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
-import useUserStore from "@/store/useUserStore";
 
 function EditProfessorMyAccountForm({ data }: { data: userContentData }) {
   const { setUserImg } = useUserStore();
