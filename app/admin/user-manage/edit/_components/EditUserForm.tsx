@@ -1,10 +1,10 @@
 "use client";
-import { userContentAPI, userModifyAPI } from "@/api/admin/adminUserAPI";
+import { userContentAPI, userModifyAPI, nicknameCheckAPI} from "@/api/admin/adminUserAPI";
 import { userContentData, userFormData } from "@/types/admin/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 function EditUserForm({
@@ -24,8 +24,35 @@ function EditUserForm({
     formState: { errors },
   } = useForm<userFormData>();
 
+  const nicknameCheckMutation = useMutation({
+    mutationFn: nicknameCheckAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.result.available === true) {
+        setNicknameCheck(true);
+        alert("사용 가능한 닉네임입니다.");
+      } else {
+        setNicknameCheck(false);
+        alert("이미 사용 중인 닉네임입니다.");
+      }
+    },
+  });
+
+  const handleNicknameCheck = () => {
+    const nickname = getValues("memberNickname");
+    nicknameCheckMutation.mutate(nickname);
+  };
+
+  const [nicknameCheck, setNicknameCheck] = useState(true);
+
   const onSubmit = (data: userFormData) => {
-    ModifyMutation.mutate(data);
+    if (nicknameCheck) {
+      console.log(nicknameCheck);
+      ModifyMutation.mutate(data);
+    } else alert("닉네임 중복 확인을 해주세요.");
   };
 
   const ModifyMutation = useMutation({
@@ -97,10 +124,7 @@ function EditUserForm({
           />
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
-          <label
-            htmlFor="nickname"
-            className="w-28 font-medium mb-1 mr-2"
-          >
+          <label htmlFor="nickname" className="w-28 font-medium mb-1 mr-2">
             닉네임
           </label>
           <input
@@ -112,9 +136,16 @@ function EditUserForm({
           <button
             type="button"
             onClick={handleAutoFillNickname}
-            className="ml-2 px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
           >
             이름과 동일하게 설정
+          </button>
+          <button
+            type="button"
+            onClick={handleNicknameCheck}
+            className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
+          >
+            중복 확인
           </button>
         </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
@@ -129,13 +160,14 @@ function EditUserForm({
           />
         </div>
         <div className="flex justify-center">
-        <Link href="/admin/user-manage/list">
-        <button
-          onClick={handleSubmit(onSubmit)}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold  py-2 px-4 rounded-lg mt-8 mr-8"
-        > 
-          변경사항 저장
-        </button></Link>
+          <Link href="/admin/user-manage/list">
+            <button
+              onClick={handleSubmit(onSubmit)}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold  py-2 px-4 rounded-lg mt-8 mr-8"
+            >
+              변경사항 저장
+            </button>
+          </Link>
         </div>
       </div>
       <div className="flex justify-end">

@@ -23,14 +23,23 @@ export type problemTableColumn = {
   accessor: keyof problemTableData;
 };
 
+export interface TestCase {
+  testcaseInput: string | null;
+  testcaseOutput: string | null;
+  testcaseStatus: string | null;
+}
+
 export interface ProblemFormData {
-  memory: string;
-  time: string;
-  difficulty: difficulty;
-  language: string[];
-  title: string;
-  content: string;
-  inputDescription: string;
-  outputDescription: string;
-  class: string;
+  problemMemoryLimit: number;
+  problemTimeLimit: number;
+  problemDiff: number;
+  problemTitle: string;
+  problemContents: string;
+  problemInputContents: string;
+  problemOutputContents: string;
+  problemClass: string;
+  problemStatus: string;
+  problemPrompt: string;
+  testcases: TestCase[];
+
 }
