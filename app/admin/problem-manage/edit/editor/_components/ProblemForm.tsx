@@ -3,12 +3,21 @@ import { ProblemFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCheckStore, useTestCaseStore } from "@/store/useTestCaseStore";
-import { problemEnrollAPI } from "@/api/admin/adminProblemAPI";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import {
+  problemModifyAPI,
+  problemContentAPI,
+} from "@/api/admin/adminProblemAPI";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-export default function ProblemForm() {
+function ProblemForm({
+  data,
+  problemId,
+}: {
+  data: ProblemFormData;
+  problemId: number;
+}) {
   const router = useRouter();
   const {
     register,
@@ -16,16 +25,16 @@ export default function ProblemForm() {
     formState: { errors },
   } = useForm<ProblemFormData>();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
+  const [TestCaseList, setTestCases] = useState<TestCase[]>(data.testcases);
   const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
     useTestCaseStore();
-    const { check, setCheck } = useCheckStore();
+  const { check, setCheck } = useCheckStore();
   // 등록 버튼 작동 함수
-
+ 
   const onSubmit = (data: ProblemFormData) => {
     const testcases = TestCaseList;
     const newData = { ...data, testcases, problemStatus: "REGISTERED" };
-    EnrollMutation.mutate(newData);
+    ModifyMutation.mutate(newData);
   };
 
   //  저장 버튼 작동 함수
@@ -33,11 +42,11 @@ export default function ProblemForm() {
   const onSave = (data: ProblemFormData) => {
     const testcases = TestCaseList;
     const newData = { ...data, testcases, problemStatus: "SAVED" };
-    EnrollMutation.mutate(newData);
+    ModifyMutation.mutate(newData);
   };
 
-  const EnrollMutation = useMutation({
-    mutationFn: (data: ProblemFormData) => problemEnrollAPI(data),
+  const ModifyMutation = useMutation({
+    mutationFn: (data: ProblemFormData) => problemModifyAPI(problemId, data),
     onError: (error) => {
       console.log(error);
     },
@@ -52,7 +61,6 @@ export default function ProblemForm() {
   // 테스트케이스 추가 함수
 
   const addOrEditTestCase = () => {
-
     const newTestCase = {
       testcaseInput: testcaseInput,
       testcaseOutput: testcaseOutput,
@@ -60,22 +68,18 @@ export default function ProblemForm() {
     };
     // 테스트케이스 수정 및 추가 함수
     if (editingIndex !== null) {
-
       const updatedTestCases = [...TestCaseList];
       updatedTestCases[editingIndex] = newTestCase;
       setTestCases(updatedTestCases);
     } else {
-
       setTestCases([...TestCaseList, newTestCase]);
     }
     setEditingIndex(null);
     setCheck(false);
-
   };
 
   // 페이지 렌더링시 최초 1회 테스트케이스 관련 변수 전체 초기화
   useEffect(() => {
-    setTestCases([]);
     setTestCase(null, null, null);
   }, []);
 
@@ -148,6 +152,7 @@ export default function ProblemForm() {
             메모리 제한
           </label>
           <select
+            defaultValue={data.problemMemoryLimit}
             {...register("problemMemoryLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
@@ -163,6 +168,7 @@ export default function ProblemForm() {
             실행 시간 제한
           </label>
           <select
+          defaultValue={data.problemTimeLimit}
             {...register("problemTimeLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
@@ -177,6 +183,7 @@ export default function ProblemForm() {
             난이도 설정
           </label>
           <select
+          defaultValue={data.problemDiff}
             {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
@@ -192,6 +199,7 @@ export default function ProblemForm() {
             분류
           </label>
           <select
+          defaultValue={data.problemClass}
             {...register("problemClass")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
@@ -222,6 +230,7 @@ export default function ProblemForm() {
           문제 제목
         </div>
         <input
+        defaultValue={data.problemTitle}
           type="text"
           {...register("problemTitle")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
@@ -232,6 +241,7 @@ export default function ProblemForm() {
           문제 본문
         </div>
         <textarea
+        defaultValue={data.problemContents}
           {...register("problemContents")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={8}
@@ -242,6 +252,7 @@ export default function ProblemForm() {
           입력 설명
         </div>
         <textarea
+        defaultValue={data.problemInputContents}
           {...register("problemInputContents")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
@@ -252,6 +263,7 @@ export default function ProblemForm() {
           출력 설명
         </div>
         <textarea
+        defaultValue={data.problemOutputContents}
           {...register("problemOutputContents")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
@@ -262,6 +274,7 @@ export default function ProblemForm() {
           프롬프트
         </div>
         <textarea
+        defaultValue={data.problemPrompt}
           {...register("problemPrompt")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
@@ -315,18 +328,18 @@ export default function ProblemForm() {
           </tbody>
         </table>
       </div>
-      
-        <div className="flex justify-end">
-          <Link href="/admin/problem-manage/enroll/editor/testcase">
+
+      <div className="flex justify-end">
+        <Link href="/admin/problem-manage/enroll/editor/testcase">
           <button
             onClick={() => EnrollTestCase()}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"
           >
             테스트 케이스 추가
           </button>
-          </Link>
-        </div>
-      
+        </Link>
+      </div>
+
       <div className="flex justify-end">
         <button
           onClick={handleSubmit(onSubmit)}
@@ -346,3 +359,18 @@ export default function ProblemForm() {
     </form>
   );
 }
+
+const ProblemContentsContainer = () => {
+  const params = useSearchParams();
+  const problemId = Number(params.get("problemId"));
+  const { data } = useQuery<ProblemFormData>({
+    queryKey: ["problemContent"],
+    queryFn: () => problemContentAPI(problemId),
+  });
+
+  if (!data) return null;
+  
+  return <ProblemForm data={data} problemId={problemId} />;
+};
+
+export default ProblemContentsContainer;

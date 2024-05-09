@@ -138,9 +138,9 @@ export function ProblemManageTable({
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link
                   href={{
-                    pathname: "edit",
-                    query: { memberId: row.original.problemId },
-                  }} // as ="edit"
+                    pathname: "edit/editor",
+                    query: { problemId: row.original.problemId },
+                  }}
                 >
                   <button className="underline underline-offset-auto">
                     수정

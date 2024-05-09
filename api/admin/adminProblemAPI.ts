@@ -40,3 +40,27 @@ export const problemEnrollAPI = async (data: ProblemFormData) => {
   }
 
 };
+
+export const problemContentAPI = async (problemId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P22_URL}/${encodeURIComponent(
+      problemId
+    )}`;
+    const response = await instanceAuth.get(url);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const problemModifyAPI = async (problemId: number, data: ProblemFormData) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P13_URL}/${encodeURIComponent(
+      problemId
+    )}`;
+    const response = await instanceAuth.put(url,data);
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
