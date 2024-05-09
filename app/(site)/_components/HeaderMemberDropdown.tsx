@@ -58,14 +58,8 @@ export default function HeaderMemberDropdown() {
           <Image
             src={userImg}
             alt="Member Profile Image"
-<<<<<<< HEAD
             width={80}
             height={80}
-=======
-            width={100}
-            height={100}
-            className="rounded-full"
->>>>>>> parent of 4cf820c ([feat] #102 랜딩페이지 추가 구현)
           />
         )}
       </button>
