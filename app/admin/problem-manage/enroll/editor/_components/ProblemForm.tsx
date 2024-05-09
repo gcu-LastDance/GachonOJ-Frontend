@@ -19,7 +19,7 @@ export default function ProblemForm() {
   const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
   const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
     useTestCaseStore();
-    const { check, setCheck } = useCheckStore();
+  const { check, setCheck } = useCheckStore();
   // 등록 버튼 작동 함수
 
   const onSubmit = (data: ProblemFormData) => {
@@ -52,7 +52,6 @@ export default function ProblemForm() {
   // 테스트케이스 추가 함수
 
   const addOrEditTestCase = () => {
-
     const newTestCase = {
       testcaseInput: testcaseInput,
       testcaseOutput: testcaseOutput,
@@ -60,17 +59,14 @@ export default function ProblemForm() {
     };
     // 테스트케이스 수정 및 추가 함수
     if (editingIndex !== null) {
-
       const updatedTestCases = [...TestCaseList];
       updatedTestCases[editingIndex] = newTestCase;
       setTestCases(updatedTestCases);
     } else {
-
       setTestCases([...TestCaseList, newTestCase]);
     }
     setEditingIndex(null);
     setCheck(false);
-
   };
 
   // 페이지 렌더링시 최초 1회 테스트케이스 관련 변수 전체 초기화
@@ -144,7 +140,7 @@ export default function ProblemForm() {
           문제 설정
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
-          <label htmlFor="memory" className="block font-medium mb-1 mr-8">
+          <label  className="block font-medium mb-1 mr-8">
             메모리 제한
           </label>
           <select
@@ -159,7 +155,7 @@ export default function ProblemForm() {
           </select>
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
-          <label htmlFor="time" className="block font-medium mb-1 mr-8">
+          <label className="block font-medium mb-1 mr-8">
             실행 시간 제한
           </label>
           <select
@@ -173,7 +169,7 @@ export default function ProblemForm() {
         </div>
 
         <div className="w-1/3 flex text-lg items-center justify-start">
-          <label htmlFor="difficulty" className="block font-medium mb-1 mr-8">
+          <label className="block font-medium mb-1 mr-8">
             난이도 설정
           </label>
           <select
@@ -315,18 +311,18 @@ export default function ProblemForm() {
           </tbody>
         </table>
       </div>
-      
-        <div className="flex justify-end">
-          <Link href="/admin/problem-manage/enroll/editor/testcase">
+
+      <div className="flex justify-end">
+        <Link href="/admin/problem-manage/enroll/editor/testcase">
           <button
             onClick={() => EnrollTestCase()}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"
           >
             테스트 케이스 추가
           </button>
-          </Link>
-        </div>
-      
+        </Link>
+      </div>
+
       <div className="flex justify-end">
         <button
           onClick={handleSubmit(onSubmit)}

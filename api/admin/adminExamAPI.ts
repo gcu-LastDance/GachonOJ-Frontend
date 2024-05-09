@@ -26,3 +26,16 @@ export const examDeleteAPI = async (examId: number) => {
     throw new Error(String(error));
   }
 };
+
+export const findCandidateAPI = async (memberInfo: number | string ) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_M28_URL}/${encodeURIComponent(
+      memberInfo
+    )}`;
+    const response = await instanceAuth.get(url);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+}

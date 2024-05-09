@@ -10,7 +10,6 @@ export const breadCrumbsMap: Record<string, string> = {
   "problem-manage": "문제",
   "exam-manage" : "시험",
   "contest-manage": "대회",
-  "test-manage": "시험&대회",
   "ai-manage": "AI분석",
 };
 
