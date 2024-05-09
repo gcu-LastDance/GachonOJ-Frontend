@@ -70,7 +70,7 @@ export interface MemberSettingData {
   memberNumber: string;
   memberIntroduce: string;
   memberNickname: string;
-  memberImg?: string;
+  memberImg?: string | File | null;
   rating: rank;
 }
 

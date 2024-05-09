@@ -5,7 +5,7 @@ interface UserState {
   userImg: string | null;
   userPermission: permissionType | null;
   token: string | null;
-  setUserImg: (userImg: string | null) => void;
+  setUserImg: (userImg: File | string | null) => void;
   setUserPermission: (userPermission: permissionType | null) => void;
   setToken: (token: string | null) => void;
   setUser: (
@@ -22,8 +22,11 @@ const useUserStore = create(
       userImg: null,
       userPermission: null,
       token: null,
-
-      setUserImg: (userImg) => set({ userImg }),
+      setUserImg: (userImg) =>
+        set({
+          userImg:
+            userImg instanceof File ? URL.createObjectURL(userImg) : userImg,
+        }),
       setUserPermission: (userPermission) => set({ userPermission }),
       setToken: (token) => set({ token }),
       setUser: (userImg, userPermission, token) =>

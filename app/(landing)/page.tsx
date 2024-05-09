@@ -43,7 +43,7 @@ export default function page() {
               <button
                 type="button"
                 onClick={() => setActiveIndex(1)}
-                className="fixed z-50 bottom-[7vh]"
+                className="fixed z-50 bottom-[10vh]"
               >
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -67,7 +67,7 @@ export default function page() {
                 />
               )}
             </div>
-            <div className="w-[20vw] pt-[6vh]">
+            <div className="w-[20vw] pt-[2vh]">
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}

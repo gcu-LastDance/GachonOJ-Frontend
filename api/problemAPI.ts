@@ -1,5 +1,9 @@
 import { instanceAuth, instanceNonAuth } from "@/lib/axiosConfig";
-import { ProfileProblemType, difficulty } from "@/types/problem";
+import {
+  ProblemSolutionExcuteData,
+  ProfileProblemType,
+  difficulty,
+} from "@/types/problem";
 
 export const recProblemAPI = async () => {
   try {
@@ -60,6 +64,23 @@ export const problemDetailAPI = async (problemId: number) => {
     const response = await instanceAuth.get(url);
     console.log(response.data);
     return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const problemSolutionExcuteAPI = async ({
+  problemId,
+  data,
+}: {
+  problemId: number;
+  data: ProblemSolutionExcuteData;
+}) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_S04_URL as string}/${problemId}`;
+    const response = await instanceAuth.post(url, data);
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     throw new Error(String(error));
   }

@@ -54,7 +54,7 @@ export default function MemberTestInfoCard() {
           {data?.memberNickname}
         </span>
       </div>
-      <div className="flex flex-col mt-[6vh] space-y-[3vh] font-PretendardLight text-[1.2vw] text-realGrey items-center">
+      <div className="flex flex-col mt-[8vh] space-y-[5vh] font-PretendardLight text-[1vw] text-realGrey items-center">
         <p>이름 : {data?.memberName ?? ""}</p>
         <p>학번 : {data?.memberNumber ?? ""}</p>
       </div>

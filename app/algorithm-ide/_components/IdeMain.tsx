@@ -8,7 +8,7 @@ import { useProgramLangStore } from "@/store/useProgramLangStore";
 import { githubLight } from "@uiw/codemirror-theme-github";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 
 export default function IdeMain({ problemId }: { problemId: number }) {
@@ -16,6 +16,10 @@ export default function IdeMain({ problemId }: { problemId: number }) {
   const [code, setCode] = useState<string>(
     programLangSampleCodeMap[programLang ?? "C"]
   );
+
+  useEffect(() => {
+    setCode(programLangSampleCodeMap[programLang ?? "C"]);
+  }, [programLang]);
 
   const handleCode = (value: string) => {
     setCode(value);
@@ -35,6 +39,7 @@ export default function IdeMain({ problemId }: { problemId: number }) {
         value={code}
         height="83vh"
         theme={githubLight}
+        autoFocus={true}
         onChange={handleCode}
       />
     </div>

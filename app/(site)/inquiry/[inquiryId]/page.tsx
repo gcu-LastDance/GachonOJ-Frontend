@@ -26,7 +26,7 @@ export default function page({ params }: { params: { inquiryId: number } }) {
         </div>
         <div className="flex items-center">
           <span className="font-PretendardSemiBold text-[1vw] mr-[3vw]">
-            작성일
+            작성 일자
           </span>
           <span className="font-PretendardLight text-[1vw]">
             {inquiryDetailData?.inquiryCreatedDate}
@@ -40,15 +40,15 @@ export default function page({ params }: { params: { inquiryId: number } }) {
             {inquiryDetailData?.inquiryContents}
           </span>
         </div>
-        {inquiryDetailData?.replyContents && (
+        {inquiryDetailData?.replyContent && (
           <div>
             <hr />
-            <div className="flex">
-              <span className="font-PretendardSemiBold text-[1vw] mr-[3vw] w-[8vw]">
+            <div className="flex mt-[4vh]">
+              <span className="font-PretendardSemiBold text-[1vw] mr-[3vw]">
                 문의 답변
               </span>
-              <span className="w-[40vw] font-PretendardLight text-[1vw]">
-                {inquiryDetailData?.replyContents}
+              <span className="font-PretendardLight text-[1vw]">
+                {inquiryDetailData?.replyContent}
               </span>
             </div>
           </div>

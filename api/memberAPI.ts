@@ -107,6 +107,7 @@ export const memberSettingGetAPI = async () => {
     const response = await instanceAuth.get(
       process.env.NEXT_PUBLIC_M11_URL as string
     );
+    console.log(response.data.result);
     return response.data.result;
   } catch (error) {
     throw new Error(String(error));
@@ -118,11 +119,13 @@ export const memberSettingPutAPI = async ({
   memberImg,
 }: {
   data: MemberSettingPutData;
-  memberImg: string | null;
+  memberImg: File | null;
 }) => {
   try {
     const formData = new FormData();
-    formData.append("img", memberImg as unknown as Blob);
+    if (memberImg) {
+      formData.append("img", memberImg);
+    }
     formData.append(
       "info",
       new Blob([JSON.stringify(data)], { type: "application/json" })
@@ -132,7 +135,7 @@ export const memberSettingPutAPI = async ({
       formData
     );
     console.log(response.data);
-    return response.data.result;
+    return response.data;
   } catch (error) {
     throw new Error(String(error));
   }

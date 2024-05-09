@@ -8,13 +8,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
 export default function page() {
-  const { userImg } = useUserStore();
-  const [memberImg, setMemberImg] = useState(userImg);
+  const { userImg, setUserImg } = useUserStore();
+  const [memberImg, setMemberImg] = useState<string | File | null>(userImg);
   const [nicknameCheck, setNicknameCheck] = useState(true); // 기본값을 true로 설정하여 중복확인이 필요없는 상태로 설정
 
   const fileInput = useRef<HTMLInputElement>(null);
@@ -26,11 +26,12 @@ export default function page() {
   });
 
   const { register, handleSubmit, setValue, getValues } =
-    useForm<MemberSettingPutData>({
+    useForm<MemberSettingData>({
       defaultValues: {
         memberNickname: memberSettingData?.memberNickname,
         memberIntroduce: memberSettingData?.memberIntroduce,
         memberName: memberSettingData?.memberName,
+        memberImg: memberSettingData?.memberImg,
       },
     });
 
@@ -39,6 +40,13 @@ export default function page() {
       setValue("memberNickname", memberSettingData?.memberNickname ?? "");
       setValue("memberIntroduce", memberSettingData?.memberIntroduce ?? "");
       setValue("memberName", memberSettingData?.memberName ?? "");
+      setValue("memberImg", memberSettingData?.memberImg ?? "");
+      setMemberImg(
+        memberSettingData?.memberImg instanceof File
+          ? URL.createObjectURL(memberSettingData?.memberImg)
+          : memberSettingData?.memberImg || null
+      );
+      setUserImg(memberSettingData?.memberImg || null);
     }
   }, [isFetched, memberSettingData]);
 
@@ -78,7 +86,10 @@ export default function page() {
 
   const onSubmit = (data: MemberSettingPutData) => {
     console.log(data);
-    memberSettingMutation.mutate({ data, memberImg });
+    memberSettingMutation.mutate({
+      data,
+      memberImg: fileInput.current?.files?.[0] || null,
+    });
   };
 
   const memberSettingMutation = useMutation({
@@ -87,8 +98,8 @@ export default function page() {
       console.log(error);
     },
     onSuccess: (data) => {
-      console.log(data);
-      if (data.success) {
+      console.log(data.result);
+      if (data) {
         alert("수정이 완료되었습니다.");
       } else {
         alert("수정에 실패했습니다.");
@@ -104,15 +115,19 @@ export default function page() {
       <div className="flex flex-col bg-white border-[0.1vw] border-semiSemiGrey rounded-lg overflow-hidden w-full h-[75vh]">
         <div className="flex items-center px-[2vw] py-[1vh] mt-[2vh]">
           <div className="flex flex-col items-center">
-            <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
+            <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden relative">
               {!memberImg || memberImg === "" ? (
                 <CiUser className="text-[4vw] text-semiGrey" />
               ) : (
                 <Image
-                  src={memberImg}
+                  src={
+                    typeof memberImg === "string"
+                      ? memberImg
+                      : URL.createObjectURL(memberImg)
+                  }
                   alt="Member Profile Image"
-                  layout="fill"
-                  objectFit="cover"
+                  width={100}
+                  height={100}
                 />
               )}
               <input

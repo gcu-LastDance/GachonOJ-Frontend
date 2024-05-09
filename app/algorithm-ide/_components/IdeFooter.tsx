@@ -1,9 +1,14 @@
+import { useProblemSolutionExecute } from "@/hooks/useProblemSolutionExcute";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
 
 export default function IdeFooter() {
   const params = useParams();
+
+  // const handleSolutionExcute = () => {
+  //   useProblemSolutionExecute.mutate();
+  // };
 
   return (
     <footer className="fixed bottom-0 flex border-t-2 shadow-md h-[5.5vh] px-[1.5vw] w-screen bg-white items-center">
@@ -33,6 +38,7 @@ export default function IdeFooter() {
       </button>
       <button
         type="button"
+        // onClick={handleSolutionExcute}
         className="border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-[0.5vw]"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">

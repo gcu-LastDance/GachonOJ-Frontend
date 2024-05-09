@@ -60,8 +60,8 @@ export default function IdeHeaderMemberDropdown() {
           <Image
             src={userImg}
             alt="Member Profile Image"
-            width={100}
-            height={100}
+            width={80}
+            height={80}
             className="rounded-full"
           />
         )}

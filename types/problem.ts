@@ -18,10 +18,6 @@ export interface ProblemTableData {
   correctRate: number;
   isBookmarked: boolean;
 }
-// export interface ExamplePair {
-//   input: string;
-//   output: string;
-// }
 
 /**
  * ProblemDetailData
@@ -42,4 +38,14 @@ export interface SubmitHistoryData {
   submitTime: string;
   submitResult: string;
   submitLang: string;
+}
+
+interface TestcaseData {
+  [input: string]: string;
+}
+
+export interface ProblemSolutionExcuteData {
+  code: string;
+  language: string;
+  testcase: TestcaseData;
 }

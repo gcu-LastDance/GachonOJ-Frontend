@@ -1,10 +1,5 @@
-"use client";
-
 import IdeHeader from "@/components/header/IdeHeader";
 import React from "react";
-import IdeGuestFooter from "./_components/IdeGuestFooter";
-import useUserStore from "@/store/useUserStore";
-import IdeFooter from "./_components/IdeFooter";
 
 export default function layout({
   children,
@@ -13,8 +8,6 @@ export default function layout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
-  const { token } = useUserStore();
-
   return (
     <div className="flex flex-col">
       {modal}
@@ -22,7 +15,6 @@ export default function layout({
         <IdeHeader />
       </div>
       <div className="mt-[5.7vh] z-10 relative">{children}</div>
-      {!token ? <IdeGuestFooter /> : <IdeFooter />}
     </div>
   );
 }

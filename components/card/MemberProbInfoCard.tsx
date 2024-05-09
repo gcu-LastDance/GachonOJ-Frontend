@@ -54,7 +54,7 @@ export default function MemberProbInfoCard() {
           {data?.memberNickname}
         </span>
       </div>
-      <div className="flex flex-col mt-[6vh] space-y-[3vh] font-PretendardLight text-[1.2vw] text-realGrey items-center">
+      <div className="flex flex-col mt-[8vh] space-y-[5vh] font-PretendardLight text-[1vw] text-realGrey items-center">
         <p>해결한 문제 : {data?.solvedProblemCount ?? 0}</p>
         <p>도전중인 문제 : {data?.tryProblemCount ?? 0}</p>
         <p>북마크 문제 : {data?.bookmarkedProblemCount ?? 0}</p>

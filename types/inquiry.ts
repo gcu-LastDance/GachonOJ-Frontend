@@ -9,7 +9,7 @@ export interface InquiryDetailData {
   inquiryTitle: string;
   inquiryContents: string;
   inquiryCreatedDate: string;
-  replyContents: string;
+  replyContent: string;
 }
 
 export interface InquiryFormData {
