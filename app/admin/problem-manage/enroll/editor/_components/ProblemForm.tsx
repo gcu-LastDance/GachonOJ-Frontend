@@ -316,16 +316,18 @@ export default function ProblemForm() {
           </tbody>
         </table>
       </div>
-      <Link href="/admin/problem-manage/enroll/editor/testcase">
+      
         <div className="flex justify-end">
+          <Link href="/admin/problem-manage/enroll/editor/testcase">
           <button
             onClick={() => EnrollTestCase()}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"
           >
             테스트 케이스 추가
           </button>
+          </Link>
         </div>
-      </Link>
+      
       <div className="flex justify-end">
         <button
           onClick={handleSubmit(onSubmit)}
