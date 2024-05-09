@@ -112,6 +112,7 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
             className="w-80 ml-10 px-3 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
+
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center justify-start">
           <label htmlFor="name" className="w-28 block font-medium mb-1 mr-2">
             이름

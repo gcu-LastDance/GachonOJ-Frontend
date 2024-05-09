@@ -1,45 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import GachonOJ_logo_white_image from "@/public/images/logo/gachonoj_logo_white.png";
-import GachonOJ_logo_black_image from "@/public/images/logo/gachonoj_logo.png";
+import GachonOJ_logo_image from "@/public/images/logo/gachonoj_logo_white.png";
 import LandingHeaderLoginButton from "./LandingHeaderLoginButton";
 
-export default function LandingHeader({
-  activeIndex,
-}: {
-  activeIndex: number;
-}) {
+export default function LandingHeader() {
   return (
-    <header
-      className={`${
-        activeIndex === 0
-          ? "bg-primaryBlue"
-          : activeIndex === 1
-          ? "bg-[#eceff7] border-b-[0.12vw] shadow-md"
-          : "bg-white border-b-[0.12vw] shadow-md"
-      }`}
-    >
+    <header>
       <div className="flex items-center pl-[2vw] pr-[3vw] h-[7vh] mx-auto">
         <div>
           <Link href="/main">
             <div className="w-[8vw]">
-              <Image
-                src={
-                  activeIndex === 0
-                    ? GachonOJ_logo_white_image
-                    : GachonOJ_logo_black_image
-                }
-                alt="gachonOJ logo"
-              />
+              <Image src={GachonOJ_logo_image} alt="gachonOJ logo" />
             </div>
           </Link>
         </div>
-        <div
-          className={`${
-            activeIndex === 0 ? "text-white" : "text-primaryDark"
-          } mx-[5vw] space-x-[5.5vw] font-PretendardSemiBold text-[1.1vw] items-center`}
-        >
+        <div className="mx-[5vw] space-x-[5.5vw] font-PretendardSemiBold text-[1.1vw] text-white items-center">
           <Link href="/problem">
             <span>문제</span>
           </Link>
@@ -57,7 +33,7 @@ export default function LandingHeader({
           </Link>
         </div>
         <div className="ml-auto">
-          <LandingHeaderLoginButton activeIndex={activeIndex} />
+          <LandingHeaderLoginButton />
         </div>
       </div>
     </header>
