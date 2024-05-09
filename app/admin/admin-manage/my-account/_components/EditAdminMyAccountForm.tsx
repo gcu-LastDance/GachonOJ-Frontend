@@ -53,7 +53,9 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
 
   const userImg = data?.result.memberImg;
   const fileInput = useRef<HTMLInputElement>(null);
-  const [memberImg, setMemberImg] = useState<string | File | null>(userImg || null);
+  const [memberImg, setMemberImg] = useState<string | File | null>(
+    userImg || null
+  );
 
   const onSubmit = (data: myInfoModifyFormData) => {
     if (nicknameCheck) {
@@ -63,7 +65,9 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
         memberImg: fileInput.current?.files?.[0] || null,
       });
       if (memberImg) {
-        setUserImg(memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg);
+        setUserImg(
+          memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg
+        );
       }
     } else alert("닉네임 중복 확인을 해주세요.");
   };
@@ -73,7 +77,6 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
     setNicknameCheck(false);
   };
 
- 
   const ModifyMutation = useMutation({
     mutationFn: myInfoModifyAPI,
     onError: (error) => {
@@ -82,6 +85,7 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
+        console.log(data);
       }
     },
   });
@@ -153,12 +157,16 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
             이름과 동일하게 설정
           </button>
         </div>
-   <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
+        <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
           {!memberImg || memberImg === null ? (
             <CiUser className="text-[4vw] text-semiGrey" />
           ) : (
             <Image
-              src={typeof memberImg === 'string' ? memberImg : URL.createObjectURL(memberImg)}
+              src={
+                typeof memberImg === "string"
+                  ? memberImg
+                  : URL.createObjectURL(memberImg)
+              }
               alt="Member Profile Image"
               layout="fill"
               objectFit="cover"
