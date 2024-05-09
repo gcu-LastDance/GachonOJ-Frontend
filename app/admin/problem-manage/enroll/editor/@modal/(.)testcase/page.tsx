@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalLarge from "@/components/modal/ModalLarge";
 import { useRouter } from "next/navigation";
-import { useTestCaseStore } from "@/store/useTestCaseStore";
+import { useCheckStore, useTestCaseStore } from "@/store/useTestCaseStore";
 
 
 export default function Page() {
@@ -10,14 +10,24 @@ export default function Page() {
   const { testcaseInput, testcaseOutput, setTestCase } = useTestCaseStore();
   const [inputValue, setInputValue] = useState(""); // useState를 사용하여 입력값 상태를 관리합니다.
   const [outputValue, setOutputValue] = useState(""); // useState를 사용하여 입력값 상태를 관리합니다.
+  const { check, setCheck } = useCheckStore();
+
+  useEffect(() => {
+    if (testcaseInput && testcaseOutput) {
+    setInputValue(testcaseInput);
+    setOutputValue(testcaseOutput);
+    }
+  },[])
 
   const handleCloseModal = () => {
     router.back();
+    setCheck(false);
   };
 
   const handleSubmitModal = () => {
     if(inputValue && outputValue) {
     setTestCase(inputValue, outputValue, "VISIBLE");
+    setCheck(true);
     router.back();
     }
     else {

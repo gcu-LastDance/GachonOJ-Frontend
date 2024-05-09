@@ -14,6 +14,11 @@ interface TestCaseStore {
   ) => void;
 }
 
+interface checkStore {
+  check: boolean | null;
+  setCheck: (check: boolean) => void;
+}
+
 export const useTestCaseStore = create(
   persist<TestCaseStore>(
     (set) => ({
@@ -26,6 +31,20 @@ export const useTestCaseStore = create(
     }),
     {
       name: "testCases",
+    }
+  )
+);
+
+export const useCheckStore = create(
+  persist<checkStore>(
+    (set) => ({
+      check: null,
+
+      setCheck: (check) =>
+        set({check}),
+    }),
+    {
+      name: "checkStore",
     }
   )
 );

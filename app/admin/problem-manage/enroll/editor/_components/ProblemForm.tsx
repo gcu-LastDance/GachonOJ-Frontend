@@ -3,7 +3,7 @@ import { ProblemFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTestCaseStore } from "@/store/useTestCaseStore";
+import { useCheckStore, useTestCaseStore } from "@/store/useTestCaseStore";
 import { problemEnrollAPI } from "@/api/admin/adminProblemAPI";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,13 @@ export default function ProblemForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<ProblemFormData>();
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
+  const [checkStatus, setcheckStatus] = useState<string | null >(null);
+  const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
+    useTestCaseStore();
+    const { check, setCheck } = useCheckStore();
+  // 등록 버튼 작동 함수
 
   const onSubmit = (data: ProblemFormData) => {
     const testcases = TestCaseList;
@@ -22,12 +29,14 @@ export default function ProblemForm() {
     EnrollMutation.mutate(newData);
   };
 
+  //  저장 버튼 작동 함수
+
   const onSave = (data: ProblemFormData) => {
-    const testcases = TestCaseList
+    const testcases = TestCaseList;
     const newData = { ...data, testcases, problemStatus: "SAVED" };
     EnrollMutation.mutate(newData);
   };
-  
+
   const EnrollMutation = useMutation({
     mutationFn: (data: ProblemFormData) => problemEnrollAPI(data),
     onError: (error) => {
@@ -35,39 +44,52 @@ export default function ProblemForm() {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.success) {
-        router.push("admin/problem-manage/list");
+      if (data.isSuccess) {
+        router.push("/admin/problem-manage/list");
       }
     },
   });
 
-  const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
-  const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
-    useTestCaseStore();
+  // 테스트케이스 추가 함수
 
-  const addTestCase = () => {
+  const addOrEditTestCase = () => {
+
     const newTestCase = {
       testcaseInput: testcaseInput,
       testcaseOutput: testcaseOutput,
       testcaseStatus: testcaseStatus,
     };
-    // 이전 상태를 가져와서 새로운 테스트 케이스를 추가한 후 상태를 업데이트합니다.
-    setTestCases((prevTestcases) => [...prevTestcases, newTestCase]);
+    // 테스트케이스 수정 및 추가 함수
+    if (editingIndex !== null) {
+
+      const updatedTestCases = [...TestCaseList];
+      updatedTestCases[editingIndex] = newTestCase;
+      setTestCases(updatedTestCases);
+    } else {
+
+      setTestCases([...TestCaseList, newTestCase]);
+    }
+    setEditingIndex(null);
+    setCheck(false);
+
   };
 
-  useEffect(() => {
-    if (testcaseInput && testcaseOutput) {
-      addTestCase();
-    }
-  }, [testcaseInput, testcaseOutput]);
-
+  // 페이지 렌더링시 최초 1회 테스트케이스 관련 변수 전체 초기화
   useEffect(() => {
     setTestCases([]);
     setTestCase(null, null, null);
   }, []);
 
+  // 페이지 렌더링시 전역변수 값 변화 있을시 테스트케이스 추가 혹은 수정
+  useEffect(() => {
+    if (testcaseInput && testcaseOutput && check == true) {
+      addOrEditTestCase();
+    }
+  }, [check]);
+
+  // 체크박스 변경시 작동 함수
+
   const handleCheckboxChange = (index: number) => {
-    console.log(TestCaseList);
     const updatedTestCases = [...TestCaseList];
     updatedTestCases[index].testcaseStatus =
       updatedTestCases[index].testcaseStatus === "VISIBLE"
@@ -76,6 +98,30 @@ export default function ProblemForm() {
     setTestCases(updatedTestCases);
   };
 
+  const EnrollTestCase = () => {
+    setEditingIndex(null);
+    setTestCase(null, null, null);
+  };
+
+  // 수정 함수
+  const ModifyTestcase = (index: number) => {
+    setEditingIndex(index);
+    setTestCase(
+      TestCaseList[index].testcaseInput,
+      TestCaseList[index].testcaseOutput,
+      TestCaseList[index].testcaseStatus
+    );
+
+    router.push("/admin/problem-manage/enroll/editor/testcase");
+  };
+
+  const DeleteTestcase = (index: number) => {
+    setTestCases((prevTestcases) => {
+      const updatedTestcases = [...prevTestcases];
+      updatedTestcases.splice(index, 1);
+      return updatedTestcases;
+    });
+  };
   return (
     <form>
       <div className="flex justify-end">
@@ -232,7 +278,7 @@ export default function ProblemForm() {
               <th className="border px-4 py-2 text-left">입력</th>
               <th className="border px-4 py-2 text-left">출력</th>
               <th className="border text-center">예제 설정</th>
-              <th className="border"></th>
+              <th className="border">설정</th>
             </tr>
           </thead>
           <tbody>
@@ -249,32 +295,47 @@ export default function ProblemForm() {
                     onChange={() => handleCheckboxChange(index)}
                   />
                 </td>
-                <td className="w-min flex-auto text-center border">
-                  <button type="button" className="underline underline-offset-auto pr-5">수정</button>
-                  <button type="button" className="underline underline-offset-auto pl-5">삭제</button>
+                <td className="flex-auto text-center border">
+                  <button
+                    onClick={() => ModifyTestcase(index)}
+                    type="button"
+                    className="underline underline-offset-auto pr-2"
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => DeleteTestcase(index)}
+                    type="button"
+                    className="underline underline-offset-auto pl-2"
+                  >
+                    삭제
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Link href="/admin/problem-manage/editor/testcase">
+      <Link href="/admin/problem-manage/enroll/editor/testcase">
         <div className="flex justify-end">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4">
+          <button
+            onClick={() => EnrollTestCase()}
+            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"
+          >
             테스트 케이스 추가
           </button>
         </div>
       </Link>
       <div className="flex justify-end">
         <button
-        onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(onSubmit)}
           type="button"
           className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8 mr-4"
         >
           등록하기
         </button>
         <button
-        onClick={handleSubmit(onSave)}
+          onClick={handleSubmit(onSave)}
           type="button"
           className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8"
         >
