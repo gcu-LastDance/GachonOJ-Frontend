@@ -1,18 +1,69 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { findCandidateAPI } from "@/api/admin/adminExamAPI";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { examEnrollAPI, findCandidateAPI } from "@/api/admin/adminExamAPI";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+
 import { FaUser } from "react-icons/fa";
+import ProblemForm from "./ProblemForm";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+
+
 export default function EnrollTestForm() {
+  const router = useRouter();
+
+
   const { register, handleSubmit, control } = useForm();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
+  const [isProblemOpen, setIsProblemOpen] = useState(false);
+
+  const [formCount, setFormCount] = useState(1);
+  const [formData, setFormData] = useState([{ id: 1, data: "" }]);
+  const [activeForm, setActiveForm] = useState(1);
+
+  const handleAddForm = () => {
+    setFormCount(formCount + 1);
+    setActiveForm(formCount + 1);
+    setFormData([...formData, { id: formCount + 1, data: "" }]);
+  };
+
+  const handleSwitchForm = (id: number) => {
+    setActiveForm(id);
+  };
+
+  const setProblemForm = (formId: number, data) => {
+    const updatedFormData = formData.map((form) =>
+      form.id === formId ? { ...form, data: data } : form
+    );
+    setFormData(updatedFormData);
+  };
+
+  const onSubmit = (data: any) => {
+    const tests = formData.map(form => form.data);
+    const newData = { ...data, tests, examStatus: "REGISTERED" };
+    EnrollMutation.mutate(newData);
+  };
+
+  const EnrollMutation = useMutation({
+    mutationFn: (data: any) => examEnrollAPI(data),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.isSuccess) {
+        router.push("/admin/problem-manage/list");
+      }
+    },
+  });
+
 
   return (
     <form>
       <div className="p-10">
         <div className="flex items-center mb-4">
-          <div className="text-lg mr-4 min-w-30 self-start flex-shrink-0">
+          <div className="text-xl mr-4 min-w-30 self-start flex-shrink-0">
             시험제목
           </div>
           <textarea
@@ -23,7 +74,7 @@ export default function EnrollTestForm() {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="text-lg mr-4 min-w-30 self-start flex-shrink-0">
+          <div className="text-xl mr-4 min-w-30 self-start flex-shrink-0">
             시험메모
           </div>
           <textarea
@@ -33,16 +84,20 @@ export default function EnrollTestForm() {
           />
         </div>
 
-        <div className="flex-wrap">
+        <div className="flex-wrap mb-2">
           <div
             onClick={() => setIsDetailOpen(!isDetailOpen)}
             className="flex items-center cursor-pointer"
           >
-            <button type="button" className="text-lg mb-2">
+            <button type="button" className="text-xl mb-2">
               시험 상세설정
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
-            <IoMdArrowDropdown size={24} />
+            {isDetailOpen ? (
+              <IoIosArrowDown size={24} className="ml-3" />
+            ) : (
+              <IoIosArrowUp size={24} className="ml-3" />
+            )}
           </div>
           {isDetailOpen && (
             <div className="p-10">
@@ -51,7 +106,7 @@ export default function EnrollTestForm() {
                   시험 안내사항
                 </div>
                 <textarea
-                  {...register("examInstructions")}
+                  {...register("examNotice")}
                   className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                   rows={6}
                 />
@@ -107,7 +162,7 @@ export default function EnrollTestForm() {
                   <div className="flex mr-5 items-center">
                     <div className="flex-shrink-0 mr-4">모니터링 여부 설정</div>
                     <select
-                      {...register("monitoring")}
+                      {...register("examMonitoring")}
                       className="border rounded-md w-24 p-1"
                     >
                       <option value="사용">사용</option>
@@ -118,7 +173,7 @@ export default function EnrollTestForm() {
                   <div className="flex ml-5 items-center">
                     <div className="flex-shrink-0 mr-4">복사/붙혀넣기 제한</div>
                     <select
-                      {...register("copypasteRestriction")}
+                      {...register("examCopypasteRestriction")}
                       className="border rounded-md w-24 p-1"
                     >
                       <option value="금지" selected>
@@ -138,11 +193,15 @@ export default function EnrollTestForm() {
             onClick={() => setIsAttendanceOpen(!isAttendanceOpen)}
             className="flex items-center cursor-pointer"
           >
-            <button type="button" className="text-lg mb-2">
-              응시 인원 관리
+            <button type="button" className="text-xl mb-2">
+              시험 응시인원 관리
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
-            <IoMdArrowDropdown size={24} />
+            {isAttendanceOpen ? (
+              <IoIosArrowDown size={24} className="ml-3" />
+            ) : (
+              <IoIosArrowUp size={24} className="ml-3" />
+            )}
           </div>
           {isAttendanceOpen && (
             <div className="p-10">
@@ -150,6 +209,7 @@ export default function EnrollTestForm() {
                 <div className="text-lg mr-4 min-w-30 flex-shrink-0">
                   응시자 추가하기
                 </div>
+
                 <div className="flex items-center border-b-4 rounded-sm">
                   <FaUser />
                   <input
@@ -157,12 +217,70 @@ export default function EnrollTestForm() {
                     placeholder="이메일 혹은 학번을 입력해주세요."
                   />
                 </div>
+                <button
+                  type="button"
+                  className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
+                >
+                  검색하기
+                </button>
+                <button
+                  type="button"
+                  className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
+                >
+                  추가하기
+                </button>
               </div>
             </div>
           )}
         </div>
-
+        <div className="flex-wrap">
+          <div
+            onClick={() => setIsProblemOpen(!isProblemOpen)}
+            className="flex items-center cursor-pointer"
+          >
+            <button type="button" className="text-xl mb-2">
+              시험 문제 등록
+            </button>
+            <hr className="flex-grow border-gray-300 ml-4" />
+            {isProblemOpen ? (
+              <IoIosArrowDown size={24} className="ml-3" />
+            ) : (
+              <IoIosArrowUp size={24} className="ml-3" />
+            )}
+          </div>
+          {isProblemOpen && (
+            <div className="p-10">
+              <div>
+                {Array.from({ length: formCount }, (_, i) => i + 1).map(
+                  (id) => (
+                    <button
+                      type="button"
+                      className={`border rounded-md p-2 ${
+                        activeForm === id ? "bg-blue-500 text-white" : ""
+                      }`}
+                      onClick={() => handleSwitchForm(id)}
+                    >
+                      {id}
+                    </button>
+                  )
+                )}
+                <button
+                  type="button"
+                  className="border rounded-md p-2"
+                  onClick={handleAddForm}
+                >
+                  +
+                </button>
+              </div>
+              <ProblemForm
+                data={formData[activeForm - 1] || ""}
+                setProblemForm={setProblemForm}
+              />
+            </div>
+          )}
+        </div>
         <button
+        onClick={handleSubmit(onSubmit)}
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded"
         >

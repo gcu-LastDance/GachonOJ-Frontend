@@ -39,3 +39,17 @@ export const findCandidateAPI = async (memberInfo: number | string ) => {
     throw new Error(String(error));
   }
 }
+
+export const examEnrollAPI = async (data: any) => {
+  try {
+    const response = await instanceAuth.post(
+      process.env.NEXT_PUBLIC_P04_URL as string,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+
+};
