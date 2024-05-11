@@ -29,7 +29,7 @@ export const examDeleteAPI = async (examId: number) => {
 
 export const findCandidateAPI = async (memberInfo: number | string ) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_M28_URL}/${encodeURIComponent(
+    const url = `${process.env.NEXT_PUBLIC_M37_URL}${encodeURIComponent(
       memberInfo
     )}`;
     const response = await instanceAuth.get(url);

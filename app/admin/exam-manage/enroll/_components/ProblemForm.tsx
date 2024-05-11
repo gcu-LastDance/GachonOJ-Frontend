@@ -27,11 +27,17 @@ export default function ProblemForm({
 
   console.log(data);
   useEffect(() => {
+    setTestCases([]);
+    setTestCase(null, null, null);
     reset(); // 새로운 폼을 추가할 때 이전 폼의 값을 초기화
   }, [data.id]);
 
   const onSubmit = (formData: ProblemFormData) => {
-    setProblemForm(data.id, formData);
+    const formDataWithTestcases = {
+      ...formData,
+      testcases: TestCaseList,
+    };
+    setProblemForm(data.id, formDataWithTestcases);
   };
   const addOrEditTestCase = () => {
     const newTestCase = {
@@ -278,7 +284,7 @@ export default function ProblemForm({
       </div>
 
       <div className="flex justify-end">
-        <Link href="/admin/problem-manage/enroll/editor/testcase">
+        <Link href="/admin/exam-manage/enroll/testcase">
           <button
             onClick={() => EnrollTestCase()}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"

@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { examEnrollAPI, findCandidateAPI } from "@/api/admin/adminExamAPI";
+import { examEnrollAPI } from "@/api/admin/adminExamAPI";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-
+import AddCandidate from "./AddCandidate";
 
 export default function EnrollTestForm() {
   const router = useRouter();
-
 
   const { register, handleSubmit, control } = useForm();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
   const [isProblemOpen, setIsProblemOpen] = useState(false);
-
+  const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
   const [formData, setFormData] = useState([{ id: 1, data: "" }]);
   const [activeForm, setActiveForm] = useState(1);
-
+  const [showAddCandidate, setShowAddCandidate] = useState(false);
+  const [tempValue, setTempValue] = useState("");
   const handleAddForm = () => {
     setFormCount(formCount + 1);
     setActiveForm(formCount + 1);
@@ -32,7 +32,7 @@ export default function EnrollTestForm() {
     setActiveForm(id);
   };
 
-  const setProblemForm = (formId: number, data) => {
+  const setProblemForm = (formId: number, data: any) => {
     const updatedFormData = formData.map((form) =>
       form.id === formId ? { ...form, data: data } : form
     );
@@ -40,7 +40,7 @@ export default function EnrollTestForm() {
   };
 
   const onSubmit = (data: any) => {
-    const tests = formData.map(form => form.data);
+    const tests = formData.map((form) => form.data);
     const newData = { ...data, tests, examStatus: "REGISTERED" };
     EnrollMutation.mutate(newData);
   };
@@ -57,7 +57,6 @@ export default function EnrollTestForm() {
       }
     },
   });
-
 
   return (
     <form>
@@ -215,14 +214,24 @@ export default function EnrollTestForm() {
                   <input
                     className="w-72 p-1 ml-2"
                     placeholder="이메일 혹은 학번을 입력해주세요."
+                    onChange={(e) => setTempValue(e.target.value)}
                   />
                 </div>
                 <button
+                  onClick={() => {
+                    setShowAddCandidate(true);
+                    setCandidateValue(tempValue);
+                  }}
                   type="button"
                   className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
                 >
                   검색하기
                 </button>
+
+                {showAddCandidate && (
+                  <AddCandidate memberInfo={CandidateValue} />
+                )}
+
                 <button
                   type="button"
                   className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
@@ -280,7 +289,7 @@ export default function EnrollTestForm() {
           )}
         </div>
         <button
-        onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(onSubmit)}
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded"
         >
