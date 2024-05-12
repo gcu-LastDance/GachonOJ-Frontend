@@ -1,24 +1,22 @@
 "use client";
-import { ProblemFormData, TestCase } from "@/types/admin/problem";
+import { TestProblemFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useCheckStore, useTestCaseStore } from "@/store/useTestCaseStore";
-
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 export default function ProblemForm({
   data,
   setProblemForm,
 }: {
-  data: ProblemFormData;
+  data: TestProblemFormData;
   setProblemForm: any;
 }) {
   const router = useRouter();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [TestCaseList, setTestCases] = useState<TestCase[]>(
-    data.testcases || []
+    []
   );
   const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
     useTestCaseStore();
@@ -27,18 +25,19 @@ export default function ProblemForm({
 
   console.log(data);
   useEffect(() => {
-    setTestCases([]);
+    setTestCases(data.data.testcases || []);
     setTestCase(null, null, null);
     reset(); // 새로운 폼을 추가할 때 이전 폼의 값을 초기화
   }, [data.id]);
 
-  const onSubmit = (formData: ProblemFormData) => {
+  const onSubmit = (formData: FieldValues) => {
     const formDataWithTestcases = {
       ...formData,
       testcases: TestCaseList,
     };
     setProblemForm(data.id, formDataWithTestcases);
   };
+
   const addOrEditTestCase = () => {
     const newTestCase = {
       testcaseInput: testcaseInput,

@@ -8,9 +8,26 @@ import ProblemForm from "./ProblemForm";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
+import { TestProblemFormData } from "@/types/admin/problem";
 
 export default function EnrollTestForm() {
   const router = useRouter();
+
+  const initialData = {
+    
+      problemMemoryLimit: 0,
+      problemTimeLimit: 0,
+      problemDiff: 0,
+      problemTitle: "",
+      problemContents: "",
+      problemInputContents: "",
+      problemOutputContents: "",
+      problemClass: "",
+      problemStatus: "",
+      problemPrompt: "",
+      testcases: [],
+    
+    }
 
   const { register, handleSubmit, control } = useForm();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -18,16 +35,21 @@ export default function EnrollTestForm() {
   const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState([{ id: 1, data: "" }]);
+  const [formData, setFormData] = useState<TestProblemFormData[]>([
+    {
+      id: 1,
+      data: initialData
+    },
+  ]);
   const [activeForm, setActiveForm] = useState(1);
   const [showAddCandidate, setShowAddCandidate] = useState(false);
   const [tempValue, setTempValue] = useState("");
-  const [candidateList, setCandidateList] = useState([]);
+  const [candidateList, setCandidateList] = useState<[]>([]);
 
   const handleAddForm = () => {
     setFormCount(formCount + 1);
     setActiveForm(formCount + 1);
-    setFormData([...formData, { id: formCount + 1, data: "" }]);
+    setFormData([...formData, { id: formCount + 1, data: initialData }]);
   };
 
   const handleSwitchForm = (id: number) => {
@@ -206,43 +228,46 @@ export default function EnrollTestForm() {
           </div>
           {isAttendanceOpen && (
             <div className="p-10">
-            <div>
-              <div className="flex items-center mb-4">
-                <div className="text-lg mr-4 min-w-30 flex-shrink-0">
-                  응시자 추가하기
-                </div>
+              <div>
+                <div className="flex items-center mb-4">
+                  <div className="text-lg mr-4 min-w-30 flex-shrink-0">
+                    응시자 추가하기
+                  </div>
 
-                <div className="flex items-center border-b-4 rounded-sm">
-                  <FaUser />
-                  <input
-                    className="w-72 p-1 ml-2"
-                    placeholder="이메일 혹은 학번을 입력해주세요."
-                    onChange={(e) => setTempValue(e.target.value)}
-                  />
-                </div>
-                <button
-                  onClick={() => {
-                    setShowAddCandidate(true);
-                    setCandidateValue(tempValue);
-                  }}
-                  type="button"
-                  className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
-                >
-                  검색하기
-                </button>
-                <button
-                  type="button"
-                  className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
-                >
-                  추가하기
-                </button>
+                  <div className="flex items-center border-b-4 rounded-sm">
+                    <FaUser />
+                    <input
+                      className="w-72 p-1 ml-2"
+                      placeholder="이메일 혹은 학번을 입력해주세요."
+                      onChange={(e) => setTempValue(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowAddCandidate(true);
+                      setCandidateValue(tempValue);
+                    }}
+                    type="button"
+                    className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
+                  >
+                    검색하기
+                  </button>
+                  <button
+                    type="button"
+                    className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
+                  >
+                    추가하기
+                  </button>
                 </div>
                 <div className="flex-col w-fit container bg-semiGrey">
                   {showAddCandidate && (
-                    <AddCandidate memberInfo={CandidateValue} candidateList={candidateList} setCandidateList={setCandidateList}/>
+                    <AddCandidate
+                      memberInfo={CandidateValue}
+                      candidateList={candidateList}
+                      setCandidateList={setCandidateList}
+                    />
                   )}
                 </div>
-              
               </div>
             </div>
           )}
@@ -287,7 +312,7 @@ export default function EnrollTestForm() {
                 </button>
               </div>
               <ProblemForm
-                data={formData[activeForm - 1] || ""}
+                data={formData[activeForm - 1] || null}
                 setProblemForm={setProblemForm}
               />
             </div>
