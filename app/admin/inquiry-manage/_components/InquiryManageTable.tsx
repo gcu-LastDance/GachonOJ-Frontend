@@ -28,6 +28,7 @@ export function InquiryManageTable({
   tableData: inquiryTableData[];
 }) {
   const [data, setData] = useState<inquiryTableData[]>(tableData);
+  
   const router = useRouter();
   const onDelete = (inquiryId: number) => {
     DeleteMutation.mutate(inquiryId);

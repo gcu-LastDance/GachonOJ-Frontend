@@ -19,3 +19,11 @@ export interface examListData {
     content: examTableData[];
   };
 }
+
+export interface candidateTableData {
+  memberId: number;
+  memberNumber: number;
+  memberEmail: string;
+  memberName: string;
+  memberImg: string;
+}

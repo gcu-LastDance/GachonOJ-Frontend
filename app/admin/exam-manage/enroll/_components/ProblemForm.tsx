@@ -1,55 +1,42 @@
 "use client";
-import { ProblemFormData, TestCase } from "@/types/admin/problem";
+import { TestProblemFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useCheckStore, useTestCaseStore } from "@/store/useTestCaseStore";
-import { problemEnrollAPI } from "@/api/admin/adminProblemAPI";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-export default function ProblemForm() {
+export default function ProblemForm({
+  data,
+  setProblemForm,
+}: {
+  data: TestProblemFormData;
+  setProblemForm: any;
+}) {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProblemFormData>();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
+  const [TestCaseList, setTestCases] = useState<TestCase[]>(
+    []
+  );
   const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
     useTestCaseStore();
   const { check, setCheck } = useCheckStore();
-  // 등록 버튼 작동 함수
+  const { register, handleSubmit, control, reset } = useForm();
 
-  const onSubmit = (data: ProblemFormData) => {
-    const testcases = TestCaseList;
-    const newData = { ...data, testcases, problemStatus: "REGISTERED" };
-    EnrollMutation.mutate(newData);
+  console.log(data);
+  useEffect(() => {
+    setTestCases(data.data.testcases || []);
+    setTestCase(null, null, null);
+    reset(); // 새로운 폼을 추가할 때 이전 폼의 값을 초기화
+  }, [data.id]);
+
+  const onSubmit = (formData: FieldValues) => {
+    const formDataWithTestcases = {
+      ...formData,
+      testcases: TestCaseList,
+    };
+    setProblemForm(data.id, formDataWithTestcases);
   };
-
-  //  저장 버튼 작동 함수
-
-  const onSave = (data: ProblemFormData) => {
-    const testcases = TestCaseList;
-    const newData = { ...data, testcases, problemStatus: "SAVED" };
-    EnrollMutation.mutate(newData);
-  };
-
-  const EnrollMutation = useMutation({
-    mutationFn: (data: ProblemFormData) => problemEnrollAPI(data),
-    onError: (error) => {
-      console.log(error);
-    },
-    onSuccess: (data) => {
-      console.log(data);
-      if (data.isSuccess) {
-        router.push("/admin/problem-manage/list");
-      }
-    },
-  });
-
-  // 테스트케이스 추가 함수
 
   const addOrEditTestCase = () => {
     const newTestCase = {
@@ -119,30 +106,12 @@ export default function ProblemForm() {
   };
   return (
     <form>
-      <div className="flex justify-end">
-        <button
-          type="button"
-          onClick={handleSubmit(onSubmit)}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mr-4 rounded-lg mt-8"
-        >
-          등록하기
-        </button>
-        <button
-          type="button"
-          onClick={handleSubmit(onSave)}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8"
-        >
-          저장하기
-        </button>
-      </div>
       <div className="flex flex-wrap mb-4 items-center">
         <div className="text-2xl font-PretendardBold mb-4 w-full">
           문제 설정
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
-          <label  className="block font-medium mb-1 mr-8">
-            메모리 제한
-          </label>
+          <label className="block font-medium mb-1 mr-8">메모리 제한</label>
           <select
             {...register("problemMemoryLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
@@ -155,9 +124,7 @@ export default function ProblemForm() {
           </select>
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
-          <label className="block font-medium mb-1 mr-8">
-            실행 시간 제한
-          </label>
+          <label className="block font-medium mb-1 mr-8">실행 시간 제한</label>
           <select
             {...register("problemTimeLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
@@ -169,11 +136,9 @@ export default function ProblemForm() {
         </div>
 
         <div className="w-1/3 flex text-lg items-center justify-start">
-          <label className="block font-medium mb-1 mr-8">
-            난이도 설정
-          </label>
+          <label className="block font-medium mb-1 mr-8">난이도 설정</label>
           <select
-            {...register("problemDiff")}
+            {...register("problemDifficulty")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
             <option value="1">매우 쉬움</option>
@@ -220,6 +185,7 @@ export default function ProblemForm() {
         <input
           type="text"
           {...register("problemTitle")}
+          defaultValue={data.data?.problemTitle || ""}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
         />
       </div>
@@ -229,6 +195,7 @@ export default function ProblemForm() {
         </div>
         <textarea
           {...register("problemContents")}
+          defaultValue={data?.data?.problemContents || ""}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={8}
         ></textarea>
@@ -239,6 +206,7 @@ export default function ProblemForm() {
         </div>
         <textarea
           {...register("problemInputContents")}
+          defaultValue={data.data?.problemInputContents || ""}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
         ></textarea>
@@ -249,6 +217,7 @@ export default function ProblemForm() {
         </div>
         <textarea
           {...register("problemOutputContents")}
+          defaultValue={data.data?.problemOutputContents || ""}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
         ></textarea>
@@ -259,6 +228,7 @@ export default function ProblemForm() {
         </div>
         <textarea
           {...register("problemPrompt")}
+          defaultValue={data.data?.problemPrompt || ""}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
         ></textarea>
@@ -313,7 +283,7 @@ export default function ProblemForm() {
       </div>
 
       <div className="flex justify-end">
-        <Link href="/admin/problem-manage/enroll/editor/testcase">
+        <Link href="/admin/exam-manage/enroll/testcase">
           <button
             onClick={() => EnrollTestCase()}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"
@@ -322,17 +292,9 @@ export default function ProblemForm() {
           </button>
         </Link>
       </div>
-
       <div className="flex justify-end">
         <button
           onClick={handleSubmit(onSubmit)}
-          type="button"
-          className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8 mr-4"
-        >
-          등록하기
-        </button>
-        <button
-          onClick={handleSubmit(onSave)}
           type="button"
           className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8"
         >

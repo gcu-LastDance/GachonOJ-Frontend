@@ -43,3 +43,9 @@ export interface ProblemFormData {
   testcases: TestCase[];
 
 }
+
+
+export interface TestProblemFormData {
+id: number
+data : ProblemFormData
+}
