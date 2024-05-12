@@ -15,8 +15,8 @@ export default function page() {
       </div>
       <div className="flex">
         <div className="mr-3 flex-auto w-3/4">
-          <div className="w-full h-1/3">
-            <div className="mb-3">
+          <div className="mb-3 w-full h-1/3 ">
+            <div className="h-full">
               <OngoingExams />
             </div>
           </div>

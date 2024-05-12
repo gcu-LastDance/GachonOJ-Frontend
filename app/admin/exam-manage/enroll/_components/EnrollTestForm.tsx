@@ -65,7 +65,7 @@ export default function EnrollTestForm() {
 
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "REGISTERED" };
+    const newData = { ...data, tests, candidateList, examStatus: "ONGOING" };
     EnrollMutation.mutate(newData);
   };
 
