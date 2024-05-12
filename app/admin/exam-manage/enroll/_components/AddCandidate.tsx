@@ -9,13 +9,14 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import Image from "next/image";
+import { candidateTableData } from "@/types/admin/exam";
 
 function CandidateListTable({
   tableData,
   candidateList,
   setCandidateList,
 }: {
-  tableData: any;
+  tableData: candidateTableData[];
   candidateList: [];
   setCandidateList: any,
 }) {
@@ -29,14 +30,14 @@ function CandidateListTable({
     }
   };
 
-  const columns: ColumnDef<any, any>[] = [
+  const columns: ColumnDef<candidateTableData, any>[] = [
     columnHelper("memberNumber", { header: "학번" }),
     columnHelper("memberImg", {
       header: "사진",
       cell: (value) =>
         value && (
           <Image
-            src={value}
+            src={value.toString()}
             alt="사진"
             className="rounded-full"
             objectFit="cover"
@@ -49,7 +50,7 @@ function CandidateListTable({
     columnHelper("memberEmail", { header: "이메일" }),
   ];
 
-  const [data, setData] = useState<any[]>(tableData);
+  const [data, setData] = useState<candidateTableData[]>(tableData);
 
   const table = useReactTable({
     data,
@@ -63,6 +64,9 @@ function CandidateListTable({
         {/* 테이블 헤더 생성 */}
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
+            <td>
+
+            </td>
             {headerGroup.headers.map((header) => (
               <th
                 className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
