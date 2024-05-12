@@ -22,6 +22,8 @@ export default function EnrollTestForm() {
   const [activeForm, setActiveForm] = useState(1);
   const [showAddCandidate, setShowAddCandidate] = useState(false);
   const [tempValue, setTempValue] = useState("");
+  const [candidateList, setCandidateList] = useState([]);
+
   const handleAddForm = () => {
     setFormCount(formCount + 1);
     setActiveForm(formCount + 1);
@@ -41,7 +43,7 @@ export default function EnrollTestForm() {
 
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, examStatus: "REGISTERED" };
+    const newData = { ...data, tests, candidateList, examStatus: "REGISTERED" };
     EnrollMutation.mutate(newData);
   };
 
@@ -204,6 +206,7 @@ export default function EnrollTestForm() {
           </div>
           {isAttendanceOpen && (
             <div className="p-10">
+            <div>
               <div className="flex items-center mb-4">
                 <div className="text-lg mr-4 min-w-30 flex-shrink-0">
                   응시자 추가하기
@@ -227,17 +230,19 @@ export default function EnrollTestForm() {
                 >
                   검색하기
                 </button>
-
-                {showAddCandidate && (
-                  <AddCandidate memberInfo={CandidateValue} />
-                )}
-
                 <button
                   type="button"
                   className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
                 >
                   추가하기
                 </button>
+                </div>
+                <div className="flex-col w-fit container bg-semiGrey">
+                  {showAddCandidate && (
+                    <AddCandidate memberInfo={CandidateValue} candidateList={candidateList} setCandidateList={setCandidateList}/>
+                  )}
+                </div>
+              
               </div>
             </div>
           )}
