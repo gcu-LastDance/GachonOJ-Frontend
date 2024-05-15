@@ -65,7 +65,7 @@ export default function EnrollTestForm() {
 
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "REGISTERED" };
+    const newData = { ...data, tests, candidateList, examStatus: "ONGOING" };
     EnrollMutation.mutate(newData);
   };
 
@@ -185,7 +185,7 @@ export default function EnrollTestForm() {
                   <div className="flex mr-5 items-center">
                     <div className="flex-shrink-0 mr-4">모니터링 여부 설정</div>
                     <select
-                      {...register("examMonitoring")}
+                      // {...register("examMonitoring")}
                       className="border rounded-md w-24 p-1"
                     >
                       <option value="사용">사용</option>
@@ -196,7 +196,7 @@ export default function EnrollTestForm() {
                   <div className="flex ml-5 items-center">
                     <div className="flex-shrink-0 mr-4">복사/붙혀넣기 제한</div>
                     <select
-                      {...register("examCopypasteRestriction")}
+                      // {...register("examCopypasteRestriction")}
                       className="border rounded-md w-24 p-1"
                     >
                       <option value="금지" selected>

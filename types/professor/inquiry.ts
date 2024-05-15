@@ -7,7 +7,6 @@ export interface inquiryListData {
 export interface inquiryTableData {
   inquiryId: number;
   inquiryTitle: string;
-  
   inquiryCreatedDate: string;
   inquiryStatus: string;
 }

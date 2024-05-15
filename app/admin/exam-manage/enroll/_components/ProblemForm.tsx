@@ -138,7 +138,7 @@ export default function ProblemForm({
         <div className="w-1/3 flex text-lg items-center justify-start">
           <label className="block font-medium mb-1 mr-8">난이도 설정</label>
           <select
-            {...register("problemDifficulty")}
+            {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
             <option value="1">매우 쉬움</option>
