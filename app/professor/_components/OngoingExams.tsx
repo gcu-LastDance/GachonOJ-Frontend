@@ -19,10 +19,7 @@ function OngoingExams({ data }: { data: TestData[] }) {
       <div className="flex flex-wrap pt-10 justify-center">
         {data && data.length > 0 ? (
           data.map((item) => (
-            <div
-              key={item.examId}
-              className="shrink-0 mr-2 ml-2 mb-2 w-60 h-36 p-5 rounded-xl border border-gray-400"
-            >
+            <div key={item.examId}>
               <ProfessorTestCard data={item} />
             </div>
           ))
