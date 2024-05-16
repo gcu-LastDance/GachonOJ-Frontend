@@ -11,8 +11,8 @@ export default function TestCard({ data }: { data: TestData }) {
           data.examStatus === "종료됨" ? "bg-realGrey" : "bg-primaryBlue"
         } w-full h-[1vh]`}
       />
-      <div className="flex flex-col px-[0.8vw] pt-[1.2vh] pb-[0.5vh] h-full">
-        <Link href={`/exam/${data.examId}`} className="w-[8vw]">
+      <div className="flex flex-col px-[0.8vw] pt-[0.8vh] pb-[0.5vh] h-full">
+        <Link href={`/exam/${data.examId}`} className="w-[12vw]">
           <span className="font-PretendardRegular text-[0.85vw] leading-none">
             {data.examTitle}
           </span>

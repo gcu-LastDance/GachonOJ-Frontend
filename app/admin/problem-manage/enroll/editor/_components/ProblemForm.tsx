@@ -140,9 +140,7 @@ export default function ProblemForm() {
           문제 설정
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
-          <label  className="block font-medium mb-1 mr-8">
-            메모리 제한
-          </label>
+          <label className="block font-medium mb-1 mr-8">메모리 제한</label>
           <select
             {...register("problemMemoryLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
@@ -155,9 +153,7 @@ export default function ProblemForm() {
           </select>
         </div>
         <div className="w-1/3 text-lg flex items-center justify-start">
-          <label className="block font-medium mb-1 mr-8">
-            실행 시간 제한
-          </label>
+          <label className="block font-medium mb-1 mr-8">실행 시간 제한</label>
           <select
             {...register("problemTimeLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
@@ -169,9 +165,7 @@ export default function ProblemForm() {
         </div>
 
         <div className="w-1/3 flex text-lg items-center justify-start">
-          <label className="block font-medium mb-1 mr-8">
-            난이도 설정
-          </label>
+          <label className="block font-medium mb-1 mr-8">난이도 설정</label>
           <select
             {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"

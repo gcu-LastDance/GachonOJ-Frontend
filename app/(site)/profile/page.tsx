@@ -30,7 +30,7 @@ export default function page() {
         </div>
         <div className="flex justify-between mt-[4vh]">
           <div className="flex flex-col space-y-[4vh]">
-            <div className="w-[13vw] h-[26vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden py-[1.5vh] px-[1vw]">
+            <div className="w-[13vw] h-[26vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden py-[1.5vh] px-[1vw] flex flex-col">
               <div className="flex items-center">
                 <span className="font-PretendardMedium text-[0.9vw] mr-[0.5vw]">
                   등급 도우미
@@ -39,7 +39,7 @@ export default function page() {
               </div>
               <RatingHelperCard data={memberProfileDashBoardData!} />
             </div>
-            <div className="w-[13vw] h-[31vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden py-[1.5vh] px-[1vw]">
+            <div className="w-[13vw] h-[31vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden py-[1.5vh] px-[1vw] flex flex-col">
               <div className="flex items-center">
                 <span className="font-PretendardMedium text-[0.9vw] mr-[0.5vw]">
                   선호 언어 선택
@@ -47,8 +47,8 @@ export default function page() {
                 <GoQuestion size="1vw" color="#767676" />
               </div>
               <LanguageForm />
-              <div className="flex justify-center">
-                <span className="flex font-PretendardLight text-realGrey text-[0.6vw] mt-[4vh]">
+              <div className="flex justify-center mt-auto">
+                <span className="flex font-PretendardLight text-realGrey text-[0.6vw]">
                   언어는 향후 다양하게 추가될 예정입니다.
                 </span>
               </div>

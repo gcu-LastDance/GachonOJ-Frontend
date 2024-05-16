@@ -55,7 +55,23 @@ export interface ProblemSolutionExcuteData {
   testcase: TestcaseData;
 }
 
+export interface ProblemSolutionSubmitData {
+  code: string;
+  language: string;
+}
+
 export interface ProblemExcuteResultData {
   output: string;
   result: boolean;
+}
+
+export interface ProblemSubmitResultData {
+  submissionId: number;
+  isCorrect: boolean;
+  problemRank: number;
+  ratingChange: boolean;
+  memberRating: number;
+  memberRank: number;
+  afterMemberRating: number;
+  afterMemberRank: number;
 }

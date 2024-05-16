@@ -4,7 +4,9 @@ export type TestMenuType = "scheduled" | "past";
 
 export const scheduledContestAPI = async () => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P19_URL as string}?type=대회`;
+    const url = `${
+      process.env.NEXT_PUBLIC_P24_URL as string
+    }?type=대회&status=예약`;
     const response = await instanceAuth.get(url);
     console.log(response.data);
     return response.data.result;
@@ -15,7 +17,9 @@ export const scheduledContestAPI = async () => {
 
 export const pastContestAPI = async () => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P18_URL as string}?type=대회`;
+    const url = `${
+      process.env.NEXT_PUBLIC_P24_URL as string
+    }?type=대회&status=종료`;
     const response = await instanceAuth.get(url);
     console.log(response.data);
     return response.data.result;
@@ -26,7 +30,9 @@ export const pastContestAPI = async () => {
 
 export const scheduledExamAPI = async () => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P19_URL as string}?type=시험`;
+    const url = `${
+      process.env.NEXT_PUBLIC_P24_URL as string
+    }?type=시험&status=예약`;
     const response = await instanceAuth.get(url);
     console.log(response.data);
     return response.data.result;
@@ -37,7 +43,9 @@ export const scheduledExamAPI = async () => {
 
 export const pastExamAPI = async () => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P18_URL as string}?type=시험`;
+    const url = `${
+      process.env.NEXT_PUBLIC_P24_URL as string
+    }?type=시험&status=종료`;
     const response = await instanceAuth.get(url);
     console.log(response.data);
     return response.data.result;
