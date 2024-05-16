@@ -6,10 +6,10 @@ const GachonOJShortCut = () => {
   return (
    
       <div className="flex items-center justify-center shadow-md border-semiGrey border-4 bg-white px-5 py-5">
-        <div className="w-[14vw]">
+        <div className="w-fit">
           <Image src={GachonOJ_logo_image} alt="GachonOJ logo" />
         </div>
-        <div className="text-lg ml-5 font-PretendardBold">바로가기</div>
+        <div className="shrink-0 text-lg ml-5 font-PretendardBold">바로가기</div>
       </div>
    
   );

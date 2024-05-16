@@ -11,7 +11,7 @@ import {
 import { inquiryDeleteAPI, inquiryListAPI } from "@/api/admin/adminInquiryAPI";
 import { inquiryTableData, inquiryListData } from "@/types/admin/inquiry";
 import columnHelper from "@/lib/columnHelper";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {useRouter} from "next/navigation";
 
 const columns: ColumnDef<inquiryTableData, any>[] = [
@@ -27,8 +27,8 @@ export function InquiryManageTable({
 }: {
   tableData: inquiryTableData[];
 }) {
-  const [data, setData] = useState<inquiryTableData[]>(tableData);
-  
+
+  const queryClient = useQueryClient();
   const router = useRouter();
   const onDelete = (inquiryId: number) => {
     DeleteMutation.mutate(inquiryId);
@@ -42,13 +42,13 @@ export function InquiryManageTable({
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/notice-manage/list");
+        queryClient.invalidateQueries({ queryKey: ["inquiryList"] });
       }
     },
   });
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

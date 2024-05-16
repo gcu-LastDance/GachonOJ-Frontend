@@ -76,8 +76,8 @@ export default function EnrollTestForm() {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.isSuccess) {
-        router.push("/admin/problem-manage/list");
+      if (data.success) {      
+        router.push("/admin/exam-manage/list");
       }
     },
   });
@@ -294,7 +294,7 @@ export default function EnrollTestForm() {
                   (id) => (
                     <button
                       type="button"
-                      className={`border rounded-md p-2 ${
+                      className={`border rounded-md mr-2 p-2 ${
                         activeForm === id ? "bg-blue-500 text-white" : ""
                       }`}
                       onClick={() => handleSwitchForm(id)}

@@ -31,6 +31,8 @@ export default function CreateAdminForm() {
       if (data.success) {
         router.push("/admin/user-manage/list");
       }
+      else
+        alert("회원 생성에 실패했습니다.");
     },
   });
 

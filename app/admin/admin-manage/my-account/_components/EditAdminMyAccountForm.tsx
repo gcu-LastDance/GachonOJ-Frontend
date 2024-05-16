@@ -5,9 +5,7 @@ import {
   nicknameCheckAPI,
 } from "@/api/admin/adminUserAPI";
 import { myInfoModifyFormData, userContentData } from "@/types/admin/user";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
@@ -16,8 +14,9 @@ import { IoSettingsOutline } from "react-icons/io5";
 import useUserStore from "@/store/useUserStore";
 
 function EditAdminMyAccountForm({ data }: { data: userContentData }) {
+  const queryClient = useQueryClient();
   const { setUserImg } = useUserStore();
-  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -64,6 +63,8 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
         data,
         memberImg: fileInput.current?.files?.[0] || null,
       });
+      alert("회원 정보가 수정되었습니다.");
+      
       if (memberImg) {
         setUserImg(
           memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg
@@ -84,9 +85,7 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.success) {
-        console.log(data);
-      }
+      queryClient.invalidateQueries({ queryKey: ["getMyInfo"] });
     },
   });
 
@@ -195,14 +194,14 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
           </button>
         </div>
         <div className="flex justify-center">
-          <Link href="/member/info">
+         
             <button
               onClick={handleSubmit(onSubmit)}
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
             >
               변경사항 저장
             </button>
-          </Link>
+
         </div>
       </div>
 

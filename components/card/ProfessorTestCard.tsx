@@ -1,15 +1,12 @@
 import { TestData } from "@/types/professor/dashboard";
-import Link from "next/link";
 import React from "react";
-import { IoArrowForwardSharp } from "react-icons/io5";
+
 
 export default function ProfessorTestCard({ data }: { data: TestData }) {
   return (
-    <div className="flex flex-col border-2 rounded-xl border-semiGrey w-60 h-36 overflow-hidden">
+    <div className="flex flex-col mr-2 ml-2 border-2 rounded-xl border-semiGrey w-60 h-36 overflow-hidden">
       <div
-        className={`${
-          data.examStatus === "종료됨" ? "bg-realGrey" : "bg-primaryBlue"
-        } w-full h-5`}
+        className="bg-primaryBlue w-full h-5"
       />
       <div className="flex flex-col px-[0.8vw] pt-[1.2vh] pb-[0.5vh] h-full">
         <span className="font-PretendardRegular text-[0.85vw] leading-none">

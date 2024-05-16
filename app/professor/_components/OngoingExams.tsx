@@ -9,14 +9,14 @@ import ProfessorTestCard from "@/components/card/ProfessorTestCard";
 
 function OngoingExams({ data }: { data: TestData[] }) {
   return (
-    <div className="flex-col h-full px-5 py-5 shadow-md border-4 border-semiGrey bg-white overflow-x-scroll">
+    <div className="flex-col h-full px-5 py-5 shadow-md border-4 border-semiGrey bg-white overflow-y-hidden overflow-x-scroll">
       <div className="flex items-center">
-        <div className="text-2xl">진행중인 시험</div>
+        <div className="text-2xl ">진행중인 시험</div>
         <div className="ml-3">
           <RxQuestionMarkCircled />
         </div>
       </div>
-      <div className="flex flex-wrap pt-10 justify-center">
+      <div className="flex pt-10">
         {data && data.length > 0 ? (
           data.map((item) => (
             <div key={item.examId}>

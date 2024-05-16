@@ -118,13 +118,13 @@ function EditProfessorForm({
           </button>
         </div>
         <div className="flex justify-center">
-        <Link href="/admin/user-manage/list">
+        
         <button
           onClick={handleSubmit(onSubmit)}
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold  py-2 px-4 rounded-lg mt-8 mr-8"
         > 
           변경사항 저장
-        </button></Link>
+        </button>
         </div>
       </div>
       <div className="flex justify-end">

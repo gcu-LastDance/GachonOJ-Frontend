@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-table";
 import { examDeleteAPI, examListAPI } from "@/api/admin/adminExamAPI";
 import { examListData, examTableData } from "@/types/admin/exam";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -29,7 +29,7 @@ export function ExamManageTable({
   tableData: examTableData[];
 }) {
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   const onDelete = (examId: number) => {
     DeleteMutation.mutate(examId);
   };
@@ -43,15 +43,16 @@ export function ExamManageTable({
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/exam-manage/list");
+        
+        queryClient.invalidateQueries({ queryKey: ["examList"] });
       }
     },
   });
 
-  const [data, setData] = useState<examTableData[]>(tableData);
+  
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

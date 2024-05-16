@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-table";
 import { noticeDeleteAPI, noticeListAPI } from "@/api/admin/adminNoticeAPI";
 import { noticeListData, noticeTableData } from "@/types/admin/notice";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ export function NoticeManageTable({
   tableData: noticeTableData[];
 }) {
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   const onDelete = (noticeId: number) => {
     DeleteMutation.mutate(noticeId);
   };
@@ -39,15 +39,15 @@ export function NoticeManageTable({
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/notice-manage/list");
+
+        queryClient.invalidateQueries({ queryKey: ["noticeList"] });
       }
     },
   });
 
-  const [data, setData] = useState<noticeTableData[]>(tableData);
 
   const table = useReactTable({
-    data,
+    data:tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

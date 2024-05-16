@@ -9,7 +9,7 @@ import {
 import { userDeleteAPI, userListAPI } from "@/api/admin/adminUserAPI";
 import { userListData, userTableData } from "@/types/admin/user";
 import columnHelper from "@/lib/columnHelper";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 const columns: ColumnDef<userTableData, any>[] = [
@@ -24,8 +24,7 @@ const columns: ColumnDef<userTableData, any>[] = [
 
 
 export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
-
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const onDelete = (memberId: number) => {
     DeleteMutation.mutate(memberId);
@@ -39,14 +38,14 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/user-manage/list");
+        queryClient.invalidateQueries({ queryKey: ["userList"] });
       }
     }})
 
-  const [data, setData] = useState<userTableData[]>(tableData);
+  
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
