@@ -65,6 +65,8 @@ function EditUserForm({
       if (data.success) {
         router.push("/admin/user-manage/list");
       }
+      else
+        alert("회원 정보 수정에 실패했습니다.");
     },
   });
 

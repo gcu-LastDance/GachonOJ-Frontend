@@ -33,11 +33,9 @@ export function ProblemManageTable({
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const [data, setData] = useState<problemTableData[]>(tableData);
 
-  useEffect(() => {
-    setData(tableData);
-  }, [tableData]);
+  const queryClient = useQueryClient();
+
 
   const [showInput, setShowInput] = useState(false);
 
@@ -52,12 +50,11 @@ export function ProblemManageTable({
   };
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const router = useRouter();
 
   const onDelete = (problemId: number) => {
     DeleteMutation.mutate(problemId);
@@ -71,7 +68,7 @@ export function ProblemManageTable({
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/problem-manage");
+        queryClient.invalidateQueries({ queryKey: ["problemList"] });
       }
     },
   });
@@ -177,27 +174,16 @@ const ProblemManageTableContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-  const queryClient = useQueryClient();
-
   useEffect(() => {
-    // searchTerm이 변경될 때마다 debouncedSearchTerm을 업데이트합니다.
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 1000);
-
     return () => clearTimeout(timer);
   }, [searchTerm]);
-
-  useEffect(() => {
-    // debouncedSearchTerm이 변경될 때마다 데이터를 갱신합니다.
-    queryClient.invalidateQueries({ queryKey: ["problemList"] });
-  }, [debouncedSearchTerm]);
 
   const { data } = useQuery<problemListData>({
     queryKey: ["problemList", debouncedSearchTerm],
     queryFn: () => problemListAPI(debouncedSearchTerm),
-    enabled: debouncedSearchTerm !== undefined, // 검색어가 있을 때만 API 호출
-    staleTime: 0,
   });
 
   if (!data) return null;
