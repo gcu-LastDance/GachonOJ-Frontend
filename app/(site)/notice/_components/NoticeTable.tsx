@@ -104,8 +104,8 @@ export default function NoticeTable() {
       <div className="mt-auto flex justify-center items-center mb-[3vh]">
         {mainNoticeTabledata && (
           <PaginationBar
-            totalElements={mainNoticeTabledata.totalElements}
-            pageSize={mainNoticeTabledata.pageable.pageSize}
+            totalElements={mainNoticeTabledata?.totalElements}
+            pageSize={mainNoticeTabledata?.pageable?.pageSize}
             pageNo={pageNum}
             setPageNo={setPageNum}
           />

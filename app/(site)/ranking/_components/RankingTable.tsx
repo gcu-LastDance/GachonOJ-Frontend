@@ -139,8 +139,8 @@ export default function RankingTable() {
       <div className="mt-auto flex justify-center items-center mb-[3vh]">
         {rakingData && (
           <PaginationBar
-            totalElements={rakingData.totalElements}
-            pageSize={rakingData.pageable.pageSize}
+            totalElements={rakingData?.totalElements}
+            pageSize={rakingData?.pageable?.pageSize}
             pageNo={pageNum}
             setPageNo={setPageNum}
           />

@@ -111,8 +111,8 @@ export default function InquiryTable() {
       <div className="mt-auto flex justify-center items-center mb-[3vh]">
         {inquiryTabledata && (
           <PaginationBar
-            totalElements={inquiryTabledata.totalElements}
-            pageSize={inquiryTabledata.pageable.pageSize}
+            totalElements={inquiryTabledata?.totalElements}
+            pageSize={inquiryTabledata?.pageable?.pageSize}
             pageNo={pageNum}
             setPageNo={setPageNum}
           />

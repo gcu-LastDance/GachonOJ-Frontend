@@ -197,8 +197,8 @@ export default function MemberProblemTable() {
       <div className="mt-auto flex justify-center items-center mb-[3vh]">
         {problemData && (
           <PaginationBar
-            totalElements={problemData.totalElements}
-            pageSize={problemData.pageable.pageSize}
+            totalElements={problemData?.totalElements}
+            pageSize={problemData?.pageable?.pageSize}
             pageNo={pageNum}
             setPageNo={setPageNum}
           />
