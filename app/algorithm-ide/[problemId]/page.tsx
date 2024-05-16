@@ -9,8 +9,13 @@ import IdeFooter from "../_components/IdeFooter";
 import { useProgramLangStore } from "@/store/useProgramLangStore";
 import { programLangSampleCodeMap } from "@/constants/programLangMap";
 import IdeResultWindow from "../_components/IdeResultWindow";
-import { ProblemExcuteResultData, TestcaseSetData } from "@/types/problem";
+import {
+  ProblemExcuteResultData,
+  ProblemSubmitResultData,
+  TestcaseSetData,
+} from "@/types/problem";
 import TestcaseModal from "../_components/TestcaseModal";
+import ResultModal from "../_components/ResultModal";
 
 export default function page({ params }: { params: { problemId: number } }) {
   const { token } = useUserStore();
@@ -23,6 +28,8 @@ export default function page({ params }: { params: { problemId: number } }) {
   );
   const [testcaseModalOpen, setTestcaseModalOpen] = useState(false);
   const [testcase, setTestcase] = useState<TestcaseSetData[]>([]);
+  const [resultModalOpen, setResultModalOpen] = useState(false);
+  const [submitResult, setSubmitResult] = useState<ProblemSubmitResultData>();
 
   useEffect(() => {
     setCode(programLangSampleCodeMap[programLang ?? "C"]);
@@ -55,6 +62,8 @@ export default function page({ params }: { params: { problemId: number } }) {
           testcase={testcase}
           setExcuteResult={setExcuteResult}
           setTestcaseModalOpen={setTestcaseModalOpen}
+          setResultModalOpen={setResultModalOpen}
+          setSubmitResult={setSubmitResult}
         />
       )}
       {testcaseModalOpen && (
@@ -62,6 +71,12 @@ export default function page({ params }: { params: { problemId: number } }) {
           setModalOpen={setTestcaseModalOpen}
           testcase={testcase}
           setTestcase={setTestcase}
+        />
+      )}
+      {resultModalOpen && (
+        <ResultModal
+          submitResult={submitResult}
+          setResultModalOpen={setResultModalOpen}
         />
       )}
     </div>

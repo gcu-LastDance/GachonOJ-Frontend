@@ -1,6 +1,7 @@
 import { instanceAuth, instanceNonAuth } from "@/lib/axiosConfig";
 import {
   ProblemSolutionExcuteData,
+  ProblemSolutionSubmitData,
   ProfileProblemType,
   difficulty,
 } from "@/types/problem";
@@ -20,13 +21,11 @@ export const recProblemAPI = async () => {
 export const problemTableGuestAPI = async ({
   pageNum,
   searchKeyword,
-  classType,
   diff,
   sortType,
 }: {
   pageNum: number;
   searchKeyword?: string;
-  classType?: string;
   diff?: difficulty;
   sortType?: string;
 }) => {
@@ -35,6 +34,14 @@ export const problemTableGuestAPI = async ({
       const url = `${
         process.env.NEXT_PUBLIC_P01_URL as string
       }?pageNo=${pageNum}&search=${searchKeyword}`;
+      const response = await instanceNonAuth.get(url);
+      console.log(url);
+      console.log(response);
+      return response.data.result.content;
+    } else if (diff) {
+      const url = `${
+        process.env.NEXT_PUBLIC_P01_URL as string
+      }?pageNo=${pageNum}&diff=${diff}`;
       const response = await instanceNonAuth.get(url);
       console.log(url);
       console.log(response);
@@ -96,6 +103,24 @@ export const problemSolutionExcuteAPI = async ({
 }) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_S04_URL as string}/${problemId}`;
+    const response = await instanceAuth.post(url, data);
+    console.log(data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const problemSolutionSubmitAPI = async ({
+  problemId,
+  data,
+}: {
+  problemId: number;
+  data: ProblemSolutionSubmitData;
+}) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_S05_URL as string}/${problemId}`;
     const response = await instanceAuth.post(url, data);
     console.log(data);
     console.log(response.data);

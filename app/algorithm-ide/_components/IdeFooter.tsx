@@ -1,10 +1,14 @@
 "use client";
 
-import { problemSolutionExcuteAPI } from "@/api/problemAPI";
+import {
+  problemSolutionExcuteAPI,
+  problemSolutionSubmitAPI,
+} from "@/api/problemAPI";
 import ModalLarge from "@/components/modal/ModalLarge";
 import { useProgramLangStore } from "@/store/useProgramLangStore";
 import {
   ProblemExcuteResultData,
+  ProblemSubmitResultData,
   TestcaseData,
   TestcaseSetData,
 } from "@/types/problem";
@@ -12,12 +16,15 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { set } from "react-hook-form";
 
 export default function IdeFooter({
   code,
   testcase,
   setExcuteResult,
   setTestcaseModalOpen,
+  setResultModalOpen,
+  setSubmitResult,
 }: {
   code: string;
   testcase: TestcaseSetData[];
@@ -25,6 +32,10 @@ export default function IdeFooter({
     React.SetStateAction<ProblemExcuteResultData[]>
   >;
   setTestcaseModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setResultModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSubmitResult: React.Dispatch<
+    React.SetStateAction<ProblemSubmitResultData | undefined>
+  >;
 }) {
   const params = useParams();
   const { programLang } = useProgramLangStore();
@@ -39,7 +50,7 @@ export default function IdeFooter({
     return testcaseData;
   };
 
-  const problemSolutionExcute = useMutation({
+  const problemSolutionExcuteMutation = useMutation({
     mutationFn: problemSolutionExcuteAPI,
     onError: (error) => {
       console.error(error);
@@ -56,9 +67,32 @@ export default function IdeFooter({
 
   const handleSolutionExcute = () => {
     const testcaseData = convertTestcaseSetToData(testcase);
-    problemSolutionExcute.mutate({
+    problemSolutionExcuteMutation.mutate({
       problemId: Number(params.problemId),
       data: { code: code, language: "Java", testcase: testcaseData },
+    });
+  };
+
+  const problemSolutionSubmitMutation = useMutation({
+    mutationFn: problemSolutionSubmitAPI,
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        setSubmitResult(data.result);
+        setResultModalOpen(true);
+      } else {
+        alert("제출 실패");
+      }
+    },
+  });
+
+  const handleSolutionSubmit = () => {
+    problemSolutionSubmitMutation.mutate({
+      problemId: Number(params.problemId),
+      data: { code: code, language: "Java" },
     });
   };
 
@@ -100,6 +134,7 @@ export default function IdeFooter({
       </button>
       <button
         type="button"
+        onClick={handleSolutionSubmit}
         className="flex border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] bg-primaryRed border-primaryRed ml-[0.5vw] items-center justify-center"
       >
         <span className="font-PretendardMedium text-white text-[0.8vw]">

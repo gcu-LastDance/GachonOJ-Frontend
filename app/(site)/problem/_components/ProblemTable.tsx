@@ -57,9 +57,8 @@ export default function ProblemTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [debouncedSearchKeyword, setDebouncedSearchKeyword] =
     useState(searchKeyword);
-  const [classType, setClassType] = useState<string>("");
-
   const [diff, setDiff] = useState<difficulty>();
+  const [debouncedDiff, setDebouncedDiff] = useState(diff);
   const [sortType, setSortType] = useState<SortType>("ASC");
   const [debouncedSortType, setDebouncedSortType] =
     useState<SortType>(sortType);
@@ -69,16 +68,14 @@ export default function ProblemTable() {
       "problemTableGuest",
       pageNum,
       debouncedSearchKeyword,
-      classType,
-      diff,
+      debouncedDiff,
       debouncedSortType,
     ],
     queryFn: () =>
       problemTableGuestAPI({
         pageNum,
         searchKeyword: debouncedSearchKeyword,
-        classType,
-        diff,
+        diff: debouncedDiff,
         sortType: debouncedSortType,
       }),
   });
@@ -86,15 +83,24 @@ export default function ProblemTable() {
   useEffect(() => {
     const timeout = setTimeout(
       () => setDebouncedSearchKeyword(searchKeyword),
-      1000
+      500
     );
     return () => clearTimeout(timeout);
   }, [searchKeyword]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setDebouncedSortType(sortType), 500);
+    const timeout = setTimeout(() => setDebouncedSortType(sortType), 300);
     return () => clearTimeout(timeout);
   }, [sortType]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedDiff(diff), 300);
+    return () => clearTimeout(timeout);
+  }, [diff]);
+
+  const handleDiffChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDiff(e.target.value as difficulty);
+  };
 
   const table = useReactTable({
     data: problemData || [],
@@ -113,14 +119,18 @@ export default function ProblemTable() {
             }}
             className="w-[10vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
           >
-            난이도 오름차순
+            {sortType === "ASC" ? "난이도 오름차순" : "난이도 내림차순"}
           </button>
-          <button
-            type="button"
-            className="w-[7vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
+          <select
+            onChange={handleDiffChange}
+            className="w-[9vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center focus:outline-none pl-[1.8vw]"
           >
-            난이도 선택
-          </button>
+            <option value={""}>난이도 선택</option>
+            <option value={1}>1단계</option>
+            <option value={2}>2단계</option>
+            <option value={3}>3단계</option>
+            <option value={4}>4단계</option>
+          </select>
           {/* <button
             type="button"
             className="w-[7vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
