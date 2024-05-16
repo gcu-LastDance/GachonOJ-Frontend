@@ -10,6 +10,7 @@ import { inquiryListAPI } from "@/api/professor/professorInquiryAPI";
 import { inquiryTableData, inquiryListData } from "@/types/professor/inquiry";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<inquiryTableData, any>[] = [
   columnHelper("inquiryId", { header: "번호" }),
@@ -20,8 +21,14 @@ const columns: ColumnDef<inquiryTableData, any>[] = [
 
 export function InquiryTable({
   tableData,
+  paginationData,
+  pageNo,
+  setPageNo,
 }: {
   tableData: inquiryTableData[];
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [data, setData] = useState<inquiryTableData[]>(tableData);
   const table = useReactTable({
@@ -66,9 +73,7 @@ export function InquiryTable({
                   key={cell.id}
                 >
                   {cell.column.columnDef.header === "제목" ? (
-                    <Link
-                      href={`/professor/inquiry/${row.original.inquiryId}`}
-                    >
+                    <Link href={`/professor/inquiry/${row.original.inquiryId}`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -93,18 +98,33 @@ export function InquiryTable({
           </button>
         </Link>
       </div>
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
+      </div>
     </div>
   );
 }
 
 const InquiryTableContainer = () => {
+  const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<inquiryListData>({
     queryKey: ["professorinquiryList"],
     queryFn: inquiryListAPI,
-    
   });
   if (!data) return null;
-  return <InquiryTable tableData={data.result.content} />;
+  return (
+    <InquiryTable
+      tableData={data.result.content}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
+    />
+  );
 };
 
 export default InquiryTableContainer;

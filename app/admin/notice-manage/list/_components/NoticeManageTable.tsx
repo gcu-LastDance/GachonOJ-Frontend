@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<noticeTableData, any>[] = [
   columnHelper("noticeId", { header: "번호" }),
@@ -22,8 +23,14 @@ const columns: ColumnDef<noticeTableData, any>[] = [
 
 export function NoticeManageTable({
   tableData,
+  paginationData,
+  pageNo,
+  setPageNo,
 }: {
   tableData: noticeTableData[];
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -39,15 +46,13 @@ export function NoticeManageTable({
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-
         queryClient.invalidateQueries({ queryKey: ["noticeList"] });
       }
     },
   });
 
-
   const table = useReactTable({
-    data:tableData,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -104,7 +109,10 @@ export function NoticeManageTable({
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link href={`/board/admin/notice/list`}>
-                  <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.noticeId)}>
+                  <button
+                    className="underline underline-offset-auto"
+                    onClick={() => onDelete(row.original.noticeId)}
+                  >
                     삭제
                   </button>
                 </Link>
@@ -123,19 +131,36 @@ export function NoticeManageTable({
           </button>
         </Link>
       </div>
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
+      </div>
     </div>
   );
 }
 
 const NoticeManageTableContainer = () => {
+  const [pageNo, setPageNo] = useState(1);
+
   const { data } = useQuery<noticeListData>({
-    queryKey: ["noticeList"],
-    queryFn: noticeListAPI,
+    queryKey: ["noticeList", pageNo],
+    queryFn: () => noticeListAPI(pageNo),
   });
 
   if (!data) return null;
 
-  return <NoticeManageTable tableData={data?.result.content} />;
+  return (
+    <NoticeManageTable
+      tableData={data?.result.content}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
+    />
+  );
 };
 
 export default NoticeManageTableContainer;

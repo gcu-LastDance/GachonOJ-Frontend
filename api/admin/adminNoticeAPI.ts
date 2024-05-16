@@ -1,12 +1,11 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 import { noticeFormData } from "@/types/admin/notice";
 
-export const noticeListAPI = async () => {
+export const noticeListAPI = async (pageNo: number) => {
   try {
-    const response = await instanceAuth.get(
-      process.env.NEXT_PUBLIC_B10_URL as string
-    );
-
+    const url = `${process.env.NEXT_PUBLIC_B10_URL}?pageNo=${encodeURIComponent(pageNo)}`;
+    const response = await instanceAuth.get(url);
+    
     return response.data;
   } catch (error) {
     throw new Error(String(error));

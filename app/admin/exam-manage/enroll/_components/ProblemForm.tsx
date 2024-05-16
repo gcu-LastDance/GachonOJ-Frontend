@@ -15,9 +15,7 @@ export default function ProblemForm({
 }) {
   const router = useRouter();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [TestCaseList, setTestCases] = useState<TestCase[]>(
-    []
-  );
+  const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
   const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
     useTestCaseStore();
   const { check, setCheck } = useCheckStore();
@@ -283,7 +281,7 @@ export default function ProblemForm({
       </div>
 
       <div className="flex justify-end">
-        <Link href="/admin/exam-manage/enroll/testcase">
+        <Link href="/admin/exam-manage/enroll/testcase" scroll={false}>
           <button
             onClick={() => EnrollTestCase()}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"

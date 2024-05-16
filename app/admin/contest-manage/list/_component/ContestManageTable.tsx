@@ -12,6 +12,7 @@ import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { contestDeleteAPI, contestListAPI } from "@/api/admin/adminContestAPI";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<contestTableData, any>[] = [
   columnHelper("examId", { header: "인덱스" }),
@@ -57,10 +58,6 @@ export function ContestManageTable({
 
   return (
     <div>
-      <div className="text-xl font-PretendardBlack mb-10 px-4 py-4 border-b-4 inline-block w-3/4">
-        관리기능 &gt; 대회 관리
-      </div>
-
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -128,6 +125,9 @@ export function ContestManageTable({
             새로운 대회 등록
           </button>
         </Link>
+      </div>
+      <div>
+      {/* <PaginationBar /> */}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import {
   problemModifyAPI,
   problemContentAPI,
 } from "@/api/admin/adminProblemAPI";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 function ProblemForm({
   data,
@@ -19,6 +19,7 @@ function ProblemForm({
   problemId: number;
 }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -30,10 +31,13 @@ function ProblemForm({
     useTestCaseStore();
   const { check, setCheck } = useCheckStore();
   // 등록 버튼 작동 함수
- 
+
   const onSubmit = (data: ProblemFormData) => {
     const testcases = TestCaseList;
+    
     const newData = { ...data, testcases, problemStatus: "REGISTERED" };
+    console.log(testcases);
+
     ModifyMutation.mutate(newData);
   };
 
@@ -42,6 +46,7 @@ function ProblemForm({
   const onSave = (data: ProblemFormData) => {
     const testcases = TestCaseList;
     const newData = { ...data, testcases, problemStatus: "SAVED" };
+
     ModifyMutation.mutate(newData);
   };
 
@@ -52,7 +57,8 @@ function ProblemForm({
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.isSuccess) {
+      if (data.success) {
+        queryClient.invalidateQueries({ queryKey: ["problemContent"] });
         router.push("/admin/problem-manage/list");
       }
     },
@@ -115,7 +121,7 @@ function ProblemForm({
       TestCaseList[index].testcaseStatus
     );
 
-    router.push("/admin/problem-manage/enroll/editor/testcase");
+    router.push("/admin/problem-manage/edit/editor/testcase");
   };
 
   const DeleteTestcase = (index: number) => {
@@ -168,7 +174,7 @@ function ProblemForm({
             실행 시간 제한
           </label>
           <select
-          defaultValue={data.problemTimeLimit}
+            defaultValue={data.problemTimeLimit}
             {...register("problemTimeLimit")}
             className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
           >
@@ -183,7 +189,7 @@ function ProblemForm({
             난이도 설정
           </label>
           <select
-          defaultValue={data.problemDiff}
+            defaultValue={data.problemDiff}
             {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
@@ -199,7 +205,7 @@ function ProblemForm({
             분류
           </label>
           <select
-          defaultValue={data.problemClass}
+            defaultValue={data.problemClass}
             {...register("problemClass")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
@@ -230,7 +236,7 @@ function ProblemForm({
           문제 제목
         </div>
         <input
-        defaultValue={data.problemTitle}
+          defaultValue={data.problemTitle}
           type="text"
           {...register("problemTitle")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
@@ -241,7 +247,7 @@ function ProblemForm({
           문제 본문
         </div>
         <textarea
-        defaultValue={data.problemContents}
+          defaultValue={data.problemContents}
           {...register("problemContents")}
           className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={8}
@@ -252,7 +258,7 @@ function ProblemForm({
           입력 설명
         </div>
         <textarea
-        defaultValue={data.problemInputContents}
+          defaultValue={data.problemInputContents}
           {...register("problemInputContents")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
@@ -263,7 +269,7 @@ function ProblemForm({
           출력 설명
         </div>
         <textarea
-        defaultValue={data.problemOutputContents}
+          defaultValue={data.problemOutputContents}
           {...register("problemOutputContents")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
@@ -274,7 +280,7 @@ function ProblemForm({
           프롬프트
         </div>
         <textarea
-        defaultValue={data.problemPrompt}
+          defaultValue={data.problemPrompt}
           {...register("problemPrompt")}
           className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
           rows={4}
@@ -330,7 +336,7 @@ function ProblemForm({
       </div>
 
       <div className="flex justify-end">
-        <Link href="/admin/problem-manage/enroll/editor/testcase">
+        <Link href="/admin/problem-manage/edit/editor/testcase" scroll={false}>
           <button
             onClick={() => EnrollTestCase()}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"
@@ -369,7 +375,7 @@ const ProblemContentsContainer = () => {
   });
 
   if (!data) return null;
-  
+
   return <ProblemForm data={data} problemId={problemId} />;
 };
 

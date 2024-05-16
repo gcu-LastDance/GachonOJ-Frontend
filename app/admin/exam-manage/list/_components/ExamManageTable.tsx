@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<examTableData, any>[] = [
   columnHelper("examId", { header: "인덱스" }),
@@ -25,8 +26,14 @@ const columns: ColumnDef<examTableData, any>[] = [
 
 export function ExamManageTable({
   tableData,
+  paginationData,
+  pageNo,
+  setPageNo,
 }: {
   tableData: examTableData[];
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -34,7 +41,6 @@ export function ExamManageTable({
     DeleteMutation.mutate(examId);
   };
 
-  
   const DeleteMutation = useMutation({
     mutationFn: (examId: number) => examDeleteAPI(examId),
     onError: (error) => {
@@ -43,13 +49,10 @@ export function ExamManageTable({
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        
         queryClient.invalidateQueries({ queryKey: ["examList"] });
       }
     },
   });
-
-  
 
   const table = useReactTable({
     data: tableData,
@@ -59,7 +62,6 @@ export function ExamManageTable({
 
   return (
     <div>
-
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -95,9 +97,7 @@ export function ExamManageTable({
                   key={cell.id}
                 >
                   {cell.column.columnDef.header === "제목" ? (
-                    <Link
-                      href={`/admin/exam-manage/${row.original.examId}`}
-                    >
+                    <Link href={`/admin/exam-manage/${row.original.examId}`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -109,13 +109,12 @@ export function ExamManageTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-              
-                  <button className="underline underline-offset-auto"
+                <button
+                  className="underline underline-offset-auto"
                   onClick={() => onDelete(row.original.examId)}
-                  >
-                    삭제
-                  </button>
-          
+                >
+                  삭제
+                </button>
               </td>
             </tr>
           ))}
@@ -131,11 +130,20 @@ export function ExamManageTable({
           </button>
         </Link>
       </div>
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
+      </div>
     </div>
   );
 }
 
 const ExamManageTableConatiner = () => {
+  const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<examListData>({
     queryKey: ["examList"],
     queryFn: () => examListAPI("시험"),
@@ -143,7 +151,14 @@ const ExamManageTableConatiner = () => {
 
   if (!data) return null;
 
-  return <ExamManageTable tableData={data?.result.content} />;
+  return (
+    <ExamManageTable
+      tableData={data?.result.content}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
+    />
+  );
 };
 
 export default ExamManageTableConatiner;

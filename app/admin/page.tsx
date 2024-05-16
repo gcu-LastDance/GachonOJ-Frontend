@@ -1,9 +1,10 @@
 import React from "react";
+import HealthCheck from "./_components/HealthCheck";
 
 export default function page() {
   return (
-    <div className="flex text-PretendardBold text-[5vw]">
-      관리자 메인 대시보드 화면입니다.
+    <div className="flex-wrap">
+      <HealthCheck/>
     </div>
   );
 }
