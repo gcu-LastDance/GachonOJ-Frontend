@@ -12,7 +12,8 @@ import { inquiryDeleteAPI, inquiryListAPI } from "@/api/admin/adminInquiryAPI";
 import { inquiryTableData, inquiryListData } from "@/types/admin/inquiry";
 import columnHelper from "@/lib/columnHelper";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<inquiryTableData, any>[] = [
   columnHelper("inquiryId", { header: "번호" }),
@@ -24,10 +25,15 @@ const columns: ColumnDef<inquiryTableData, any>[] = [
 
 export function InquiryManageTable({
   tableData,
+  paginationData,
+  pageNo,
+  setPageNo,
 }: {
   tableData: inquiryTableData[];
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
-
   const queryClient = useQueryClient();
   const router = useRouter();
   const onDelete = (inquiryId: number) => {
@@ -55,8 +61,6 @@ export function InquiryManageTable({
 
   return (
     <div>
-  
-
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -105,28 +109,45 @@ export function InquiryManageTable({
                   )}
                 </td>
               ))}
-                 <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-
-                  <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.inquiryId)}>
-                    삭제
-                  </button>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <button
+                  className="underline underline-offset-auto"
+                  onClick={() => onDelete(row.original.inquiryId)}
+                >
+                  삭제
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
+      </div>
     </div>
   );
 }
 
 const InquiryManageTableContainer = () => {
+  const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<inquiryListData>({
     queryKey: ["inquiryList"],
     queryFn: inquiryListAPI,
-    
   });
   if (!data) return null;
-  return <InquiryManageTable tableData={data.result.content} />;
+  return (
+    <InquiryManageTable
+      tableData={data.result.content}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
+    />
+  );
 };
 
 export default InquiryManageTableContainer;

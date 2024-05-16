@@ -1,10 +1,9 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 import { ProblemFormData } from "@/types/admin/problem";
-export const problemListAPI = async (search: string) => {
+export const problemListAPI = async (search: string, pageNo: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P11_URL}?search=${encodeURIComponent(
-      search
-    )}`;
+      search)}&pageNo=${encodeURIComponent(pageNo)}`;
 
     const response = await instanceAuth.get(url);
 
@@ -38,7 +37,6 @@ export const problemEnrollAPI = async (data: ProblemFormData) => {
   } catch (error) {
     throw new Error(String(error));
   }
-
 };
 
 export const problemContentAPI = async (problemId: number) => {
@@ -53,12 +51,15 @@ export const problemContentAPI = async (problemId: number) => {
   }
 };
 
-export const problemModifyAPI = async (problemId: number, data: ProblemFormData) => {
+export const problemModifyAPI = async (
+  problemId: number,
+  data: ProblemFormData
+) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P13_URL}/${encodeURIComponent(
       problemId
     )}`;
-    const response = await instanceAuth.put(url,data);
+    const response = await instanceAuth.put(url, data);
     return response.data;
   } catch (error) {
     throw new Error(String(error));

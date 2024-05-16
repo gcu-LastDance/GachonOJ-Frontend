@@ -1,76 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import Pagination from "react-js-pagination";
+import "./PaginationBar.css";
 
-export default function PaginationBar() {
+const PaginationBar = ({
+  pageSize,
+  totalElements,
+  pageNo,
+  setPageNo,
+}: {
+  pageSize: number;
+  totalElements: number;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
+}) => {
+  const handlePageChange = (page: number) => {
+    setPageNo(page);
+  };
   return (
     <div className="flex">
-      <div className="mx-auto w-[24vw] grid grid-cols-12 justify-center items-center border-[0.08vw] border-realGrey overflow-hidden rounded-lg font-PretendardLight text-realGrey">
-        <button type="button" className="py-[0.6vh]">
-          ⟨
-        </button>
-        <button type="button" className="bg-primaryBlue text-white py-[0.6vh]">
-          1
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          2
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          3
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          4
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          5
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          6
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          7
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          8
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          9
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          10
-        </button>
-        <button
-          type="button"
-          className="py-[0.6vh] border-x-[0.03vw] border-realGrey"
-        >
-          ⟩
-        </button>
-      </div>
+      <Pagination
+        activePage={pageNo}
+        itemsCountPerPage={pageSize}
+        totalItemsCount={totalElements}
+        pageRangeDisplayed={10}
+        prevPageText={"<"}
+        nextPageText={">"}
+        onChange={handlePageChange}
+      />
     </div>
   );
-}
+};
+
+export default PaginationBar;

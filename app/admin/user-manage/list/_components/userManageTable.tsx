@@ -9,8 +9,9 @@ import {
 import { userDeleteAPI, userListAPI } from "@/api/admin/adminUserAPI";
 import { userListData, userTableData } from "@/types/admin/user";
 import columnHelper from "@/lib/columnHelper";
-import {useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<userTableData, any>[] = [
   columnHelper("memberId", { header: "번호" }),
@@ -22,8 +23,17 @@ const columns: ColumnDef<userTableData, any>[] = [
   columnHelper("memberCreatedDate", { header: "가입일" }),
 ];
 
-
-export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
+export function UserManageTable({
+  tableData,
+  paginationData,
+  pageNo,
+  setPageNo,
+}: {
+  tableData: userTableData[];
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
+}) {
   const queryClient = useQueryClient();
 
   const onDelete = (memberId: number) => {
@@ -40,9 +50,8 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
       if (data.success) {
         queryClient.invalidateQueries({ queryKey: ["userList"] });
       }
-    }})
-
-  
+    },
+  });
 
   const table = useReactTable({
     data: tableData,
@@ -52,7 +61,6 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
 
   return (
     <div>
-
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -95,21 +103,21 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
                   href={{
                     pathname: "edit",
                     query: { memberId: row.original.memberId },
-                  }}  // as ="edit"
+                  }} // as ="edit"
                 >
                   <button className="underline underline-offset-auto">
                     정보 수정
                   </button>
-                 
                 </Link>
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                
-                <button className="underline underline-offset-auto" onClick={() => onDelete(row.original.memberId)}>
+                <button
+                  className="underline underline-offset-auto"
+                  onClick={() => onDelete(row.original.memberId)}
+                >
                   정보 삭제
                 </button>
-
               </td>
             </tr>
           ))}
@@ -125,18 +133,34 @@ export function UserManageTable({ tableData }: { tableData: userTableData[] }) {
           </button>
         </Link>
       </div>
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
+      </div>
     </div>
   );
 }
 
 const UserManageTableContainer = () => {
+  const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<userListData>({
-    queryKey: ["userList"],
+    queryKey: ["userList", pageNo],
     queryFn: userListAPI,
   });
 
   if (!data) return null;
-  return <UserManageTable tableData={data?.result.content} />;
+  return (
+    <UserManageTable
+      tableData={data?.result.content}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
+    />
+  );
 };
 
 export default UserManageTableContainer;

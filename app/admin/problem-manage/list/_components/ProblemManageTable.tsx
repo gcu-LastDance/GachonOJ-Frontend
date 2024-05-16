@@ -10,8 +10,8 @@ import { problemDeleteAPI, problemListAPI } from "@/api/admin/adminProblemAPI";
 import { problemListData, problemTableData } from "@/types/admin/problem";
 import columnHelper from "@/lib/columnHelper";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { GrSearch } from "react-icons/gr";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<problemTableData, any>[] = [
   columnHelper("problemId", { header: "번호" }),
@@ -28,14 +28,18 @@ export function ProblemManageTable({
   tableData,
   searchTerm,
   setSearchTerm,
+  paginationData,
+  pageNo,
+  setPageNo
 }: {
   tableData: problemTableData[];
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
-
   const queryClient = useQueryClient();
-
 
   const [showInput, setShowInput] = useState(false);
 
@@ -54,7 +58,6 @@ export function ProblemManageTable({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
 
   const onDelete = (problemId: number) => {
     DeleteMutation.mutate(problemId);
@@ -75,7 +78,6 @@ export function ProblemManageTable({
 
   return (
     <div>
-
       <div className="flex justify-end">
         {showInput ? (
           <input
@@ -146,11 +148,12 @@ export function ProblemManageTable({
               </td>
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-            
-                  <button className="underline underline-offset-auto"onClick={() => onDelete(row.original.problemId)}>
-                    삭제
-                  </button>
-
+                <button
+                  className="underline underline-offset-auto"
+                  onClick={() => onDelete(row.original.problemId)}
+                >
+                  삭제
+                </button>
               </td>
             </tr>
           ))}
@@ -166,6 +169,14 @@ export function ProblemManageTable({
           </button>
         </Link>
       </div>
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
+      </div>
     </div>
   );
 }
@@ -173,6 +184,7 @@ export function ProblemManageTable({
 const ProblemManageTableContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [pageNo, setPageNo] = useState(1);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -182,8 +194,8 @@ const ProblemManageTableContainer = () => {
   }, [searchTerm]);
 
   const { data } = useQuery<problemListData>({
-    queryKey: ["problemList", debouncedSearchTerm],
-    queryFn: () => problemListAPI(debouncedSearchTerm),
+    queryKey: ["problemList", debouncedSearchTerm, pageNo],
+    queryFn: () => problemListAPI(debouncedSearchTerm, pageNo),
   });
 
   if (!data) return null;
@@ -192,6 +204,9 @@ const ProblemManageTableContainer = () => {
       tableData={data?.result?.content}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
     />
   );
 };

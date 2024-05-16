@@ -13,6 +13,7 @@ export interface problemTableData {
 
 export interface problemListData {
   result: {
+    [x: string]: any;
     content: problemTableData[];
   };
 }
