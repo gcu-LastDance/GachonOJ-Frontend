@@ -1,10 +1,10 @@
 import React from "react";
-import HealthCheck from "./_components/HealthCheck";
+import AiToken from "./_components/AiToken";
 
 export default function page() {
   return (
     <div className="flex-wrap">
-      <HealthCheck/>
+      <AiToken/>
     </div>
   );
 }

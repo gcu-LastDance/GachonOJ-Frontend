@@ -6,16 +6,15 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { examListAPI } from "@/api/professor/professorExamAPI";
+import { examDeleteAPI, examListAPI } from "@/api/professor/professorExamAPI";
 import { examListData, examTableData } from "@/types/professor/exam";
 
 import columnHelper from "@/lib/columnHelper";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<examTableData, any>[] = [
-  columnHelper("examId", { header: "인덱스" }),
   columnHelper("examTitle", { header: "제목" }),
   columnHelper("examMemo", { header: "메모" }),
   columnHelper("examStatus", { header: "상태" }),
@@ -36,10 +35,25 @@ export function ExamTable({
 }) {
   const router = useRouter();
 
-  const [data, setData] = useState<examTableData[]>(tableData);
+  const queryClient = useQueryClient();
 
+  const onDelete = (memberId: number) => {
+    DeleteMutation.mutate(memberId);
+  };
+  const DeleteMutation = useMutation({
+    mutationFn: (examId: number) => examDeleteAPI(examId),
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        queryClient.invalidateQueries({ queryKey: ["ProfessorexamList"] });
+      }
+    },
+  });
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -52,6 +66,9 @@ export function ExamTable({
           {/* 테이블 헤더 생성 */}
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
+              <th className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0">
+                번호
+              </th>
               {headerGroup.headers.map((header) => (
                 <th
                   className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
@@ -75,6 +92,11 @@ export function ExamTable({
               key={row.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
+              <td className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0">
+                {row.index +
+                  1 +
+                  paginationData.pageable.pageSize * (pageNo - 1)}
+              </td>
               {row.getVisibleCells().map((cell) => (
                 <td
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
@@ -93,14 +115,12 @@ export function ExamTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/admin/exam-manage/list`}>
-                  <button
-                    className="underline underline-offset-auto"
-                    // onClick={() => onDelete(row.original.examId)}
-                  >
-                    삭제
-                  </button>
-                </Link>
+                <button
+                  className="underline underline-offset-auto"
+                  onClick={() => onDelete(row.original.examId)}
+                >
+                  삭제
+                </button>
               </td>
             </tr>
           ))}

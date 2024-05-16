@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<examTableData, any>[] = [
-  columnHelper("examId", { header: "인덱스" }),
   columnHelper("examTitle", { header: "제목" }),
   columnHelper("examMemo", { header: "메모" }),
   columnHelper("memberNickname", { header: "생성자" }),
@@ -68,6 +67,9 @@ export function ExamManageTable({
           {/* 테이블 헤더 생성 */}
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
+              <th className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0">
+                번호
+              </th>
               {headerGroup.headers.map((header) => (
                 <th
                   className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
@@ -91,6 +93,11 @@ export function ExamManageTable({
               key={row.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
+              <td className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0">
+                {row.index +
+                  1 +
+                  paginationData.pageable.pageSize * (pageNo - 1)}
+              </td>
               {row.getVisibleCells().map((cell) => (
                 <td
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
