@@ -35,7 +35,7 @@ export default function IdeResultWindow({
 
   return (
     <div className="border-t-[0.5vh]">
-      <div className="font-PretendardSemiBold text-[1.2vw] text-darkGrey border-b-[0.2vh] h-[5vh] items-center flex pl-[0.5vw]">
+      <div className="font-PretendardSemiBold text-[1.2vw] text-darkGrey border-b-[0.2vh] h-[5vh] items-center flex pl-[0.9vw]">
         실행 결과
       </div>
       <table className="w-full">

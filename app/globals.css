@@ -59,6 +59,13 @@
   }
 }
 
+body {
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
 .blink {
   animation: blink 1s step-end infinite;
 }

@@ -29,9 +29,9 @@ export default function IdeMain({
   return (
     <div>
       <div className="flex justify-between h-[5.5vh] w-full items-center bg-white px-[1vw] border-b-[0.15vw] z-0">
-        <span className="font-PretendardRegular text-[1.2vw]">
+        <div className="font-PretendardSemiBold text-[1.2vw] text-darkGrey h-[5vh] items-center flex">
           {programLangMap[programLang ?? "C"]}
-        </span>
+        </div>
         <Link href={`/algorithm-ide/setting`}>
           <IoSettingsOutline className="text-[1.7vw] text-primaryDark" />
         </Link>

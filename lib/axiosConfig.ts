@@ -50,7 +50,7 @@ instanceAuth.interceptors.response.use(
       window.localStorage.removeItem("programLang");
       window.location.href = "/login";
     } else {
-      window.location.href = "/";
+      window.location.href = "/main";
     }
     return Promise.reject(err);
   }
