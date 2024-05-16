@@ -37,7 +37,7 @@ export const problemTableGuestAPI = async ({
       const response = await instanceNonAuth.get(url);
       console.log(url);
       console.log(response);
-      return response.data.result.content;
+      return response.data.result;
     } else if (diff) {
       const url = `${
         process.env.NEXT_PUBLIC_P01_URL as string
@@ -45,7 +45,7 @@ export const problemTableGuestAPI = async ({
       const response = await instanceNonAuth.get(url);
       console.log(url);
       console.log(response);
-      return response.data.result.content;
+      return response.data.result;
     } else if (sortType) {
       const url = `${
         process.env.NEXT_PUBLIC_P01_URL as string
@@ -53,7 +53,7 @@ export const problemTableGuestAPI = async ({
       const response = await instanceNonAuth.get(url);
       console.log(url);
       console.log(response);
-      return response.data.result.content;
+      return response.data.result;
     } else {
       const url = `${
         process.env.NEXT_PUBLIC_P01_URL as string
@@ -61,7 +61,7 @@ export const problemTableGuestAPI = async ({
       const response = await instanceNonAuth.get(url);
       console.log(url);
       console.log(response);
-      return response.data.result.content;
+      return response.data.result;
     }
   } catch (error) {
     throw new Error(String(error));
@@ -70,14 +70,18 @@ export const problemTableGuestAPI = async ({
 
 export const memberProblemTableAPI = async ({
   menu,
+  pageNum,
 }: {
   menu: ProfileProblemType;
+  pageNum: number;
 }) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P20_URL as string}?sortType=${menu}`;
+    const url = `${
+      process.env.NEXT_PUBLIC_P20_URL as string
+    }?pageNo=${pageNum}&type=${menu}`;
     const response = await instanceAuth.get(url);
     console.log(response.data);
-    return response.data.result.content;
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }

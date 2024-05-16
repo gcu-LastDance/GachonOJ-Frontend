@@ -53,13 +53,13 @@ export const rankingTableAPI = async ({
         process.env.NEXT_PUBLIC_M12_URL as string
       }?page=${pageNum}`;
       const response = await instanceNonAuth.get(url);
-      return response.data.result.content;
+      return response.data.result;
     } else {
       const url = `${
         process.env.NEXT_PUBLIC_M12_URL as string
       }?page=${pageNum}&search=${searchKeyword}`;
       const response = await instanceNonAuth.get(url);
-      return response.data.result.content;
+      return response.data.result;
     }
   } catch (error) {
     throw new Error(String(error));

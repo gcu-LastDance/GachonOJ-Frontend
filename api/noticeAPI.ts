@@ -18,7 +18,7 @@ export const noticeTableAPI = async () => {
     const response = await instanceNonAuth.get(
       process.env.NEXT_PUBLIC_B06_URL as string
     );
-    return response.data.result.content;
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }

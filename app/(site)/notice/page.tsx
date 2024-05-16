@@ -9,9 +9,6 @@ export default function page() {
       <div className="mt-[2vh]">
         <NoticeTable />
       </div>
-      <div className="mt-[3.5vh]">
-        <PaginationBar />
-      </div>
     </div>
   );
 }

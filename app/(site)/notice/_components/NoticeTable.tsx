@@ -1,6 +1,7 @@
 "use client";
 
 import { noticeTableAPI } from "@/api/noticeAPI";
+import PaginationBar from "@/components/pagination/PaginationBar";
 import columnHelper from "@/lib/columnHelper";
 import { NoticeTableData } from "@/types/notice";
 import { useQuery } from "@tanstack/react-query";
@@ -11,7 +12,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const columns: ColumnDef<NoticeTableData, any>[] = [
   columnHelper("noticeTitle", {
@@ -26,20 +27,22 @@ const columns: ColumnDef<NoticeTableData, any>[] = [
 ];
 
 export default function NoticeTable() {
-  const { data: mainNoticeTabledata } = useQuery<NoticeTableData[]>({
+  const [pageNum, setPageNum] = useState<number>(1);
+
+  const { data: mainNoticeTabledata } = useQuery({
     queryKey: ["mainNoticeTable"],
     queryFn: noticeTableAPI,
     refetchOnMount: "always",
   });
 
   const table = useReactTable({
-    data: mainNoticeTabledata || [],
+    data: mainNoticeTabledata?.content || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="flex px-[2vw] mt-[1.5vh]">
+    <div className="flex flex-col px-[2vw] mt-[1.5vh] h-[65vh]">
       <table className="w-[58vw]">
         <thead>
           {table.getHeaderGroups().map((headerGroup, index) => (
@@ -98,6 +101,16 @@ export default function NoticeTable() {
           ))}
         </tbody>
       </table>
+      <div className="mt-auto flex justify-center items-center mb-[3vh]">
+        {mainNoticeTabledata && (
+          <PaginationBar
+            totalElements={mainNoticeTabledata.totalElements}
+            pageSize={mainNoticeTabledata.pageable.pageSize}
+            pageNo={pageNum}
+            setPageNo={setPageNum}
+          />
+        )}
+      </div>
     </div>
   );
 }
