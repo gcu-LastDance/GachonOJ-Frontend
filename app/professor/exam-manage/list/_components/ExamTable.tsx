@@ -12,6 +12,7 @@ import { examListData, examTableData } from "@/types/professor/exam";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<examTableData, any>[] = [
   columnHelper("examId", { header: "인덱스" }),
@@ -24,11 +25,16 @@ const columns: ColumnDef<examTableData, any>[] = [
 
 export function ExamTable({
   tableData,
+  paginationData,
+  pageNo,
+  setPageNo,
 }: {
   tableData: examTableData[];
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const router = useRouter();
-
 
   const [data, setData] = useState<examTableData[]>(tableData);
 
@@ -40,7 +46,6 @@ export function ExamTable({
 
   return (
     <div>
-
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -76,9 +81,7 @@ export function ExamTable({
                   key={cell.id}
                 >
                   {cell.column.columnDef.header === "제목" ? (
-                    <Link
-                      href={`/admin/exam-manage/${row.original.examId}`}
-                    >
+                    <Link href={`/admin/exam-manage/${row.original.examId}`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -91,8 +94,9 @@ export function ExamTable({
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link href={`/admin/exam-manage/list`}>
-                  <button className="underline underline-offset-auto"
-                  // onClick={() => onDelete(row.original.examId)}
+                  <button
+                    className="underline underline-offset-auto"
+                    // onClick={() => onDelete(row.original.examId)}
                   >
                     삭제
                   </button>
@@ -112,19 +116,35 @@ export function ExamTable({
           </button>
         </Link>
       </div>
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
+      </div>
     </div>
   );
 }
 
 const ExamManageTableConatiner = () => {
+  const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<examListData>({
     queryKey: ["ProfessorexamList"],
-    queryFn: examListAPI
+    queryFn: examListAPI,
   });
 
   if (!data) return null;
 
-  return <ExamTable tableData={data?.result.content} />;
+  return (
+    <ExamTable
+      tableData={data?.result.content}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
+    />
+  );
 };
 
 export default ExamManageTableConatiner;

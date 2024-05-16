@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -86,6 +84,7 @@ export function InquiryManageTable({
         <tbody>
           {/* 페이지에 해당하는 데이터 행들을 렌더링 */}
           {table.getRowModel().rows.map((row) => (
+           
             <tr
               key={row.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
