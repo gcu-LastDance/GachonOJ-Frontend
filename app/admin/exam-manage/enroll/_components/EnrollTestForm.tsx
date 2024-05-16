@@ -14,20 +14,18 @@ export default function EnrollTestForm() {
   const router = useRouter();
 
   const initialData = {
-    
-      problemMemoryLimit: 0,
-      problemTimeLimit: 0,
-      problemDiff: 0,
-      problemTitle: "",
-      problemContents: "",
-      problemInputContents: "",
-      problemOutputContents: "",
-      problemClass: "",
-      problemStatus: "",
-      problemPrompt: "",
-      testcases: [],
-    
-    }
+    problemMemoryLimit: 0,
+    problemTimeLimit: 0,
+    problemDiff: 0,
+    problemTitle: "",
+    problemContents: "",
+    problemInputContents: "",
+    problemOutputContents: "",
+    problemClass: "",
+    problemStatus: "",
+    problemPrompt: "",
+    testcases: [],
+  };
 
   const { register, handleSubmit, control } = useForm();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -38,7 +36,7 @@ export default function EnrollTestForm() {
   const [formData, setFormData] = useState<TestProblemFormData[]>([
     {
       id: 1,
-      data: initialData
+      data: initialData,
     },
   ]);
   const [activeForm, setActiveForm] = useState(1);
@@ -76,7 +74,7 @@ export default function EnrollTestForm() {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data.success) {      
+      if (data.success) {
         router.push("/admin/exam-manage/list");
       }
     },
@@ -251,12 +249,6 @@ export default function EnrollTestForm() {
                     className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
                   >
                     검색하기
-                  </button>
-                  <button
-                    type="button"
-                    className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
-                  >
-                    추가하기
                   </button>
                 </div>
                 <div className="flex-col w-fit container bg-semiGrey">
