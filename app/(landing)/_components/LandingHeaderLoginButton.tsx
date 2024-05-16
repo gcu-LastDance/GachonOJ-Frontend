@@ -7,7 +7,7 @@ export default function LandingHeaderLoginButton({
   activeIndex: number;
 }) {
   return (
-    <Link href="/logi{n">
+    <Link href="/login">
       <div
         className={`${
           activeIndex === 0 ? "border-white" : "border-primaryBlue"

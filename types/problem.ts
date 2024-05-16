@@ -40,12 +40,22 @@ export interface SubmitHistoryData {
   submitLang: string;
 }
 
-interface TestcaseData {
+export interface TestcaseData {
   [input: string]: string;
+}
+
+export interface TestcaseSetData {
+  input: string;
+  output: string;
 }
 
 export interface ProblemSolutionExcuteData {
   code: string;
   language: string;
   testcase: TestcaseData;
+}
+
+export interface ProblemExcuteResultData {
+  output: string;
+  result: boolean;
 }

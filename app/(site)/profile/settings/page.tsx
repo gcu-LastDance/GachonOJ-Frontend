@@ -126,8 +126,8 @@ export default function page() {
                       : URL.createObjectURL(memberImg)
                   }
                   alt="Member Profile Image"
-                  width={100}
-                  height={100}
+                  width={120}
+                  height={120}
                 />
               )}
               <input

@@ -29,7 +29,7 @@ export default function page() {
       <FullpageContainer
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
-        transitionDuration={700}
+        transitionDuration={600}
       >
         <FullpageSection>
           <div className="flex w-screen font-PretendardExtraBold text-[3.7vw] items-center justify-center text-white space-y-[4vh] bg-gradient-to-b from-primaryBlue to-[#eceff7] pb-[20vh]">

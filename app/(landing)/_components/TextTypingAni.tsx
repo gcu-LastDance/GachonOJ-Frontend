@@ -33,7 +33,7 @@ export default function TextTypingAni({ text }: { text: string }) {
       } else {
         setTextCount((prevCount) => prevCount + 1);
       }
-    }, 100); // 설정한 초만큼 일정한 간격마다 실행된다
+    }, 60); // 설정한 초만큼 일정한 간격마다 실행된다
 
     return () => clearInterval(typingInterval); //컴포넌트가 마운트 해제되거나, 재렌더링 될 때마다 setInterval를 정리하는 함수를 반환함.
   }, [text, textCount, isTypingPaused]); //해당 상태들이 변경될 때마다 useEffect가 다시 실행 됨

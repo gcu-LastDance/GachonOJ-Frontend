@@ -1,3 +1,5 @@
+"use client";
+
 import { hoverProfileAPI } from "@/api/memberAPI";
 import RankBadge from "@/components/badge/RankBadge";
 import useUserStore from "@/store/useUserStore";
@@ -111,7 +113,6 @@ export default function HeaderMemberDropdown() {
                 onClick={handleLogout}
                 className="flex items-center px-[1vw] py-[1.6vh] hover:bg-gray-100"
               >
-                z``
                 <IoLogOutOutline className="text-[1.3vw] text-primaryRed mr-[0.8vw]" />
                 <span className="font-PretendardRegular text-[0.9vw] text-primaryRed">
                   로그아웃

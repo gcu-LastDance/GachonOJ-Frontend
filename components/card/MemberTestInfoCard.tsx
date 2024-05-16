@@ -34,15 +34,15 @@ export default function MemberTestInfoCard() {
       <p className="font-PretendardRegular text-[1.1vw] text-primaryDark">
         {memberPermisionMap[userPermission as permissionType]}
       </p>
-      <div className="border-[0.2vw] border-realGrey rounded-full flex w-[7vw] h-[7vw] justify-center items-center my-[1.5vh]">
+      <div className="border-[0.2vw] border-realGrey rounded-full flex w-[7vw] h-[7vw] justify-center items-center my-[1.5vh] overflow-hidden">
         {!userImg || userImg === "" ? (
           <CiUser className="text-[5vw] text-semiGrey" />
         ) : (
           <Image
             src={userImg}
             alt="Member Profile Image"
-            width={100}
-            height={100}
+            width={150}
+            height={150}
           />
         )}
       </div>
