@@ -38,6 +38,24 @@ instanceAuth.interceptors.request.use(
   }
 );
 
+// 응답에 대한 리턴값 설정과 오류 발생에 대한 처리
+instanceAuth.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  async function (err) {
+    const originalConfig = err.config;
+    if (err.response && err.response.status == 401) {
+      window.localStorage.removeItem("user");
+      window.localStorage.removeItem("programLang");
+      window.location.href = "/login";
+    } else {
+      window.location.href = "/";
+    }
+    return Promise.reject(err);
+  }
+);
+
 instanceAuthWithMultipart.interceptors.request.use(
   (config) => {
     const userString = localStorage.getItem("user");

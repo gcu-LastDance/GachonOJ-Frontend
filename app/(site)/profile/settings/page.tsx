@@ -115,7 +115,7 @@ export default function page() {
       <div className="flex flex-col bg-white border-[0.1vw] border-semiSemiGrey rounded-lg overflow-hidden w-full h-[75vh]">
         <div className="flex items-center px-[2vw] py-[1vh] mt-[2vh]">
           <div className="flex flex-col items-center">
-            <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden relative">
+            <div className="border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden relative">
               {!memberImg || memberImg === "" ? (
                 <CiUser className="text-[4vw] text-semiGrey" />
               ) : (

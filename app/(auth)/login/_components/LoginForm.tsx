@@ -40,7 +40,7 @@ export default function LoginForm() {
         );
         setIsLoginSuccessful(true);
         router.push("/main");
-      } else if (data.data.code === 401) {
+      } else if (data.data.code === 4011) {
         setIsLoginReject(true);
       }
     },
@@ -79,7 +79,7 @@ export default function LoginForm() {
               isLoginReject
                 ? "text-primaryRed text-[1vw]"
                 : "text-realGrey text-[0.9vw]"
-            } font-PretendardLight pl-[0.5vw] mt-[0.5vh]`}
+            } font-PretendardLight mt-[0.5vh]`}
           >
             {!isLoginReject
               ? "* 가천대학교 이메일로 로그인이 가능합니다."

@@ -56,7 +56,6 @@ export default function IdeFooter({
 
   const handleSolutionExcute = () => {
     const testcaseData = convertTestcaseSetToData(testcase);
-
     problemSolutionExcute.mutate({
       problemId: Number(params.problemId),
       data: { code: code, language: "Java", testcase: testcaseData },
@@ -75,7 +74,7 @@ export default function IdeFooter({
       </Link>
       <button
         type="button"
-        className="border-[0.13vw] w-[5vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-auto"
+        className="flex border-[0.13vw] w-[5vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-auto items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">
           저장
@@ -93,7 +92,7 @@ export default function IdeFooter({
       <button
         type="button"
         onClick={handleSolutionExcute}
-        className="border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-[0.5vw]"
+        className="flex border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-[0.5vw] items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">
           코드 실행
@@ -101,7 +100,7 @@ export default function IdeFooter({
       </button>
       <button
         type="button"
-        className="border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] bg-primaryRed border-primaryRed ml-[0.5vw]"
+        className="flex border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] bg-primaryRed border-primaryRed ml-[0.5vw] items-center justify-center"
       >
         <span className="font-PretendardMedium text-white text-[0.8vw]">
           제출
