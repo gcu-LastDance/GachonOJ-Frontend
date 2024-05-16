@@ -12,7 +12,7 @@ export const inquiryTableAPI = async () => {
       process.env.NEXT_PUBLIC_B09_URL as string
     );
     console.log(response.data.result.content);
-    return response.data.result.content;
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }

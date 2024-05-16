@@ -43,13 +43,22 @@ export default function RankingTable() {
   const [debouncedSearchKeyword, setDebouncedSearchKeyword] =
     useState(searchKeyword);
   const [pageNum, setPageNum] = useState<number>(1);
+  const [debouncedPageNum, setDebouncedPageNum] = useState(pageNum);
 
-  const { data: rakingData } = useQuery<RankingTableData[]>({
-    queryKey: ["rankingTable", pageNum, debouncedSearchKeyword],
+  const { data: rakingData } = useQuery({
+    queryKey: ["rankingTable", debouncedPageNum, debouncedSearchKeyword],
     queryFn: () =>
-      rankingTableAPI({ pageNum, searchKeyword: debouncedSearchKeyword }),
+      rankingTableAPI({
+        pageNum: debouncedPageNum,
+        searchKeyword: debouncedSearchKeyword,
+      }),
     refetchOnMount: "always",
   });
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedPageNum(pageNum), 300);
+    return () => clearTimeout(timeout);
+  }, [pageNum]);
 
   useEffect(() => {
     const timeout = setTimeout(
@@ -60,13 +69,13 @@ export default function RankingTable() {
   }, [searchKeyword]);
 
   const table = useReactTable({
-    data: rakingData || [],
+    data: rakingData?.content || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-[73vh]">
       <div className="h-[5.5vh] my-[1.5vh] mx-[1.5vw] flex items-end">
         <div className="flex ml-auto border-[0.1vw] border-realGrey h-[5vh] w-[12vw] rounded-lg px-[0.5vw] space-x-[0.3vw] items-center">
           <IoMdSearch className="text-[1vw] text-primaryDark" />
@@ -127,8 +136,15 @@ export default function RankingTable() {
           ))}
         </tbody>
       </table>
-      <div className="mt-[2.3vh]">
-        <PaginationBar />
+      <div className="mt-auto flex justify-center items-center mb-[3vh]">
+        {rakingData && (
+          <PaginationBar
+            totalElements={rakingData?.totalElements}
+            pageSize={rakingData?.pageable?.pageSize}
+            pageNo={pageNum}
+            setPageNo={setPageNum}
+          />
+        )}
       </div>
     </div>
   );

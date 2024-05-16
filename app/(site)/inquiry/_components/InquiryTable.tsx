@@ -1,6 +1,7 @@
 "use client";
 
 import { inquiryTableAPI } from "@/api/inquiryAPI";
+import PaginationBar from "@/components/pagination/PaginationBar";
 import columnHelper from "@/lib/columnHelper";
 import { InquiryTableData } from "@/types/inquiry";
 import { useQuery } from "@tanstack/react-query";
@@ -11,7 +12,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const columns: ColumnDef<InquiryTableData, any>[] = [
   columnHelper("inquiryTitle", {
@@ -33,20 +34,22 @@ const columns: ColumnDef<InquiryTableData, any>[] = [
 ];
 
 export default function InquiryTable() {
-  const { data: inquiryTabledata } = useQuery<InquiryTableData[]>({
+  const [pageNum, setPageNum] = useState<number>(1);
+
+  const { data: inquiryTabledata } = useQuery({
     queryKey: ["inquiryTable"],
     queryFn: inquiryTableAPI,
     refetchOnMount: "always",
   });
 
   const table = useReactTable({
-    data: inquiryTabledata || [],
+    data: inquiryTabledata?.content || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="flex px-[2vw] mt-[1.5vh]">
+    <div className="flex flex-col px-[2vw] mt-[1.5vh] h-[60vh]">
       <table className="w-[58vw]">
         <thead>
           {table.getHeaderGroups().map((headerGroup, index) => (
@@ -105,6 +108,16 @@ export default function InquiryTable() {
           ))}
         </tbody>
       </table>
+      <div className="mt-auto flex justify-center items-center mb-[3vh]">
+        {inquiryTabledata && (
+          <PaginationBar
+            totalElements={inquiryTabledata?.totalElements}
+            pageSize={inquiryTabledata?.pageable?.pageSize}
+            pageNo={pageNum}
+            setPageNo={setPageNum}
+          />
+        )}
+      </div>
     </div>
   );
 }

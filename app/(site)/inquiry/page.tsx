@@ -1,4 +1,3 @@
-import PaginationBar from "@/components/pagination/PaginationBar";
 import React from "react";
 import InquiryTable from "./_components/InquiryTable";
 import Link from "next/link";
@@ -21,9 +20,6 @@ export default function page() {
       </div>
       <div className="mt-[2vh]">
         <InquiryTable />
-      </div>
-      <div className="mt-[3.5vh]">
-        <PaginationBar />
       </div>
     </div>
   );

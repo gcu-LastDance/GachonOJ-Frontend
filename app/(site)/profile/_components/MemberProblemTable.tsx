@@ -16,7 +16,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 
 const columns: ColumnDef<ProblemTableData, any>[] = [
   columnHelper("problemDiff", {
@@ -46,32 +47,56 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
   }),
   columnHelper("isBookmarked", {
     header: "북마크",
+    cell: (value) => {
+      return value ? (
+        <div className="text-[1.2vw] flex items-center justify-center">
+          <IoBookmark />
+        </div>
+      ) : (
+        <div className="text-[1.2vw] flex items-center justify-center">
+          <IoBookmarkOutline />
+        </div>
+      );
+    },
   }),
 ];
 
 export default function MemberProblemTable() {
-  const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [menu, setMenu] = useState<ProfileProblemType>("bookmark");
+  const [debouncedMenu, setDebouncedMenu] = useState(menu);
+  const [pageNum, setPageNum] = useState<number>(1);
+  const [debouncedPageNum, setDebouncedPageNum] = useState(pageNum);
 
   const activeMenuCss =
     "flex w-[16.3vw] h-[5.5vh] items-center justify-center bg-white";
   const inactiveMenuCss =
     "flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-semiSemiGrey bg-lightGrey";
 
-  const { data: problemData } = useQuery<ProblemTableData[]>({
-    queryKey: ["problemTableGuest"],
-    queryFn: () => memberProblemTableAPI({ menu: menu }),
+  const { data: problemData } = useQuery({
+    queryKey: ["problemTableGuest", debouncedMenu, debouncedPageNum],
+    queryFn: () =>
+      memberProblemTableAPI({ menu: debouncedMenu, pageNum: debouncedPageNum }),
     refetchOnMount: "always",
   });
 
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedPageNum(pageNum), 300);
+    return () => clearTimeout(timeout);
+  }, [pageNum]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedMenu(menu), 300);
+    return () => clearTimeout(timeout);
+  }, [menu]);
+
   const table = useReactTable({
-    data: problemData || [],
+    data: problemData?.content || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center h-[70vh]">
       <div className="h-[5.5vh] flex mb-[2.5vh]">
         <button
           type="button"
@@ -169,8 +194,15 @@ export default function MemberProblemTable() {
           ))}
         </tbody>
       </table>
-      <div className="mt-[2.3vh]">
-        <PaginationBar />
+      <div className="mt-auto flex justify-center items-center mb-[3vh]">
+        {problemData && (
+          <PaginationBar
+            totalElements={problemData?.totalElements}
+            pageSize={problemData?.pageable?.pageSize}
+            pageNo={pageNum}
+            setPageNo={setPageNum}
+          />
+        )}
       </div>
     </div>
   );

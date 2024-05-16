@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 
 const columns: ColumnDef<ProblemTableData, any>[] = [
   columnHelper("problemDiff", {
@@ -46,6 +47,17 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
   }),
   columnHelper("isBookmarked", {
     header: "북마크",
+    cell: (value) => {
+      return value ? (
+        <div className="text-[1vw] flex items-center justify-center">
+          <IoBookmark />
+        </div>
+      ) : (
+        <div className="text-[1vw] flex items-center justify-center">
+          <IoBookmarkOutline />
+        </div>
+      );
+    },
   }),
 ];
 
@@ -54,6 +66,7 @@ type SortType = "ASC" | "DESC";
 export default function ProblemTable() {
   const { token } = useUserStore();
   const [pageNum, setPageNum] = useState<number>(1);
+  const [debouncedPageNum, setDebouncedPageNum] = useState(pageNum);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [debouncedSearchKeyword, setDebouncedSearchKeyword] =
     useState(searchKeyword);
@@ -63,22 +76,27 @@ export default function ProblemTable() {
   const [debouncedSortType, setDebouncedSortType] =
     useState<SortType>(sortType);
 
-  const { data: problemData } = useQuery<ProblemTableData[]>({
+  const { data: problemData } = useQuery({
     queryKey: [
       "problemTableGuest",
-      pageNum,
+      debouncedPageNum,
       debouncedSearchKeyword,
       debouncedDiff,
       debouncedSortType,
     ],
     queryFn: () =>
       problemTableGuestAPI({
-        pageNum,
+        pageNum: debouncedPageNum,
         searchKeyword: debouncedSearchKeyword,
         diff: debouncedDiff,
         sortType: debouncedSortType,
       }),
   });
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedPageNum(pageNum), 300);
+    return () => clearTimeout(timeout);
+  }, [pageNum]);
 
   useEffect(() => {
     const timeout = setTimeout(
@@ -103,13 +121,13 @@ export default function ProblemTable() {
   };
 
   const table = useReactTable({
-    data: problemData || [],
+    data: problemData?.content || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-[73vh]">
       <div className="h-[5.5vh] my-[1.5vh] mx-[1.5vw] flex items-end">
         <div className="flex space-x-[1.1vw]">
           <button
@@ -208,8 +226,15 @@ export default function ProblemTable() {
           ))}
         </tbody>
       </table>
-      <div className="mt-[2.3vh]">
-        <PaginationBar />
+      <div className="mt-auto flex justify-center items-center mb-[3vh]">
+        {problemData && (
+          <PaginationBar
+            totalElements={problemData?.totalElements}
+            pageSize={problemData?.pageable?.pageSize}
+            pageNo={pageNum}
+            setPageNo={setPageNum}
+          />
+        )}
       </div>
     </div>
   );
