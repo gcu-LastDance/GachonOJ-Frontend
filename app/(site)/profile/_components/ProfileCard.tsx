@@ -16,15 +16,15 @@ export default function ProfileCard({
 
   return (
     <div className="relative flex h-[18vh] items-center px-[2vw] py-[1vh]">
-      <div className="border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center">
+      <div className="border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center relative overflow-hidden">
         {!userImg || userImg === "" ? (
           <CiUser className="text-[4vw] text-semiGrey" />
         ) : (
           <Image
             src={userImg}
             alt="Member Profile Image"
-            width={100}
-            height={100}
+            width={120}
+            height={120}
           />
         )}
       </div>

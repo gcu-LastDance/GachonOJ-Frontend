@@ -1,3 +1,5 @@
+"use client";
+
 import { hoverProfileAPI } from "@/api/memberAPI";
 import RankBadge from "@/components/badge/RankBadge";
 import useUserStore from "@/store/useUserStore";
@@ -6,7 +8,7 @@ import { rank } from "@/types/rank";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { RiUser3Line } from "react-icons/ri";
 import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
@@ -49,7 +51,7 @@ export default function HeaderMemberDropdown() {
         onMouseEnter={() => setShowDropdown(true)}
         onMouseLeave={() => setShowDropdown(false)}
         onClick={() => router.push("/profile")}
-        className="flex text-white border-[0.15vw] w-[2vw] h-[2vw] border-realGrey hover:ring-4 hover:ring-semiGrey rounded-full items-center justify-center"
+        className="flex text-white border-[0.15vw] w-[2vw] h-[2vw] border-realGrey hover:ring-4 hover:ring-semiGrey rounded-full items-center justify-center overflow-hidden relative"
         type="button"
       >
         {!userImg ? (
@@ -58,9 +60,8 @@ export default function HeaderMemberDropdown() {
           <Image
             src={userImg}
             alt="Member Profile Image"
-            width={100}
-            height={100}
-            className="rounded-full"
+            width={80}
+            height={80}
           />
         )}
       </button>

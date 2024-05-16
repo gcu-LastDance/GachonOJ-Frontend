@@ -15,7 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
 const columns: ColumnDef<ProblemTableData, any>[] = [
@@ -49,32 +49,52 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
   }),
 ];
 
+type SortType = "ASC" | "DESC";
+
 export default function ProblemTable() {
   const { token } = useUserStore();
   const [pageNum, setPageNum] = useState<number>(1);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [debouncedSearchKeyword, setDebouncedSearchKeyword] =
+    useState(searchKeyword);
   const [classType, setClassType] = useState<string>("");
+
   const [diff, setDiff] = useState<difficulty>();
-  const [sortType, setSortType] = useState<string>("");
+  const [sortType, setSortType] = useState<SortType>("ASC");
+  const [debouncedSortType, setDebouncedSortType] =
+    useState<SortType>(sortType);
 
   const { data: problemData } = useQuery<ProblemTableData[]>({
     queryKey: [
       "problemTableGuest",
       pageNum,
-      searchKeyword,
+      debouncedSearchKeyword,
       classType,
       diff,
-      sortType,
+      debouncedSortType,
     ],
     queryFn: () =>
       problemTableGuestAPI({
         pageNum,
-        searchKeyword,
+        searchKeyword: debouncedSearchKeyword,
         classType,
         diff,
-        sortType,
+        sortType: debouncedSortType,
       }),
   });
+
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => setDebouncedSearchKeyword(searchKeyword),
+      1000
+    );
+    return () => clearTimeout(timeout);
+  }, [searchKeyword]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedSortType(sortType), 500);
+    return () => clearTimeout(timeout);
+  }, [sortType]);
 
   const table = useReactTable({
     data: problemData || [],
@@ -88,6 +108,9 @@ export default function ProblemTable() {
         <div className="flex space-x-[1.1vw]">
           <button
             type="button"
+            onClick={() => {
+              sortType == "ASC" ? setSortType("DESC") : setSortType("ASC");
+            }}
             className="w-[10vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
           >
             난이도 오름차순
@@ -98,12 +121,12 @@ export default function ProblemTable() {
           >
             난이도 선택
           </button>
-          <button
+          {/* <button
             type="button"
             className="w-[7vw] h-[4vh] border-[0.12vw] rounded-xl border-realGrey bg-superlightGrey font-PretendardRegular text-[0.9vw] flex justify-center items-center"
           >
             분류 선택
-          </button>
+          </button> */}
         </div>
         <div className="flex ml-auto border-[0.1vw] border-realGrey h-[5vh] w-[12vw] rounded-lg px-[0.5vw] space-x-[0.3vw] items-center">
           <IoMdSearch className="text-[1vw] text-primaryDark" />
@@ -111,7 +134,7 @@ export default function ProblemTable() {
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             placeholder="문제 제목을 검색해보세요"
-            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] focus:outline-none w-[9vw] h-[4vh]"
+            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.75vw] focus:outline-none w-[9vw] h-[4vh]"
           />
         </div>
       </div>

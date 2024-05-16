@@ -28,6 +28,7 @@ export const inquiryDetailAPI = async (inquiryId: number) => {
     const response = await instanceAuth.get(
       `${process.env.NEXT_PUBLIC_B20_URL}/${inquiryId}`
     );
+    console.log(response.data.result);
     return response.data.result;
   } catch (error) {
     throw new Error(String(error));

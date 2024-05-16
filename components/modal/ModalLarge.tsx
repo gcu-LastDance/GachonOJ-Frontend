@@ -8,7 +8,7 @@ export default function ModalLarge({
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed inset-0 backdrop-blur-sm overflow-hidden z-40 flex justify-center items-center">
+    <div className="fixed inset-0 backdrop-blur-sm overflow-hidden z-50 flex justify-center items-center">
       <div className="w-[50vw] mx-auto mb-[3vh] border-2 border-semiSemiGrey rounded-3xl overflow-hidden shadow-xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
         <div className="flex bg-primaryGrey h-[12vh] items-center drop-shadow-none pl-[2vw]">
           <div className="w-[10vw]">

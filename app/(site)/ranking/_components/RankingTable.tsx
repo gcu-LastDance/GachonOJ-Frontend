@@ -13,8 +13,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
 const columns: ColumnDef<RankingTableData, any>[] = [
@@ -41,13 +40,24 @@ const columns: ColumnDef<RankingTableData, any>[] = [
 
 export default function RankingTable() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [debouncedSearchKeyword, setDebouncedSearchKeyword] =
+    useState(searchKeyword);
   const [pageNum, setPageNum] = useState<number>(1);
 
   const { data: rakingData } = useQuery<RankingTableData[]>({
-    queryKey: ["rankingTable", pageNum, searchKeyword],
-    queryFn: () => rankingTableAPI({ pageNum, searchKeyword }),
+    queryKey: ["rankingTable", pageNum, debouncedSearchKeyword],
+    queryFn: () =>
+      rankingTableAPI({ pageNum, searchKeyword: debouncedSearchKeyword }),
     refetchOnMount: "always",
   });
+
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => setDebouncedSearchKeyword(searchKeyword),
+      1000
+    );
+    return () => clearTimeout(timeout);
+  }, [searchKeyword]);
 
   const table = useReactTable({
     data: rakingData || [],
@@ -64,7 +74,7 @@ export default function RankingTable() {
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             placeholder="닉네임으로 검색해보세요"
-            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.85vw] focus:outline-none w-[9vw] h-[4vh]"
+            className="placeholder-semiGrey placeholder-PretendardRegular text-[0.75vw] focus:outline-none w-[9vw] h-[4vh]"
           />
         </div>
       </div>

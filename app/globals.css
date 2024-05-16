@@ -46,3 +46,19 @@
   font-family: "Pretendard-Thin";
   src: url("../public/fonts/Pretendard-Thin.ttf");
 }
+
+@keyframes blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}

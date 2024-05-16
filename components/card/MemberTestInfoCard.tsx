@@ -34,15 +34,15 @@ export default function MemberTestInfoCard() {
       <p className="font-PretendardRegular text-[1.1vw] text-primaryDark">
         {memberPermisionMap[userPermission as permissionType]}
       </p>
-      <div className="border-[0.2vw] border-realGrey rounded-full flex w-[7vw] h-[7vw] justify-center items-center my-[1.5vh]">
+      <div className="border-[0.2vw] border-realGrey rounded-full flex w-[7vw] h-[7vw] justify-center items-center my-[1.5vh] overflow-hidden">
         {!userImg || userImg === "" ? (
           <CiUser className="text-[5vw] text-semiGrey" />
         ) : (
           <Image
             src={userImg}
             alt="Member Profile Image"
-            width={100}
-            height={100}
+            width={150}
+            height={150}
           />
         )}
       </div>
@@ -54,7 +54,7 @@ export default function MemberTestInfoCard() {
           {data?.memberNickname}
         </span>
       </div>
-      <div className="flex flex-col mt-[6vh] space-y-[3vh] font-PretendardLight text-[1.2vw] text-realGrey items-center">
+      <div className="flex flex-col mt-[8vh] space-y-[5vh] font-PretendardLight text-[1vw] text-realGrey items-center">
         <p>이름 : {data?.memberName ?? ""}</p>
         <p>학번 : {data?.memberNumber ?? ""}</p>
       </div>
