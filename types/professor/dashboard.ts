@@ -4,4 +4,9 @@ export interface TestData {
   examStartDate: string;
   examEndDate: string;
   examStatus: string;
-};
+}
+
+export interface LanguageGraph {
+  lang: string;
+  count: number;
+}

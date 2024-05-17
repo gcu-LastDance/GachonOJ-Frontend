@@ -1,72 +1,79 @@
-// "use client";
+"use client";
 
-// import React from "react";
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-// import { Doughnut } from "react-chartjs-2";
+import { LanguageGraphAPI } from "@/api/professor/professorDashboardAPI";
+import { LanguageGraphData } from "@/types/professor/dashboard";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
-// ChartJS.register(ArcElement, Tooltip, Legend);
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-// const data = {
-//   labels: ["C++", "Python", "Java", "C"],
-//   datasets: [
-//     {
-//       label: "학생 선호 언어 현황",
-//       data: [92, 12, 23, 40],
-//       backgroundColor: [
-//         "rgba(255, 99, 132, 0.2)",
-//         "rgba(54, 162, 235, 0.2)",
-//         "rgba(255, 206, 86, 0.2)",
-//         "rgba(75, 192, 192, 0.2)",
-//       ],
-//       borderColor: [
-//         "rgba(255, 99, 132, 1)",
-//         "rgba(54, 162, 235, 1)",
-//         "rgba(255, 206, 86, 1)",
-//         "rgba(75, 192, 192, 1)",
-//       ],
-//       borderWidth: 1,
-//     },
-//   ],
-// };
+function LanguageGraph({ data }: { data: LanguageGraphData[] }) {
+  console.log(data);
 
-// const options = {
-//   plugins: {
-//     legend: {
-//       position: "bottom",
-//       labels: {
-//         boxWidth: 20, // 숫자형으로 수정
-//         generateLabels: function (chart: { data: any }) {
-//           const data = chart.data;
-//           if (data.labels.length && data.datasets.length) {
-//             return data.labels.map((label: any, i: string | number) => {
-//               const total = data.datasets[0].data.reduce(
-//                 (a: any, b: any) => a + b,
-//                 0
-//               );
-//               const value = data.datasets[0].data[i];
-//               const percentage = ((value / total) * 100).toFixed(0);
-//               return {
-//                 text: `${label}: ${percentage}%`,
-//                 fillStyle: data.datasets[0].backgroundColor[i],
-//               };
-//             });
-//           } else {
-//             return [];
-//           }
-//         },
-//       },
-//     },
-//     tooltip: false,
-//   },
-// };
+  const renderLegend = (props: any) => {
+    const { payload } = props;
+    return (
+      <div style={{ textAlign: "center" }}>
+        <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+          {payload.map((entry: any, index: number) => (
+            <li
+              key={`item-${index}`}
+              style={{
+                display: "inline-block",
+                margin: "0 10px",
+                color: entry.color,
+              }}
+            >
+              {entry.value} : {entry.payload.count}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
-// // const LanguageGraph = () => {
-// //   return (
-// //     <div className="flex flex-col justify-center items-center shadow-md border-semiGrey border-4 px-5 py-5 bg-white">
-// //       <div className="mb-8 text-2xl">학생 선호 언어 현황</div>
-// //       <Doughnut data={data} options={options} />
-// //     </div>
-// //   );
-// // };
+  return (
+    <div className="flex flex-wrap shadow-md border-semiGrey border-4 h-full bg-white px-5 py-5">
+      <div className="text-2xl">학생 선호 언어 현황</div>
+      <div className="p-3 h-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={80}
+              fill="#8884d8"
+              paddingAngle={5}
+              dataKey="count"
+              nameKey="lang"
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Legend content={renderLegend} layout="horizontal" verticalAlign="bottom" align="center"/>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+}
 
-// export default LanguageGraph;
+const LanguageGraphContainer = () => {
+  const { data } = useQuery<LanguageGraphData[]>({
+    queryKey: ["ProfessorexamList"],
+    queryFn: LanguageGraphAPI,
+  });
+
+  if (!data) return null;
+
+  return <LanguageGraph data={data} />;
+};
+
+export default LanguageGraphContainer;

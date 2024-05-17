@@ -5,7 +5,7 @@ import IncorrectRate from "./_components/IncorrectRateQuestions";
 import IncorrectAlgorithm from "./_components/IncorrectAlgorithm";
 import GuideShortCut from "./_components/GuideShortCut";
 import Link from "next/link";
-// import LanguageGraph from "./_components/LanguageGraph";
+import LanguageGraph from "./_components/LanguageGraph";
 
 export default function page() {
   return (
@@ -38,11 +38,13 @@ export default function page() {
 
         <div className="flex-wrap w-1/4">
           <Link href="/main">
-          <div className="mb-3">
-            <GachonOJShortCut />
-          </div>
+            <div className="mb-3 h-1/6">
+              <GachonOJShortCut />
+            </div>
           </Link>
-          <div className="w-full h-max">{/* <LanguageGraph/> */}</div>
+          <div className="w-full h-5/6">
+            <LanguageGraph />
+          </div>
         </div>
       </div>
     </div>
