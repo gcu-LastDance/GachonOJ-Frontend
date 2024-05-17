@@ -63,9 +63,16 @@ export default function EnrollTestForm() {
 
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "ONGOING" };
+    const newData = { ...data, tests, candidateList, examStatus: "RESERVAION" };
     EnrollMutation.mutate(newData);
   };
+
+  const onSave = (data: any) => {
+    const tests = formData.map((form) => form.data);
+    const newData = { ...data, tests, candidateList, examStatus: "WRITING" };
+    EnrollMutation.mutate(newData);
+  };
+
 
   const EnrollMutation = useMutation({
     mutationFn: (data: any) => examEnrollAPI(data),
@@ -315,7 +322,14 @@ export default function EnrollTestForm() {
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded"
         >
-          제출
+          등록
+        </button>
+        <button
+          onClick={handleSubmit(onSave)}
+          type="submit"
+          className="bg-blue-500 ml-5 text-white py-2 px-4 rounded"
+        >
+          저장
         </button>
       </div>
     </form>
