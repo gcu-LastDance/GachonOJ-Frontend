@@ -15,7 +15,6 @@ import { contestDeleteAPI, contestListAPI } from "@/api/admin/adminContestAPI";
 import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<contestTableData, any>[] = [
-  columnHelper("examId", { header: "인덱스" }),
   columnHelper("examTitle", { header: "제목" }),
   columnHelper("examMemo", { header: "메모" }),
   columnHelper("memberNickname", { header: "생성자" }),
@@ -26,8 +25,14 @@ const columns: ColumnDef<contestTableData, any>[] = [
 
 export function ContestManageTable({
   tableData,
+  paginationData,
+  pageNo,
+  setPageNo,
 }: {
   tableData: contestTableData[];
+  paginationData: any;
+  pageNo: number;
+  setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const router = useRouter();
 
@@ -48,10 +53,8 @@ export function ContestManageTable({
     },
   });
 
-  const [data, setData] = useState<contestTableData[]>(tableData);
-
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -64,6 +67,9 @@ export function ContestManageTable({
           {/* 테이블 헤더 생성 */}
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
+              <th className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0">
+                번호
+              </th>
               {headerGroup.headers.map((header) => (
                 <th
                   className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
@@ -87,6 +93,11 @@ export function ContestManageTable({
               key={row.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
+              <td className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0">
+                {row.index +
+                  1 +
+                  paginationData.pageable.pageSize * (pageNo - 1)}
+              </td>
               {row.getVisibleCells().map((cell) => (
                 <td
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
@@ -126,14 +137,21 @@ export function ContestManageTable({
           </button>
         </Link>
       </div>
-      <div>
-      {/* <PaginationBar /> */}
+      <div className="flex justify-center items-center">
+        <PaginationBar
+          totalElements={paginationData.totalElements}
+          pageSize={paginationData.pageable.pageSize}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
+        />
       </div>
     </div>
   );
 }
 
 const ContestManageTableConatiner = () => {
+  const [pageNo, setPageNo] = useState(1);
+
   const { data } = useQuery<contestListData>({
     queryKey: ["contestList"],
     queryFn: () => contestListAPI("대회"),
@@ -141,7 +159,14 @@ const ContestManageTableConatiner = () => {
 
   if (!data) return null;
 
-  return <ContestManageTable tableData={data?.result.content} />;
+  return (
+    <ContestManageTable
+      tableData={data?.result.content}
+      paginationData={data?.result}
+      pageNo={pageNo}
+      setPageNo={setPageNo}
+    />
+  );
 };
 
 export default ContestManageTableConatiner;
