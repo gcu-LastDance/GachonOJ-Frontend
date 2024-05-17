@@ -4,12 +4,15 @@ import React from "react";
 import GachonOJ_logo_white_image from "@/public/images/logo/gachonoj_logo_white.png";
 import GachonOJ_logo_black_image from "@/public/images/logo/gachonoj_logo.png";
 import LandingHeaderLoginButton from "./LandingHeaderLoginButton";
+import useUserStore from "@/store/useUserStore";
+import HeaderLoginButton from "@/app/(site)/_components/HeaderLoginButton";
 
 export default function LandingHeader({
   activeIndex,
 }: {
   activeIndex: number;
 }) {
+  const { token } = useUserStore();
   return (
     <header
       className={`${
@@ -56,8 +59,11 @@ export default function LandingHeader({
             <span>문의</span>
           </Link>
         </div>
+
         <div className="ml-auto">
-          <LandingHeaderLoginButton activeIndex={activeIndex} />
+          {token ? (
+            null
+          ) : <LandingHeaderLoginButton activeIndex={activeIndex} />}
         </div>
       </div>
     </header>
