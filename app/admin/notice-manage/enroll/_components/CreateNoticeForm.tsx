@@ -27,7 +27,7 @@ export default function CreaetNoticeForm() {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("admin/notice-manage/list");
+        router.push("/admin/notice-manage/list");
       }
     },
   });
