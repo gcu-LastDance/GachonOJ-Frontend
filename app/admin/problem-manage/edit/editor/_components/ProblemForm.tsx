@@ -24,6 +24,7 @@ function ProblemForm({
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<ProblemFormData>();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [TestCaseList, setTestCases] = useState<TestCase[]>(data.testcases);
@@ -32,6 +33,7 @@ function ProblemForm({
   const { check, setCheck } = useCheckStore();
   // 등록 버튼 작동 함수
 
+  console.log(data);
   const onSubmit = (data: ProblemFormData) => {
     const testcases = TestCaseList;
     
@@ -46,7 +48,6 @@ function ProblemForm({
   const onSave = (data: ProblemFormData) => {
     const testcases = TestCaseList;
     const newData = { ...data, testcases, problemStatus: "SAVED" };
-
     ModifyMutation.mutate(newData);
   };
 
@@ -87,6 +88,7 @@ function ProblemForm({
   // 페이지 렌더링시 최초 1회 테스트케이스 관련 변수 전체 초기화
   useEffect(() => {
     setTestCase(null, null, null);
+    reset();
   }, []);
 
   // 페이지 렌더링시 전역변수 값 변화 있을시 테스트케이스 추가 혹은 수정
@@ -193,11 +195,11 @@ function ProblemForm({
             {...register("problemDiff")}
             className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           >
-            <option value="1">매우 쉬움</option>
-            <option value="2">쉬움</option>
-            <option value="3">보통</option>
-            <option value="4">어려움</option>
-            <option value="5">매우 어려움</option>
+            <option value="0">매우 쉬움</option>
+            <option value="1">쉬움</option>
+            <option value="2">보통</option>
+            <option value="3">어려움</option>
+            <option value="4">매우 어려움</option>
           </select>
         </div>
         <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
@@ -372,6 +374,7 @@ const ProblemContentsContainer = () => {
   const { data } = useQuery<ProblemFormData>({
     queryKey: ["problemContent"],
     queryFn: () => problemContentAPI(problemId),
+
   });
 
   if (!data) return null;

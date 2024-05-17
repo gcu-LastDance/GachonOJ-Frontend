@@ -174,7 +174,6 @@ export default function ProblemForm() {
             <option value="2">쉬움</option>
             <option value="3">보통</option>
             <option value="4">어려움</option>
-            <option value="5">매우 어려움</option>
           </select>
         </div>
         <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
