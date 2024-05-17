@@ -6,7 +6,17 @@ export interface TestData {
   examStatus: string;
 }
 
-export interface LanguageGraph {
+export interface LanguageGraphData {
   lang: string;
   count: number;
+}
+
+export interface IncorrectRate {
+  problemId: number;
+  problemTitle: string;
+  problemDiff: string;
+  problemClass: string;
+  correctRate: string
+
+
 }

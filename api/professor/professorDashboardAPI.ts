@@ -26,3 +26,14 @@ export const LanguageGraphAPI = async () => {
   }
 };
 
+export const IncorrectRate = async () => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_G06_URL}`;
+
+    const response = await instanceAuth.get(url);
+
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
