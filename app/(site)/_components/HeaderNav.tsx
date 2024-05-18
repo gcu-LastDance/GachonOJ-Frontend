@@ -11,7 +11,7 @@ export default function HeaderNav() {
   const { userPermission } = useUserStore();
 
   return (
-    <header className="border-b-[0.1vw] shadow-md">
+    <header className="border-b-[0.1vw] shadow-xl relative z-50">
       <div className="flex items-center w-[65vw] h-[7vh] mx-auto">
         <div>
           <Link href="/main">
@@ -24,11 +24,11 @@ export default function HeaderNav() {
           <Link href="/problem">
             <span>문제</span>
           </Link>
-          <Link href="/contest">
-            <span>대회</span>
-          </Link>
           <Link href="/ranking">
             <span>랭킹</span>
+          </Link>
+          <Link href="/contest">
+            <span>대회</span>
           </Link>
           <Link href="/exam">
             <span>시험</span>

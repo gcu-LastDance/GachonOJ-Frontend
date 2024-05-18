@@ -21,7 +21,7 @@ import Link from "next/link";
 import { RiArrowDownWideLine } from "react-icons/ri";
 
 export default function page() {
-  const [activeIndex, setActiveIndex] = useState<number>(7);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   return (
     <div>

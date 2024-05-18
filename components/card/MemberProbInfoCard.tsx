@@ -34,7 +34,7 @@ export default function MemberProbInfoCard() {
       <p className="font-PretendardRegular text-[1.1vw] text-primaryDark">
         {memberPermisionMap[userPermission as permissionType]}
       </p>
-      <div className="border-[0.2vw] border-realGrey rounded-full flex w-[7vw] h-[7vw] justify-center items-center my-[1.5vh] overflow-hidden">
+      <div className="border-[0.2vh] border-semiGrey rounded-full flex w-[7vw] h-[7vw] justify-center items-center my-[1.5vh] overflow-hidden">
         {!userImg || userImg === "" ? (
           <CiUser className="text-[5vw] text-semiGrey" />
         ) : (

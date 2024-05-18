@@ -2,6 +2,7 @@
 
 import {
   TestMenuType,
+  ongoingContestAPI,
   pastContestAPI,
   scheduledContestAPI,
 } from "@/api/testAPI";
@@ -23,13 +24,24 @@ export default function ContestTable({ menu }: { menu: TestMenuType }) {
     refetchOnMount: "always",
   });
 
+  const { data: ongoingContestData } = useQuery<TestData[]>({
+    queryKey: ["ongoingContest"],
+    queryFn: ongoingContestAPI,
+    refetchOnMount: "always",
+  });
+
+  const contestData =
+    menu === "scheduled"
+      ? scheduledContestData
+      : menu === "past"
+      ? pastContestData
+      : ongoingContestData;
+
   return (
     <div className="grid grid-cols-3 gap-y-[4vh] gap-x-[1.5vw]">
-      {(menu === "scheduled" ? scheduledContestData : pastContestData)?.map(
-        (data: TestData) => (
-          <TestCard key={data.examId} data={data} />
-        )
-      )}
+      {contestData?.map((data: TestData) => (
+        <TestCard key={data.examId} data={data} />
+      ))}
     </div>
   );
 }

@@ -63,7 +63,7 @@ export default function page() {
               </Link>
             </div>
           </div>
-          <div className="w-[49vw] h-[73vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
+          <div className="w-[49.2vw] h-[73vh] bg-white border-2 border-semiSemiGrey rounded-lg overflow-hidden">
             <MemberProblemTable />
           </div>
         </div>
