@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { examEnrollAPI } from "@/api/admin/adminExamAPI";
+import { examContentAPI, examEnrollAPI } from "@/api/admin/adminExamAPI";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
 import AddCandidate from "./AddCandidate";
-import { TestProblemFormData } from "@/types/admin/problem";
+import { ExamProblemFormData } from "@/types/admin/problem";
+import { ExamContents } from "@/types/admin/exam";
 
-export default function EnrollExamForm() {
+function EditExamForm({
+  data,
+  examId,
+}: {
+  data: ExamContents;
+  examId: number;
+}) {
   const router = useRouter();
 
   const initialData = {
@@ -33,7 +40,7 @@ export default function EnrollExamForm() {
   const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<TestProblemFormData[]>([
+  const [formData, setFormData] = useState<ExamProblemFormData[]>([
     {
       id: 1,
       data: initialData,
@@ -96,6 +103,7 @@ export default function EnrollExamForm() {
             시험제목
           </div>
           <textarea
+            defaultValue={data.examTitle}
             {...register("examTitle")}
             className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={2}
@@ -107,6 +115,7 @@ export default function EnrollExamForm() {
             시험메모
           </div>
           <textarea
+          defaultValue={data.examMemo}
             {...register("examMemo")}
             className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={2}
@@ -135,6 +144,7 @@ export default function EnrollExamForm() {
                   시험 안내사항
                 </div>
                 <textarea
+                defaultValue={data.examNotice}
                   {...register("examNotice")}
                   className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                   rows={6}
@@ -151,6 +161,7 @@ export default function EnrollExamForm() {
                       시험 시작 가능 날짜 설정
                     </div>
                     <input
+                    defaultValue={data.examStartDate}
                       {...register("examStartDate")}
                       className="border rounded-md w-48 p-1"
                       placeholder="YYYY.MM.DD.HH.MM.SS"
@@ -163,6 +174,7 @@ export default function EnrollExamForm() {
                       시험 종료 날짜 설정
                     </div>
                     <input
+                    defaultValue={data.examEndDate}
                       {...register("examEndDate")}
                       className="border rounded-md w-48 p-1"
                       placeholder="YYYY.MM.DD.HH.MM.SS"
@@ -176,6 +188,7 @@ export default function EnrollExamForm() {
                   시험 제한 시간
                 </div>
                 <input
+                // defaultValue={data.examDueTime}
                   {...register("examDueTime")}
                   className="border rounded-md w-24 p-1"
                   placeholder="120"
@@ -305,3 +318,19 @@ export default function EnrollExamForm() {
     </form>
   );
 }
+
+const EditExamFormConatiner = () => {
+  const params = useSearchParams();
+  const examId = Number(params.get("examId"));
+  const { data } = useQuery<ExamContents>({
+    queryKey: ["examContents"],
+    queryFn: () => examContentAPI(examId),
+
+  });
+
+  if (!data) return null;
+
+  return <EditExamForm data={data} examId={examId} />;
+};
+
+export default EditExamFormConatiner;

@@ -115,7 +115,20 @@ export function ExamManageTable({
                   )}
                 </td>
               ))}
+         
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+              <Link
+                  href={{
+                    pathname: "edit",
+                    query: { examId: row.original.examId },
+                  }}
+                >
+                  <button className="underline underline-offset-auto">
+                    수정
+                  </button>
+                </Link>
+                </td>
+                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
                   className="underline underline-offset-auto"
                   onClick={() => onDelete(row.original.examId)}
@@ -152,8 +165,8 @@ export function ExamManageTable({
 const ExamManageTableConatiner = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<examListData>({
-    queryKey: ["examList"],
-    queryFn: () => examListAPI("시험"),
+    queryKey: ["examList", pageNo],
+    queryFn: () => examListAPI("시험", pageNo),
   });
 
   if (!data) return null;

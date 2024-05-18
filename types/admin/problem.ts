@@ -46,7 +46,7 @@ export interface ProblemFormData {
 }
 
 
-export interface TestProblemFormData {
+export interface ExamProblemFormData {
 id: number
 data : ProblemFormData
 }

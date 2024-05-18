@@ -141,8 +141,8 @@ export function InquiryManageTable({
 const InquiryManageTableContainer = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<inquiryListData>({
-    queryKey: ["inquiryList"],
-    queryFn: inquiryListAPI,
+    queryKey: ["inquiryList", pageNo],
+    queryFn: () => inquiryListAPI(pageNo),
   });
   if (!data) return null;
   return (

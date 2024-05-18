@@ -154,7 +154,7 @@ const UserManageTableContainer = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<userListData>({
     queryKey: ["professorList", pageNo],
-    queryFn: professorListAPI,
+    queryFn: () => professorListAPI(pageNo),
   });
 
   if (!data) return null;

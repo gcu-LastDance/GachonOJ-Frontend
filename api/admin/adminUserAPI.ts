@@ -1,13 +1,13 @@
 import { instanceAuth, instanceAuthWithMultipart } from "@/lib/axiosConfig";
 import { myInfoModifyFormData, userFormData } from "@/types/admin/user";
 
-export const userListAPI = async () => {
+export const userListAPI = async (pageNo : number) => {
   try {
     const memberRole = "학생";
 
     const url = `${
       process.env.NEXT_PUBLIC_M09_URL
-    }?memberRole=${encodeURIComponent(memberRole)}`;
+    }?memberRole=${encodeURIComponent(memberRole)}&pageNo=${encodeURIComponent(pageNo)}`;
 
     const response = await instanceAuth.get(url);
 
@@ -17,13 +17,13 @@ export const userListAPI = async () => {
   }
 };
 
-export const professorListAPI = async () => {
+export const professorListAPI = async (pageNo: number) => {
   try {
     const memberRole = "교수";
 
     const url = `${
       process.env.NEXT_PUBLIC_M09_URL
-    }?memberRole=${encodeURIComponent(memberRole)}`;
+    }?memberRole=${encodeURIComponent(memberRole)}&pageNo=${encodeURIComponent(pageNo)}`;
 
     const response = await instanceAuth.get(url);
 

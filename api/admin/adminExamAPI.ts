@@ -1,10 +1,10 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 
-export const examListAPI = async (type: string) => {
+export const examListAPI = async (type: string, pageNo: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P02_URL}?type=${encodeURIComponent(
       type
-    )}`;
+    )}&pageNo=${encodeURIComponent(pageNo)}`;
 
     const response = await instanceAuth.get(url);
 
@@ -27,7 +27,7 @@ export const examDeleteAPI = async (examId: number) => {
   }
 };
 
-export const findCandidateAPI = async (memberInfo: number | string ) => {
+export const findCandidateAPI = async (memberInfo: number | string) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_M37_URL}${encodeURIComponent(
       memberInfo
@@ -38,7 +38,7 @@ export const findCandidateAPI = async (memberInfo: number | string ) => {
   } catch (error) {
     throw new Error(String(error));
   }
-}
+};
 
 export const examEnrollAPI = async (data: any) => {
   try {
@@ -51,5 +51,17 @@ export const examEnrollAPI = async (data: any) => {
   } catch (error) {
     throw new Error(String(error));
   }
+};
 
+export const examContentAPI = async (examId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P25_URL}/${encodeURIComponent(
+      examId
+    )}`;
+    const response = await instanceAuth.get(url);
+
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
 };

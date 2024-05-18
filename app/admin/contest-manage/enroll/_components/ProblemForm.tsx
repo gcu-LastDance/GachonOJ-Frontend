@@ -1,5 +1,5 @@
 "use client";
-import { TestProblemFormData, TestCase } from "@/types/admin/problem";
+import { ExamProblemFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ export default function ProblemForm({
   data,
   setProblemForm,
 }: {
-  data: TestProblemFormData;
+  data: ExamProblemFormData;
   setProblemForm: any;
 }) {
   const router = useRouter();
