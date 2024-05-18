@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
 import { TestProblemFormData } from "@/types/admin/problem";
 
-export default function EnrollTestForm() {
+export default function EnrollExamForm() {
   const router = useRouter();
 
   const initialData = {
@@ -63,7 +63,13 @@ export default function EnrollTestForm() {
 
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "ONGOING" };
+    const newData = { ...data, tests, candidateList, examStatus: "RESERVATION", examType: "EXAM" };
+    EnrollMutation.mutate(newData);
+  };
+
+  const onSave = (data: any) => {
+    const tests = formData.map((form) => form.data);
+    const newData = { ...data, tests, candidateList, examStatus: "WRITING", examType: "EXAM" };
     EnrollMutation.mutate(newData);
   };
 
@@ -75,7 +81,7 @@ export default function EnrollTestForm() {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/exam-manage/list");
+        router.push("/professor/exam-manage/list");
       }
     },
   });
@@ -173,37 +179,6 @@ export default function EnrollTestForm() {
                   placeholder="120"
                   title="분 단위로 입력해주세요."
                 ></input>
-              </div>
-
-              <div className="flex-col items-center mb-4">
-                <div className="text-lg mr-4 min-w-30 flex-shrink-0">
-                  부정 행위 방지 설정
-                </div>
-                <div className="mt-5 mb-5 ml-32 flex flex-auto">
-                  <div className="flex mr-5 items-center">
-                    <div className="flex-shrink-0 mr-4">모니터링 여부 설정</div>
-                    <select
-                      // {...register("examMonitoring")}
-                      className="border rounded-md w-24 p-1"
-                    >
-                      <option value="사용">사용</option>
-                      <option value="미사용">미사용</option>
-                    </select>
-                  </div>
-                  <div className="border-l-2"></div>
-                  <div className="flex ml-5 items-center">
-                    <div className="flex-shrink-0 mr-4">복사/붙혀넣기 제한</div>
-                    <select
-                      // {...register("examCopypasteRestriction")}
-                      className="border rounded-md w-24 p-1"
-                    >
-                      <option value="금지" selected>
-                        금지
-                      </option>
-                      <option value="허용">허용</option>
-                    </select>
-                  </div>
-                </div>
               </div>
             </div>
           )}
@@ -315,7 +290,14 @@ export default function EnrollTestForm() {
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded"
         >
-          제출
+          등록
+        </button>
+        <button
+          onClick={handleSubmit(onSave)}
+          type="submit"
+          className="bg-blue-500 ml-5 text-white py-2 px-4 rounded"
+        >
+          저장
         </button>
       </div>
     </form>

@@ -48,9 +48,11 @@ export default function SideProfessorNav() {
               </Link>
             </button>
             <button>
+              <Link href="/professor/exam-manage/enroll">
               <p className="font-PretendardLight text-realGrey text-[0.75vw]">
                 새 시험 생성
               </p>
+              </Link>
             </button>
           </div>
         </div>

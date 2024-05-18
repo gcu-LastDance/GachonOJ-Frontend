@@ -1,15 +1,23 @@
 "use client";
 
-import { LanguageGraphAPI } from "@/api/professor/professorDashboardAPI";
-import { LanguageGraphData } from "@/types/professor/dashboard";
+import { TodaySubmissionAPI } from "@/api/admin/adminDashboardAPI";
+import { TodaySubmissionData } from "@/types/admin/dashboard";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-function LanguageGraph({ data }: { data: LanguageGraphData[] }) {
-  console.log(data);
+function TodaySubmission({ data }: { data: TodaySubmissionData[] }) {
+
+  const transformData = (data: TodaySubmissionData[]) => {
+    return Object.entries(data)
+      .filter(([submission]) => submission !== "totalSubmissionCount")
+      .map(([submission, count]) => ({ submission, count }));
+  };
+
+  const transformedData = transformData(data);
+  console.log(transformedData);
 
   const renderLegend = (props: any) => {
     const { payload } = props;
@@ -34,13 +42,13 @@ function LanguageGraph({ data }: { data: LanguageGraphData[] }) {
   };
 
   return (
-    <div className="flex flex-wrap shadow-md border-semiGrey border-4 h-full  bg-white px-5 py-5">
-      <div className="text-2xl">학생 선호 언어 현황</div>
-      <div className="p-3 h-full w-full">
-        <ResponsiveContainer width="100%" height="100%" >
+    <div className="flex flex-wrap shadow-md border-semiGrey border-4 h-full bg-white px-5 py-5">
+      <div className="text-2xl">금일 채점 결과 현황</div>
+      <div className="p-3 h-full w-full ">
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={data}
+              data={transformedData}
               cx="50%"
               cy="50%"
               innerRadius={60}
@@ -48,16 +56,21 @@ function LanguageGraph({ data }: { data: LanguageGraphData[] }) {
               fill="#8884d8"
               paddingAngle={5}
               dataKey="count"
-              nameKey="lang"
+              nameKey="submission"
             >
-              {data.map((entry, index) => (
+              {transformedData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
                 />
               ))}
             </Pie>
-             <Legend content={renderLegend} layout="horizontal" verticalAlign="bottom" align="center"/>
+            <Legend
+              content={renderLegend}
+              layout="horizontal"
+              verticalAlign="bottom"
+              align="center"
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -65,15 +78,15 @@ function LanguageGraph({ data }: { data: LanguageGraphData[] }) {
   );
 }
 
-const LanguageGraphContainer = () => {
-  const { data } = useQuery<LanguageGraphData[]>({
-    queryKey: ["LanguageGraph"],
-    queryFn: LanguageGraphAPI,
+const TodaySubmissionContainer = () => {
+  const { data } = useQuery<TodaySubmissionData[]>({
+    queryKey: ["TodaySubmission"],
+    queryFn: TodaySubmissionAPI,
   });
 
   if (!data) return null;
 
-  return <LanguageGraph data={data} />;
+  return <TodaySubmission data={data} />;
 };
 
-export default LanguageGraphContainer;
+export default TodaySubmissionContainer;

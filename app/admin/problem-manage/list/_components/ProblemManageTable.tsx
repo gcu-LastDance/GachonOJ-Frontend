@@ -40,6 +40,8 @@ export function ProblemManageTable({
 }) {
   const queryClient = useQueryClient();
 
+
+
   const [showInput, setShowInput] = useState(false);
 
   const handleSearchInputChange = (
@@ -201,6 +203,8 @@ const ProblemManageTableContainer = () => {
   const { data } = useQuery<problemListData>({
     queryKey: ["problemList", debouncedSearchTerm, pageNo],
     queryFn: () => problemListAPI(debouncedSearchTerm, pageNo),
+    refetchOnMount: "always",
+    staleTime:0
   });
 
   if (!data) return null;
