@@ -11,12 +11,10 @@ export interface LanguageGraphData {
   count: number;
 }
 
-export interface IncorrectRate {
+export interface IncorrectRateData {
   problemId: number;
   problemTitle: string;
   problemDiff: string;
   problemClass: string;
   correctRate: string
-
-
 }
