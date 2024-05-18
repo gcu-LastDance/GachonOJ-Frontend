@@ -68,7 +68,7 @@ export default function MemberProblemTable() {
   const [debouncedPageNum, setDebouncedPageNum] = useState(pageNum);
 
   const activeMenuCss =
-    "flex w-[16.3vw] h-[5.5vh] items-center justify-center bg-white";
+    "flex w-[16.4vw] h-[5.5vh] items-center justify-center bg-white";
   const inactiveMenuCss =
     "flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-semiSemiGrey bg-lightGrey";
 

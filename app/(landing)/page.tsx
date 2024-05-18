@@ -262,7 +262,9 @@ export default function page() {
             </div>
           </div>
         </FullpageSection>
-        <SiteFooter />
+        <div className="h-[35vh]">
+          <SiteFooter />
+        </div>
       </FullpageContainer>
     </div>
   );

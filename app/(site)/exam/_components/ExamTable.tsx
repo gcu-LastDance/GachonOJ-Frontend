@@ -1,4 +1,9 @@
-import { TestMenuType, pastExamAPI, scheduledExamAPI } from "@/api/testAPI";
+import {
+  TestMenuType,
+  ongoingExamAPI,
+  pastExamAPI,
+  scheduledExamAPI,
+} from "@/api/testAPI";
 import TestCard from "@/components/card/TestCard";
 import { TestData } from "@/types/test";
 import { useQuery } from "@tanstack/react-query";
@@ -14,6 +19,12 @@ export default function ExamTable({ menu }: { menu: TestMenuType }) {
   const { data: pastExamData } = useQuery<TestData[]>({
     queryKey: ["pastExam"],
     queryFn: pastExamAPI,
+    refetchOnMount: "always",
+  });
+
+  const { data: ongoingExamData } = useQuery<TestData[]>({
+    queryKey: ["ongingExam"],
+    queryFn: ongoingExamAPI,
     refetchOnMount: "always",
   });
 
