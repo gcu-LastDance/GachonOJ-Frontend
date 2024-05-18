@@ -1,4 +1,5 @@
 import { IncorrectRateData } from "@/types/professor/dashboard";
+import Link from "next/link";
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 
@@ -20,7 +21,9 @@ export default function ProfessorProblemCard({
         <div className="flex  justify-between items-center">
           <div className="">{data.problemClass}</div>
           <div>
+          <Link href={`/algorithm-ide/${data.problemId}`}>
             <FaArrowRightLong />
+            </Link>
           </div>
         </div>
       </div>

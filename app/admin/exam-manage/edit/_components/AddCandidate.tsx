@@ -59,7 +59,8 @@ function CandidateListTable({
   });
 
   return (
-    <table className="w-fit text-sm">
+    
+    <table className="w-fit text-sm ">
       <thead>
         {/* 테이블 헤더 생성 */}
         {table.getHeaderGroups().map((headerGroup) => (
@@ -90,7 +91,7 @@ function CandidateListTable({
             key={row.id}
             className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
           >
-            <td>
+            <td className="border px-4 py-2 text-center border-t-0 border-l-0 border-r-0">
               <input
                 type="checkbox"
                 onChange={(e) =>

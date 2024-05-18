@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { examContentAPI, examEnrollAPI } from "@/api/admin/adminExamAPI";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import AddCandidate from "./AddCandidate";
 import { ExamProblemFormData } from "@/types/admin/problem";
 import { ExamContents } from "@/types/admin/exam";
 
 function EditExamForm({
+  
   data,
   examId,
 }: {
@@ -19,7 +20,7 @@ function EditExamForm({
   examId: number;
 }) {
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   const initialData = {
     problemMemoryLimit: 0,
     problemTimeLimit: 0,
@@ -34,7 +35,7 @@ function EditExamForm({
     testcases: [],
   };
 
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control ,reset} = useForm();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
   const [isProblemOpen, setIsProblemOpen] = useState(false);
@@ -50,6 +51,10 @@ function EditExamForm({
   const [showAddCandidate, setShowAddCandidate] = useState(false);
   const [tempValue, setTempValue] = useState("");
   const [candidateList, setCandidateList] = useState<[]>([]);
+
+  useEffect(() => {
+    reset(); 
+  }, []);
 
   const handleAddForm = () => {
     setFormCount(formCount + 1);
@@ -232,6 +237,7 @@ function EditExamForm({
                   </div>
                   <button
                     onClick={() => {
+                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
                     }}
@@ -241,7 +247,7 @@ function EditExamForm({
                     검색하기
                   </button>
                 </div>
-                <div className="flex-col w-fit container bg-semiGrey">
+                <div className="flex-col w-fit border rounded-lg bg-semiGrey">
                   {showAddCandidate && (
                     <AddCandidate
                       memberInfo={CandidateValue}
@@ -260,7 +266,7 @@ function EditExamForm({
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              시험 문제 등록
+              시험 문제 수정
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isProblemOpen ? (
@@ -334,3 +340,4 @@ const EditExamFormConatiner = () => {
 };
 
 export default EditExamFormConatiner;
+

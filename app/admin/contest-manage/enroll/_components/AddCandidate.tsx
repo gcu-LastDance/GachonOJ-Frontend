@@ -18,15 +18,13 @@ function CandidateListTable({
 }: {
   tableData: candidateTableData[];
   candidateList: [];
-  setCandidateList: any,
+  setCandidateList: any;
 }) {
-
   const handleCheckboxChange = (memberId: number, isChecked: boolean) => {
-    
     if (isChecked) {
       setCandidateList([...candidateList, memberId]);
     } else {
-      setCandidateList(candidateList.filter(id => id !== memberId));
+      setCandidateList(candidateList.filter((id) => id !== memberId));
     }
   };
 
@@ -50,10 +48,10 @@ function CandidateListTable({
     columnHelper("memberEmail", { header: "이메일" }),
   ];
 
-  const [data, setData] = useState<candidateTableData[]>(tableData);
+  
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -64,9 +62,7 @@ function CandidateListTable({
         {/* 테이블 헤더 생성 */}
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
-            <td>
-
-            </td>
+            <td></td>
             {headerGroup.headers.map((header) => (
               <th
                 className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
@@ -90,7 +86,7 @@ function CandidateListTable({
             key={row.id}
             className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
           >
-            <td>
+            <td className="border px-4 py-2 text-center border-t-0 border-l-0 border-r-0">
               <input
                 type="checkbox"
                 onChange={(e) =>

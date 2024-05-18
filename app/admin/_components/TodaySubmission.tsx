@@ -10,12 +10,22 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 function TodaySubmission({ data }: { data: TodaySubmissionData[] }) {
 
-  const transformData = (data: TodaySubmissionData[]) => {
-    return Object.entries(data)
-      .filter(([submission]) => submission !== "totalSubmissionCount")
-      .map(([submission, count]) => ({ submission, count }));
+  const getLegendText = (submission: string) => {
+    switch (submission) {
+      case 'correctSubmissionCount':
+        return '맞은 제출 수';
+      case 'incorrectSubmissionCount':
+        return '틀린 제출 수';
+      default:
+        return submission;
+    }
   };
 
+  const transformData = (data: TodaySubmissionData[]) => {
+    return Object.entries(data)
+      .filter(([submission]) => submission !== 'totalSubmissionCount')
+      .map(([submission, count]) => ({ submission, count }));
+  };
   const transformedData = transformData(data);
   console.log(transformedData);
 
@@ -33,14 +43,13 @@ function TodaySubmission({ data }: { data: TodaySubmissionData[] }) {
                 color: entry.color,
               }}
             >
-              {entry.value} : {entry.payload.count}
+              {getLegendText(entry.value)} : {entry.payload.count}
             </li>
           ))}
         </ul>
       </div>
     );
   };
-
   return (
     <div className="flex flex-wrap shadow-md border-semiGrey border-4 h-full bg-white px-5 py-5">
       <div className="text-2xl">금일 채점 결과 현황</div>

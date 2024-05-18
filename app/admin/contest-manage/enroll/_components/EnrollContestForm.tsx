@@ -5,14 +5,14 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
-import { TestProblemFormData } from "@/types/admin/problem";
+import { ExamProblemFormData } from "@/types/admin/problem";
 
-export default function EnrollTestForm() {
+function EnrollContestForm() {
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   const initialData = {
     problemMemoryLimit: 0,
     problemTimeLimit: 0,
@@ -33,7 +33,7 @@ export default function EnrollTestForm() {
   const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<TestProblemFormData[]>([
+  const [formData, setFormData] = useState<ExamProblemFormData[]>([
     {
       id: 1,
       data: initialData,
@@ -182,36 +182,7 @@ export default function EnrollTestForm() {
                 ></input>
               </div>
 
-              <div className="flex-col items-center mb-4">
-                <div className="text-lg mr-4 min-w-30 flex-shrink-0">
-                  부정 행위 방지 설정
-                </div>
-                <div className="mt-5 mb-5 ml-32 flex flex-auto">
-                  <div className="flex mr-5 items-center">
-                    <div className="flex-shrink-0 mr-4">모니터링 여부 설정</div>
-                    <select
-                      // {...register("examMonitoring")}
-                      className="border rounded-md w-24 p-1"
-                    >
-                      <option value="사용">사용</option>
-                      <option value="미사용">미사용</option>
-                    </select>
-                  </div>
-                  <div className="border-l-2"></div>
-                  <div className="flex ml-5 items-center">
-                    <div className="flex-shrink-0 mr-4">복사/붙혀넣기 제한</div>
-                    <select
-                      // {...register("examCopypasteRestriction")}
-                      className="border rounded-md w-24 p-1"
-                    >
-                      <option value="금지" selected>
-                        금지
-                      </option>
-                      <option value="허용">허용</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           )}
         </div>
@@ -249,6 +220,7 @@ export default function EnrollTestForm() {
                   </div>
                   <button
                     onClick={() => {
+                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
                     }}
@@ -258,7 +230,7 @@ export default function EnrollTestForm() {
                     검색하기
                   </button>
                 </div>
-                <div className="flex-col w-fit container bg-semiGrey">
+                <div className="flex-col w-fit border rounded-lg bg-semiGrey">
                   {showAddCandidate && (
                     <AddCandidate
                       memberInfo={CandidateValue}

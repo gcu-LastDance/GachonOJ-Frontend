@@ -5,12 +5,14 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
-import { TestProblemFormData } from "@/types/admin/problem";
+import { ExamProblemFormData } from "@/types/admin/problem";
 
 export default function EnrollExamForm() {
+
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const initialData = {
@@ -33,7 +35,7 @@ export default function EnrollExamForm() {
   const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<TestProblemFormData[]>([
+  const [formData, setFormData] = useState<ExamProblemFormData[]>([
     {
       id: 1,
       data: initialData,
@@ -221,6 +223,7 @@ export default function EnrollExamForm() {
                     onClick={() => {
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
+                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
                     }}
                     type="button"
                     className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
@@ -228,7 +231,7 @@ export default function EnrollExamForm() {
                     검색하기
                   </button>
                 </div>
-                <div className="flex-col w-fit container bg-semiGrey">
+                <div className="flex-col w-fit border rounded-lg bg-semiGrey">
                   {showAddCandidate && (
                     <AddCandidate
                       memberInfo={CandidateValue}
