@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 export default function ProblemForm({
   data,
   setProblemForm,
+  deleteProblemForm,
 }: {
   data: ExamProblemFormData;
   setProblemForm: any;
+  deleteProblemForm: any;
 }) {
   const router = useRouter();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -34,6 +36,16 @@ export default function ProblemForm({
       testcases: TestCaseList,
     };
     setProblemForm(data.id, formDataWithTestcases);
+  };
+
+  const handleClick = () => {
+    if (data && data.id) {
+      if (data.id === 1) {
+        alert("1번 문제는 삭제할 수 없습니다");
+      } else {
+        deleteProblemForm(data.id);
+      }
+    }
   };
 
   const addOrEditTestCase = () => {
@@ -102,6 +114,7 @@ export default function ProblemForm({
       return updatedTestcases;
     });
   };
+
   return (
     <form>
       <div className="container bg-lightGrey p-5 border-2 rounded-lg mt-2">
@@ -302,6 +315,13 @@ export default function ProblemForm({
             className="bg-blue-500 hover:bg-blue-600 text-white  py-2 px-4 rounded-lg mt-8"
           >
             저장하기
+          </button>
+          <button
+            onClick={handleClick}
+            type="button"
+            className="bg-blue-500 hover:bg-blue-600 text-white ml-2 py-2 px-4 rounded-lg mt-8"
+          >
+            삭제하기
           </button>
         </div>
       </div>

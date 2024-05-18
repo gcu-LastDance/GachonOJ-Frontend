@@ -63,6 +63,14 @@ export default function EnrollExamForm() {
     setFormData(updatedFormData);
   };
 
+  const deleteProblemForm = (formId: number) => {
+    console.log(formId);
+    const updatedFormData = formData.filter((form) => form.id !== formId);
+    setFormData(updatedFormData);
+    setFormCount(formCount - 1);
+    handleSwitchForm(formCount - 1);
+  }
+  
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
     const newData = { ...data, tests, candidateList, examStatus: "RESERVATION", examType: "EXAM",
@@ -286,6 +294,7 @@ export default function EnrollExamForm() {
               <ProblemForm
                 data={formData[activeForm - 1] || null}
                 setProblemForm={setProblemForm}
+                deleteProblemForm={deleteProblemForm}
               />
             </div>
           )}
