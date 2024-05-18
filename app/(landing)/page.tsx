@@ -21,7 +21,7 @@ import Link from "next/link";
 import { RiArrowDownWideLine } from "react-icons/ri";
 
 export default function page() {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number>(7);
 
   return (
     <div>
@@ -262,7 +262,9 @@ export default function page() {
             </div>
           </div>
         </FullpageSection>
-        <SiteFooter />
+        <div className="h-[35vh]">
+          <SiteFooter />
+        </div>
       </FullpageContainer>
     </div>
   );

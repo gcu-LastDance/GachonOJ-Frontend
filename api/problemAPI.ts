@@ -133,3 +133,26 @@ export const problemSolutionSubmitAPI = async ({
     throw new Error(String(error));
   }
 };
+
+export const problemBookmarkPostAPI = async (problemId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_M13_URL as string}/${problemId}`;
+    const response = await instanceAuth.post(url);
+    console.log(url);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const problemBookmarkDeleteAPI = async (problemId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_M14_URL as string}/${problemId}`;
+    const response = await instanceAuth.delete(url);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
