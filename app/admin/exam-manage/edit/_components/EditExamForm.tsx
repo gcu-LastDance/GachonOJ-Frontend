@@ -42,6 +42,7 @@ function EditExamForm({
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(data.tests.length);
   const [formData, setFormData] = useState<any[]>(data.tests);
+
   const [activeForm, setActiveForm] = useState(1);
   const [showAddCandidate, setShowAddCandidate] = useState(false);
   const [tempValue, setTempValue] = useState("");

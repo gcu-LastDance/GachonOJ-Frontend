@@ -50,4 +50,5 @@ export interface ExamProblemFormData {
 
 export interface ExamProblemEditFormData extends ProblemFormData {
   id: number;
+  data: ProblemFormData;
 }
