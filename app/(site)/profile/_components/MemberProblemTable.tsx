@@ -1,4 +1,8 @@
-import { memberProblemTableAPI } from "@/api/problemAPI";
+import {
+  memberProblemTableAPI,
+  problemBookmarkDeleteAPI,
+  problemBookmarkPostAPI,
+} from "@/api/problemAPI";
 import DiffBadge from "@/components/badge/DiffBadge";
 import CategoryButton from "@/components/button/CategoryButton";
 import PaginationBar from "@/components/pagination/PaginationBar";
@@ -8,7 +12,7 @@ import {
   ProfileProblemType,
   difficulty,
 } from "@/types/problem";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ColumnDef,
   flexRender,
@@ -47,17 +51,6 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
   }),
   columnHelper("isBookmarked", {
     header: "북마크",
-    cell: (value) => {
-      return value ? (
-        <div className="text-[1.2vw] flex items-center justify-center">
-          <IoBookmark />
-        </div>
-      ) : (
-        <div className="text-[1.2vw] flex items-center justify-center">
-          <IoBookmarkOutline />
-        </div>
-      );
-    },
   }),
 ];
 
@@ -67,13 +60,15 @@ export default function MemberProblemTable() {
   const [pageNum, setPageNum] = useState<number>(1);
   const [debouncedPageNum, setDebouncedPageNum] = useState(pageNum);
 
+  const queryClient = useQueryClient();
+
   const activeMenuCss =
     "flex w-[16.4vw] h-[5.5vh] items-center justify-center bg-white";
   const inactiveMenuCss =
     "flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-semiSemiGrey bg-lightGrey";
 
   const { data: problemData } = useQuery({
-    queryKey: ["problemTableGuest", debouncedMenu, debouncedPageNum],
+    queryKey: ["memberProblemTable", debouncedMenu, debouncedPageNum],
     queryFn: () =>
       memberProblemTableAPI({ menu: debouncedMenu, pageNum: debouncedPageNum }),
     refetchOnMount: "always",
@@ -88,6 +83,37 @@ export default function MemberProblemTable() {
     const timeout = setTimeout(() => setDebouncedMenu(menu), 300);
     return () => clearTimeout(timeout);
   }, [menu]);
+
+  const handleBookmarkAdd = (problemId: number) => {
+    bookmarkAddMutation.mutate(problemId);
+  };
+
+  const handleBookmarkRemove = (problemId: number) => {
+    bookmarkRemoveMutation.mutate(problemId);
+  };
+
+  const bookmarkAddMutation = useMutation({
+    mutationFn: problemBookmarkPostAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      alert("북마크에 추가되었습니다.");
+      queryClient.invalidateQueries({ queryKey: ["memberProblemTable"] });
+    },
+  });
+
+  const bookmarkRemoveMutation = useMutation({
+    mutationFn: problemBookmarkDeleteAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["memberProblemTable"] });
+    },
+  });
 
   const table = useReactTable({
     data: problemData?.content || [],
@@ -173,18 +199,42 @@ export default function MemberProblemTable() {
                 <td
                   key={cell.id}
                   className={`${
-                    cell.column.id === "title" ? "text-left" : "text-center"
+                    cell.column.id === "problemTitle"
+                      ? "text-left"
+                      : "text-center"
                   } ${
-                    cell.column.id === "category" && "w-[8vw]"
+                    cell.column.id === "problemClass" && "w-[8vw]"
                   } text-[0.95vw] font-PretendardLight text-realGrey`}
                 >
-                  {cell.column.id === "title" ? (
-                    <Link href={`/algorithm-ide/1`}>
+                  {cell.column.id === "problemTitle" ? (
+                    <Link href={`/algorithm-ide/${row.original.problemId}`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
                     </Link>
+                  ) : cell.column.id === "isBookmarked" ? (
+                    row.original.isBookmarked ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleBookmarkRemove(row.original.problemId)
+                        }
+                        className="text-[1vw] flex items-center justify-center"
+                      >
+                        <IoBookmark />
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleBookmarkAdd(row.original.problemId)
+                        }
+                        className="text-[1vw] flex items-center justify-center"
+                      >
+                        <IoBookmarkOutline />
+                      </button>
+                    )
                   ) : (
                     flexRender(cell.column.columnDef.cell, cell.getContext())
                   )}

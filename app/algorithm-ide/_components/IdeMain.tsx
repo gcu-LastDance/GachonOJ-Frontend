@@ -41,6 +41,7 @@ export default function IdeMain({
         height="55vh"
         theme={githubLight}
         autoFocus={true}
+        editable={true}
         onChange={handleCode}
       />
     </div>

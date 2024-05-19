@@ -136,6 +136,7 @@ export const problemSolutionSubmitAPI = async ({
 
 export const problemBookmarkPostAPI = async (problemId: number) => {
   try {
+    console.log(problemId);
     const url = `${process.env.NEXT_PUBLIC_M13_URL as string}/${problemId}`;
     const response = await instanceAuth.post(url);
     console.log(url);

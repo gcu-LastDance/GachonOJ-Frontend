@@ -248,7 +248,7 @@ export default function ProblemTable() {
                       <button
                         type="button"
                         onClick={() =>
-                          handleBookmarkAdd(row.original.problemId)
+                          handleBookmarkRemove(row.original.problemId)
                         }
                         className="text-[1vw] flex items-center justify-center"
                       >
@@ -258,7 +258,7 @@ export default function ProblemTable() {
                       <button
                         type="button"
                         onClick={() =>
-                          handleBookmarkRemove(row.original.problemId)
+                          handleBookmarkAdd(row.original.problemId)
                         }
                         className="text-[1vw] flex items-center justify-center"
                       >
