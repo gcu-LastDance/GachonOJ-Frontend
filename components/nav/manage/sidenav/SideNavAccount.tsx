@@ -6,7 +6,7 @@ import { permissionType } from "@/types/auth";
 import { memberProbInfoData } from "@/types/member";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { CiUser } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 
@@ -31,6 +31,11 @@ export default function SideNavAccount() {
     queryFn: memberProbInfoCardAPI,
     refetchOnMount: "always",
   });
+
+
+
+
+
 
   return (
     <div className="flex items-centers space-x-[0.7vw]">
