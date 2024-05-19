@@ -53,6 +53,23 @@ export const examEnrollAPI = async (data: any) => {
   }
 };
 
+export const examEditAPI = async (data: any, examId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P10_URL}/${encodeURIComponent(
+      examId
+    )}`;
+
+    const response = await instanceAuth.put(
+      url,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
 export const examContentAPI = async (examId: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P25_URL}/${encodeURIComponent(

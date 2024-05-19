@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { examContentAPI, examEnrollAPI } from "@/api/admin/adminExamAPI";
+import { examContentAPI, examEditAPI, examEnrollAPI } from "@/api/admin/adminExamAPI";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
@@ -12,7 +12,6 @@ import { ExamProblemFormData } from "@/types/admin/problem";
 import { ExamContents } from "@/types/admin/exam";
 
 function EditExamForm({
-  
   data,
   examId,
 }: {
@@ -35,26 +34,23 @@ function EditExamForm({
     testcases: [],
   };
 
-  const { register, handleSubmit, control ,reset} = useForm();
+  const { register, handleSubmit, control, reset } = useForm();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
   const [isProblemOpen, setIsProblemOpen] = useState(false);
+
   const [CandidateValue, setCandidateValue] = useState("");
-  const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<ExamProblemFormData[]>([
-    {
-      id: 1,
-      data: initialData,
-    },
-  ]);
+  const [formCount, setFormCount] = useState(data.tests.length);
+  const [formData, setFormData] = useState<any[]>(data.tests);
   const [activeForm, setActiveForm] = useState(1);
   const [showAddCandidate, setShowAddCandidate] = useState(false);
   const [tempValue, setTempValue] = useState("");
-  const [candidateList, setCandidateList] = useState<[]>([]);
+  const [candidateList, setCandidateList] = useState<[]>(data.candidateList);
 
   useEffect(() => {
-    reset(); 
+    reset();
   }, []);
+
 
   const handleAddForm = () => {
     setFormCount(formCount + 1);
@@ -73,22 +69,41 @@ function EditExamForm({
     setFormData(updatedFormData);
   };
 
-  const onSubmit = (data: any) => {
-    const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "RESERVATION", examType: "EXAM",
+  const deleteProblemForm = (formId: number) => {
+    console.log(formId);
+    const updatedFormData = formData.filter((form) => form.id !== formId);
+    setFormData(updatedFormData);
+    setFormCount(formCount - 1);
+    handleSwitchForm(formCount - 1);
   };
+
+  const onSubmit = (data: any) => {
+    console.log(formData);
+    const tests = formData.map((form) => form.data ? form.data : form);
+    const newData = {
+      ...data,
+      tests,
+      candidateList,
+      examStatus: "RESERVATION",
+      examType: "EXAM",
+    };
     EnrollMutation.mutate(newData);
   };
 
   const onSave = (data: any) => {
-    const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "WRITING", examType: "EXAM",
-  };
+    const tests = formData.map((form) => form.data ? form.data : form);
+    const newData = {
+      ...data,
+      tests,
+      candidateList,
+      examStatus: "WRITING",
+      examType: "EXAM",
+    };
     EnrollMutation.mutate(newData);
   };
 
   const EnrollMutation = useMutation({
-    mutationFn: (data: any) => examEnrollAPI(data),
+    mutationFn: (data: any) => examEditAPI(data, examId),
     onError: (error) => {
       console.log(error);
     },
@@ -120,7 +135,7 @@ function EditExamForm({
             시험메모
           </div>
           <textarea
-          defaultValue={data.examMemo}
+            defaultValue={data.examMemo}
             {...register("examMemo")}
             className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={2}
@@ -149,7 +164,7 @@ function EditExamForm({
                   시험 안내사항
                 </div>
                 <textarea
-                defaultValue={data.examNotice}
+                  defaultValue={data.examNotice}
                   {...register("examNotice")}
                   className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                   rows={6}
@@ -166,7 +181,7 @@ function EditExamForm({
                       시험 시작 가능 날짜 설정
                     </div>
                     <input
-                    defaultValue={data.examStartDate}
+                      defaultValue={data.examStartDate}
                       {...register("examStartDate")}
                       className="border rounded-md w-48 p-1"
                       placeholder="YYYY.MM.DD.HH.MM.SS"
@@ -179,7 +194,7 @@ function EditExamForm({
                       시험 종료 날짜 설정
                     </div>
                     <input
-                    defaultValue={data.examEndDate}
+                      defaultValue={data.examEndDate}
                       {...register("examEndDate")}
                       className="border rounded-md w-48 p-1"
                       placeholder="YYYY.MM.DD.HH.MM.SS"
@@ -193,7 +208,7 @@ function EditExamForm({
                   시험 제한 시간
                 </div>
                 <input
-                // defaultValue={data.examDueTime}
+                  defaultValue={data.examDueTime}
                   {...register("examDueTime")}
                   className="border rounded-md w-24 p-1"
                   placeholder="120"
@@ -237,7 +252,9 @@ function EditExamForm({
                   </div>
                   <button
                     onClick={() => {
-                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
+                      queryClient.invalidateQueries({
+                        queryKey: ["candidateList"],
+                      });
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
                     }}
@@ -302,6 +319,7 @@ function EditExamForm({
               <ProblemForm
                 data={formData[activeForm - 1] || null}
                 setProblemForm={setProblemForm}
+                deleteProblemForm={deleteProblemForm}
               />
             </div>
           )}
@@ -331,7 +349,6 @@ const EditExamFormConatiner = () => {
   const { data } = useQuery<ExamContents>({
     queryKey: ["examContents"],
     queryFn: () => examContentAPI(examId),
-
   });
 
   if (!data) return null;
@@ -340,4 +357,3 @@ const EditExamFormConatiner = () => {
 };
 
 export default EditExamFormConatiner;
-

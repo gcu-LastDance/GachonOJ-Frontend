@@ -29,6 +29,7 @@ export interface candidateTableData {
 }
 
 export interface Problem {
+  
   problemTitle: string;
   problemContents: string;
   problemDiff: string | null;
@@ -36,6 +37,7 @@ export interface Problem {
   problemOutputContents: string;
   testcaseInputs: string[];
   testcaseOutputs: string[];
+  testcaseStatus: string[];
 }
 
 export interface ExamContents {
@@ -48,5 +50,8 @@ export interface ExamContents {
   examType: string;
   examMemo: string;
   examNotice: string;
-  problems: Problem[];
+  examDueTime: string;
+  tests: Problem[];
+  candidateList: [];
+
 }

@@ -1,4 +1,3 @@
-import { difficulty } from "../problem";
 
 export interface problemTableData {
   problemId: number;
@@ -42,11 +41,13 @@ export interface ProblemFormData {
   problemStatus: string;
   problemPrompt: string;
   testcases: TestCase[];
-
 }
 
-
 export interface ExamProblemFormData {
-id: number
-data : ProblemFormData
+  id: number;
+  data: ProblemFormData;
+}
+
+export interface ExamProblemEditFormData extends ProblemFormData {
+  id: number;
 }
