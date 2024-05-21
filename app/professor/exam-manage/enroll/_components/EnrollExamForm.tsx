@@ -8,7 +8,7 @@ import ProblemForm from "./ProblemForm";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
-import { TestProblemFormData } from "@/types/admin/problem";
+import { ExamProblemFormData } from "@/types/admin/problem";
 
 export default function EnrollExamForm() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function EnrollExamForm() {
   const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<TestProblemFormData[]>([
+  const [formData, setFormData] = useState<ExamProblemFormData[]>([
     {
       id: 1,
       data: initialData,

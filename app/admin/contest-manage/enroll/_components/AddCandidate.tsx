@@ -17,14 +17,16 @@ function CandidateListTable({
   setCandidateList,
 }: {
   tableData: candidateTableData[];
-  candidateList: [];
-  setCandidateList: any;
+  candidateList: number[];
+  setCandidateList: any,
 }) {
+
   const handleCheckboxChange = (memberId: number, isChecked: boolean) => {
+    
     if (isChecked) {
       setCandidateList([...candidateList, memberId]);
     } else {
-      setCandidateList(candidateList.filter((id) => id !== memberId));
+      setCandidateList(candidateList.filter(id => id !== memberId));
     }
   };
 
@@ -48,7 +50,7 @@ function CandidateListTable({
     columnHelper("memberEmail", { header: "이메일" }),
   ];
 
-  
+ 
 
   const table = useReactTable({
     data: tableData,
@@ -62,7 +64,9 @@ function CandidateListTable({
         {/* 테이블 헤더 생성 */}
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
-            <td></td>
+            <td>
+
+            </td>
             {headerGroup.headers.map((header) => (
               <th
                 className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
@@ -89,10 +93,8 @@ function CandidateListTable({
             <td className="border px-4 py-2 text-center border-t-0 border-l-0 border-r-0">
               <input
                 type="checkbox"
-                onChange={(e) =>
-                  handleCheckboxChange(row.original.memberId, e.target.checked)
-                }
-              />
+                checked={candidateList.includes(row.original.memberId)}
+                onChange={(e) => handleCheckboxChange(row.original.memberId, e.target.checked)} />
             </td>
             {row.getVisibleCells().map((cell) => (
               <td
@@ -106,6 +108,7 @@ function CandidateListTable({
         ))}
       </tbody>
     </table>
+
   );
 }
 
@@ -115,7 +118,7 @@ export default function AddCandidate({
   setCandidateList,
 }: {
   memberInfo: number | string;
-  candidateList: [];
+  candidateList: number[];
   setCandidateList: any;
 }) {
   // memberInfo가 변경될 때마다 검색어 상태를 업데이트

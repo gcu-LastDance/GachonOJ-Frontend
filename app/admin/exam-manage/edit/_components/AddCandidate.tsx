@@ -17,7 +17,7 @@ function CandidateListTable({
   setCandidateList,
 }: {
   tableData: candidateTableData[];
-  candidateList: [];
+  candidateList: number[];
   setCandidateList: any,
 }) {
 
@@ -50,17 +50,16 @@ function CandidateListTable({
     columnHelper("memberEmail", { header: "이메일" }),
   ];
 
-  const [data, setData] = useState<candidateTableData[]>(tableData);
+ 
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    
-    <table className="w-fit text-sm ">
+    <table className="w-fit text-sm">
       <thead>
         {/* 테이블 헤더 생성 */}
         {table.getHeaderGroups().map((headerGroup) => (
@@ -94,10 +93,8 @@ function CandidateListTable({
             <td className="border px-4 py-2 text-center border-t-0 border-l-0 border-r-0">
               <input
                 type="checkbox"
-                onChange={(e) =>
-                  handleCheckboxChange(row.original.memberId, e.target.checked)
-                }
-              />
+                checked={candidateList.includes(row.original.memberId)}
+                onChange={(e) => handleCheckboxChange(row.original.memberId, e.target.checked)} />
             </td>
             {row.getVisibleCells().map((cell) => (
               <td
@@ -111,6 +108,7 @@ function CandidateListTable({
         ))}
       </tbody>
     </table>
+
   );
 }
 
@@ -120,7 +118,7 @@ export default function AddCandidate({
   setCandidateList,
 }: {
   memberInfo: number | string;
-  candidateList: [];
+  candidateList: number[];
   setCandidateList: any;
 }) {
   // memberInfo가 변경될 때마다 검색어 상태를 업데이트

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
 import { ExamProblemFormData } from "@/types/admin/problem";
 
-function EnrollContestForm() {
+export default function EnrollContestForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const initialData = {

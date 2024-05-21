@@ -16,7 +16,7 @@ export const inquiryContentsAPI = async (inquiryId: number) => {
 
 export const inquiryListAPI = async (pageNo: number) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_B02_URL}?&pageNo=${encodeURIComponent(pageNo)}`;
+    const url = `${process.env.NEXT_PUBLIC_B02_URL}?pageNo=${encodeURIComponent(pageNo)}`;
 
     const response = await instanceAuth.get(url);
     return response.data;
