@@ -12,9 +12,9 @@ export default function page() {
       <div className="flex flex-auto w-min h-80">
         <TodaySubmission />
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <InquiryList />
-      </div>
+      </div> */}
     </div>
   );
 }
