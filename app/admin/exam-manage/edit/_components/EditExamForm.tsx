@@ -31,7 +31,6 @@ function EditExamForm({
     problemPrompt: "",
     testcases: [],
   };
-
   const { register, handleSubmit, control, reset } = useForm();
   const [isDetailOpen, setIsDetailOpen] = useState(true);
   const [isAttendanceOpen, setIsAttendanceOpen] = useState(true);
@@ -111,6 +110,7 @@ function EditExamForm({
   });
 
   return (
+   
     <form>
       <div className="p-10">
         <div className="flex items-center mb-4">
@@ -342,13 +342,13 @@ function EditExamForm({
 const EditExamFormConatiner = () => {
   const params = useSearchParams();
   const examId = Number(params.get("examId"));
-  const { data } = useQuery<ExamContents>({
+  const { data, isFetching } = useQuery<ExamContents>({
     queryKey: ["examContents"],
     queryFn: () => examContentAPI(examId),
   });
 
   if (!data) return null;
-
+  if(!isFetching)
   return <EditExamForm data={data} examId={examId} />;
 };
 

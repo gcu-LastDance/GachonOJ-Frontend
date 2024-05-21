@@ -93,7 +93,7 @@ export default function EnrollExamForm() {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/exam-manage/list");
+        router.push("/professor/exam-manage/list");
       }
     },
   });

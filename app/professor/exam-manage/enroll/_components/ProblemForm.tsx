@@ -299,7 +299,7 @@ export default function ProblemForm({
         </div>
 
         <div className="flex justify-end">
-          <Link href="/admin/exam-manage/enroll/testcase" scroll={false}>
+          <Link href="/professor/exam-manage/enroll/testcase" scroll={false}>
             <button
               onClick={() => EnrollTestCase()}
               className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"

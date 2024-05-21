@@ -57,12 +57,12 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
 
   const onSubmit = (data: myInfoModifyFormData) => {
     if (nicknameCheck) {
-      console.log(nicknameCheck);
+      queryClient.invalidateQueries({ queryKey: ["memberProbCard"] });
       ModifyMutation.mutate({
         data,
         memberImg: fileInput.current?.files?.[0] || null,
       });
-      queryClient.invalidateQueries({ queryKey: ["memberProbCard"] });
+      
       alert("회원 정보가 수정되었습니다.");
 
       if (memberImg) {
