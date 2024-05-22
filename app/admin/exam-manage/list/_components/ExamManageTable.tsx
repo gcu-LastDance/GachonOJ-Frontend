@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -105,12 +103,12 @@ export function ExamManageTable({
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                   key={cell.id}
                 >
-               {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
-         
+
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-              <Link
+                <Link
                   href={{
                     pathname: "edit",
                     query: { examId: row.original.examId },
@@ -120,8 +118,8 @@ export function ExamManageTable({
                     수정
                   </button>
                 </Link>
-                </td>
-                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
                   className="underline underline-offset-auto"
                   onClick={() => onDelete(row.original.examId)}
@@ -131,12 +129,11 @@ export function ExamManageTable({
               </td>
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link
-                 href={`/admin/exam-manage/result/list/${row.original.examId}`}>
-                <button
-                  className="underline underline-offset-auto"
+                  href={`/admin/exam-manage/result/list/${row.original.examId}`}
                 >
-                  결과 조회
-                </button>
+                  <button className="underline underline-offset-auto">
+                    결과 조회
+                  </button>
                 </Link>
               </td>
             </tr>
@@ -167,13 +164,13 @@ export function ExamManageTable({
 
 const ExamManageTableConatiner = () => {
   const [pageNo, setPageNo] = useState(1);
-  const { data } = useQuery<examListData>({
+  const { data, isFetching } = useQuery<examListData>({
     queryKey: ["examList", pageNo],
     queryFn: () => examListAPI("시험", pageNo),
   });
 
   if (!data) return null;
-
+  if(!isFetching) 
   return (
     <ExamManageTable
       tableData={data?.result.content}

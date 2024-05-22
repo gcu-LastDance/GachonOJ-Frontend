@@ -103,18 +103,21 @@ export function ContestManageTable({
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                   key={cell.id}
                 >
-                  {cell.column.columnDef.header === "제목" ? (
-                    <Link href={`/admin/exam-manage/${row.original.examId}`}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Link>
-                  ) : (
-                    flexRender(cell.column.columnDef.cell, cell.getContext())
-                  )}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
+                   <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  href={{
+                    pathname: "edit",
+                    query: { examId: row.original.examId },
+                  }}
+                >
+                  <button className="underline underline-offset-auto">
+                    수정
+                  </button>
+                </Link>
+              </td>
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
                   className="underline underline-offset-auto"

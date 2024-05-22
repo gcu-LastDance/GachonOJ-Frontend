@@ -69,6 +69,7 @@ export interface ExamResultListData {
   examTitle: string;
   examMemo: string;
   submissionTotal: number;
-  content: ExamResultListContents[];
-
+  results: {
+    content: ExamResultListContents[];
+  };
 }

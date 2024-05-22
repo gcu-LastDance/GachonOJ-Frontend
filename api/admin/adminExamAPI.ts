@@ -59,10 +59,7 @@ export const examEditAPI = async (data: any, examId: number) => {
       examId
     )}`;
 
-    const response = await instanceAuth.put(
-      url,
-      data
-    );
+    const response = await instanceAuth.put(url, data);
 
     return response.data;
   } catch (error) {
@@ -94,4 +91,4 @@ export const examResultListAPI = async (examId: number) => {
   } catch (error) {
     throw new Error(String(error));
   }
-}
+};

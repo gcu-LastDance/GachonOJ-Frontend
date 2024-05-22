@@ -11,7 +11,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import Link from "next/link";
+
 import React, { useState } from "react";
 
 const columns: ColumnDef<ExamResultListContents, any>[] = [
@@ -30,19 +30,38 @@ export default function ExamResultList({ examId }: { examId: number }) {
     queryFn: () => examResultListAPI(examId),
   });
 
-  const paginationData = data
+  const paginationData: any = data?.results;
+
   const table = useReactTable({
-    data: data?.content ?? [],
+    data: data?.results?.content || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  console.log(data);
 
   if (!data) return null;
 
   return (
     <div>
+      <div className="flex justify-between px-20 mb-10">
+        <div className="flex items-center space-x-5">
+          <div className="text-2xl text-realGrey font-PretendardBold">
+            시험 제목
+          </div>
+          <div>{data.examTitle}</div>
+        </div>
+        <div className="flex items-center space-x-5">
+          <div className="text-2xl text-realGrey font-PretendardBold">
+            시험 메모
+          </div>
+          <div>{data.examMemo}</div>
+        </div>
+        <div className="flex items-center space-x-5">
+          <div className="text-2xl text-realGrey font-PretendardBold">
+            제출 인원
+          </div>
+          <div>{data.submissionTotal}</div>
+        </div>
+      </div>
       {/* 테이블 요소 생성 */}
       <table className="w-full text-sm">
         <thead>
@@ -78,7 +97,7 @@ export default function ExamResultList({ examId }: { examId: number }) {
               <td className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0">
                 {row.index +
                   1 +
-                  paginationData.pageable.pageSize * (pageNo - 1)}
+                  paginationData?.pageable?.pageSize * (pageNo - 1)}
               </td>
               {row.getVisibleCells().map((cell) => (
                 <td
@@ -110,14 +129,14 @@ export default function ExamResultList({ examId }: { examId: number }) {
         </tbody>
       </table>
 
-      {/* <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center">
         <PaginationBar
-          totalElements={paginationData.totalElements}
-          pageSize={paginationData.pageable.pageSize}
+          totalElements={paginationData?.totalElements}
+          pageSize={paginationData?.pageable?.pageSize}
           pageNo={pageNo}
           setPageNo={setPageNo}
         />
-      </div> */}
+      </div>
     </div>
   );
 }
