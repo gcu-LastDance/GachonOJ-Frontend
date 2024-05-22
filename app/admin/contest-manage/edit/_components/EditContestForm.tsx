@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { examEnrollAPI } from "@/api/admin/adminExamAPI";
+import { examContentAPI, examEditAPI } from "@/api/admin/adminExamAPI";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
 import AddCandidate from "./AddCandidate";
-import { ExamProblemFormData } from "@/types/admin/problem";
+import { ExamContents } from "@/types/admin/exam";
 
-export default function EnrollExamForm() {
-
-  const queryClient = useQueryClient();
+function EditExamForm({
+  data,
+  examId,
+}: {
+  data: ExamContents;
+  examId: number;
+}) {
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   const initialData = {
     problemMemoryLimit: 0,
     problemTimeLimit: 0,
@@ -28,23 +31,22 @@ export default function EnrollExamForm() {
     problemPrompt: "",
     testcases: [],
   };
+  const { register, handleSubmit, control, reset } = useForm();
+  const [isDetailOpen, setIsDetailOpen] = useState(true);
+  const [isAttendanceOpen, setIsAttendanceOpen] = useState(true);
+  const [isProblemOpen, setIsProblemOpen] = useState(true);
 
-  const { register, handleSubmit, control } = useForm();
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
-  const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
-  const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<ExamProblemFormData[]>([
-    {
-      id: 1,
-      data: initialData,
-    },
-  ]);
+  const [formCount, setFormCount] = useState(data.tests.length);
+  const [formData, setFormData] = useState<any[]>(data.tests);
   const [activeForm, setActiveForm] = useState(1);
   const [showAddCandidate, setShowAddCandidate] = useState(false);
   const [tempValue, setTempValue] = useState("");
-  const [candidateList, setCandidateList] = useState<[]>([]);
+  const [candidateList, setCandidateList] = useState<[]>(data.candidateList);
+
+  useEffect(() => {
+    reset();
+  }, []);
 
   const handleAddForm = () => {
     setFormCount(formCount + 1);
@@ -64,41 +66,51 @@ export default function EnrollExamForm() {
   };
 
   const deleteProblemForm = (formId: number) => {
-    console.log(formId);
     const updatedFormData = formData.filter((form) => form.id !== formId);
     setFormData(updatedFormData);
     setFormCount(formCount - 1);
     handleSwitchForm(formCount - 1);
-  }
-  
-  const onSubmit = (data: any) => {
-    const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "RESERVATION", examType: "CONTEST",
   };
+
+  const onSubmit = (data: any) => {
+    const tests = formData.map((form) => (form.data ? form.data : form));
+    const newData = {
+      ...data,
+      tests,
+      candidateList,
+      examStatus: "RESERVATION",
+      examType: "CONTEST",
+    };
     EnrollMutation.mutate(newData);
   };
 
   const onSave = (data: any) => {
-    const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "WRITING", examType: "CONTEST",
-  };
+    const tests = formData.map((form) => (form.data ? form.data : form));
+    const newData = {
+      ...data,
+      tests,
+      candidateList,
+      examStatus: "WRITING",
+      examType: "CONTEST",
+    };
     EnrollMutation.mutate(newData);
   };
 
   const EnrollMutation = useMutation({
-    mutationFn: (data: any) => examEnrollAPI(data),
+    mutationFn: (data: any) => examEditAPI(data, examId),
     onError: (error) => {
       console.log(error);
     },
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/exam-manage/list");
+        router.push("/admin/contest-manage/list");
       }
     },
   });
 
   return (
+   
     <form>
       <div className="p-10">
         <div className="flex items-center mb-4">
@@ -106,6 +118,7 @@ export default function EnrollExamForm() {
             시험제목
           </div>
           <textarea
+            defaultValue={data.examTitle}
             {...register("examTitle")}
             className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={2}
@@ -117,6 +130,7 @@ export default function EnrollExamForm() {
             시험메모
           </div>
           <textarea
+            defaultValue={data.examMemo}
             {...register("examMemo")}
             className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={2}
@@ -145,6 +159,7 @@ export default function EnrollExamForm() {
                   시험 안내사항
                 </div>
                 <textarea
+                  defaultValue={data.examNotice}
                   {...register("examNotice")}
                   className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                   rows={6}
@@ -161,6 +176,7 @@ export default function EnrollExamForm() {
                       시험 시작 가능 날짜 설정
                     </div>
                     <input
+                      defaultValue={data.examStartDate}
                       {...register("examStartDate")}
                       className="border rounded-md w-48 p-1"
                       placeholder="YYYY.MM.DD.HH.MM.SS"
@@ -173,6 +189,7 @@ export default function EnrollExamForm() {
                       시험 종료 날짜 설정
                     </div>
                     <input
+                      defaultValue={data.examEndDate}
                       {...register("examEndDate")}
                       className="border rounded-md w-48 p-1"
                       placeholder="YYYY.MM.DD.HH.MM.SS"
@@ -186,6 +203,7 @@ export default function EnrollExamForm() {
                   시험 제한 시간
                 </div>
                 <input
+                  defaultValue={data.examDueTime}
                   {...register("examDueTime")}
                   className="border rounded-md w-24 p-1"
                   placeholder="120"
@@ -229,9 +247,11 @@ export default function EnrollExamForm() {
                   </div>
                   <button
                     onClick={() => {
+                      queryClient.invalidateQueries({
+                        queryKey: ["candidateList"],
+                      });
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
-                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
                     }}
                     type="button"
                     className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
@@ -258,7 +278,7 @@ export default function EnrollExamForm() {
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              시험 문제 등록
+              시험 문제 수정
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isProblemOpen ? (
@@ -291,6 +311,7 @@ export default function EnrollExamForm() {
                   +
                 </button>
               </div>
+
               <ProblemForm
                 data={formData[activeForm - 1] || null}
                 setProblemForm={setProblemForm}
@@ -317,3 +338,18 @@ export default function EnrollExamForm() {
     </form>
   );
 }
+
+const EditExamFormConatiner = () => {
+  const params = useSearchParams();
+  const examId = Number(params.get("examId"));
+  const { data, isFetching } = useQuery<ExamContents>({
+    queryKey: ["examContents"],
+    queryFn: () => examContentAPI(examId),
+  });
+
+  if (!data) return null;
+  if(!isFetching)
+  return <EditExamForm data={data} examId={examId} />;
+};
+
+export default EditExamFormConatiner;

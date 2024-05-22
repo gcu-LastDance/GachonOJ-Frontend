@@ -1,12 +1,13 @@
 "use client";
 
-import EnrollExamForm from "./_components/EnrollExamForm";
+import EditExamForm from "./_components/EditExamForm";
+
 
 
 function page() {
   return (
     <div>
-      <EnrollExamForm />
+      <EditExamForm />
     </div>
   );
 }

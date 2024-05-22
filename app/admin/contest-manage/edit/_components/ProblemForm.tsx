@@ -1,5 +1,5 @@
 "use client";
-import { ExamProblemFormData, TestCase } from "@/types/admin/problem";
+import { ExamProblemEditFormData, TestCase } from "@/types/admin/problem";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ export default function ProblemForm({
   setProblemForm,
   deleteProblemForm,
 }: {
-  data: ExamProblemFormData;
+  data: ExamProblemEditFormData;
   setProblemForm: any;
   deleteProblemForm: any;
 }) {
@@ -23,12 +23,16 @@ export default function ProblemForm({
   const { check, setCheck } = useCheckStore();
   const { register, handleSubmit, control, reset } = useForm();
 
-  console.log(data);
   useEffect(() => {
-    setTestCases(data.data.testcases || []);
+    setTestCases(data.testcases || []);
     setTestCase(null, null, null);
     reset(); // 새로운 폼을 추가할 때 이전 폼의 값을 초기화
   }, [data.id]);
+
+  useEffect(() => {
+    setTestCases(data?.testcases || data?.data?.testcases || []);
+    setTestCase(null, null, null);
+  }, [data]);
 
   const onSubmit = (formData: FieldValues) => {
     const formDataWithTestcases = {
@@ -68,8 +72,9 @@ export default function ProblemForm({
 
   // 페이지 렌더링시 최초 1회 테스트케이스 관련 변수 전체 초기화
   useEffect(() => {
-    setTestCases([]);
+    setTestCases(data?.testcases);
     setTestCase(null, null, null);
+    reset();
   }, []);
 
   // 페이지 렌더링시 전역변수 값 변화 있을시 테스트케이스 추가 혹은 수정
@@ -125,6 +130,9 @@ export default function ProblemForm({
           <div className="w-1/3 text-lg flex items-center justify-start">
             <label className="block font-medium mb-1 mr-8">메모리 제한</label>
             <select
+              defaultValue={
+                data?.problemMemoryLimit || data?.data?.problemMemoryLimit || ""
+              }
               {...register("problemMemoryLimit")}
               className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
             >
@@ -140,6 +148,9 @@ export default function ProblemForm({
               실행 시간 제한
             </label>
             <select
+              defaultValue={
+                data?.problemTimeLimit || data?.data?.problemTimeLimit || ""
+              }
               {...register("problemTimeLimit")}
               className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
             >
@@ -152,6 +163,7 @@ export default function ProblemForm({
           <div className="w-1/3 flex text-lg items-center justify-start">
             <label className="block font-medium mb-1 mr-8">난이도 설정</label>
             <select
+              defaultValue={data?.problemDiff || data?.data?.problemDiff || ""}
               {...register("problemDiff")}
               className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             >
@@ -167,6 +179,9 @@ export default function ProblemForm({
               분류
             </label>
             <select
+              defaultValue={
+                data?.problemClass || data?.data?.problemClass || ""
+              }
               {...register("problemClass")}
               className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             >
@@ -199,7 +214,7 @@ export default function ProblemForm({
           <input
             type="text"
             {...register("problemTitle")}
-            defaultValue={data.data?.problemTitle || ""}
+            defaultValue={data?.problemTitle || data?.data?.problemTitle || ""}
             className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -209,7 +224,9 @@ export default function ProblemForm({
           </div>
           <textarea
             {...register("problemContents")}
-            defaultValue={data?.data?.problemContents || ""}
+            defaultValue={
+              data?.problemContents || data?.data?.problemContents || ""
+            }
             className="w-full flex ml-auto px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={8}
           ></textarea>
@@ -220,7 +237,9 @@ export default function ProblemForm({
           </div>
           <textarea
             {...register("problemInputContents")}
-            defaultValue={data.data?.problemInputContents || ""}
+            defaultValue={
+              data.problemInputContents || data?.data.problemInputContents || ""
+            }
             className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={4}
           ></textarea>
@@ -231,7 +250,11 @@ export default function ProblemForm({
           </div>
           <textarea
             {...register("problemOutputContents")}
-            defaultValue={data.data?.problemOutputContents || ""}
+            defaultValue={
+              data?.problemOutputContents ||
+              data?.data?.problemOutputContents ||
+              ""
+            }
             className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={4}
           ></textarea>
@@ -242,7 +265,9 @@ export default function ProblemForm({
           </div>
           <textarea
             {...register("problemPrompt")}
-            defaultValue={data.data?.problemPrompt || ""}
+            defaultValue={
+              data?.problemPrompt || data?.data?.problemPrompt || ""
+            }
             className="w-full ml-auto flex px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 resize-none"
             rows={4}
           ></textarea>
@@ -299,7 +324,7 @@ export default function ProblemForm({
         </div>
 
         <div className="flex justify-end">
-          <Link href="/admin/contest-manage/enroll/testcase" scroll={false}>
+          <Link href="/admin/contest-manage/edit/testcase" scroll={false}>
             <button
               onClick={() => EnrollTestCase()}
               className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4"
