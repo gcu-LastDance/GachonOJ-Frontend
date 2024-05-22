@@ -3,6 +3,7 @@
 import { examDetailAPI } from "@/api/testAPI";
 import { TestDetailData } from "@/types/test";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import React from "react";
 
 export default function page({ params }: { params: { examId: number } }) {
@@ -61,12 +62,12 @@ export default function page({ params }: { params: { examId: number } }) {
         </div>
       </div>
       <div className="mt-[5vh] mx-auto">
-        <button
-          type="button"
-          className="rounded-[0.7vh] bg-primaryBlue w-[7vw] h-[4vh] text-white font-PretendardMedium text-[1.6vh]"
+        <Link
+          href={`/test-ide/${params.examId}`}
+          className="rounded-[0.7vh] bg-primaryBlue w-[7vw] h-[4vh] text-white font-PretendardMedium text-[1.6vh] items-center justify-center flex"
         >
           응시하기
-        </button>
+        </Link>
       </div>
     </div>
   );

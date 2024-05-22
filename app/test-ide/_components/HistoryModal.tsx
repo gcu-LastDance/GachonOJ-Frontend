@@ -1,25 +1,17 @@
 "use client";
 
+import { sumbitHistoryAPI } from "@/api/problemAPI";
 import ModalLarge from "@/components/modal/ModalLarge";
 import columnHelper from "@/lib/columnHelper";
 import { SubmitHistoryData } from "@/types/problem";
+import { useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useParams, useRouter } from "next/navigation";
 import React from "react";
-
-const submitHistoryData: SubmitHistoryData[] = [
-  {
-    submitId: 1,
-    submitTime: "2024-05-05 14:00:00",
-    submitResult: "오답",
-    submitLang: "C++",
-  },
-];
 
 const columns: ColumnDef<SubmitHistoryData, any>[] = [
   columnHelper("submitTime", {
@@ -38,9 +30,18 @@ const columns: ColumnDef<SubmitHistoryData, any>[] = [
   }),
 ];
 
-export default function page() {
-  const router = useRouter();
-  const params = useParams();
+export default function HistoryModal({
+  problemId,
+  setModalOpen,
+}: {
+  problemId: number;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const { data: submitHistoryData } = useQuery<SubmitHistoryData[]>({
+    queryKey: ["submitHistory"],
+    queryFn: () => sumbitHistoryAPI(problemId),
+    refetchOnMount: "always",
+  });
 
   const table = useReactTable({
     data: submitHistoryData || [],
@@ -120,7 +121,7 @@ export default function page() {
           <button
             type="button"
             onClick={() => {
-              router.back();
+              setModalOpen(false);
             }}
             className="flex border-[0.15vw] border-primaryBlue bg-primaryBlue w-[10vw] h-[4vh] items-center justify-center rounded-[0.2vw]"
           >

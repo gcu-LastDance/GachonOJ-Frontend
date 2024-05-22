@@ -12,11 +12,9 @@ import React, { useEffect, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 
 export default function IdeMain({
-  problemId,
   code,
   setCode,
 }: {
-  problemId: number;
   code: string;
   setCode: React.Dispatch<React.SetStateAction<string>>;
 }) {
@@ -29,10 +27,10 @@ export default function IdeMain({
   return (
     <div>
       <div className="flex justify-between h-[5.5vh] w-full items-center bg-white px-[1vw] border-b-[0.15vw] z-0">
-        <span className="font-PretendardRegular text-[1.2vw]">
+        <div className="font-PretendardSemiBold text-[1.2vw] text-darkGrey h-[5vh] items-center flex">
           {programLangMap[programLang ?? "C"]}
-        </span>
-        <Link href={`/algorithm-ide/setting`}>
+        </div>
+        <Link href={`/test-ide/setting`}>
           <IoSettingsOutline className="text-[1.7vw] text-primaryDark" />
         </Link>
       </div>
@@ -41,6 +39,7 @@ export default function IdeMain({
         height="55vh"
         theme={githubLight}
         autoFocus={true}
+        editable={true}
         onChange={handleCode}
       />
     </div>

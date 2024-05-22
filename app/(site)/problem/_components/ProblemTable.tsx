@@ -245,25 +245,29 @@ export default function ProblemTable() {
                     </Link>
                   ) : cell.column.id === "isBookmarked" ? (
                     row.original.isBookmarked ? (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleBookmarkRemove(row.original.problemId)
-                        }
-                        className="text-[1vw] flex items-center justify-center"
-                      >
-                        <IoBookmark />
-                      </button>
+                      <div className="flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleBookmarkRemove(row.original.problemId)
+                          }
+                          className="text-[1vw] flex items-center justify-center"
+                        >
+                          <IoBookmark />
+                        </button>
+                      </div>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleBookmarkAdd(row.original.problemId)
-                        }
-                        className="text-[1vw] flex items-center justify-center"
-                      >
-                        <IoBookmarkOutline />
-                      </button>
+                      <div className="flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleBookmarkAdd(row.original.problemId)
+                          }
+                          className="text-[1vw] flex items-center justify-center"
+                        >
+                          <IoBookmarkOutline />
+                        </button>
+                      </div>
                     )
                   ) : (
                     flexRender(cell.column.columnDef.cell, cell.getContext())

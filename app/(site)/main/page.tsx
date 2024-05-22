@@ -7,7 +7,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function page() {
   return (
-    <div className="flex flex-col mt-[4.5vh] mb-[4.5vh]">
+    <div className="flex flex-col mb-[4.5vh]">
       <MainBanner />
       <div className="mx-[1vw] flex flex-col">
         <div className="my-[4vh]">
