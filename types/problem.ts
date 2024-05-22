@@ -19,6 +19,17 @@ export interface ProblemTableData {
   isBookmarked: boolean;
 }
 
+export interface SolProblemTableData {
+  problemId: number;
+  problemTitle: string;
+  problemDiff: difficulty;
+  problemClass?: string;
+  correctPeople: number;
+  correctRate: number;
+  isBookmarked: boolean;
+  submissionId: number;
+}
+
 /**
  * ProblemDetailData
  * IDE 왼편에 표시되는 문제 상세 정보 데이터
@@ -34,10 +45,10 @@ export interface ProblemDetailData {
 }
 
 export interface SubmitHistoryData {
-  submitId: number;
-  submitTime: string;
-  submitResult: string;
-  submitLang: string;
+  submissionId: number;
+  submissionDate: string;
+  submissionStatus: string;
+  submissionLang: string;
 }
 
 export interface TestcaseData {
@@ -74,4 +85,18 @@ export interface ProblemSubmitResultData {
   memberRank: number;
   afterMemberRating: number;
   afterMemberRank: number;
+}
+
+export interface ProblemFeedbackData {
+  aiContents: string;
+  code: string;
+  memberNickname: string;
+  problemId: number;
+  problemTitle: string;
+}
+
+export interface SolutionHistorySubmitDetailData {
+  memberNickname: string;
+  problemTitle: string;
+  submissionCode: string;
 }

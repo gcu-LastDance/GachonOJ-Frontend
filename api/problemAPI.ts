@@ -136,6 +136,7 @@ export const problemSolutionSubmitAPI = async ({
 
 export const problemBookmarkPostAPI = async (problemId: number) => {
   try {
+    console.log(problemId);
     const url = `${process.env.NEXT_PUBLIC_M13_URL as string}/${problemId}`;
     const response = await instanceAuth.post(url);
     console.log(url);
@@ -152,6 +153,72 @@ export const problemBookmarkDeleteAPI = async (problemId: number) => {
     const response = await instanceAuth.delete(url);
     console.log(response.data);
     return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const problemSolutionSaveAPI = async ({
+  problemId,
+  data,
+}: {
+  problemId: number;
+  data: ProblemSolutionSubmitData;
+}) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_S08_URL as string}/${problemId}`;
+    const response = await instanceAuth.post(url, data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const sumbitHistoryAPI = async (problemId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_S07_URL as string}/${problemId}`;
+    const response = await instanceAuth.get(url);
+    console.log(url);
+    console.log(response.data);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const problemHistoryGetCodeAPI = async ({
+  submissionId,
+}: {
+  submissionId: number;
+}) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_S06_URL as string}/${submissionId}}`;
+    const response = await instanceAuth.get(url);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const solutionFeedbackAPI = async (submissionId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_A01_URL as string}/${submissionId}`;
+    const response = await instanceAuth.get(url);
+    console.log(response.data);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const solutionHistorySubmitDetailAPI = async (submissionId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_S06_URL as string}/${submissionId}`;
+    const response = await instanceAuth.get(url);
+    console.log(response.data);
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }

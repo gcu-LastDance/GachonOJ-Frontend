@@ -28,13 +28,18 @@ export default function ExamTable({ menu }: { menu: TestMenuType }) {
     refetchOnMount: "always",
   });
 
+  const examData =
+    menu === "scheduled"
+      ? scheduledExamData
+      : menu === "past"
+      ? pastExamData
+      : ongoingExamData;
+
   return (
     <div className="grid grid-cols-3 gap-y-[4vh] gap-x-[1.5vw]">
-      {(menu === "scheduled" ? scheduledExamData : pastExamData)?.map(
-        (data: TestData) => (
-          <TestCard key={data.examId} data={data} />
-        )
-      )}
+      {examData?.map((data: TestData) => (
+        <TestCard key={data.examId} data={data} />
+      ))}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import {
   problemSolutionExcuteAPI,
+  problemSolutionSaveAPI,
   problemSolutionSubmitAPI,
 } from "@/api/problemAPI";
 import ModalLarge from "@/components/modal/ModalLarge";
@@ -25,6 +26,7 @@ export default function IdeFooter({
   setTestcaseModalOpen,
   setResultModalOpen,
   setSubmitResult,
+  setHistoryModalOpen,
 }: {
   code: string;
   testcase: TestcaseSetData[];
@@ -36,6 +38,7 @@ export default function IdeFooter({
   setSubmitResult: React.Dispatch<
     React.SetStateAction<ProblemSubmitResultData | undefined>
   >;
+  setHistoryModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const params = useParams();
   const { programLang } = useProgramLangStore();
@@ -73,6 +76,28 @@ export default function IdeFooter({
     });
   };
 
+  const problemSolutionSaveMutation = useMutation({
+    mutationFn: problemSolutionSaveAPI,
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        alert("코드 저장 성공");
+      } else {
+        alert("코드 저장 실패");
+      }
+    },
+  });
+
+  const handleSolutionSave = () => {
+    problemSolutionSaveMutation.mutate({
+      problemId: Number(params.problemId),
+      data: { code: code, language: "Java" },
+    });
+  };
+
   const problemSolutionSubmitMutation = useMutation({
     mutationFn: problemSolutionSubmitAPI,
     onError: (error) => {
@@ -98,16 +123,18 @@ export default function IdeFooter({
 
   return (
     <footer className="fixed bottom-0 flex border-t-2 shadow-md h-[5.5vh] px-[1.5vw] w-screen bg-white items-center">
-      <Link
-        href={`/algorithm-ide/${params.problemId}/history`}
+      <button
+        type="button"
+        onClick={() => setHistoryModalOpen(true)}
         className="flex border-[0.13vw] w-[7vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">
           제출이력 확인
         </span>
-      </Link>
+      </button>
       <button
         type="button"
+        onClick={handleSolutionSave}
         className="flex border-[0.13vw] w-[5vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-auto items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">

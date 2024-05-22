@@ -51,7 +51,7 @@ export default function HeaderMemberDropdown() {
         onMouseEnter={() => setShowDropdown(true)}
         onMouseLeave={() => setShowDropdown(false)}
         onClick={() => router.push("/profile")}
-        className="flex text-white border-[0.15vw] w-[2vw] h-[2vw] border-realGrey hover:ring-4 hover:ring-semiGrey rounded-full items-center justify-center overflow-hidden relative"
+        className="flex text-white border-[0.15vh] w-[2.5vw] h-[2.5vw] border-realGrey hover:ring-4 hover:ring-semiGrey rounded-full items-center justify-center overflow-hidden relative"
         type="button"
       >
         {!userImg ? (

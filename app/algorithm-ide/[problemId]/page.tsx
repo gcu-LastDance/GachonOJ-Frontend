@@ -16,6 +16,7 @@ import {
 } from "@/types/problem";
 import TestcaseModal from "../_components/TestcaseModal";
 import ResultModal from "../_components/ResultModal";
+import HistoryModal from "../_components/HistoryModal";
 
 export default function page({ params }: { params: { problemId: number } }) {
   const { token } = useUserStore();
@@ -27,6 +28,7 @@ export default function page({ params }: { params: { problemId: number } }) {
     []
   );
   const [testcaseModalOpen, setTestcaseModalOpen] = useState(false);
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
   const [testcase, setTestcase] = useState<TestcaseSetData[]>([]);
   const [resultModalOpen, setResultModalOpen] = useState(false);
   const [submitResult, setSubmitResult] = useState<ProblemSubmitResultData>();
@@ -64,6 +66,7 @@ export default function page({ params }: { params: { problemId: number } }) {
           setTestcaseModalOpen={setTestcaseModalOpen}
           setResultModalOpen={setResultModalOpen}
           setSubmitResult={setSubmitResult}
+          setHistoryModalOpen={setHistoryModalOpen}
         />
       )}
       {testcaseModalOpen && (
@@ -77,6 +80,13 @@ export default function page({ params }: { params: { problemId: number } }) {
         <ResultModal
           submitResult={submitResult}
           setResultModalOpen={setResultModalOpen}
+        />
+      )}
+      {historyModalOpen && (
+        <HistoryModal
+          problemId={params.problemId}
+          setCode={setCode}
+          setModalOpen={setHistoryModalOpen}
         />
       )}
     </div>

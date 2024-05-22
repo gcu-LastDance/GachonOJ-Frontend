@@ -105,3 +105,14 @@ export const contestDetailAPI = async (examId: number) => {
     throw new Error(String(error));
   }
 };
+
+export const examInfoAPI = async (examId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P25_URL as string}/${examId}`;
+    const response = await instanceAuth.get(url);
+    console.log(response.data);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};

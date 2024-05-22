@@ -1,4 +1,8 @@
-import { memberProblemTableAPI } from "@/api/problemAPI";
+import {
+  memberProblemTableAPI,
+  problemBookmarkDeleteAPI,
+  problemBookmarkPostAPI,
+} from "@/api/problemAPI";
 import DiffBadge from "@/components/badge/DiffBadge";
 import CategoryButton from "@/components/button/CategoryButton";
 import PaginationBar from "@/components/pagination/PaginationBar";
@@ -8,7 +12,7 @@ import {
   ProfileProblemType,
   difficulty,
 } from "@/types/problem";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ColumnDef,
   flexRender,
@@ -18,6 +22,7 @@ import {
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import MemberSolProblemTable from "./MemberSolProblemTable";
 
 const columns: ColumnDef<ProblemTableData, any>[] = [
   columnHelper("problemDiff", {
@@ -47,17 +52,6 @@ const columns: ColumnDef<ProblemTableData, any>[] = [
   }),
   columnHelper("isBookmarked", {
     header: "북마크",
-    cell: (value) => {
-      return value ? (
-        <div className="text-[1.2vw] flex items-center justify-center">
-          <IoBookmark />
-        </div>
-      ) : (
-        <div className="text-[1.2vw] flex items-center justify-center">
-          <IoBookmarkOutline />
-        </div>
-      );
-    },
   }),
 ];
 
@@ -67,13 +61,15 @@ export default function MemberProblemTable() {
   const [pageNum, setPageNum] = useState<number>(1);
   const [debouncedPageNum, setDebouncedPageNum] = useState(pageNum);
 
+  const queryClient = useQueryClient();
+
   const activeMenuCss =
     "flex w-[16.4vw] h-[5.5vh] items-center justify-center bg-white";
   const inactiveMenuCss =
     "flex w-[16.4vw] h-[5.5vh] items-center justify-center border-b-[0.15vw] border-semiSemiGrey bg-lightGrey";
 
-  const { data: problemData } = useQuery({
-    queryKey: ["problemTableGuest", debouncedMenu, debouncedPageNum],
+  const { data: problemData, isLoading } = useQuery({
+    queryKey: ["memberProblemTable", debouncedMenu, debouncedPageNum],
     queryFn: () =>
       memberProblemTableAPI({ menu: debouncedMenu, pageNum: debouncedPageNum }),
     refetchOnMount: "always",
@@ -89,8 +85,38 @@ export default function MemberProblemTable() {
     return () => clearTimeout(timeout);
   }, [menu]);
 
+  const handleBookmarkAdd = (problemId: number) => {
+    bookmarkAddMutation.mutate(problemId);
+  };
+
+  const handleBookmarkRemove = (problemId: number) => {
+    bookmarkRemoveMutation.mutate(problemId);
+  };
+
+  const bookmarkAddMutation = useMutation({
+    mutationFn: problemBookmarkPostAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["memberProblemTable"] });
+    },
+  });
+
+  const bookmarkRemoveMutation = useMutation({
+    mutationFn: problemBookmarkDeleteAPI,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["memberProblemTable"] });
+    },
+  });
+
   const table = useReactTable({
-    data: problemData?.content || [],
+    data: isLoading ? [] : problemData?.content,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -136,64 +162,96 @@ export default function MemberProblemTable() {
           해결한 문제
         </button>
       </div>
-      <table className="w-[47vw]">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr
-              key={headerGroup.id}
-              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[0.95vw]"
-            >
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  className={`${
-                    header.id === "title"
-                      ? "text-left w-[16vw]"
-                      : "text-center w-[11w]"
-                  }`}
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  key={cell.id}
-                  className={`${
-                    cell.column.id === "title" ? "text-left" : "text-center"
-                  } ${
-                    cell.column.id === "category" && "w-[8vw]"
-                  } text-[0.95vw] font-PretendardLight text-realGrey`}
-                >
-                  {cell.column.id === "title" ? (
-                    <Link href={`/algorithm-ide/1`}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Link>
-                  ) : (
-                    flexRender(cell.column.columnDef.cell, cell.getContext())
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {menu === "solved" ? (
+        <MemberSolProblemTable data={problemData?.content} />
+      ) : (
+        <table className="w-[47vw]">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr
+                key={headerGroup.id}
+                className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[0.95vw]"
+              >
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className={`${
+                      header.id === "title"
+                        ? "text-left w-[16vw]"
+                        : "text-center w-[11w]"
+                    }`}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr
+                key={row.id}
+                className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td
+                    key={cell.id}
+                    className={`${
+                      cell.column.id === "problemTitle"
+                        ? "text-left"
+                        : "text-center"
+                    } ${
+                      cell.column.id === "problemClass" && "w-[8vw]"
+                    } text-[0.95vw] font-PretendardLight text-realGrey`}
+                  >
+                    {cell.column.id === "problemTitle" ? (
+                      <Link href={`/algorithm-ide/${row.original.problemId}`}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Link>
+                    ) : cell.column.id === "isBookmarked" ? (
+                      row.original.isBookmarked ? (
+                        <div className="flex items-center justify-center">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleBookmarkRemove(row.original.problemId)
+                            }
+                            className="text-[1vw] flex items-center justify-center"
+                          >
+                            <IoBookmark />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleBookmarkAdd(row.original.problemId)
+                            }
+                            className="text-[1vw] flex items-center justify-center"
+                          >
+                            <IoBookmarkOutline />
+                          </button>
+                        </div>
+                      )
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       <div className="mt-auto flex justify-center items-center mb-[3vh]">
         {problemData && (
           <PaginationBar

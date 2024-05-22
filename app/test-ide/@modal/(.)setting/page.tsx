@@ -23,7 +23,7 @@ export default function page() {
           IDE 설정
         </p>
         <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[4vh] items-center">
-          <form className="flex space-x-[2.5vw] my-[1vh]">
+          <form className="flex space-x-[2.5vw] my-[4.5vh]">
             <div className="flex space-x-[0.3vw]">
               <span>C</span>
               <input
@@ -69,7 +69,7 @@ export default function page() {
         <span className="text-[0.9vw] font-PretendardRegular text-realGrey mt-[3vh]">
           언어를 변경하면 기존에 작성된 코드가 삭제될 수 있습니다
         </span>
-        <div className="flex space-x-[2vw] mt-[4vh]">
+        <div className="flex space-x-[2vw] mt-[8vh]">
           <button
             type="button"
             onClick={() => {

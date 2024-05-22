@@ -1,10 +1,15 @@
 "use client";
 
-import { problemSolutionExcuteAPI } from "@/api/problemAPI";
+import {
+  problemSolutionExcuteAPI,
+  problemSolutionSaveAPI,
+  problemSolutionSubmitAPI,
+} from "@/api/problemAPI";
 import ModalLarge from "@/components/modal/ModalLarge";
 import { useProgramLangStore } from "@/store/useProgramLangStore";
 import {
   ProblemExcuteResultData,
+  ProblemSubmitResultData,
   TestcaseData,
   TestcaseSetData,
 } from "@/types/problem";
@@ -12,12 +17,16 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { set } from "react-hook-form";
 
 export default function IdeFooter({
   code,
   testcase,
   setExcuteResult,
   setTestcaseModalOpen,
+  setResultModalOpen,
+  setSubmitResult,
+  setHistoryModalOpen,
 }: {
   code: string;
   testcase: TestcaseSetData[];
@@ -25,6 +34,11 @@ export default function IdeFooter({
     React.SetStateAction<ProblemExcuteResultData[]>
   >;
   setTestcaseModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setResultModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSubmitResult: React.Dispatch<
+    React.SetStateAction<ProblemSubmitResultData | undefined>
+  >;
+  setHistoryModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const params = useParams();
   const { programLang } = useProgramLangStore();
@@ -39,7 +53,7 @@ export default function IdeFooter({
     return testcaseData;
   };
 
-  const problemSolutionExcute = useMutation({
+  const problemSolutionExcuteMutation = useMutation({
     mutationFn: problemSolutionExcuteAPI,
     onError: (error) => {
       console.error(error);
@@ -56,26 +70,72 @@ export default function IdeFooter({
 
   const handleSolutionExcute = () => {
     const testcaseData = convertTestcaseSetToData(testcase);
-
-    problemSolutionExcute.mutate({
+    problemSolutionExcuteMutation.mutate({
       problemId: Number(params.problemId),
       data: { code: code, language: "Java", testcase: testcaseData },
     });
   };
 
+  const problemSolutionSaveMutation = useMutation({
+    mutationFn: problemSolutionSaveAPI,
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        alert("코드 저장 성공");
+      } else {
+        alert("코드 저장 실패");
+      }
+    },
+  });
+
+  const handleSolutionSave = () => {
+    problemSolutionSaveMutation.mutate({
+      problemId: Number(params.problemId),
+      data: { code: code, language: "Java" },
+    });
+  };
+
+  const problemSolutionSubmitMutation = useMutation({
+    mutationFn: problemSolutionSubmitAPI,
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success) {
+        setSubmitResult(data.result);
+        setResultModalOpen(true);
+      } else {
+        alert("제출 실패");
+      }
+    },
+  });
+
+  const handleSolutionSubmit = () => {
+    problemSolutionSubmitMutation.mutate({
+      problemId: Number(params.problemId),
+      data: { code: code, language: "Java" },
+    });
+  };
+
   return (
     <footer className="fixed bottom-0 flex border-t-2 shadow-md h-[5.5vh] px-[1.5vw] w-screen bg-white items-center">
-      <Link
-        href={`/algorithm-ide/${params.problemId}/history`}
+      <button
+        type="button"
+        onClick={() => setHistoryModalOpen(true)}
         className="flex border-[0.13vw] w-[7vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">
           제출이력 확인
         </span>
-      </Link>
+      </button>
       <button
         type="button"
-        className="border-[0.13vw] w-[5vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-auto"
+        onClick={handleSolutionSave}
+        className="flex border-[0.13vw] w-[5vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-auto items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">
           저장
@@ -93,7 +153,7 @@ export default function IdeFooter({
       <button
         type="button"
         onClick={handleSolutionExcute}
-        className="border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-[0.5vw]"
+        className="flex border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] border-primaryBlue ml-[0.5vw] items-center justify-center"
       >
         <span className="font-PretendardMedium text-primaryBlue text-[0.8vw]">
           코드 실행
@@ -101,10 +161,20 @@ export default function IdeFooter({
       </button>
       <button
         type="button"
-        className="border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] bg-primaryRed border-primaryRed ml-[0.5vw]"
+        onClick={handleSolutionSubmit}
+        className="flex border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] bg-primaryBlue border-primaryBlue ml-[0.5vw] items-center justify-center"
       >
         <span className="font-PretendardMedium text-white text-[0.8vw]">
-          제출
+          문제 자가채점
+        </span>
+      </button>
+      <button
+        type="button"
+        onClick={handleSolutionSubmit}
+        className="flex border-[0.13vw] w-[6vw] h-[3.5vh] rounded-[0.3vw] bg-primaryRed border-primaryRed ml-[0.5vw] items-center justify-center"
+      >
+        <span className="font-PretendardMedium text-white text-[0.8vw]">
+          시험 종료
         </span>
       </button>
     </footer>
