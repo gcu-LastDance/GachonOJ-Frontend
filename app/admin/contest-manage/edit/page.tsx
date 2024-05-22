@@ -1,6 +1,6 @@
 "use client";
 
-import EditExamForm from "./_components/EditExamForm";
+import EditExamForm from "./_components/EditContestForm";
 
 
 

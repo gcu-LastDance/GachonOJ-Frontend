@@ -29,7 +29,6 @@ export interface candidateTableData {
 }
 
 export interface Problem {
-  
   problemTitle: string;
   problemContents: string;
   problemDiff: string | null;
@@ -53,5 +52,23 @@ export interface ExamContents {
   examDueTime: string;
   tests: Problem[];
   candidateList: [];
+}
+
+export interface ExamResultListContents {
+  testId: number;
+  memberId: number;
+  memberName: string;
+  memberNumber: number;
+  memberEmail: string;
+  totalScore: number;
+  examDueTime: string;
+  submissionDate: string;
+}
+
+export interface ExamResultListData {
+  examTitle: string;
+  examMemo: string;
+  submissionTotal: number;
+  content: ExamResultListContents[];
 
 }

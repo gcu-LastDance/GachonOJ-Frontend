@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -126,6 +128,16 @@ export function ExamManageTable({
                 >
                   삭제
                 </button>
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                 href={`/admin/exam-manage/result/list/${row.original.examId}`}>
+                <button
+                  className="underline underline-offset-auto"
+                >
+                  결과 조회
+                </button>
+                </Link>
               </td>
             </tr>
           ))}
