@@ -34,7 +34,7 @@ function LanguageGraph({ data }: { data: LanguageGraphData[] }) {
   };
 
   return (
-    <div className="flex flex-wrap shadow-md border-semiGrey border-4 h-full  bg-white px-5 py-5">
+    <div className="flex flex-wrap shadow-md border-semiGrey border-4 h-full bg-white px-5 py-5">
       <div className="text-2xl">학생 선호 언어 현황</div>
       <div className="p-3 h-full w-full">
         <ResponsiveContainer width="100%" height="100%" >

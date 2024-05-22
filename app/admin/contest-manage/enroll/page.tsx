@@ -1,12 +1,12 @@
 "use client";
 
-import EnrollContestForm from "./_components/EnrollContestForm";
+import EnrollExamForm from "./_components/EnrollExamForm";
 
 
 function page() {
   return (
     <div>
-      <EnrollContestForm />
+      <EnrollExamForm />
     </div>
   );
 }

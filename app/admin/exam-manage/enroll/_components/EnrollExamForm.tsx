@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { examEnrollAPI } from "@/api/admin/adminExamAPI";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
-import { TestProblemFormData } from "@/types/admin/problem";
+import { ExamProblemFormData } from "@/types/admin/problem";
 
 export default function EnrollExamForm() {
+
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const initialData = {
@@ -33,7 +35,7 @@ export default function EnrollExamForm() {
   const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<TestProblemFormData[]>([
+  const [formData, setFormData] = useState<ExamProblemFormData[]>([
     {
       id: 1,
       data: initialData,
@@ -61,6 +63,14 @@ export default function EnrollExamForm() {
     setFormData(updatedFormData);
   };
 
+  const deleteProblemForm = (formId: number) => {
+    console.log(formId);
+    const updatedFormData = formData.filter((form) => form.id !== formId);
+    setFormData(updatedFormData);
+    setFormCount(formCount - 1);
+    handleSwitchForm(formCount - 1);
+  }
+  
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
     const newData = { ...data, tests, candidateList, examStatus: "RESERVATION", examType: "EXAM",
@@ -221,6 +231,7 @@ export default function EnrollExamForm() {
                     onClick={() => {
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
+                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
                     }}
                     type="button"
                     className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
@@ -228,7 +239,7 @@ export default function EnrollExamForm() {
                     검색하기
                   </button>
                 </div>
-                <div className="flex-col w-fit container bg-semiGrey">
+                <div className="flex-col w-fit border rounded-lg bg-semiGrey">
                   {showAddCandidate && (
                     <AddCandidate
                       memberInfo={CandidateValue}
@@ -283,6 +294,7 @@ export default function EnrollExamForm() {
               <ProblemForm
                 data={formData[activeForm - 1] || null}
                 setProblemForm={setProblemForm}
+                deleteProblemForm={deleteProblemForm}
               />
             </div>
           )}

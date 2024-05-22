@@ -36,3 +36,15 @@ export const TodaySubmissionAPI = async () => {
     throw new Error(String(error));
   }
 };
+
+export const InquiryDashboardAPI = async () => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_G07_URL}`;
+
+    const response = await instanceAuth.get(url);
+
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+}

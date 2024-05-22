@@ -16,14 +16,14 @@ export default function page() {
           <div>가천OJ 교수님 전용 관리 페이지입니다.</div>
         </div>
         <div className="flex">
-          <div className="mr-3 flex-auto w-3/4">
-            <div className="mb-3 w-full h-1/3 ">
+          <div className="mr-3 flex-auto h-full w-3/4">
+            <div className="mb-3 w-full">
               <div className="h-full">
                 <OngoingExams />
               </div>
             </div>
             <div className="mb-3">
-              <div className="flex w-full h-1/3">
+              <div className="flex w-full">
                 <div className="w-5/6 mr-3">
                   <IncorrectRate />
                 </div>
@@ -32,18 +32,18 @@ export default function page() {
                 </div>
               </div>
             </div>
-            <div className="w-full h-1/3">
+            {/* <div className="w-full h-1/3">
               <IncorrectAlgorithm />
-            </div>
+            </div> */}
           </div>
 
-          <div className="flex-wrap w-1/4">
+          <div className="flex-auto  w-1/4">
             <Link href="/main">
               <div className="mb-3 h-1/6">
                 <GachonOJShortCut />
               </div>
             </Link>
-            <div className="w-full h-5/6">
+            <div className="w-full h-4/6">
               <LanguageGraph />
             </div>
           </div>

@@ -21,7 +21,7 @@ export const hoverProfileAPI = async () => {
 export const memberProbInfoCardAPI = async () => {
   try {
     const response = await instanceAuth.get(
-      process.env.NEXT_PUBLIC_M17_URL as string
+      process.env.NEXT_PUBLIC_M11_URL as string
     );
     return response.data.result;
   } catch (error) {

@@ -35,8 +35,7 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
       if (data.result.available === true) {
         setNicknameCheck(true);
         alert("사용 가능한 닉네임입니다.");
-      }
-      else {
+      } else {
         setNicknameCheck(false);
         alert("이미 사용 중인 닉네임입니다.");
       }
@@ -58,13 +57,14 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
 
   const onSubmit = (data: myInfoModifyFormData) => {
     if (nicknameCheck) {
-      console.log(nicknameCheck);
+      queryClient.invalidateQueries({ queryKey: ["memberProbCard"] });
       ModifyMutation.mutate({
         data,
         memberImg: fileInput.current?.files?.[0] || null,
       });
-      alert("회원 정보가 수정되었습니다.");
       
+      alert("회원 정보가 수정되었습니다.");
+
       if (memberImg) {
         setUserImg(
           memberImg instanceof File ? URL.createObjectURL(memberImg) : memberImg
@@ -105,7 +105,45 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
 
   return (
     <form>
-      <div className="flex-auto ml-10 mt-10 mb-4 items-center">
+      <div className="flex-auto ml-10 mt-10 mb-4">
+        <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
+          {!memberImg || memberImg === null ? (
+            <CiUser className="text-[4vw] text-semiGrey" />
+          ) : (
+            <Image
+              src={
+                typeof memberImg === "string"
+                  ? memberImg
+                  : URL.createObjectURL(memberImg)
+              }
+              alt="Member Profile Image"
+              layout="fill"
+              objectFit="cover"
+            />
+          )}
+          <input
+            type="file"
+            ref={fileInput}
+            onChange={handleImageChange}
+            style={{ display: "none" }}
+          />
+        </div>
+        <div className="flex mt-[1vh]">
+          <button
+            type="button"
+            onClick={() => fileInput?.current?.click()}
+            className="hover:bg-primaryLightBlue border-[0.11vw] w-[4vh] h-[4vh] border-primaryBlue rounded-[0.4vw] font-PretendardSemiBold flex text-primaryBlue items-center justify-center"
+          >
+            <IoSettingsOutline className="text-[1.5vw] text-primaryBlue" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setMemberImg("")}
+            className="hover:bg-primaryLightBlue border-[0.11vw] w-[5vw] h-[4vh] border-primaryBlue rounded-[0.4vw] font-PretendardRegular text-[0.7vw] text-primaryBlue ml-[0.5vw]"
+          >
+            기본이미지로
+          </button>
+        </div>
         <div className="w-full mb-5 mt-5 sm:mb-0 flex items-center">
           <label htmlFor="email" className="w-28 block font-medium mb-1 mr-2">
             이메일
@@ -155,53 +193,14 @@ function EditAdminMyAccountForm({ data }: { data: userContentData }) {
             이름과 동일하게 설정
           </button>
         </div>
-        <div className="relative border-[0.2vw] border-realGrey rounded-full flex w-[6.5vw] h-[6.5vw] justify-center items-center overflow-hidden">
-          {!memberImg || memberImg === null ? (
-            <CiUser className="text-[4vw] text-semiGrey" />
-          ) : (
-            <Image
-              src={
-                typeof memberImg === "string"
-                  ? memberImg
-                  : URL.createObjectURL(memberImg)
-              }
-              alt="Member Profile Image"
-              layout="fill"
-              objectFit="cover"
-            />
-          )}
-          <input
-            type="file"
-            ref={fileInput}
-            onChange={handleImageChange}
-            style={{ display: "none" }}
-          />
-        </div>
-        <div className="flex mt-[1vh]">
-          <button
-            type="button"
-            onClick={() => fileInput?.current?.click()}
-            className="hover:bg-primaryLightBlue border-[0.11vw] w-[4vh] h-[4vh] border-primaryBlue rounded-[0.4vw] font-PretendardSemiBold flex text-primaryBlue items-center justify-center"
-          >
-            <IoSettingsOutline className="text-[1.5vw] text-primaryBlue" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setMemberImg("")}
-            className="hover:bg-primaryLightBlue border-[0.11vw] w-[5vw] h-[4vh] border-primaryBlue rounded-[0.4vw] font-PretendardRegular text-[0.7vw] text-primaryBlue ml-[0.5vw]"
-          >
-            기본이미지로
-          </button>
-        </div>
-        <div className="flex justify-center">
-         
-            <button
-              onClick={handleSubmit(onSubmit)}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
-            >
-              변경사항 저장
-            </button>
 
+        <div className="flex justify-center">
+          <button
+            onClick={handleSubmit(onSubmit)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
+          >
+            변경사항 저장
+          </button>
         </div>
       </div>
 

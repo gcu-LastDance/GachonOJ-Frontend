@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { examEnrollAPI } from "@/api/admin/adminExamAPI";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { FaUser } from "react-icons/fa";
 import ProblemForm from "./ProblemForm";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import AddCandidate from "./AddCandidate";
-import { TestProblemFormData } from "@/types/admin/problem";
+import { ExamProblemFormData } from "@/types/admin/problem";
 
-export default function EnrollTestForm() {
+export default function EnrollExamForm() {
+
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const initialData = {
@@ -33,7 +35,7 @@ export default function EnrollTestForm() {
   const [isProblemOpen, setIsProblemOpen] = useState(false);
   const [CandidateValue, setCandidateValue] = useState("");
   const [formCount, setFormCount] = useState(1);
-  const [formData, setFormData] = useState<TestProblemFormData[]>([
+  const [formData, setFormData] = useState<ExamProblemFormData[]>([
     {
       id: 1,
       data: initialData,
@@ -61,18 +63,27 @@ export default function EnrollTestForm() {
     setFormData(updatedFormData);
   };
 
+  const deleteProblemForm = (formId: number) => {
+    console.log(formId);
+    const updatedFormData = formData.filter((form) => form.id !== formId);
+    setFormData(updatedFormData);
+    setFormCount(formCount - 1);
+    handleSwitchForm(formCount - 1);
+  }
+  
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "RESERVATION" , examType: "CONTEST"};
+    const newData = { ...data, tests, candidateList, examStatus: "RESERVATION", examType: "CONTEST",
+  };
     EnrollMutation.mutate(newData);
   };
 
   const onSave = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "WRITING",examType: "CONTEST" };
+    const newData = { ...data, tests, candidateList, examStatus: "WRITING", examType: "CONTEST",
+  };
     EnrollMutation.mutate(newData);
   };
-
 
   const EnrollMutation = useMutation({
     mutationFn: (data: any) => examEnrollAPI(data),
@@ -82,7 +93,7 @@ export default function EnrollTestForm() {
     onSuccess: (data) => {
       console.log(data);
       if (data.success) {
-        router.push("/admin/contest-manage/list");
+        router.push("/admin/exam-manage/list");
       }
     },
   });
@@ -92,7 +103,7 @@ export default function EnrollTestForm() {
       <div className="p-10">
         <div className="flex items-center mb-4">
           <div className="text-xl mr-4 min-w-30 self-start flex-shrink-0">
-            대회제목
+            시험제목
           </div>
           <textarea
             {...register("examTitle")}
@@ -103,7 +114,7 @@ export default function EnrollTestForm() {
 
         <div className="flex items-center mb-4">
           <div className="text-xl mr-4 min-w-30 self-start flex-shrink-0">
-            대회메모
+            시험메모
           </div>
           <textarea
             {...register("examMemo")}
@@ -118,7 +129,7 @@ export default function EnrollTestForm() {
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              대회 상세설정
+              시험 상세설정
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isDetailOpen ? (
@@ -131,7 +142,7 @@ export default function EnrollTestForm() {
             <div className="p-10">
               <div className="flex items-center mb-4">
                 <div className="flex text-lg mr-4 min-w-30 self-start flex-shrink-0">
-                  대회 안내사항
+                  시험 안내사항
                 </div>
                 <textarea
                   {...register("examNotice")}
@@ -147,7 +158,7 @@ export default function EnrollTestForm() {
                 <div className="mt-5 mb-5 ml-32 flex flex-auto">
                   <div className="flex mr-5 items-center">
                     <div className="flex-shrink-0 mr-4">
-                      대회 시작 가능 날짜 설정
+                      시험 시작 가능 날짜 설정
                     </div>
                     <input
                       {...register("examStartDate")}
@@ -159,7 +170,7 @@ export default function EnrollTestForm() {
                   <div className="border-l-2"></div>
                   <div className="flex ml-5 items-center">
                     <div className="flex-shrink-0 mr-4">
-                      대회 종료 날짜 설정
+                      시험 종료 날짜 설정
                     </div>
                     <input
                       {...register("examEndDate")}
@@ -172,7 +183,7 @@ export default function EnrollTestForm() {
               </div>
               <div className="flex items-center mb-6">
                 <div className="flex text-lg mr-4 min-w-30 flex-shrink-0">
-                  대회 제한 시간
+                  시험 제한 시간
                 </div>
                 <input
                   {...register("examDueTime")}
@@ -180,37 +191,6 @@ export default function EnrollTestForm() {
                   placeholder="120"
                   title="분 단위로 입력해주세요."
                 ></input>
-              </div>
-
-              <div className="flex-col items-center mb-4">
-                <div className="text-lg mr-4 min-w-30 flex-shrink-0">
-                  부정 행위 방지 설정
-                </div>
-                <div className="mt-5 mb-5 ml-32 flex flex-auto">
-                  <div className="flex mr-5 items-center">
-                    <div className="flex-shrink-0 mr-4">모니터링 여부 설정</div>
-                    <select
-                      // {...register("examMonitoring")}
-                      className="border rounded-md w-24 p-1"
-                    >
-                      <option value="사용">사용</option>
-                      <option value="미사용">미사용</option>
-                    </select>
-                  </div>
-                  <div className="border-l-2"></div>
-                  <div className="flex ml-5 items-center">
-                    <div className="flex-shrink-0 mr-4">복사/붙혀넣기 제한</div>
-                    <select
-                      // {...register("examCopypasteRestriction")}
-                      className="border rounded-md w-24 p-1"
-                    >
-                      <option value="금지" selected>
-                        금지
-                      </option>
-                      <option value="허용">허용</option>
-                    </select>
-                  </div>
-                </div>
               </div>
             </div>
           )}
@@ -222,7 +202,7 @@ export default function EnrollTestForm() {
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              대회 응시인원 관리
+              시험 응시인원 관리
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isAttendanceOpen ? (
@@ -251,6 +231,7 @@ export default function EnrollTestForm() {
                     onClick={() => {
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
+                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
                     }}
                     type="button"
                     className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
@@ -258,7 +239,7 @@ export default function EnrollTestForm() {
                     검색하기
                   </button>
                 </div>
-                <div className="flex-col w-fit container bg-semiGrey">
+                <div className="flex-col w-fit border rounded-lg bg-semiGrey">
                   {showAddCandidate && (
                     <AddCandidate
                       memberInfo={CandidateValue}
@@ -277,7 +258,7 @@ export default function EnrollTestForm() {
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              대회 문제 등록
+              시험 문제 등록
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isProblemOpen ? (
@@ -313,6 +294,7 @@ export default function EnrollTestForm() {
               <ProblemForm
                 data={formData[activeForm - 1] || null}
                 setProblemForm={setProblemForm}
+                deleteProblemForm={deleteProblemForm}
               />
             </div>
           )}

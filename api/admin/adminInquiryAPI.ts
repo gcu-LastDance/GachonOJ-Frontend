@@ -14,12 +14,11 @@ export const inquiryContentsAPI = async (inquiryId: number) => {
   }
 };
 
-export const inquiryListAPI = async () => {
+export const inquiryListAPI = async (pageNo: number) => {
   try {
-    const response = await instanceAuth.get(
-      process.env.NEXT_PUBLIC_B02_URL as string
-    );
+    const url = `${process.env.NEXT_PUBLIC_B02_URL}?pageNo=${encodeURIComponent(pageNo)}`;
 
+    const response = await instanceAuth.get(url);
     return response.data;
   } catch (error) {
     throw new Error(String(error));

@@ -20,7 +20,7 @@ const columns: ColumnDef<inquiryTableData, any>[] = [
   columnHelper("inquiryStatus", { header: "답변여부" }),
 ];
 
-export function InquiryManageTable({
+function InquiryManageTable({
   tableData,
   paginationData,
   pageNo,
@@ -32,7 +32,6 @@ export function InquiryManageTable({
   setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const queryClient = useQueryClient();
-  const router = useRouter();
   const onDelete = (inquiryId: number) => {
     DeleteMutation.mutate(inquiryId);
   };
@@ -141,8 +140,8 @@ export function InquiryManageTable({
 const InquiryManageTableContainer = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<inquiryListData>({
-    queryKey: ["inquiryList"],
-    queryFn: inquiryListAPI,
+    queryKey: ["inquiryList", pageNo],
+    queryFn: () => inquiryListAPI(pageNo),
   });
   if (!data) return null;
   return (
