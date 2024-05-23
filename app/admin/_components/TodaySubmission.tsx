@@ -54,7 +54,9 @@ function TodaySubmission({ data }: { data: TodaySubmissionData }) {
       <div className="text-2xl">금일 채점 결과 현황</div>
       <div className="p-3 h-full w-full">
         {data.totalSubmissionCount === 0 ? (
-          <div className="flex text-center justify-center items-center h-full">금일 제출된 문제가 없습니다.</div>
+          <div className="flex text-center justify-center items-center h-full">
+            금일 제출된 문제가 없습니다.
+          </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

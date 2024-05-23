@@ -92,3 +92,16 @@ export const examResultListAPI = async (examId: number, pageNo: number) => {
     throw new Error(String(error));
   }
 };
+
+export const examResultAPI = async (testId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P27_URL}/${encodeURIComponent(
+      testId
+    )}`;
+    const response = await instanceAuth.get(url);
+
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};

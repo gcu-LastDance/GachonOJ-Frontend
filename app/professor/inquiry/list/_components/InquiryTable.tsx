@@ -124,7 +124,7 @@ const InquiryTableContainer = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<inquiryListData>({
     queryKey: ["professorinquiryList"],
-    queryFn: inquiryListAPI,
+    queryFn: () => inquiryListAPI(pageNo),
   });
   if (!data) return null;
   return (

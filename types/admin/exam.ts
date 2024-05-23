@@ -73,3 +73,26 @@ export interface ExamResultListData {
     content: ExamResultListContents[];
   };
 }
+
+export interface ExamQuestion {
+  questionSequence: number;
+  questionScore: number;
+  problemId: number;
+  problemTitle: string;
+  problemContents: string;
+  submissionStatus: boolean;
+  submissionCode: string;
+}
+
+export interface ExamResultContent {
+  examTitle: string;
+  examMemo: string;
+  submissionTotal: number;
+  memberName: string;
+  memberNumber: string;
+  memberEmail: string;
+  testTotalScore: number;
+  testDueTime: string;
+  submissionDate: string;
+  examQuestions: ExamQuestion[];
+}

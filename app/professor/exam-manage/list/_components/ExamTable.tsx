@@ -143,14 +143,14 @@ const ExamManageTableConatiner = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<examListData>({
     queryKey: ["ProfessorexamList"],
-    queryFn: examListAPI,
+    queryFn: () => examListAPI(pageNo),
   });
 
   if (!data) return null;
 
   return (
     <ExamTable
-      tableData={data?.result.content}
+      tableData={data?.result?.content}
       paginationData={data?.result}
       pageNo={pageNo}
       setPageNo={setPageNo}
