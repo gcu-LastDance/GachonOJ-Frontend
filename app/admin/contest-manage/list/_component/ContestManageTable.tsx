@@ -106,8 +106,9 @@ export function ContestManageTable({
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
-                   <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link
+                  className="hover:underline-offset-auto hover:text-realGrey"
                   href={{
                     pathname: "edit",
                     query: { examId: row.original.examId },
@@ -120,7 +121,7 @@ export function ContestManageTable({
               </td>
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.examId)}
                 >
                   삭제

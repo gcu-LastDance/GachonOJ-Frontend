@@ -114,14 +114,14 @@ export function ExamManageTable({
                     query: { examId: row.original.examId },
                   }}
                 >
-                  <button className="underline underline-offset-auto">
+                  <button className="underline underline-offset-auto hover:text-realGrey">
                     수정
                   </button>
                 </Link>
               </td>
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.examId)}
                 >
                   삭제
@@ -129,6 +129,7 @@ export function ExamManageTable({
               </td>
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link
+                  className="hover:underline-offset-auto hover:text-realGrey"
                   href={`/admin/exam-manage/result/list/${row.original.examId}`}
                 >
                   <button className="underline underline-offset-auto">
@@ -170,15 +171,15 @@ const ExamManageTableConatiner = () => {
   });
 
   if (!data) return null;
-  if(!isFetching) 
-  return (
-    <ExamManageTable
-      tableData={data?.result.content}
-      paginationData={data?.result}
-      pageNo={pageNo}
-      setPageNo={setPageNo}
-    />
-  );
+  if (!isFetching)
+    return (
+      <ExamManageTable
+        tableData={data?.result.content}
+        paginationData={data?.result}
+        pageNo={pageNo}
+        setPageNo={setPageNo}
+      />
+    );
 };
 
 export default ExamManageTableConatiner;

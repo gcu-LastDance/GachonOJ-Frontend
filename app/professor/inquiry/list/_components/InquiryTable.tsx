@@ -80,7 +80,10 @@ export function InquiryTable({
                   key={cell.id}
                 >
                   {cell.column.columnDef.header === "제목" ? (
-                    <Link href={`/professor/inquiry/${row.original.inquiryId}`}>
+                    <Link
+                      href={`/professor/inquiry/${row.original.inquiryId}`}
+                      className="hover:underline-offset-auto hover:text-realGrey"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

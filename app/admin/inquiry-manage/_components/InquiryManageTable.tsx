@@ -114,7 +114,7 @@ function InquiryManageTable({
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.inquiryId)}
                 >
                   삭제
