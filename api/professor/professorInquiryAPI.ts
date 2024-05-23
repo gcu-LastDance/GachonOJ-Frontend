@@ -1,11 +1,13 @@
+import page from "@/app/(landing)/page";
 import { instanceAuth } from "@/lib/axiosConfig";
 import { InquiryFormData } from "@/types/professor/inquiry";
 
-export const inquiryListAPI = async () => {
+export const inquiryListAPI = async (pageId: number) => {
   try {
-    const response = await instanceAuth.get(
-      process.env.NEXT_PUBLIC_B09_URL as string
-    );
+    const url = `${process.env.NEXT_PUBLIC_B09_URL}?pageId=${encodeURIComponent(
+      pageId
+    )}`;
+    const response = await instanceAuth.get(url);
 
     return response.data;
   } catch (error) {

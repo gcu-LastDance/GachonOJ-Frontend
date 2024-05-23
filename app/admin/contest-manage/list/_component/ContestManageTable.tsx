@@ -158,7 +158,7 @@ const ContestManageTableConatiner = () => {
 
   const { data } = useQuery<contestListData>({
     queryKey: ["contestList"],
-    queryFn: () => contestListAPI("대회"),
+    queryFn: () => contestListAPI("대회", pageNo),
   });
 
   if (!data) return null;

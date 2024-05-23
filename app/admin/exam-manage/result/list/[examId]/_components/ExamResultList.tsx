@@ -11,6 +11,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import Link from "next/link";
 
 import React, { useState } from "react";
 
@@ -27,7 +28,7 @@ export default function ExamResultList({ examId }: { examId: number }) {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<ExamResultListData>({
     queryKey: ["examList", pageNo],
-    queryFn: () => examResultListAPI(examId),
+    queryFn: () => examResultListAPI(examId, pageNo),
   });
 
   const paginationData: any = data?.results;
@@ -108,22 +109,22 @@ export default function ExamResultList({ examId }: { examId: number }) {
                 </td>
               ))}
 
-              <td className="border px-4 py-2 text-left border-l-0 border-r-0"></td>
-              {/* <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+              {/* <td className="border px-4 py-2 text-left border-l-0 border-r-0"></td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
                   className="underline underline-offset-auto"
                   onClick={() => onDelete(row.original.examId)}
                 >
                   삭제
                 </button>
-              </td>
+              </td> */}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/admin/exam-manage/result/${row.original.examId}`}>
+                <Link href={`/admin/exam-manage/result/${row.original.testId}`}>
                   <button className="underline underline-offset-auto">
                     상세 조회
                   </button>
                 </Link>
-              </td> */}
+              </td>
             </tr>
           ))}
         </tbody>

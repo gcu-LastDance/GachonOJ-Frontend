@@ -80,11 +80,11 @@ export const examContentAPI = async (examId: number) => {
   }
 };
 
-export const examResultListAPI = async (examId: number) => {
+export const examResultListAPI = async (examId: number, pageNo: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P28_URL}/${encodeURIComponent(
       examId
-    )}/results`;
+    )}/results?pageNo=${encodeURIComponent(pageNo)}`;
     const response = await instanceAuth.get(url);
 
     return response.data.result;
