@@ -1,17 +1,18 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 
-// export const healthCheckAPI = async (service: string) => {
-//   try {
-//     const url = `${process.env.NEXT_PUBLIC_G01_URL}/${encodeURIComponent(service)}`;
+export const healthCheckAPI = async (service: string) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_G02_URL}/${encodeURIComponent(
+      service
+    )}`;
 
-//     const response = await instanceAuth.get(url);
+    const response = await instanceAuth.get(url);
 
-//     return response.data;
-//   } catch (error) {
-//     throw new Error(String(error));
-//   }
-// };
-
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
 
 export const AiTokenAPI = async () => {
   try {
@@ -47,4 +48,4 @@ export const InquiryDashboardAPI = async () => {
   } catch (error) {
     throw new Error(String(error));
   }
-}
+};

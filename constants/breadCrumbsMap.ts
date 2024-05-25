@@ -7,7 +7,7 @@ export const breadCrumbsMap: Record<string, string> = {
   "user-manage": "학생",
 
   "problem-manage": "문제",
-  "exam-manage" : "시험",
+  "exam-manage": "시험",
   "contest-manage": "대회",
   "ai-manage": "AI분석",
 };
@@ -17,4 +17,5 @@ export const detailBreadCrumbsMap: Record<string, string> = {
   editor: "편집기",
   edit: "수정",
   enroll: "등록",
+  result: "결과",
 };

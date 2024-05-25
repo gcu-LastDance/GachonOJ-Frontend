@@ -174,7 +174,7 @@ const ExamManageTableConatiner = () => {
   if (!isFetching)
     return (
       <ExamManageTable
-        tableData={data?.result.content}
+        tableData={data?.result?.content}
         paginationData={data?.result}
         pageNo={pageNo}
         setPageNo={setPageNo}

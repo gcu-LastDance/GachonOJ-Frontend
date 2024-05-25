@@ -18,7 +18,6 @@ function InquiryList({ data }: { data: InquiryList[] }) {
     columnHelper("inquiryTitle", { header: "제목" }),
     columnHelper("memberNickname", { header: "작성자" }),
     columnHelper("inquiryCreatedDate", { header: "작성일" }),
-    columnHelper("inquiryStatus", { header: "답변여부" }),
   ];
 
   const table = useReactTable({
@@ -26,19 +25,15 @@ function InquiryList({ data }: { data: InquiryList[] }) {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
+  console.log(data);
   return (
-    <div className="flex-col px-5 py-5 shadow-md border-4 border-semiGrey bg-white overflow-y-hidden overflow-x-scroll">
+    <div className="flex-col px-5 py-5 shadow-md border-4 w-full border-semiGrey  bg-white overflow-y-hidden overflow-x-scroll">
       <div className="text-2xl">미응답 문의사항</div>
       <table className="w-full text-sm">
         <thead>
           {/* 테이블 헤더 생성 */}
           {table.getHeaderGroups().map((headerGroup) => (
-            
             <tr key={headerGroup.id}>
-                <th className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0">
-                번호
-              </th>
               {headerGroup.headers.map((header) => (
                 <th
                   className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0"
@@ -61,7 +56,6 @@ function InquiryList({ data }: { data: InquiryList[] }) {
               key={row.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
-         
               {row.getVisibleCells().map((cell) => (
                 <td
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
@@ -85,17 +79,17 @@ function InquiryList({ data }: { data: InquiryList[] }) {
           ))}
         </tbody>
       </table>
-      </div>
+    </div>
   );
 }
 
 const InquiryListContainer = () => {
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["InquriyDashboard"],
     queryFn: InquiryDashboardAPI,
   });
   if (!data) return null;
-  return <InquiryList data={data.result} />;
+  if (!isFetching) return <InquiryList data={data} />;
 };
 
 export default InquiryListContainer;

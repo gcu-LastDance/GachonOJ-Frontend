@@ -108,13 +108,12 @@ export function ContestManageTable({
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <Link
-                  className="hover:underline-offset-auto hover:text-realGrey"
                   href={{
                     pathname: "edit",
                     query: { examId: row.original.examId },
                   }}
                 >
-                  <button className="underline underline-offset-auto">
+                  <button className="underline underline-offset-auto hover:text-realGrey">
                     수정
                   </button>
                 </Link>
@@ -126,6 +125,16 @@ export function ContestManageTable({
                 >
                   삭제
                 </button>
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  className="hover:underline-offset-auto hover:text-realGrey"
+                  href={`/admin/contest-manage/result/list/${row.original.examId}`}
+                >
+                  <button className="underline underline-offset-auto">
+                    결과 조회
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}

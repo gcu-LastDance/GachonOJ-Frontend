@@ -22,20 +22,20 @@ const page = ({ params }: { params: { inquiryId: number } }) => {
           <div className="flex py-2 mb-2">
             <div className="text-realGrey">작성자</div>
             <div className="font-bold ml-8 mr-20">
-              {data?.result.memberNickname}
+              {data?.result?.memberNickname}
             </div>
           </div>
           <div className="flex py-2 mb-2">
             <div className="text-realGrey ml-20">작성일</div>
             <div className="font-bold ml-8 ">
-              {data?.result.inquiryCreatedDate}
+              {data?.result?.inquiryCreatedDate}
             </div>
           </div>
         </div>
         <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2 items-center">
           <div className="text-realGrey ">제목</div>
           <h1 className="text-xl ml-11 font-bold">
-            {data?.result.inquiryTitle}
+            {data?.result?.inquiryTitle}
           </h1>
         </div>
         <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2">
@@ -43,9 +43,9 @@ const page = ({ params }: { params: { inquiryId: number } }) => {
           <p className="mb-10 ml-11">{data?.result.inquiryContents}</p>
         </div>
         {data?.result.replyContent == null ? (
-          <Inquiryempty inquiryId={params.inquiryId ?? 0}/>
+          <Inquiryempty inquiryId={params?.inquiryId ?? 0} />
         ) : (
-          <Inquiryreply replyContent={data?.result.replyContent ?? 0} />
+          <Inquiryreply replyContent={data?.result?.replyContent ?? 0} />
         )}
       </div>
       <div className="flex justify-end">
