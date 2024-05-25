@@ -61,7 +61,8 @@
   </tr>
 </table>
 
-# <img src="https://github.com/gcu-LastDance/GachonOJ-Backend/assets/112960401/38316365-a949-4c98-8863-b9f70e82d572" align=left width=90>
+
+# <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/d6b913c5-0368-4f7d-a552-00b430dcd251" align=left width=90>
 
 > GachonOJ 가천대학교 학생들을 위한 저지 서비스 입니다.
 >
