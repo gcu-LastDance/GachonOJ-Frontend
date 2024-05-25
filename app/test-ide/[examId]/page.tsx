@@ -16,59 +16,139 @@ import {
 } from "@/types/problem";
 import TestcaseModal from "../_components/TestcaseModal";
 import ResultModal from "../_components/ResultModal";
-import HistoryModal from "../_components/HistoryModal";
 import { useQuery } from "@tanstack/react-query";
 import { examInfoAPI } from "@/api/testAPI";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { AllofTestDetailData } from "@/types/test";
+import ProbNavModal from "./_components/ProbNavModal";
 
 export default function page({ params }: { params: { examId: number } }) {
+  /**
+   * 사용자 토큰
+   */
   const { token } = useUserStore();
+  /**
+   * 문제 풀이 언어
+   */
   const { programLang } = useProgramLangStore();
+  /**
+   * 작성한 코드 상태관리
+   */
   const [code, setCode] = useState<string>(
-    programLangSampleCodeMap[programLang ?? "C"]
+    programLangSampleCodeMap[programLang ?? "JAVA"]
   );
+  /**
+   * 실행 데이터 상태관리
+   */
   const [excuteResult, setExcuteResult] = useState<ProblemExcuteResultData[]>(
     []
   );
+  /**
+   * 테스트케이스 모달 상태관리
+   */
   const [testcaseModalOpen, setTestcaseModalOpen] = useState(false);
-  const [historyModalOpen, setHistoryModalOpen] = useState(false);
+  /**
+   * 테스트케이스 데이터
+   */
   const [testcase, setTestcase] = useState<TestcaseSetData[]>([]);
+  /**
+   * 결과 모달 상태관리
+   */
   const [resultModalOpen, setResultModalOpen] = useState(false);
+  /**
+   * 제출 결과 상태관리
+   */
   const [submitResult, setSubmitResult] = useState<ProblemSubmitResultData>();
+  /**
+   * 현재 문제 번호 상태관리
+   * -> 화면에 표시할 때는 +1 해서 표시
+   */
+  const [curProbNum, setCurProbNum] = useState(0);
+
+  const [probNavModalOpen, setProvNavModalOpen] = useState(false);
+
+  const handleSetNextProb = () => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(`${params.examId}-${curProbNum}`, code);
+    }
+    setCurProbNum(
+      Math.min(
+        curProbNum + 1,
+        examInfo?.tests.length ? examInfo?.tests.length - 1 : 0
+      )
+    );
+  };
+
+  const handleSetPrevProb = () => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(`${params.examId}-${curProbNum}`, code);
+    }
+    setCurProbNum(Math.max(curProbNum - 1, 0));
+  };
 
   useEffect(() => {
-    setCode(programLangSampleCodeMap[programLang ?? "C"]);
+    if (typeof window !== "undefined") {
+      if (sessionStorage.getItem(`${params.examId}-${curProbNum}`) !== null) {
+        setCode(sessionStorage.getItem(`${params.examId}-${curProbNum}`) ?? "");
+      } else {
+        setCode(programLangSampleCodeMap[programLang ?? "JAVA"]);
+      }
+    }
+  }, [curProbNum, params.examId]);
+
+  useEffect(() => {
+    setCode(programLangSampleCodeMap[programLang ?? "JAVA"]);
   }, [programLang]);
 
-  const { data: examInfo } = useQuery({
+  const { data: examInfo } = useQuery<AllofTestDetailData>({
     queryKey: ["examInfo"],
     queryFn: () => examInfoAPI(params.examId),
-    refetchOnMount: "always",
   });
 
   useEffect(() => {
-    setTimeLeft(examInfo?.examDueTime * 60 ?? 0);
-  }, [examInfo?.examDueTime]);
+    if (examInfo?.examDueTime) {
+      const storedTimeLeft = sessionStorage.getItem(`timer-${params.examId}`);
+      if (storedTimeLeft !== null) {
+        setTimeLeft(parseInt(storedTimeLeft, 10));
+      } else {
+        const initialTime = examInfo.examDueTime * 60;
+        setTimeLeft(initialTime);
+        sessionStorage.setItem(
+          `timer-${params.examId}`,
+          initialTime.toString()
+        );
+      }
+      setTimerActive(true); // Start the timer when the component mounts
+    }
+  }, [examInfo?.examDueTime, params.examId]);
 
-  /** 타이머 */
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
+
+  useEffect(() => {
+    if (!timerActive) return;
+
+    const intervalId = setInterval(() => {
+      setTimeLeft((prevTimeLeft) => {
+        const newTimeLeft = prevTimeLeft - 1;
+        sessionStorage.setItem(
+          `timer-${params.examId}`,
+          newTimeLeft.toString()
+        );
+        if (newTimeLeft <= 0) {
+          clearInterval(intervalId);
+          setTimerActive(false);
+          return 0;
+        }
+        return newTimeLeft;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [timerActive, params.examId]);
+
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  useEffect(() => {
-    if (timerActive && timeLeft > 0) {
-      const intervalId = setInterval(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
-
-      return () => clearInterval(intervalId);
-    }
-
-    // 시간이 만료되었을 때 경고 메시지
-    if (timeLeft === 0) {
-      setTimerActive(false); // 타이머 비활성화
-    }
-  }, [timerActive, timeLeft]);
 
   return (
     <div className="flex flex-col">
@@ -88,32 +168,74 @@ export default function page({ params }: { params: { examId: number } }) {
             <div className="flex w-[30vw]">
               <button
                 type="button"
-                className="w-[10vw] h-[7vh] border-t-[0.12vw] border-l-[0.12vw] border-r-[0.06vw] font-PretendardSemiBold text-[1vw] justify-center items-center"
+                onClick={() => setProvNavModalOpen(true)}
+                className="w-[12vw] h-[7vh] border-t-[0.12vw] border-l-[0.12vw] border-r-[0.06vw] font-PretendardSemiBold text-[1vw] justify-center items-center"
               >
                 <div className="flex items-center px-[1vw]">
-                  <RxHamburgerMenu className="text-[2vw]" />
+                  <RxHamburgerMenu
+                    className={`text-[2vw] ${
+                      !probNavModalOpen ? "text-primaryDark" : "text-realGrey"
+                    }`}
+                  />
                   <div className="flex flex-col ml-[1.4vw]">
-                    <span>총 문항</span>
-                    <span>현재 문항</span>
+                    <div className="flex w-[5.8vw] justify-between">
+                      <span className="font-PretendardSemiBold text-realGrey">
+                        총 문항
+                      </span>
+                      <span className="font-PretendardSemiBold">
+                        {examInfo?.tests.length}
+                      </span>
+                    </div>
+                    <div className="flex w-[5.8vw] justify-between">
+                      <span className="font-PretendardSemiBold text-realGrey">
+                        현재 문항
+                      </span>
+                      <span className="font-PretendardSemiBold">
+                        {curProbNum + 1}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </button>
+              {probNavModalOpen && (
+                <ProbNavModal
+                  setModalOpen={setProvNavModalOpen}
+                  totalProblems={examInfo?.tests.length ?? 0}
+                  selectProblem={(index) => {
+                    if (typeof window !== "undefined") {
+                      window.sessionStorage.setItem(
+                        `${params.examId}-${curProbNum}`,
+                        code
+                      );
+                    }
+                    setCurProbNum(index);
+                  }}
+                />
+              )}
               <button
                 type="button"
-                className="w-[10vw] h-[7vh] border-t-[0.12vw] border-r-[0.06vw] border-l-[0.06vw] font-PretendardSemiBold text-[1.3vw] flex justify-center items-center"
+                onClick={handleSetPrevProb}
+                disabled={curProbNum === 0}
+                className="w-[9vw] h-[7vh] border-t-[0.12vw] border-r-[0.06vw] border-l-[0.06vw] font-PretendardSemiBold text-[1.3vw] flex justify-center items-center hover:bg-lightGrey disabled:text-realGrey disabled:bg-lightGrey"
               >
                 이전 문항
               </button>
               <button
                 type="button"
-                className="w-[10vw] h-[7vh] border-t-[0.12vw] border-r-[0.12vw] border-l-[0.06vw] font-PretendardSemiBold text-[1.3vw] flex justify-center items-center"
+                onClick={handleSetNextProb}
+                disabled={
+                  examInfo?.tests.length
+                    ? curProbNum === examInfo?.tests.length - 1
+                    : false
+                }
+                className="w-[9vw] h-[7vh] border-t-[0.12vw] border-r-[0.12vw] border-l-[0.06vw] font-PretendardSemiBold text-[1.3vw] flex justify-center items-center hover:bg-lightGrey disabled:text-realGrey disabled:bg-lightGrey"
               >
                 다음 문항
               </button>
             </div>
           </div>
           <div className="w-[30vw] h-[72vh] border-[0.12vw] overflow-y-auto">
-            <IdeProblemWindow problemData={examInfo?.tests[0]} />
+            <IdeProblemWindow problemData={examInfo?.tests[curProbNum]} />
           </div>
         </div>
         <div className="w-[70vw] border-[0.12vw]">
@@ -131,11 +253,12 @@ export default function page({ params }: { params: { examId: number } }) {
         <IdeFooter
           code={code}
           testcase={testcase}
+          curProbNum={curProbNum}
+          problems={examInfo?.tests ?? []}
           setExcuteResult={setExcuteResult}
           setTestcaseModalOpen={setTestcaseModalOpen}
           setResultModalOpen={setResultModalOpen}
           setSubmitResult={setSubmitResult}
-          setHistoryModalOpen={setHistoryModalOpen}
         />
       )}
       {testcaseModalOpen && (
@@ -145,18 +268,7 @@ export default function page({ params }: { params: { examId: number } }) {
           setTestcase={setTestcase}
         />
       )}
-      {resultModalOpen && (
-        <ResultModal
-          submitResult={submitResult}
-          setResultModalOpen={setResultModalOpen}
-        />
-      )}
-      {/* {historyModalOpen && (
-        <HistoryModal
-          problemId={params.problemId}
-          setModalOpen={setHistoryModalOpen}
-        />
-      )} */}
+      {resultModalOpen && <ResultModal />}
     </div>
   );
 }

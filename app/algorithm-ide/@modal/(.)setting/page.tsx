@@ -1,17 +1,21 @@
 "use client";
 
 import ModalLarge from "@/components/modal/ModalLarge";
+import { useIdeLODStore } from "@/store/useIdeLightOnDarkStore";
 import { useProgramLangStore } from "@/store/useProgramLangStore";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function page() {
   const router = useRouter();
   const { programLang, setProgramLang } = useProgramLangStore();
+  const { ideLODMode, setIdeLODMode } = useIdeLODStore();
+  const [memberIdeLODMode, setMemberIdeLODMode] = useState(ideLODMode);
   const [memberProgramLangData, setMemberProgramLangData] =
     useState(programLang);
 
-  const handleLangChangeCommit = () => {
+  const handleSettingChangeCommit = () => {
+    setIdeLODMode(memberIdeLODMode);
     setProgramLang(memberProgramLangData);
     router.back();
   };
@@ -22,8 +26,32 @@ export default function page() {
         <p className="font-PretendardBold text-primaryDark text-[1.5vw]">
           IDE 설정
         </p>
-        <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[4vh] items-center">
-          <form className="flex space-x-[2.5vw] my-[4.5vh]">
+        {/* <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[1vh] items-center">
+          <form className="flex space-x-[2.5vw] my-[2vh]">
+            <div className="flex space-x-[0.3vw]">
+              <span>라이트모드</span>
+              <input
+                type="radio"
+                value={"Light"}
+                checked={memberIdeLODMode === "Light"}
+                onChange={() => setMemberIdeLODMode("Light")}
+                className="appearance-none border-[1px] border-semiGrey rounded-full w-5 h-5 ml-[1vw] align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
+              />
+            </div>
+            <div className="flex space-x-[0.3vw]">
+              <span>다크모드</span>
+              <input
+                type="radio"
+                value={"Dark"}
+                checked={memberIdeLODMode === "Dark"}
+                onChange={() => setMemberIdeLODMode("Dark")}
+                className="appearance-none border-[1px] border-semiGrey rounded-full w-5 h-5 ml-[1vw] align-middle bg-white checked:bg-primaryBlue checked:border-[0.19vw]"
+              />
+            </div>
+          </form>
+        </div> */}
+        <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[5vh] items-center">
+          <form className="flex space-x-[4.5vw] my-[2vh]">
             <div className="flex space-x-[0.3vw]">
               <span>C</span>
               <input
@@ -83,7 +111,7 @@ export default function page() {
           </button>
           <button
             type="button"
-            onClick={handleLangChangeCommit}
+            onClick={handleSettingChangeCommit}
             className="flex border-[0.15vw] border-primaryBlue bg-primaryBlue w-[10vw] h-[4vh] items-center justify-center rounded-[0.2vw]"
           >
             <span className="text-white font-PretendardSemiBold text-[0.85vw]">

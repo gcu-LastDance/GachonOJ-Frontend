@@ -1,29 +1,26 @@
 "use client";
 
-import { problemDetailAPI } from "@/api/problemAPI";
 import DiffBadge from "@/components/badge/DiffBadge";
-import { ProblemDetailData } from "@/types/problem";
-import { useQuery } from "@tanstack/react-query";
+import { difficulty } from "@/types/problem";
+import { TestProblemData } from "@/types/test";
 import React from "react";
 
 export default function IdeProblemWindow({
   problemData,
 }: {
-  problemData: any;
+  problemData: TestProblemData | undefined;
 }) {
-  // const { data: problemDetaildata } = useQuery<ProblemDetailData>({
-  //   queryKey: ["problemDetail"],
-  //   queryFn: () => problemDetailAPI(problemId),
-  //   refetchOnMount: "always",
-  // });
+  const visibleTestcases = problemData?.testcases.filter(
+    (testcase) => testcase.testcaseStatus === "VISIBLE"
+  );
 
   return (
-    <div className="flex">
+    <div className="flex dark:bg-primaryDark">
       <div className="flex flex-col px-[1vw] py-[3vh]">
         <div className="flex items-center">
           {problemData?.problemDiff && (
             <div className="mr-[0.6vw]">
-              <DiffBadge difficulty={problemData?.problemDiff} />
+              <DiffBadge difficulty={problemData?.problemDiff as difficulty} />
             </div>
           )}
           <p className="font-PretendardBold text-primaryDeepBlue text-[1.8vw]">
@@ -48,15 +45,15 @@ export default function IdeProblemWindow({
         <p className="font-PretendardMedium text-primaryDark text-[1.3vw] mt-[4vh]">
           입력 예제
         </p>
-        {/* <pre className="font-PretendardLight text-primaryDark text-[0.9vw] mt-[1vh]">
-          {" " + problemData?.testcaseInputs.join("\n ")}
+        <pre className="font-PretendardLight text-primaryDark text-[0.9vw] mt-[1vh]">
+          {visibleTestcases?.map((tc) => " " + tc.testcaseInput).join("\n ")}
         </pre>
         <p className="font-PretendardMedium text-primaryDark text-[1.3vw] mt-[4vh]">
           출력 예제
         </p>
         <pre className="font-PretendardLight text-primaryDark text-[0.9vw] mt-[1vh]">
-          {" " + problemData?.testcaseOutputs}
-        </pre> */}
+          {visibleTestcases?.map((tc) => " " + tc.testcaseOutput).join("\n ")}
+        </pre>
       </div>
       <div className="w-[7vw]" />
     </div>
