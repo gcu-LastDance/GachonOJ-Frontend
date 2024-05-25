@@ -102,21 +102,12 @@ export function ExamTable({
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                   key={cell.id}
                 >
-                  {cell.column.columnDef.header === "제목" ? (
-                    <Link href={`/admin/exam-manage/${row.original.examId}`}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Link>
-                  ) : (
-                    flexRender(cell.column.columnDef.cell, cell.getContext())
-                  )}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.examId)}
                 >
                   삭제
@@ -152,14 +143,14 @@ const ExamManageTableConatiner = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<examListData>({
     queryKey: ["ProfessorexamList"],
-    queryFn: examListAPI,
+    queryFn: () => examListAPI(pageNo),
   });
 
   if (!data) return null;
 
   return (
     <ExamTable
-      tableData={data?.result.content}
+      tableData={data?.result?.content}
       paginationData={data?.result}
       pageNo={pageNo}
       setPageNo={setPageNo}

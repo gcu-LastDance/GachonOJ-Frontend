@@ -40,8 +40,6 @@ export function ProblemManageTable({
 }) {
   const queryClient = useQueryClient();
 
-
-
   const [showInput, setShowInput] = useState(false);
 
   const handleSearchInputChange = (
@@ -131,7 +129,9 @@ export function ProblemManageTable({
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
               <td className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0">
-                {row.index + 1 + (paginationData.pageable.pageSize * (pageNo - 1))}
+                {row.index +
+                  1 +
+                  paginationData.pageable.pageSize * (pageNo - 1)}
               </td>
               {row.getVisibleCells().map((cell) => (
                 <td
@@ -148,7 +148,7 @@ export function ProblemManageTable({
                     query: { problemId: row.original.problemId },
                   }}
                 >
-                  <button className="underline underline-offset-auto">
+                  <button className="underline underline-offset-auto hover:text-realGrey">
                     수정
                   </button>
                 </Link>
@@ -156,7 +156,7 @@ export function ProblemManageTable({
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.problemId)}
                 >
                   삭제
@@ -204,7 +204,7 @@ const ProblemManageTableContainer = () => {
     queryKey: ["problemList", debouncedSearchTerm, pageNo],
     queryFn: () => problemListAPI(debouncedSearchTerm, pageNo),
     refetchOnMount: "always",
-    staleTime:0
+    staleTime: 0,
   });
 
   if (!data) return null;

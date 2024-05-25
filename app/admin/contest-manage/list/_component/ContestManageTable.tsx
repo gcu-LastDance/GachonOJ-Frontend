@@ -103,25 +103,38 @@ export function ContestManageTable({
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                   key={cell.id}
                 >
-                  {cell.column.columnDef.header === "제목" ? (
-                    <Link href={`/admin/exam-manage/${row.original.examId}`}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Link>
-                  ) : (
-                    flexRender(cell.column.columnDef.cell, cell.getContext())
-                  )}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  href={{
+                    pathname: "edit",
+                    query: { examId: row.original.examId },
+                  }}
+                >
+                  <button className="underline underline-offset-auto hover:text-realGrey">
+                    수정
+                  </button>
+                </Link>
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.examId)}
                 >
                   삭제
                 </button>
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  className="hover:underline-offset-auto hover:text-realGrey"
+                  href={`/admin/contest-manage/result/list/${row.original.examId}`}
+                >
+                  <button className="underline underline-offset-auto">
+                    결과 조회
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}
@@ -154,7 +167,7 @@ const ContestManageTableConatiner = () => {
 
   const { data } = useQuery<contestListData>({
     queryKey: ["contestList"],
-    queryFn: () => contestListAPI("대회"),
+    queryFn: () => contestListAPI("대회", pageNo),
   });
 
   if (!data) return null;

@@ -1,10 +1,10 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 
-export const contestListAPI = async (type: string) => {
+export const contestListAPI = async (type: string, pageNo: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P02_URL}?type=${encodeURIComponent(
       type
-    )}`;
+    )}&pageNo=${encodeURIComponent(pageNo)}`;
 
     const response = await instanceAuth.get(url);
 

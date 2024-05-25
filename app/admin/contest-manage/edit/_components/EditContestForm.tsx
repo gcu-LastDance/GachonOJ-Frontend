@@ -115,7 +115,7 @@ function EditExamForm({
       <div className="p-10">
         <div className="flex items-center mb-4">
           <div className="text-xl mr-4 min-w-30 self-start flex-shrink-0">
-            시험제목
+            대회제목
           </div>
           <textarea
             defaultValue={data.examTitle}
@@ -127,7 +127,7 @@ function EditExamForm({
 
         <div className="flex items-center mb-4">
           <div className="text-xl mr-4 min-w-30 self-start flex-shrink-0">
-            시험메모
+            대회메모
           </div>
           <textarea
             defaultValue={data.examMemo}
@@ -143,7 +143,7 @@ function EditExamForm({
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              시험 상세설정
+              대회 상세설정
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isDetailOpen ? (
@@ -156,7 +156,7 @@ function EditExamForm({
             <div className="p-10">
               <div className="flex items-center mb-4">
                 <div className="flex text-lg mr-4 min-w-30 self-start flex-shrink-0">
-                  시험 안내사항
+                  대회 안내사항
                 </div>
                 <textarea
                   defaultValue={data.examNotice}
@@ -173,7 +173,7 @@ function EditExamForm({
                 <div className="mt-5 mb-5 ml-32 flex flex-auto">
                   <div className="flex mr-5 items-center">
                     <div className="flex-shrink-0 mr-4">
-                      시험 시작 가능 날짜 설정
+                      대회 시작 가능 날짜 설정
                     </div>
                     <input
                       defaultValue={data.examStartDate}
@@ -186,7 +186,7 @@ function EditExamForm({
                   <div className="border-l-2"></div>
                   <div className="flex ml-5 items-center">
                     <div className="flex-shrink-0 mr-4">
-                      시험 종료 날짜 설정
+                      대회 종료 날짜 설정
                     </div>
                     <input
                       defaultValue={data.examEndDate}
@@ -200,7 +200,7 @@ function EditExamForm({
               </div>
               <div className="flex items-center mb-6">
                 <div className="flex text-lg mr-4 min-w-30 flex-shrink-0">
-                  시험 제한 시간
+                  대회 제한 시간
                 </div>
                 <input
                   defaultValue={data.examDueTime}
@@ -220,7 +220,7 @@ function EditExamForm({
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              시험 응시인원 관리
+              대회 응시인원 관리
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isAttendanceOpen ? (
@@ -278,7 +278,7 @@ function EditExamForm({
             className="flex items-center cursor-pointer"
           >
             <button type="button" className="text-xl mb-2">
-              시험 문제 수정
+              대회 문제 수정
             </button>
             <hr className="flex-grow border-gray-300 ml-4" />
             {isProblemOpen ? (

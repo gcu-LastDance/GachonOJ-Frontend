@@ -1,8 +1,10 @@
 import { instanceAuth } from "@/lib/axiosConfig";
 
-export const examListAPI = async () => {
+export const examListAPI = async (pageId: number) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_P09_URL}`;
+    const url = `${
+      process.env.NEXT_PUBLIC_P09_URL
+    }/?pageId=${encodeURIComponent(pageId)}`;
 
     const response = await instanceAuth.get(url);
 

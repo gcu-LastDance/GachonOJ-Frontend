@@ -10,7 +10,6 @@ import { inquiryDeleteAPI, inquiryListAPI } from "@/api/admin/adminInquiryAPI";
 import { inquiryTableData, inquiryListData } from "@/types/admin/inquiry";
 import columnHelper from "@/lib/columnHelper";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<inquiryTableData, any>[] = [
@@ -62,9 +61,8 @@ function InquiryManageTable({
         <thead>
           {/* 테이블 헤더 생성 */}
           {table.getHeaderGroups().map((headerGroup) => (
-            
             <tr key={headerGroup.id}>
-                <th className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0">
+              <th className="border px-4 py-2 text-black text-left border-t-0 border-l-0 border-r-0">
                 번호
               </th>
               {headerGroup.headers.map((header) => (
@@ -89,7 +87,7 @@ function InquiryManageTable({
               key={row.id}
               className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-s"
             >
-             <td className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0">
+              <td className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0">
                 {row.index +
                   1 +
                   paginationData.pageable.pageSize * (pageNo - 1)}
@@ -102,6 +100,7 @@ function InquiryManageTable({
                   {cell.column.columnDef.header === "제목" ? (
                     <Link
                       href={`/admin/inquiry-manage/${row.original.inquiryId}`}
+                      className="hover:underline-offset-auto hover:text-realGrey"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -115,7 +114,7 @@ function InquiryManageTable({
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.inquiryId)}
                 >
                   삭제

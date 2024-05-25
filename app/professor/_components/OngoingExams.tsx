@@ -9,7 +9,7 @@ import ProfessorTestCard from "@/components/card/ProfessorTestCard";
 
 function OngoingExams({ data }: { data: TestData[] }) {
   return (
-    <div className="flex-col h-full px-5 py-5 shadow-md border-4 border-semiGrey bg-white overflow-x-scroll">
+    <div className="flex-col px-5 py-5 shadow-md border-4 border-semiGrey bg-white overflow-x-scroll">
       <div className="flex items-center">
         <div className="text-2xl ">진행중인 시험</div>
         <div className="ml-3">

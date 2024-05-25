@@ -29,7 +29,6 @@ export interface candidateTableData {
 }
 
 export interface Problem {
-  
   problemTitle: string;
   problemContents: string;
   problemDiff: string | null;
@@ -53,5 +52,47 @@ export interface ExamContents {
   examDueTime: string;
   tests: Problem[];
   candidateList: [];
+}
 
+export interface ExamResultListContents {
+  testId: number;
+  memberId: number;
+  memberName: string;
+  memberNumber: number;
+  memberEmail: string;
+  totalScore: number;
+  examDueTime: string;
+  submissionDate: string;
+}
+
+export interface ExamResultListData {
+  examTitle: string;
+  examMemo: string;
+  submissionTotal: number;
+  results: {
+    content: ExamResultListContents[];
+  };
+}
+
+export interface ExamQuestion {
+  questionSequence: number;
+  questionScore: number;
+  problemId: number;
+  problemTitle: string;
+  problemContents: string;
+  submissionStatus: boolean;
+  submissionCode: string;
+}
+
+export interface ExamResultContent {
+  examTitle: string;
+  examMemo: string;
+  submissionTotal: number;
+  memberName: string;
+  memberNumber: string;
+  memberEmail: string;
+  testTotalScore: number;
+  testDueTime: string;
+  submissionDate: string;
+  examQuestions: ExamQuestion[];
 }

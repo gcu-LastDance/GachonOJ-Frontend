@@ -112,7 +112,7 @@ export function UserManageTable({
                     query: { memberId: row.original.memberId },
                   }} // as ="edit"
                 >
-                  <button className="underline underline-offset-auto">
+                  <button className="underline underline-offset-auto hover:text-realGrey">
                     정보 수정
                   </button>
                 </Link>
@@ -120,7 +120,7 @@ export function UserManageTable({
 
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.memberId)}
                 >
                   정보 삭제

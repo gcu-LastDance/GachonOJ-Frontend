@@ -10,6 +10,7 @@ import ReactCodeMirror from "@uiw/react-codemirror";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
+import { java } from "@codemirror/lang-java";
 
 export default function IdeMain({
   problemId,
@@ -25,6 +26,8 @@ export default function IdeMain({
   const handleCode = (value: string) => {
     setCode(value);
   };
+
+  const extensions = [java()];
 
   return (
     <div>
@@ -42,6 +45,7 @@ export default function IdeMain({
         theme={githubLight}
         autoFocus={true}
         editable={true}
+        extensions={[extensions]}
         onChange={handleCode}
       />
     </div>

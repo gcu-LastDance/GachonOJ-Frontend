@@ -80,7 +80,10 @@ export function InquiryTable({
                   key={cell.id}
                 >
                   {cell.column.columnDef.header === "제목" ? (
-                    <Link href={`/professor/inquiry/${row.original.inquiryId}`}>
+                    <Link
+                      href={`/professor/inquiry/${row.original.inquiryId}`}
+                      className="hover:underline-offset-auto hover:text-realGrey"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -121,7 +124,7 @@ const InquiryTableContainer = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<inquiryListData>({
     queryKey: ["professorinquiryList"],
-    queryFn: inquiryListAPI,
+    queryFn: () => inquiryListAPI(pageNo),
   });
   if (!data) return null;
   return (

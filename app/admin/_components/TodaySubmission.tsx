@@ -50,11 +50,13 @@ function TodaySubmission({ data }: { data: TodaySubmissionData }) {
     );
   };
   return (
-    <div className="flex flex-wrap shadow-md border-semiGrey border-4 h-full bg-white px-5 py-5">
+    <div className="flex flex-col shadow-md border-semiGrey border-4 h-full w-full bg-white px-5 py-5">
       <div className="text-2xl">금일 채점 결과 현황</div>
-      <div className="p-3 h-full w-full ">
+      <div className="p-3 h-full w-full">
         {data.totalSubmissionCount === 0 ? (
-          <div className="text-center">금일 제출된 문제가 없습니다.</div>
+          <div className="flex text-center justify-center items-center h-full">
+            금일 제출된 문제가 없습니다.
+          </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

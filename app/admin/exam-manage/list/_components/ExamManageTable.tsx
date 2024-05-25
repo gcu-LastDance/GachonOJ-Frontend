@@ -103,29 +103,39 @@ export function ExamManageTable({
                   className="border px-4 py-2 text-left border-t-0 border-l-0 border-r-0"
                   key={cell.id}
                 >
-               {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
-         
+
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-              <Link
+                <Link
                   href={{
                     pathname: "edit",
                     query: { examId: row.original.examId },
                   }}
                 >
-                  <button className="underline underline-offset-auto">
+                  <button className="underline underline-offset-auto hover:text-realGrey">
                     수정
                   </button>
                 </Link>
-                </td>
-                <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
-                  className="underline underline-offset-auto"
+                  className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.examId)}
                 >
                   삭제
                 </button>
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  className="hover:underline-offset-auto hover:text-realGrey"
+                  href={`/admin/exam-manage/result/list/${row.original.examId}`}
+                >
+                  <button className="underline underline-offset-auto">
+                    결과 조회
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}
@@ -155,21 +165,21 @@ export function ExamManageTable({
 
 const ExamManageTableConatiner = () => {
   const [pageNo, setPageNo] = useState(1);
-  const { data } = useQuery<examListData>({
+  const { data, isFetching } = useQuery<examListData>({
     queryKey: ["examList", pageNo],
     queryFn: () => examListAPI("시험", pageNo),
   });
 
   if (!data) return null;
-
-  return (
-    <ExamManageTable
-      tableData={data?.result.content}
-      paginationData={data?.result}
-      pageNo={pageNo}
-      setPageNo={setPageNo}
-    />
-  );
+  if (!isFetching)
+    return (
+      <ExamManageTable
+        tableData={data?.result?.content}
+        paginationData={data?.result}
+        pageNo={pageNo}
+        setPageNo={setPageNo}
+      />
+    );
 };
 
 export default ExamManageTableConatiner;

@@ -59,10 +59,7 @@ export const examEditAPI = async (data: any, examId: number) => {
       examId
     )}`;
 
-    const response = await instanceAuth.put(
-      url,
-      data
-    );
+    const response = await instanceAuth.put(url, data);
 
     return response.data;
   } catch (error) {
@@ -74,6 +71,32 @@ export const examContentAPI = async (examId: number) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_P25_URL}/${encodeURIComponent(
       examId
+    )}`;
+    const response = await instanceAuth.get(url);
+
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const examResultListAPI = async (examId: number, pageNo: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P28_URL}/${encodeURIComponent(
+      examId
+    )}/results?pageNo=${encodeURIComponent(pageNo)}`;
+    const response = await instanceAuth.get(url);
+
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const examResultAPI = async (testId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P27_URL}/${encodeURIComponent(
+      testId
     )}`;
     const response = await instanceAuth.get(url);
 

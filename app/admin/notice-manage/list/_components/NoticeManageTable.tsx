@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<noticeTableData, any>[] = [
-
   columnHelper("noticeTitle", { header: "제목" }),
   columnHelper("memberNickname", { header: "작성자" }),
   columnHelper("noticeCreatedDate", { header: "작성일" }),
@@ -103,6 +102,7 @@ export function NoticeManageTable({
                 >
                   {cell.column.columnDef.header === "제목" ? (
                     <Link
+                      className="hover:underline-offset-auto hover:text-realGrey"
                       href={`/admin/notice-manage/${row.original.noticeId}`}
                     >
                       {flexRender(
