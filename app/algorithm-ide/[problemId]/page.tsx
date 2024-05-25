@@ -22,7 +22,7 @@ export default function page({ params }: { params: { problemId: number } }) {
   const { token } = useUserStore();
   const { programLang } = useProgramLangStore();
   const [code, setCode] = useState<string>(
-    programLangSampleCodeMap[programLang ?? "C"]
+    programLangSampleCodeMap[programLang ?? "JAVA"]
   );
   const [excuteResult, setExcuteResult] = useState<ProblemExcuteResultData[]>(
     []
@@ -34,7 +34,7 @@ export default function page({ params }: { params: { problemId: number } }) {
   const [submitResult, setSubmitResult] = useState<ProblemSubmitResultData>();
 
   useEffect(() => {
-    setCode(programLangSampleCodeMap[programLang ?? "C"]);
+    setCode(programLangSampleCodeMap[programLang ?? "JAVA"]);
   }, [programLang]);
 
   return (
@@ -78,6 +78,7 @@ export default function page({ params }: { params: { problemId: number } }) {
       )}
       {resultModalOpen && (
         <ResultModal
+          problemId={params.problemId}
           submitResult={submitResult}
           setResultModalOpen={setResultModalOpen}
         />

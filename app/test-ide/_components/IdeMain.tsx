@@ -28,10 +28,10 @@ export default function IdeMain({
     <div>
       <div className="flex justify-between h-[5.5vh] w-full items-center bg-white px-[1vw] border-b-[0.15vw] z-0">
         <div className="font-PretendardSemiBold text-[1.2vw] text-darkGrey h-[5vh] items-center flex">
-          {programLangMap[programLang ?? "C"]}
+          {programLangMap[programLang ?? "JAVA"]}
         </div>
         <Link href={`/test-ide/setting`}>
-          <IoSettingsOutline className="text-[1.7vw] text-primaryDark" />
+          <IoSettingsOutline className="text-[1.7vw] text-primaryDark hover:text-realGrey" />
         </Link>
       </div>
       <ReactCodeMirror

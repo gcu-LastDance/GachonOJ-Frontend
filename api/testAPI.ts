@@ -1,4 +1,5 @@
 import { instanceAuth } from "@/lib/axiosConfig";
+import { ExamProblemSubmitData } from "@/types/test";
 
 export type TestMenuType = "scheduled" | "ongoing" | "past";
 
@@ -112,6 +113,23 @@ export const examInfoAPI = async (examId: number) => {
     const response = await instanceAuth.get(url);
     console.log(response.data);
     return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const examSubmitAPI = async ({
+  examId,
+  codeData,
+}: {
+  examId: number;
+  codeData: ExamProblemSubmitData[];
+}) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_S09_URL as string}/${examId}`;
+    const response = await instanceAuth.post(url, codeData);
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     throw new Error(String(error));
   }

@@ -9,9 +9,11 @@ import RankBadge from "@/components/badge/RankBadge";
 import { rank } from "@/types/rank";
 
 export default function ResultModal({
+  problemId,
   submitResult,
   setResultModalOpen,
 }: {
+  problemId: number;
   submitResult: ProblemSubmitResultData | undefined;
   setResultModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -48,15 +50,14 @@ export default function ResultModal({
                   돌아가기
                 </span>
               </button>
-              <button
-                type="button"
-                onClick={() => setResultModalOpen(false)}
+              <Link
+                href={`/problem/feedback/${problemId}`}
                 className="flex items-center justify-center w-[13.5vw] h-[4vh] rounded-[0.5vh] bg-primaryBlue mt-auto"
               >
                 <span className="font-PretendardMedium text-[0.95vw] text-white flex items-center">
                   AI 분석 <BsStars className="ml-[0.4vw]" />
                 </span>
-              </button>
+              </Link>
             </div>
             <Link
               href="/problem"

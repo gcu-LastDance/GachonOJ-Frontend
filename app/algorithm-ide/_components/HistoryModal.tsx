@@ -53,7 +53,7 @@ export default function HistoryModal({
     number | null
   >(null);
 
-  const { data: submitHistoryData, isLoading } = useQuery<SubmitHistoryData[]>({
+  const { data: submitHistoryData } = useQuery<SubmitHistoryData[]>({
     queryKey: ["submitHistory", problemId],
     queryFn: () => sumbitHistoryAPI(problemId),
     refetchOnMount: "always",
