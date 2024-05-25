@@ -4,7 +4,7 @@ import ModalLarge from "@/components/modal/ModalLarge";
 import { useIdeLODStore } from "@/store/useIdeLightOnDarkStore";
 import { useProgramLangStore } from "@/store/useProgramLangStore";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function page() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function page() {
         <p className="font-PretendardBold text-primaryDark text-[1.5vw]">
           IDE 설정
         </p>
-        <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[1vh] items-center">
+        {/* <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[1vh] items-center">
           <form className="flex space-x-[2.5vw] my-[2vh]">
             <div className="flex space-x-[0.3vw]">
               <span>라이트모드</span>
@@ -49,9 +49,9 @@ export default function page() {
               />
             </div>
           </form>
-        </div>
-        <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[1vh] items-center">
-          <form className="flex space-x-[2.5vw] my-[2vh]">
+        </div> */}
+        <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[5vh] items-center">
+          <form className="flex space-x-[4.5vw] my-[2vh]">
             <div className="flex space-x-[0.3vw]">
               <span>C</span>
               <input
