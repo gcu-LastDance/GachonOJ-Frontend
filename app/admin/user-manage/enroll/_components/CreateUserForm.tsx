@@ -30,9 +30,7 @@ export default function CreateAdminForm() {
       console.log(data);
       if (data.success) {
         router.push("/admin/user-manage/list");
-      }
-      else
-        alert("회원 생성에 실패했습니다.");
+      } else alert("회원 생성에 실패했습니다.");
     },
   });
 
@@ -131,14 +129,12 @@ export default function CreateAdminForm() {
           />
         </div>
         <div className="flex justify-center">
-          <Link href="member/admin/members">
-            <button
-              onClick={handleSubmit(onSubmit)}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold  py-2 px-4 rounded-lg mt-8 mr-8"
-            >
-              회원 생성
-            </button>
-          </Link>
+          <button
+            onClick={handleSubmit(onSubmit)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold  py-2 px-4 rounded-lg mt-8 mr-8"
+          >
+            회원 생성
+          </button>
         </div>
       </div>
 

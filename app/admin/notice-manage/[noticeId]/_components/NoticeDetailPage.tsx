@@ -36,9 +36,11 @@ const NoticeDetailPage = ({ noticeId }: { noticeId: number }) => {
             {data?.result.noticeTitle}
           </h1>
         </div>
-        <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2">
-          <div className="text-realGrey">내용</div>
-          <p className="mb-10 ml-11">{data?.result.noticeContents}</p>
+        <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2 ">
+          <div className="text-realGrey flex-shrink-0">내용</div>
+          <p className="mb-10 ml-11 whitespace-pre-wrap">
+            {data?.result.noticeContents}
+          </p>
         </div>
       </div>
     </div>
