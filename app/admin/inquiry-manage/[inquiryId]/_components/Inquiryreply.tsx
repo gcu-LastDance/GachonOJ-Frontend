@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const Inquiryreply = ({ replyContent }: { replyContent: string }) => {
-
   return (
-    <div className='flex items-center'>
+    <div className="flex items-center">
       <div className="flex mb-4 items-center">
         <label
           htmlFor="answer"
@@ -12,12 +11,11 @@ const Inquiryreply = ({ replyContent }: { replyContent: string }) => {
           답변 내용
         </label>
       </div>
-      <div className='flex flex-col'>
-        <textarea value={replyContent} readOnly className="resize-none" />
+      <div className="flex flex-col whitespace-pre-wrap">
+        <div>{replyContent}</div>
       </div>
     </div>
   );
 };
 
 export default Inquiryreply;
-

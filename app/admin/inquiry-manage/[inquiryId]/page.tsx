@@ -40,7 +40,9 @@ const page = ({ params }: { params: { inquiryId: number } }) => {
         </div>
         <div className="flex py-2 border border-t-0 border-l-0 border-r-0 mb-2">
           <div className="text-realGrey">내용</div>
-          <p className="mb-10 ml-11">{data?.result.inquiryContents}</p>
+          <p className="mb-10 ml-11 whitespace-pre-wrap">
+            {data?.result.inquiryContents}
+          </p>
         </div>
         {data?.result.replyContent == null ? (
           <Inquiryempty inquiryId={params?.inquiryId ?? 0} />

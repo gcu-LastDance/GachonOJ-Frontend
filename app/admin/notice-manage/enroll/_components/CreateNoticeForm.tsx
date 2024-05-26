@@ -55,7 +55,7 @@ export default function CreaetNoticeForm() {
           <textarea
             {...register("noticeContents")}
             className="w-1/2 ml-10 px-3 py-2 border rounded-lg
-            focus:outline-none focus:border-blue-500"
+            focus:outline-none focus:border-blue-500 whitespace-pre-wrap"
             rows={8}
           ></textarea>
         </div>
@@ -72,14 +72,12 @@ export default function CreaetNoticeForm() {
           </Link>
         </div>
         <div>
-
-            <button
-              onClick={handleSubmit(onSubmit)}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
-            >
-              공지등록
-            </button>
-        
+          <button
+            onClick={handleSubmit(onSubmit)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 mr-8"
+          >
+            공지등록
+          </button>
         </div>
       </div>
     </form>
