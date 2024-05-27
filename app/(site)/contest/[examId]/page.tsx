@@ -4,11 +4,11 @@ import { contestDetailAPI, examEnterAPI } from "@/api/testAPI";
 import { TestDetailData } from "@/types/test";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 export default function page({ params }: { params: { examId: number } }) {
   const router = useRouter();
-
+  const [testEnterEnable, setTestEnterEnable] = useState(true);
   const { data: testDetailData } = useQuery<TestDetailData>({
     queryKey: ["contestDetail"],
     queryFn: () => contestDetailAPI(params.examId),
@@ -23,6 +23,8 @@ export default function page({ params }: { params: { examId: number } }) {
     onSuccess: (data) => {
       if (data.success) {
         router.push(`/test-ide/${params.examId}`);
+      } else {
+        setTestEnterEnable(false);
       }
     },
   });
@@ -84,9 +86,12 @@ export default function page({ params }: { params: { examId: number } }) {
         <button
           type="button"
           onClick={handleTestEnter}
-          className="rounded-[0.7vh] bg-primaryBlue w-[7vw] h-[4vh] text-white font-PretendardMedium text-[1.6vh]"
+          disabled={!testEnterEnable}
+          className={`rounded-[0.7vh] w-[7vw] h-[4vh] text-white font-PretendardMedium text-[1.6vh] items-center justify-center flex ${
+            testEnterEnable ? "bg-primaryBlue" : "bg-realGrey text-[1.2vh]"
+          }`}
         >
-          참가하기
+          {testEnterEnable ? "참가하기" : "지금은 참가가 불가능합니다"}
         </button>
       </div>
     </div>
