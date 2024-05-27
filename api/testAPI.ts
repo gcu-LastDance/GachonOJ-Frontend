@@ -134,3 +134,15 @@ export const examSubmitAPI = async ({
     throw new Error(String(error));
   }
 };
+
+export const examEnterAPI = async (examId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P26_URL as string}/${examId}/enter`;
+    const response = await instanceAuth.get(url);
+    console.log("응시 시작");
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};

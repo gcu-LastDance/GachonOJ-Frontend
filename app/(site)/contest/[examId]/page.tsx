@@ -1,16 +1,38 @@
 "use client";
 
-import { contestDetailAPI } from "@/api/testAPI";
+import { contestDetailAPI, examEnterAPI } from "@/api/testAPI";
 import { TestDetailData } from "@/types/test";
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 export default function page({ params }: { params: { examId: number } }) {
+  const router = useRouter();
+  const [testEnterEnable, setTestEnterEnable] = useState(true);
   const { data: testDetailData } = useQuery<TestDetailData>({
     queryKey: ["contestDetail"],
     queryFn: () => contestDetailAPI(params.examId),
     refetchOnMount: "always",
   });
+
+  const examEnterMutation = useMutation({
+    mutationFn: examEnterAPI,
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        router.push(`/test-ide/${params.examId}`);
+      } else {
+        setTestEnterEnable(false);
+      }
+    },
+  });
+
+  const handleTestEnter = () => {
+    examEnterMutation.mutate(params.examId);
+  };
+
   return (
     <div className="flex flex-col mx-[8vw] py-[6vh]">
       <div>
@@ -63,9 +85,13 @@ export default function page({ params }: { params: { examId: number } }) {
       <div className="mt-[5vh] mx-auto">
         <button
           type="button"
-          className="rounded-[0.7vh] bg-primaryBlue w-[7vw] h-[4vh] text-white font-PretendardMedium text-[1.6vh]"
+          onClick={handleTestEnter}
+          disabled={!testEnterEnable}
+          className={`rounded-[0.7vh] w-[7vw] h-[4vh] text-white font-PretendardMedium text-[1.6vh] items-center justify-center flex ${
+            testEnterEnable ? "bg-primaryBlue" : "bg-realGrey text-[1.2vh]"
+          }`}
         >
-          참가하기
+          {testEnterEnable ? "참가하기" : "지금은 참가가 불가능합니다"}
         </button>
       </div>
     </div>

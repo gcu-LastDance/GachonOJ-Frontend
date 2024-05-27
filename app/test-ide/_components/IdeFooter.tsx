@@ -67,9 +67,8 @@ export default function IdeFooter({
 
   const handleSolutionExcute = () => {
     const testcaseData = convertTestcaseSetToData(testcase);
-    console.log(params.problemId);
     problemSolutionExcuteMutation.mutate({
-      problemId: Number(params.problemId),
+      problemId: problems[curProbNum].problemId,
       data: { code: code, language: "Java", testcase: testcaseData },
     });
   };

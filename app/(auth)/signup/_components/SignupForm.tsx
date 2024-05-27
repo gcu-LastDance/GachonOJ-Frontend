@@ -97,6 +97,7 @@ export default function SignupForm() {
     onSuccess: (data, variables, context) => {
       console.log(data);
       if (data.success) {
+        setTimerActive(false);
         setEmailVerification(true);
       }
     },
@@ -225,7 +226,7 @@ export default function SignupForm() {
             } border-[1.5px] w-[6vw] h-[5vh] border-primaryBlue rounded-md ml-auto`}
           >
             <span className="font-PretendardSemiBold text-sm text-primaryBlue">
-              확인
+              {emailVerification ? "인증됨" : "확인"}
             </span>
           </button>
         </div>

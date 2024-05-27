@@ -4,6 +4,7 @@ import {
   problemBookmarkDeleteAPI,
   problemBookmarkPostAPI,
   problemTableGuestAPI,
+  problemTableUserAPI,
 } from "@/api/problemAPI";
 import DiffBadge from "@/components/badge/DiffBadge";
 import CategoryButton from "@/components/button/CategoryButton";
@@ -19,6 +20,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
@@ -58,6 +60,7 @@ type SortType = "ASC" | "DESC";
 
 export default function ProblemTable() {
   const { token } = useUserStore();
+  const router = useRouter();
   const [pageNum, setPageNum] = useState<number>(1);
   const [debouncedPageNum, setDebouncedPageNum] = useState(pageNum);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
@@ -71,7 +74,7 @@ export default function ProblemTable() {
 
   const queryClient = useQueryClient();
 
-  const { data: problemData } = useQuery({
+  const { data: problemDataGuest } = useQuery({
     queryKey: [
       "problemTableGuest",
       debouncedPageNum,
@@ -86,6 +89,25 @@ export default function ProblemTable() {
         diff: debouncedDiff,
         sortType: debouncedSortType,
       }),
+    enabled: !token, // 게스트일 때만 활성화
+  });
+
+  const { data: problemData } = useQuery({
+    queryKey: [
+      "problemTableUser",
+      debouncedPageNum,
+      debouncedSearchKeyword,
+      debouncedDiff,
+      debouncedSortType,
+    ],
+    queryFn: () =>
+      problemTableUserAPI({
+        pageNum: debouncedPageNum,
+        searchKeyword: debouncedSearchKeyword,
+        diff: debouncedDiff,
+        sortType: debouncedSortType,
+      }),
+    enabled: !!token,
   });
 
   useEffect(() => {
@@ -116,10 +138,12 @@ export default function ProblemTable() {
   };
 
   const handleBookmarkAdd = (problemId: number) => {
+    if (!token) router.push("/login");
     bookmarkAddMutation.mutate(problemId);
   };
 
   const handleBookmarkRemove = (problemId: number) => {
+    if (!token) router.push("/login");
     bookmarkRemoveMutation.mutate(problemId);
   };
 
@@ -130,8 +154,7 @@ export default function ProblemTable() {
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("북마크에 추가되었습니다.");
-      queryClient.invalidateQueries({ queryKey: ["problemTableGuest"] });
+      queryClient.invalidateQueries({ queryKey: ["problemTableUser"] });
     },
   });
 
@@ -142,12 +165,12 @@ export default function ProblemTable() {
     },
     onSuccess: (data) => {
       console.log(data);
-      queryClient.invalidateQueries({ queryKey: ["problemTableGuest"] });
+      queryClient.invalidateQueries({ queryKey: ["problemTableUser"] });
     },
   });
 
   const table = useReactTable({
-    data: problemData?.content || [],
+    data: (token ? problemData?.content : problemDataGuest?.content) || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
