@@ -15,7 +15,7 @@ export default function IdeProblemWindow({
   );
 
   return (
-    <div className="flex dark:bg-primaryDark">
+    <div className="flex">
       <div className="flex flex-col px-[1vw] py-[3vh]">
         <div className="flex items-center">
           {problemData?.problemDiff && (

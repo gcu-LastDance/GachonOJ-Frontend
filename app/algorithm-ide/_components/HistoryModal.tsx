@@ -19,6 +19,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import React, { useState, useMemo } from "react";
+import { set } from "react-hook-form";
 
 const columns: ColumnDef<SubmitHistoryData, any>[] = [
   columnHelper("submissionDate", {
@@ -72,6 +73,7 @@ export default function HistoryModal({
   ) => {
     setSelectedSubmissionId(submissionId);
     setProgramLang(submissionLang);
+    setModalOpen(false);
   };
 
   const { data: submitDetailCodeData } =

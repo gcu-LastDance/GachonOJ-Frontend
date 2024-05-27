@@ -46,6 +46,12 @@ export default function LoginForm() {
     },
   });
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSubmit(onSubmit)();
+    }
+  };
+
   const { data: memberProgramLangData } = useQuery({
     queryKey: ["memberProgramLang"],
     queryFn: memberProgramLangAPI,
@@ -70,6 +76,7 @@ export default function LoginForm() {
                 message: "유효하지 않은 이메일 형식입니다.",
               },
             })}
+            onKeyDown={handleKeyDown}
             placeholder="이메일을 입력하세요"
             type="text"
             className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey focus:outline-none"
@@ -90,6 +97,7 @@ export default function LoginForm() {
           <input
             {...register("memberPassword", { required: true })}
             type="password"
+            onKeyDown={handleKeyDown}
             placeholder="비밀번호를 입력하세요"
             className="h-[5vh] w-full border-b-2 border-semiGrey placeholder-realGrey focus:placeholder-semiGrey focus:outline-none"
           />

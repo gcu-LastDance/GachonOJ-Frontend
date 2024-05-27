@@ -21,8 +21,9 @@ export const hoverProfileAPI = async () => {
 export const memberProbInfoCardAPI = async () => {
   try {
     const response = await instanceAuth.get(
-      process.env.NEXT_PUBLIC_M11_URL as string
+      process.env.NEXT_PUBLIC_M17_URL as string
     );
+    console.log(response.data.result);
     return response.data.result;
   } catch (error) {
     throw new Error(String(error));
@@ -51,13 +52,13 @@ export const rankingTableAPI = async ({
     if (searchKeyword === "") {
       const url = `${
         process.env.NEXT_PUBLIC_M12_URL as string
-      }?page=${pageNum}`;
+      }?pageNo=${pageNum}`;
       const response = await instanceNonAuth.get(url);
       return response.data.result;
     } else {
       const url = `${
         process.env.NEXT_PUBLIC_M12_URL as string
-      }?page=${pageNum}&search=${searchKeyword}`;
+      }?pageNo=${pageNum}&search=${searchKeyword}`;
       const response = await instanceNonAuth.get(url);
       return response.data.result;
     }
