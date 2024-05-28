@@ -106,12 +106,34 @@ export function ExamTable({
                 </td>
               ))}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  href={{
+                    pathname: "edit",
+                    query: { examId: row.original.examId },
+                  }}
+                >
+                  <button className="underline underline-offset-auto hover:text-realGrey">
+                    수정
+                  </button>
+                </Link>
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
                 <button
                   className="underline underline-offset-auto hover:text-realGrey"
                   onClick={() => onDelete(row.original.examId)}
                 >
                   삭제
                 </button>
+              </td>
+              <td className="border px-4 py-2 text-left border-l-0 border-r-0">
+                <Link
+                  className="hover:underline-offset-auto hover:text-realGrey"
+                  href={`/professor/exam-manage/result/list/${row.original.examId}`}
+                >
+                  <button className="underline underline-offset-auto">
+                    결과 조회
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}

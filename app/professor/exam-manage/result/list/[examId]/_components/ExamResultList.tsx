@@ -27,7 +27,7 @@ const columns: ColumnDef<ExamResultListContents, any>[] = [
 export default function ExamResultList({ examId }: { examId: number }) {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<ExamResultListData>({
-    queryKey: ["contestResultList", pageNo],
+    queryKey: ["professorExamList", pageNo],
     queryFn: () => examResultListAPI(examId, pageNo),
   });
 
@@ -46,13 +46,13 @@ export default function ExamResultList({ examId }: { examId: number }) {
       <div className="flex justify-between px-20 mb-10">
         <div className="flex items-center space-x-5">
           <div className="text-2xl text-realGrey font-PretendardBold">
-            대회 제목
+            시험 제목
           </div>
           <div>{data.examTitle}</div>
         </div>
         <div className="flex items-center space-x-5">
           <div className="text-2xl text-realGrey font-PretendardBold">
-            대회 메모
+            시험 메모
           </div>
           <div>{data.examMemo}</div>
         </div>
@@ -119,7 +119,9 @@ export default function ExamResultList({ examId }: { examId: number }) {
                 </button>
               </td> */}
               <td className="border px-4 py-2 text-left border-l-0 border-r-0">
-                <Link href={`/admin/exam-manage/result/${row.original.testId}`}>
+                <Link
+                  href={`/professor/exam-manage/result/${row.original.testId}`}
+                >
                   <button className="underline underline-offset-auto hover:text-realGrey">
                     상세 조회
                   </button>
