@@ -38,7 +38,7 @@ export default function page() {
         <p className="font-PretendardBold text-primaryDark text-[1.5vw]">
           탈퇴하기
         </p>
-        <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[6vh] items-center">
+        <div className="flex flex-col font-PretendardRegular text-realGrey text-[0.9vw] mt-[11vh] items-center">
           <p>저희 서비스를 이용해주셔서 감사합니다</p>
           <p>
             회원 탈퇴 시 해결한 문제, 획득한 경험치, 등급은 복구가 불가능합니다.

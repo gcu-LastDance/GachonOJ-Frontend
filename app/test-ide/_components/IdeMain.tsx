@@ -10,6 +10,7 @@ import ReactCodeMirror from "@uiw/react-codemirror";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
+import { java } from "@codemirror/lang-java";
 
 export default function IdeMain({
   code,
@@ -19,6 +20,8 @@ export default function IdeMain({
   setCode: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const { programLang } = useProgramLangStore();
+
+  const extensions = [java()];
 
   const handleCode = (value: string) => {
     setCode(value);
@@ -41,6 +44,7 @@ export default function IdeMain({
         autoFocus={true}
         editable={true}
         onChange={handleCode}
+        extensions={[extensions]}
       />
     </div>
   );

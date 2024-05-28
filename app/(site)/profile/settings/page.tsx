@@ -99,11 +99,6 @@ export default function page() {
     },
     onSuccess: (data) => {
       console.log(data.result);
-      if (data) {
-        alert("수정이 완료되었습니다.");
-      } else {
-        alert("수정에 실패했습니다.");
-      }
     },
   });
 

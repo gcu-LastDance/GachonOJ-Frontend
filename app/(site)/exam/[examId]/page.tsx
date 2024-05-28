@@ -92,7 +92,7 @@ export default function page({ params }: { params: { examId: number } }) {
             testEnterEnable ? "bg-primaryBlue" : "bg-realGrey text-[1.2vh]"
           }`}
         >
-          {testEnterEnable ? "응시하기" : "지금은 응시가 불가능합니다"}
+          {testEnterEnable ? "응시하기" : "응시 불가"}
         </button>
       </div>
     </div>
