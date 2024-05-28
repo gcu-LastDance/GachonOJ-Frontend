@@ -163,9 +163,12 @@ export default function MemberProblemTable() {
         </button>
       </div>
       {menu === "solved" ? (
-        <MemberSolProblemTable data={problemData?.content} />
+        <MemberSolProblemTable
+          data={problemData?.content}
+          isLoading={isLoading}
+        />
       ) : (
-        <table className="w-[47vw]">
+        <table className={`w-[47vw] ${isLoading && "animate-pulse"}`}>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr

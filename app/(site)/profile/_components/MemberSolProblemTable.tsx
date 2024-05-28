@@ -69,11 +69,17 @@ const columns: ColumnDef<SolProblemTableData, any>[] = [
   }),
 ];
 
-export default function MemberSolProblemTable({ data }: { data: any }) {
+export default function MemberSolProblemTable({
+  data,
+  isLoading,
+}: {
+  data: any;
+  isLoading: boolean;
+}) {
   const queryClient = useQueryClient();
 
   const table = useReactTable({
-    data: data || [],
+    data: isLoading ? [] : data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -109,7 +115,7 @@ export default function MemberSolProblemTable({ data }: { data: any }) {
   });
 
   return (
-    <table className="w-[47vw]">
+    <table className={`w-[47vw] ${isLoading && "animate-pulse"}`}>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr
