@@ -175,6 +175,17 @@ export default function ProblemForm({
             </select>
           </div>
           <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
+            <label className="block font-medium mb-1 mr-8">배점</label>
+            <input
+              type="number"
+              defaultValue={
+                data?.questionScore || data?.data?.questionScore || ""
+              }
+              {...register("questionScore")}
+              className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
             <label htmlFor="difficulty" className="block font-medium mb-1 mr-8">
               분류
             </label>

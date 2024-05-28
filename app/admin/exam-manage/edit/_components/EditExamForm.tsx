@@ -29,6 +29,7 @@ function EditExamForm({
     problemClass: "",
     problemStatus: "",
     problemPrompt: "",
+    questionScore: 10,
     testcases: [],
   };
   const { register, handleSubmit, control, reset } = useForm();
@@ -110,7 +111,6 @@ function EditExamForm({
   });
 
   return (
-   
     <form>
       <div className="p-10">
         <div className="flex items-center mb-4">
@@ -348,8 +348,7 @@ const EditExamFormConatiner = () => {
   });
 
   if (!data) return null;
-  if(!isFetching)
-  return <EditExamForm data={data} examId={examId} />;
+  if (!isFetching) return <EditExamForm data={data} examId={examId} />;
 };
 
 export default EditExamFormConatiner;

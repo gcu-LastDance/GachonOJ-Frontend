@@ -11,7 +11,6 @@ import AddCandidate from "./AddCandidate";
 import { ExamProblemFormData } from "@/types/admin/problem";
 
 export default function EnrollExamForm() {
-
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -26,6 +25,7 @@ export default function EnrollExamForm() {
     problemClass: "",
     problemStatus: "",
     problemPrompt: "",
+    questionScore: 10,
     testcases: [],
   };
 
@@ -69,19 +69,29 @@ export default function EnrollExamForm() {
     setFormData(updatedFormData);
     setFormCount(formCount - 1);
     handleSwitchForm(formCount - 1);
-  }
-  
+  };
+
   const onSubmit = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "RESERVATION", examType: "EXAM",
-  };
+    const newData = {
+      ...data,
+      tests,
+      candidateList,
+      examStatus: "RESERVATION",
+      examType: "EXAM",
+    };
     EnrollMutation.mutate(newData);
   };
 
   const onSave = (data: any) => {
     const tests = formData.map((form) => form.data);
-    const newData = { ...data, tests, candidateList, examStatus: "WRITING", examType: "EXAM",
-  };
+    const newData = {
+      ...data,
+      tests,
+      candidateList,
+      examStatus: "WRITING",
+      examType: "EXAM",
+    };
     EnrollMutation.mutate(newData);
   };
 
@@ -231,7 +241,9 @@ export default function EnrollExamForm() {
                     onClick={() => {
                       setShowAddCandidate(true);
                       setCandidateValue(tempValue);
-                      queryClient.invalidateQueries({ queryKey: ["candidateList"] });
+                      queryClient.invalidateQueries({
+                        queryKey: ["candidateList"],
+                      });
                     }}
                     type="button"
                     className="ml-2 px-3 py-1 border rounded-lg bg-semiGrey hover:bg-semiSemiGrey"
