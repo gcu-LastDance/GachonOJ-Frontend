@@ -34,7 +34,7 @@ export default function ExamResultList({ examId }: { examId: number }) {
   const paginationData: any = data?.results;
 
   const table = useReactTable({
-    data: data?.results?.content || [],
+    data: data?.results || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
