@@ -27,7 +27,7 @@ function ProblemForm({
     reset,
   } = useForm<ProblemFormData>();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [TestCaseList, setTestCases] = useState<TestCase[]>(data.testcases);
+  const [TestCaseList, setTestCases] = useState<TestCase[]>([]);
   const { testcaseInput, testcaseOutput, testcaseStatus, setTestCase } =
     useTestCaseStore();
   const { check, setCheck } = useCheckStore();
@@ -90,6 +90,10 @@ function ProblemForm({
     setTestCase(null, null, null);
     reset();
   }, []);
+
+  useEffect(() => {
+    setTestCases(data.testcases);
+  }, [data]);
 
   // 페이지 렌더링시 전역변수 값 변화 있을시 테스트케이스 추가 혹은 수정
   useEffect(() => {

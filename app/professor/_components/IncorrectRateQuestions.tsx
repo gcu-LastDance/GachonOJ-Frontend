@@ -11,7 +11,7 @@ const IncorrectRateQuestions = ({ data }: { data: IncorrectRateData[] }) => {
 
   return (
     <div className="flex-col h-full px-5 py-5 shadow-md border-4 border-semiGrey bg-white overflow-x-scroll">
-      <div className="text-2xl">최근 오답율 높은 문제 Top 3</div>
+      <div className="text-2xl">최근 오답율 높은 문제 Top 5</div>
       <div className="text-sm text-semiGrey">
         학생들이 최근 가장 어려워하는 문제들를 알려드립니다.
       </div>

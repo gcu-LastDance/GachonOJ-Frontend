@@ -27,7 +27,7 @@ const columns: ColumnDef<ExamResultListContents, any>[] = [
 export default function ExamResultList({ examId }: { examId: number }) {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<ExamResultListData>({
-    queryKey: ["examList", pageNo],
+    queryKey: ["professorExamList", pageNo],
     queryFn: () => examResultListAPI(examId, pageNo),
   });
 

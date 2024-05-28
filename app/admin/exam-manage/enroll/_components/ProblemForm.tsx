@@ -162,10 +162,18 @@ export default function ProblemForm({
               <option value="5">매우 어려움</option>
             </select>
           </div>
+
           <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
-            <label htmlFor="difficulty" className="block font-medium mb-1 mr-8">
-              분류
-            </label>
+            <label className="block font-medium mb-1 mr-8">배점</label>
+            <input
+              type="number"
+              defaultValue={10}
+              {...register("questionScore")}
+              className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="w-1/3 mt-4 flex text-lg items-center justify-start">
+            <label className="block font-medium mb-1 mr-8">분류</label>
             <select
               {...register("problemClass")}
               className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"

@@ -69,9 +69,7 @@ export interface ExamResultListData {
   examTitle: string;
   examMemo: string;
   submissionTotal: number;
-  results: {
-    content: ExamResultListContents[];
-  };
+  results: ExamResultListContents[];
 }
 
 export interface ExamQuestion {

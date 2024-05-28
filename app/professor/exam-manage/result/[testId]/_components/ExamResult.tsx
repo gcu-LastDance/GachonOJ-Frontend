@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function ExamResult({ testId }: { testId: number }) {
   const { data, isFetching } = useQuery<ExamResultContent>({
-    queryKey: ["contestResult"],
+    queryKey: ["professorExamResult"],
     queryFn: () => examResultAPI(testId),
   });
 
@@ -17,13 +17,13 @@ export default function ExamResult({ testId }: { testId: number }) {
         <div className="flex justify-between px-20 mb-10">
           <div className="flex items-center space-x-5">
             <div className="text-2xl text-realGrey font-PretendardBold">
-              대회 제목
+              시험 제목
             </div>
             <div>{data?.examTitle}</div>
           </div>
           <div className="flex items-center space-x-5">
             <div className="text-2xl text-realGrey font-PretendardBold">
-              대회 메모
+              시험 메모
             </div>
             <div>{data?.examMemo}</div>
           </div>

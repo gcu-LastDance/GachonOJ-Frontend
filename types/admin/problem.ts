@@ -1,4 +1,3 @@
-
 export interface problemTableData {
   problemId: number;
   problemTitle: string;
@@ -40,6 +39,7 @@ export interface ProblemFormData {
   problemClass: string;
   problemStatus: string;
   problemPrompt: string;
+  questionScore: number;
   testcases: TestCase[];
 }
 

@@ -29,6 +29,7 @@ function EditExamForm({
     problemClass: "",
     problemStatus: "",
     problemPrompt: "",
+    questionScore: 10,
     testcases: [],
   };
 
