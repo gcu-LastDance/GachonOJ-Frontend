@@ -110,7 +110,6 @@ function EditExamForm({
   });
 
   return (
-   
     <form>
       <div className="p-10">
         <div className="flex items-center mb-4">
@@ -348,8 +347,7 @@ const EditExamFormConatiner = () => {
   });
 
   if (!data) return null;
-  if(!isFetching)
-  return <EditExamForm data={data} examId={examId} />;
+  if (!isFetching) return <EditExamForm data={data} examId={examId} />;
 };
 
 export default EditExamFormConatiner;
