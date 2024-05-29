@@ -70,6 +70,10 @@ export default function page({ params }: { params: { examId: number } }) {
   const handleSetNextProb = () => {
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem(`${params.examId}-${curProbNum}`, code);
+      window.sessionStorage.setItem(
+        `${params.examId}-${curProbNum}-testcase`,
+        JSON.stringify(testcase)
+      );
     }
     setCurProbNum(
       Math.min(
@@ -82,6 +86,10 @@ export default function page({ params }: { params: { examId: number } }) {
   const handleSetPrevProb = () => {
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem(`${params.examId}-${curProbNum}`, code);
+      window.sessionStorage.setItem(
+        `${params.examId}-${curProbNum}-testcase`,
+        JSON.stringify(testcase)
+      );
     }
     setCurProbNum(Math.max(curProbNum - 1, 0));
   };
@@ -90,8 +98,15 @@ export default function page({ params }: { params: { examId: number } }) {
     if (typeof window !== "undefined") {
       if (sessionStorage.getItem(`${params.examId}-${curProbNum}`) !== null) {
         setCode(sessionStorage.getItem(`${params.examId}-${curProbNum}`) ?? "");
+        setTestcase(
+          JSON.parse(
+            sessionStorage.getItem(`${params.examId}-${curProbNum}-testcase`) ??
+              "[]"
+          )
+        );
       } else {
         setCode(programLangSampleCodeMap[programLang ?? "JAVA"]);
+        setTestcase([]);
       }
     }
   }, [curProbNum, params.examId]);
@@ -206,6 +221,10 @@ export default function page({ params }: { params: { examId: number } }) {
                       window.sessionStorage.setItem(
                         `${params.examId}-${curProbNum}`,
                         code
+                      );
+                      window.sessionStorage.setItem(
+                        `${params.examId}-${curProbNum}-testcase`,
+                        JSON.stringify(testcase)
                       );
                     }
                     setCurProbNum(index);
