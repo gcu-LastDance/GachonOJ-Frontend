@@ -20,12 +20,12 @@
   <tr>
     <td align="center" width="120px">
       <a href="https://github.com/naminhyeok" target="_blank">
-        <img src="" alt="나민혁 프로필" />
+        <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/7215db3f-c2c8-45bb-a8c7-dfd93c24482b" alt="나민혁 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
       <a href="https://github.com/chogh824" target="_blank">
-        <img src="" alt="조기헌 프로필" />
+        <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/ccf2ecab-4d59-4f2f-bced-f5789ad83b7f" alt="조기헌 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
@@ -35,7 +35,7 @@
     </td>
     <td align="center" width="120px">
       <a href="https://github.com/ehs208" target="_blank">
-        <img src="" alt="은현수 프로필" />
+        <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/588615b5-03bd-4787-a044-ad253ac7f860" alt="은현수 프로필" />
       </a>
     </td>
   </tr>
@@ -79,9 +79,9 @@ GachonOJ는 가천대학교 학생들을 위해 개발되어진 온라인 저지
 
 ## 🖥️ Service
 
-| 웹IDE & 채점 서비스 | AI 피드백 구현 |
-| :-----------------: | :------------: |
-|    <img src=''>     |  <img src=''>  |
+| 웹IDE & 채점 서비스 및 AI 피드백 구현 |
+| :-----------------------------: |
+|    <img src=''>                 |
 
 ## 📦 주요 기능
 
