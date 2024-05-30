@@ -30,7 +30,7 @@
     </td>
     <td align="center" width="120px">
       <a href="https://github.com/11chyeonjin" target="_blank">
-        <img src="" alt="정현진 프로필" />
+        <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/130f32a2-887f-49d3-9fe4-a6b0b7a6b65f" alt="정현진 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
