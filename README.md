@@ -4,7 +4,7 @@
 </a>
 
 [![](https://img.shields.io/badge/-gachonoj-important?style=flat&logo=airplayvideo&logoColor=white&labelColor=black&color=%233145FF)](http://cecloud.gachon.ac.kr:65001/)
-[![](https://img.shields.io/badge/back_release-v1.0.0-critical?style=flat&logo=github&logoColor=balck&labelColor=black&color=white)
+[![](https://img.shields.io/badge/Frontend_release-v1.0.0-critical?style=flat&logo=github&logoColor=balck&labelColor=black&color=white)
 ](https://github.com/gcu-LastDance/GachonOJ-Frontend/releases)
 
 ## 👻 Member
@@ -61,12 +61,10 @@
   </tr>
 </table>
 
-
 # <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/d6b913c5-0368-4f7d-a552-00b430dcd251" align=left width=90>
 
 > GachonOJ 가천대학교 학생들을 위한 저지 서비스 입니다.
 
->
 > 개발 기간: 2024.03 - 2024.05
 
 # GachonOJ
@@ -720,6 +718,7 @@ GachonOJ는 가천대학교 학생들을 위해 개발되어진 온라인 저지
     <img alt="Slack" src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
     <img alt="Notion" src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
     <img alt="Google Drive" src="https://img.shields.io/badge/google_drive-4285F4?style=for-the-badge&logo=google_drive&logoColor=white">
+     <img alt="Figma" src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
   
 </p>
 
