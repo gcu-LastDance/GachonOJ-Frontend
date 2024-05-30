@@ -1,6 +1,6 @@
 <div align="center">
 <a href="http://cecloud.gachon.ac.kr:65001/">
-<img width="100%" alt="GachonOJ 이동하기" src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/e3338058-4817-4ce6-88d1-5bfa5233f9fd">
+<img width="100%" alt="GachonOJ 이동하기" src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/b5312f37-4cd1-48c3-b2b2-8fb7e35542a2">
 </a>
 
 [![](https://img.shields.io/badge/-gachonoj-important?style=flat&logo=airplayvideo&logoColor=white&labelColor=black&color=%233145FF)](http://cecloud.gachon.ac.kr:65001/)
@@ -65,6 +65,7 @@
 # <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/d6b913c5-0368-4f7d-a552-00b430dcd251" align=left width=90>
 
 > GachonOJ 가천대학교 학생들을 위한 저지 서비스 입니다.
+
 >
 > 개발 기간: 2024.03 - 2024.05
 
@@ -692,23 +693,34 @@ GachonOJ는 가천대학교 학생들을 위해 개발되어진 온라인 저지
 
 ## 📚 Skills
 
-<img width="500px" src=''  alt="Frontend Skills"/>
+<p align="left">
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
+    <img alt="Next.js" src="https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=for-the-badge">
+    <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+</p>
 
-<img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
-<img alt="Next.js" src="https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=for-the-badge">
-<img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+## 🪄 Environment
 
+<p align="left">
+ <img alt="Vscode" src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
+  <img alt="github" src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">
+</p>
 
-## ⚙️ Infra
+## ⚙️ CI/CD / Infra
 
-<img width="600px" src=''  alt="Infra"/>
-
-## 🪄 CI/CD
-
-<img width="600px" src=''  alt="CI/CD"/>
+<p align="left">
+ <img alt="Jenkins" src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
+ <img alt="Docker" src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
+</p>
 
 ## 🤝 Team Collaboration Tool
 
-<img width="600px" src=''  alt="Collaboration Tools"/>
+<p align="left">
+    <img alt="Discord" src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
+    <img alt="Slack" src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
+    <img alt="Notion" src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
+    <img alt="Google Drive" src="https://img.shields.io/badge/google_drive-4285F4?style=for-the-badge&logo=google_drive&logoColor=white">
+  
+</p>
 
 © 2024 Gachon Univ. Online Judge. All Rights Reserved.
