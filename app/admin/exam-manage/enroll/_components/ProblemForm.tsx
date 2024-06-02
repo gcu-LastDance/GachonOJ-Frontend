@@ -125,6 +125,7 @@ export default function ProblemForm({
           <div className="w-1/3 text-lg flex items-center justify-start">
             <label className="block font-medium mb-1 mr-8">메모리 제한</label>
             <select
+              defaultValue={data.data?.problemMemoryLimit || ""}
               {...register("problemMemoryLimit")}
               className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
             >
@@ -140,6 +141,7 @@ export default function ProblemForm({
               실행 시간 제한
             </label>
             <select
+              defaultValue={data.data?.problemTimeLimit || ""}
               {...register("problemTimeLimit")}
               className="w-32 px-3 py-2 border rounded-lg mr-10 focus:outline-none focus:border-blue-500"
             >
@@ -152,6 +154,7 @@ export default function ProblemForm({
           <div className="w-1/3 flex text-lg items-center justify-start">
             <label className="block font-medium mb-1 mr-8">난이도 설정</label>
             <select
+              defaultValue={data.data?.problemDiff || ""}
               {...register("problemDiff")}
               className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             >
@@ -167,7 +170,7 @@ export default function ProblemForm({
             <label className="block font-medium mb-1 mr-8">배점</label>
             <input
               type="number"
-              defaultValue={10}
+              defaultValue={data.data?.questionScore || ""}
               {...register("questionScore")}
               className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             />

@@ -374,14 +374,14 @@ function ProblemForm({
 const ProblemContentsContainer = () => {
   const params = useSearchParams();
   const problemId = Number(params.get("problemId"));
-  const { data } = useQuery<ProblemFormData>({
+  const { data, isFetching } = useQuery<ProblemFormData>({
     queryKey: ["problemContent"],
     queryFn: () => problemContentAPI(problemId),
   });
 
   if (!data) return null;
 
-  return <ProblemForm data={data} problemId={problemId} />;
+  if (!isFetching) return <ProblemForm data={data} problemId={problemId} />;
 };
 
 export default ProblemContentsContainer;

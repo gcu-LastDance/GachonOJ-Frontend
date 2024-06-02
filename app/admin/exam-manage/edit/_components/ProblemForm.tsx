@@ -179,7 +179,9 @@ export default function ProblemForm({
             <label className="block font-medium mb-1 mr-8">배점</label>
             <input
               type="number"
-              defaultValue={10}
+              defaultValue={
+                data?.questionScore || data?.data?.questionScore || ""
+              }
               {...register("questionScore")}
               className="w-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             />

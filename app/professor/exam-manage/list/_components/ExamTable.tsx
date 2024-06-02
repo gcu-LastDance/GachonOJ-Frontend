@@ -164,7 +164,7 @@ export function ExamTable({
 const ExamManageTableConatiner = () => {
   const [pageNo, setPageNo] = useState(1);
   const { data } = useQuery<examListData>({
-    queryKey: ["ProfessorexamList"],
+    queryKey: ["ProfessorexamList", pageNo],
     queryFn: () => examListAPI(pageNo),
   });
 
