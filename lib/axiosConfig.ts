@@ -48,6 +48,7 @@ instanceAuth.interceptors.response.use(
     if (err.response && err.response.status == 401) {
       window.localStorage.removeItem("user");
       window.localStorage.removeItem("programLang");
+      window.sessionStorage.clear();
       window.location.href = "/login";
     } else {
       // window.location.href = "/main";

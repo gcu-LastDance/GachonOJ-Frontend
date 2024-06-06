@@ -37,6 +37,7 @@ export default function HeaderMemberDropdown() {
     },
     onSettled: () => {
       setUserDrop();
+      window.sessionStorage.clear();
     },
   });
 

@@ -6,6 +6,7 @@ import React from "react";
 import Image from "next/image";
 import HeaderButton from "./HeaderButton";
 import useUserStore from "@/store/useUserStore";
+import { motion } from "framer-motion";
 
 export default function HeaderNav() {
   const { userPermission } = useUserStore();
@@ -20,30 +21,135 @@ export default function HeaderNav() {
             </div>
           </Link>
         </div>
-        <div className="ml-16 mr-16 space-x-14 font-PretendardSemiBold text-[1.2vw] pt-1 text-primaryDark">
+        <div className="mx-auto space-x-[4vw] font-PretendardSemiBold text-[1.2vw] pt-[0.4vh] text-primaryDark flex pl-[3vw]">
           <Link href="/problem">
-            <span>문제</span>
+            <motion.span
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="flex w-[3vw] justify-center">문제</span>
+            </motion.span>
           </Link>
           <Link href="/ranking">
-            <span>랭킹</span>
+            <motion.span
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="flex w-[3vw] justify-center">랭킹</span>
+            </motion.span>
           </Link>
           <Link href="/contest">
-            <span>대회</span>
+            <motion.span
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="flex w-[3vw] justify-center">대회</span>
+            </motion.span>
           </Link>
           <Link href="/exam">
-            <span>시험</span>
+            <motion.span
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="flex w-[3vw] justify-center">시험</span>
+            </motion.span>
           </Link>
           <Link href="/inquiry">
-            <span>문의</span>
+            <motion.span
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="flex w-[3vw] justify-center">문의</span>
+            </motion.span>
           </Link>
           {userPermission === "ROLE_PROFESSOR" && (
             <Link href="/professor">
-              <span>관리페이지</span>
+              <motion.span
+                className="relative inline-block"
+                style={{
+                  borderBottom: "2px solid transparent",
+                  width: "0%",
+                  display: "inline-block",
+                }}
+                whileHover={{
+                  width: "100%",
+                  borderBottomColor: "black",
+                  transition: { duration: 0.2 },
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                <span className="flex w-[6vw] justify-center">관리페이지</span>
+              </motion.span>
             </Link>
           )}
           {userPermission === "ROLE_ADMIN" && (
             <Link href="/admin">
-              <span>관리페이지</span>
+              <motion.span
+                className="relative inline-block"
+                style={{
+                  borderBottom: "2px solid transparent",
+                  width: "0%",
+                  display: "inline-block",
+                }}
+                whileHover={{
+                  width: "100%",
+                  borderBottomColor: "black",
+                  transition: { duration: 0.2 },
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                <span className="flex w-[6vw] justify-center">관리페이지</span>
+              </motion.span>
             </Link>
           )}
         </div>

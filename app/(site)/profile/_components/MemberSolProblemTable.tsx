@@ -72,9 +72,11 @@ const columns: ColumnDef<SolProblemTableData, any>[] = [
 export default function MemberSolProblemTable({
   data,
   isLoading,
+  isFetching,
 }: {
   data: any;
   isLoading: boolean;
+  isFetching: boolean;
 }) {
   const queryClient = useQueryClient();
 
@@ -115,88 +117,93 @@ export default function MemberSolProblemTable({
   });
 
   return (
-    <table className={`w-[47vw] ${isLoading && "animate-pulse"}`}>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr
-            key={headerGroup.id}
-            className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[0.95vw]"
-          >
-            {headerGroup.headers.map((header) => (
-              <th
-                key={header.id}
-                className={`${
-                  header.id === "title"
-                    ? "text-left w-[16vw]"
-                    : "text-center w-[11w]"
-                }`}
-              >
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr
-            key={row.id}
-            className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
-          >
-            {row.getVisibleCells().map((cell) => (
-              <td
-                key={cell.id}
-                className={`${
-                  cell.column.id === "problemTitle"
-                    ? "text-left"
-                    : "text-center"
-                } ${
-                  cell.column.id === "problemClass" && "w-[8vw]"
-                } text-[0.95vw] font-PretendardLight text-realGrey`}
-              >
-                {cell.column.id === "problemTitle" ? (
-                  <Link href={`/algorithm-ide/${row.original.problemId}`}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Link>
-                ) : cell.column.id === "isBookmarked" ? (
-                  row.original.isBookmarked ? (
-                    <div className="flex items-center justify-center">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleBookmarkRemove(row.original.problemId)
-                        }
-                        className="text-[1vw] flex items-center justify-center"
-                      >
-                        <IoBookmark />
-                      </button>
-                    </div>
+    isFetching && (
+      <table className={`w-[47vw] ${isLoading && "animate-pulse"}`}>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr
+              key={headerGroup.id}
+              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[0.95vw]"
+            >
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  className={`${
+                    header.id === "title"
+                      ? "text-left w-[16vw]"
+                      : "text-center w-[11w]"
+                  }`}
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="h-[5vh] border-b-[0.1vh] border-semiGrey font-PretendardSemiBold text-darkGrey text-[1.1vw]"
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.id}
+                  className={`${
+                    cell.column.id === "problemTitle"
+                      ? "text-left"
+                      : "text-center"
+                  } ${
+                    cell.column.id === "problemClass" && "w-[8vw]"
+                  } text-[0.95vw] font-PretendardLight text-realGrey`}
+                >
+                  {cell.column.id === "problemTitle" ? (
+                    <Link href={`/algorithm-ide/${row.original.problemId}`}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Link>
+                  ) : cell.column.id === "isBookmarked" ? (
+                    row.original.isBookmarked ? (
+                      <div className="flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleBookmarkRemove(row.original.problemId)
+                          }
+                          className="text-[1vw] flex items-center justify-center"
+                        >
+                          <IoBookmark />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleBookmarkAdd(row.original.problemId)
+                          }
+                          className="text-[1vw] flex items-center justify-center"
+                        >
+                          <IoBookmarkOutline />
+                        </button>
+                      </div>
+                    )
                   ) : (
-                    <div className="flex items-center justify-center">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleBookmarkAdd(row.original.problemId)
-                        }
-                        className="text-[1vw] flex items-center justify-center"
-                      >
-                        <IoBookmarkOutline />
-                      </button>
-                    </div>
-                  )
-                ) : (
-                  flexRender(cell.column.columnDef.cell, cell.getContext())
-                )}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
   );
 }
