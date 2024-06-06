@@ -21,70 +21,134 @@ export default function HeaderNav() {
             </div>
           </Link>
         </div>
-        <div className="mx-auto space-x-[4vw] font-PretendardSemiBold text-[1.2vw] pt-[0.3vh] text-primaryDark flex pl-[5vw]">
+        <div className="mx-auto space-x-[4vw] font-PretendardSemiBold text-[1.2vw] pt-[0.4vh] text-primaryDark flex pl-[3vw]">
           <Link href="/problem">
-            <span>문제</span>
-            <motion.hr
-              initial={{ overflow: "hidden" }}
-              whileHover={{ x: "-100%" }}
-              transition={{ duration: 0.2 }}
-            ></motion.hr>
-          </Link>
-          <Link href="/ranking">
-            <motion.hr
-              initial={{ overflow: "hidden" }}
-              whileHover={{ x: "-100%" }}
+            <motion.span
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
               transition={{ duration: 0.2 }}
             >
-              랭킹
-            </motion.hr>
+              <span className="flex w-[3vw] justify-center">문제</span>
+            </motion.span>
+          </Link>
+          <Link href="/ranking">
+            <motion.span
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="flex w-[3vw] justify-center">랭킹</span>
+            </motion.span>
           </Link>
           <Link href="/contest">
             <motion.span
-              initial={{ overflow: "hidden" }}
-              whileHover={{ x: "-100%" }}
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
               transition={{ duration: 0.2 }}
             >
-              대회
+              <span className="flex w-[3vw] justify-center">대회</span>
             </motion.span>
           </Link>
           <Link href="/exam">
             <motion.span
-              initial={{ overflow: "hidden" }}
-              whileHover={{ x: "-100%" }}
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
               transition={{ duration: 0.2 }}
             >
-              시험
+              <span className="flex w-[3vw] justify-center">시험</span>
             </motion.span>
           </Link>
           <Link href="/inquiry">
             <motion.span
-              initial={{ overflow: "hidden" }}
-              whileHover={{ x: "-100%" }}
+              className="relative inline-block"
+              style={{
+                borderBottom: "2px solid transparent",
+                width: "0%",
+                display: "inline-block",
+              }}
+              whileHover={{
+                width: "100%",
+                borderBottomColor: "black",
+                transition: { duration: 0.2 },
+              }}
               transition={{ duration: 0.2 }}
             >
-              문의
+              <span className="flex w-[3vw] justify-center">문의</span>
             </motion.span>
           </Link>
           {userPermission === "ROLE_PROFESSOR" && (
             <Link href="/professor">
               <motion.span
-                initial={{ overflow: "hidden" }}
-                whileHover={{ x: "-100%" }}
+                className="relative inline-block"
+                style={{
+                  borderBottom: "2px solid transparent",
+                  width: "0%",
+                  display: "inline-block",
+                }}
+                whileHover={{
+                  width: "100%",
+                  borderBottomColor: "black",
+                  transition: { duration: 0.2 },
+                }}
                 transition={{ duration: 0.2 }}
               >
-                관리페이지
+                <span className="flex w-[6vw] justify-center">관리페이지</span>
               </motion.span>
             </Link>
           )}
           {userPermission === "ROLE_ADMIN" && (
             <Link href="/admin">
               <motion.span
-                initial={{ overflow: "hidden" }}
-                whileHover={{ x: "-100%" }}
+                className="relative inline-block"
+                style={{
+                  borderBottom: "2px solid transparent",
+                  width: "0%",
+                  display: "inline-block",
+                }}
+                whileHover={{
+                  width: "100%",
+                  borderBottomColor: "black",
+                  transition: { duration: 0.2 },
+                }}
                 transition={{ duration: 0.2 }}
               >
-                관리페이지
+                <span className="flex w-[6vw] justify-center">관리페이지</span>
               </motion.span>
             </Link>
           )}
