@@ -27,6 +27,7 @@ export default function AdminHeader() {
     },
     onSettled: () => {
       setUserDrop();
+      window.sessionStorage.clear();
     },
   });
 

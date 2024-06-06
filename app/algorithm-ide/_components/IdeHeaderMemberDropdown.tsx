@@ -37,6 +37,7 @@ export default function IdeHeaderMemberDropdown() {
     },
     onSettled: () => {
       setUserDrop();
+      window.sessionStorage.clear();
     },
   });
 
