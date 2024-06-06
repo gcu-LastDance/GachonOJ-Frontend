@@ -11,7 +11,10 @@ import { useMutation } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { contestDeleteAPI, contestListAPI } from "@/api/admin/adminContestAPI";
+import {
+  contestAdminDeleteAPI,
+  contestListAPI,
+} from "@/api/admin/adminContestAPI";
 import PaginationBar from "@/components/pagination/PaginationBar";
 
 const columns: ColumnDef<contestTableData, any>[] = [
@@ -41,7 +44,7 @@ export function ContestManageTable({
   };
 
   const DeleteMutation = useMutation({
-    mutationFn: (examId: number) => contestDeleteAPI(examId),
+    mutationFn: (examId: number) => contestAdminDeleteAPI(examId),
     onError: (error) => {
       console.log(error);
     },

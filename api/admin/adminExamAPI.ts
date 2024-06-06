@@ -27,6 +27,19 @@ export const examDeleteAPI = async (examId: number) => {
   }
 };
 
+export const examAdminDeleteAPI = async (examId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P29_URL}/${encodeURIComponent(
+      examId
+    )}`;
+    const response = await instanceAuth.delete(url);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
 export const findCandidateAPI = async (memberInfo: number | string) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_M37_URL}${encodeURIComponent(

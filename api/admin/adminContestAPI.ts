@@ -26,3 +26,16 @@ export const contestDeleteAPI = async (examId: number) => {
     throw new Error(String(error));
   }
 };
+
+export const contestAdminDeleteAPI = async (examId: number) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_P29_URL}/${encodeURIComponent(
+      examId
+    )}`;
+    const response = await instanceAuth.delete(url);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
