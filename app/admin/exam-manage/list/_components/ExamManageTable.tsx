@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { examDeleteAPI, examListAPI } from "@/api/admin/adminExamAPI";
+import { examAdminDeleteAPI, examListAPI } from "@/api/admin/adminExamAPI";
 import { examListData, examTableData } from "@/types/admin/exam";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import columnHelper from "@/lib/columnHelper";
@@ -34,14 +34,13 @@ export function ExamManageTable({
   pageNo: number;
   setPageNo: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const onDelete = (examId: number) => {
     DeleteMutation.mutate(examId);
   };
 
   const DeleteMutation = useMutation({
-    mutationFn: (examId: number) => examDeleteAPI(examId),
+    mutationFn: (examId: number) => examAdminDeleteAPI(examId),
     onError: (error) => {
       console.log(error);
     },
