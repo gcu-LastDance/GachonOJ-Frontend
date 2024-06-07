@@ -79,11 +79,12 @@ GachonOJ는 가천대학교 학생들을 위해 개발되어진 온라인 저지
 
 ## 🖥️ Service
 
-| 웹IDE & 채점 서비스 및 AI 피드백 구현 |
-| :-----------------------------: |
-|    <img src=''>                 |
+| 웹IDE & 채점 서비스 및 AI 피드백 구현 | 관리자/교수 시험 등록 |
+| :-----------------------------: | :-----------------------------: |
+|   <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/2eac5e94-050f-4418-a6e0-45f2e5f189e3">  | <img src="https://github.com/gcu-LastDance/GachonOJ-Frontend/assets/109217208/e6e2d881-d913-4b95-a093-35bf4535a5f5"> |
 
 ## 📦 주요 기능
+
 
 ### USER SIDE
 
