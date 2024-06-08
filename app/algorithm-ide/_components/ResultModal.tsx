@@ -51,7 +51,7 @@ export default function ResultModal({
                 </span>
               </button>
               <Link
-                href={`/problem/feedback/${problemId}`}
+                href={`/problem/feedback/${submitResult?.submissionId}`}
                 className="flex items-center justify-center w-[13.5vw] h-[4vh] rounded-[0.5vh] bg-primaryBlue mt-auto"
               >
                 <span className="font-PretendardMedium text-[0.95vw] text-white flex items-center">
