@@ -117,7 +117,7 @@ export default function MemberSolProblemTable({
   });
 
   return (
-    isFetching && (
+    !isFetching && (
       <table className={`w-[47vw] ${isLoading && "animate-pulse"}`}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
